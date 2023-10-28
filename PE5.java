@@ -1,11 +1,12 @@
-import java.util.ArrayList;
+import UsefulFunctions.PrimeFactors;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class PE5 {
     public static void main(String[] args) {
-        System.out.println(firstToDivide(arrOfNFirstElements(100)));
+        int n = 100;
+        System.out.println(firstToDivide(arrOfNFirstElements(n)));
     }
     private static long[] arrOfNFirstElements(int n) {
         long[] arr = new long[n];
@@ -16,8 +17,9 @@ public class PE5 {
     }
     private static long firstToDivide(long[] numbers) {
         long[][] allPrimeFactors = new long[numbers.length][];
+        PrimeFactors pf = new PrimeFactors();
         for (int i = 0; i < numbers.length; i++) {
-            allPrimeFactors[i] = findPrimeFactors(numbers[i]);
+            allPrimeFactors[i] = pf.findPrimeFactors(numbers[i]);
         }
         Map<Long, Long> biggestTerms = getBiggestTerms(allPrimeFactors);
         long product = 1;
@@ -47,31 +49,5 @@ public class PE5 {
             else refactoredTerms.put(term, refactoredTerms.get(term)+1);
         }
         return refactoredTerms;
-    }
-    private static long[] findPrimeFactors(long n) {
-        List<Long> primeFactors = new ArrayList<>();
-        while (n > 1) {
-            boolean nIsPrime = true;
-            for (long i = 2; i < Math.pow(n, 0.5)+1; i++) {
-                if (n % i == 0) {
-                    n /= i;
-                    primeFactors.add(i);
-                    nIsPrime = false;
-                    break;
-                }
-            }
-            if (nIsPrime) {
-                primeFactors.add(n);
-                break;
-            }
-        }
-        return listToArr(primeFactors);
-    }
-    private static long[] listToArr(List<Long> list) {
-        long[] arr = new long[list.size()];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = list.get(i);
-        }
-        return arr;
     }
 }
