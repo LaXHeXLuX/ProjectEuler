@@ -1,7 +1,7 @@
 import UsefulFunctions.Divisors;
 import UsefulFunctions.PolygonalNumber;
 
-public class PE12 {
+public class PE_012 {
     public static void main(String[] args) {
         PolygonalNumber pn = new PolygonalNumber();
         int n = 1;

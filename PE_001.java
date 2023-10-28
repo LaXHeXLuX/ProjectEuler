@@ -1,7 +1,8 @@
-public class PE1 {
+public class PE_001 {
     public static void main(String[] args) {
         int[] dividers = {3, 5};
-        System.out.println(sumOfMultiplesOf(dividers, 1000));
+        int n = 100;
+        System.out.println(sumOfMultiplesOf(dividers, n));
     }
     private static long sumOfMultiplesOf(int[] dividers, long limit) {
         long sum = 0;

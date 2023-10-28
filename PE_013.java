@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class PE13 {
+public class PE_013 {
     public static void main(String[] args) {
         String text = """
                 37107287533902102798797998220837590246510135740250

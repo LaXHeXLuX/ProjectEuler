@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class PE9 {
+public class PE_009 {
     public static void main(String[] args) {
         int sum = 1000;
         int[] specialTriplet = findPythagoreanTripletWithSumOf(sum);

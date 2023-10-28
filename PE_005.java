@@ -3,7 +3,7 @@ import UsefulFunctions.PrimeFactors;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PE5 {
+public class PE_005 {
     public static void main(String[] args) {
         int n = 100;
         System.out.println(firstToDivide(arrOfNFirstElements(n)));

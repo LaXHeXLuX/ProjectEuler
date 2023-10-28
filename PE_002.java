@@ -3,7 +3,7 @@ import UsefulFunctions.Converter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PE2 {
+public class PE_002 {
     public static void main(String[] args) {
         long n = 4_000_000L;
         System.out.println(sumOfEvenElements(fibonacciNumbersUntil(n)));

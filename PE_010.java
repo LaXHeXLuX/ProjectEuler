@@ -1,6 +1,6 @@
 import UsefulFunctions.SieveOfPrimes;
 
-public class PE10 {
+public class PE_010 {
     public static void main(String[] args) {
         int n = 2_000_000;
         SieveOfPrimes sop = new SieveOfPrimes();

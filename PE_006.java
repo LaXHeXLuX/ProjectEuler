@@ -1,6 +1,7 @@
-public class PE6 {
+public class PE_006 {
     public static void main(String[] args) {
-        System.out.println(difference(arrOfNFirstElements(100)));
+        int n = 100;
+        System.out.println(difference(arrOfNFirstElements(n)));
     }
     private static long[] arrOfNFirstElements(int n) {
         long[] arr = new long[n];

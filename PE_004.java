@@ -1,4 +1,4 @@
-public class PE4 {
+public class PE_004 {
     public static void main(String[] args) {
         double start = System.currentTimeMillis();
         for (int i = 1; i < 7; i++) {

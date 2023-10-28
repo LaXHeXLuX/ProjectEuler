@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class PE15 {
+public class PE_015 {
     public static void main(String[] args) {
         int n = 15;
 

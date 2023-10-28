@@ -1,4 +1,4 @@
-public class PE8 {
+public class PE_008 {
     public static void main(String[] args) {
         String number = """
                 73167176531330624919225119674426574742355349194934
