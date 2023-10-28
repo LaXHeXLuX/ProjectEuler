@@ -1,22 +1,22 @@
-import javax.swing.*;
 import java.math.BigInteger;
 
 public class PE15 {
     public static void main(String[] args) {
-        int n = 50_000;
-        /*
+        int n = 15;
+
         long start = System.currentTimeMillis();
         System.out.println(recLatticePaths2(n+1, n+1));
         long end = System.currentTimeMillis();
         System.out.println("AEG: " + (end-start));
-        long start = System.currentTimeMillis();
+
+        start = System.currentTimeMillis();
         System.out.println(recLatticePaths(n, n));
-        long end = System.currentTimeMillis();
+        end = System.currentTimeMillis();
         System.out.println("AEG: " + (end-start));
-         */
-        long start = System.currentTimeMillis();
+
+        start = System.currentTimeMillis();
         System.out.println(nChooseM(n*2, n));
-        long end = System.currentTimeMillis();
+        end = System.currentTimeMillis();
         System.out.println("AEG: " + (end-start));
     }
     private static BigInteger recLatticePaths(int n, int m) {

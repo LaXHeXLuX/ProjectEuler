@@ -105,7 +105,8 @@ public class PE13 {
                 53503534226472524250874054075591789781264330331690""";
         BigInteger[] numbers = parser(text);
         System.out.println(sumOfArrElements(numbers));
-        System.out.println(firstNDigits(sumOfArrElements(numbers), 10));
+        int n = 10;
+        System.out.println(firstNDigits(sumOfArrElements(numbers), n));
     }
     private static BigInteger[] parser(String text) {
         String[] textNumbers = text.split("\n");
