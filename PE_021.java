@@ -1,7 +1,5 @@
 import UsefulFunctions.Divisors;
 
-import java.util.Arrays;
-
 public class PE_021 {
     public static void main(String[] args) {
         int limit = 10_000;
@@ -29,7 +27,7 @@ public class PE_021 {
         boolean[] amicablePairs = new boolean[limit];
         for (int i = 1; i < amicablePairs.length; i++) {
             if (amicablePairs[i]) continue;
-            int othenNumber = (int) amicablePair(i);
+            int othenNumber = amicablePair(i);
             if (othenNumber == -1) continue;
             amicablePairs[i] = true;
             amicablePairs[othenNumber] = true;
