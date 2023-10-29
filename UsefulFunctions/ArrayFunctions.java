@@ -4,6 +4,12 @@ import java.math.BigInteger;
 import java.util.Objects;
 
 public class ArrayFunctions {
+    public boolean contains(String el, String[] arr) {
+        for (String element : arr) {
+            if (Objects.equals(el, element)) return true;
+        }
+        return false;
+    }
     public boolean contains(int el, int[] arr) {
         for (int element : arr) {
             if (el == element) return true;

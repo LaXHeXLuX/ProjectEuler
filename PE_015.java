@@ -49,9 +49,9 @@ public class PE_015 {
     }
     private static BigInteger nChooseM(int n, int m) {
         Factorial f = new Factorial();
-        BigInteger factorial1 = f.factorial(n);
-        BigInteger factorial2 = f.factorial(m);
-        BigInteger factorial3 = f.factorial(n-m);
+        BigInteger factorial1 = f.factorialBigInteger(n);
+        BigInteger factorial2 = f.factorialBigInteger(m);
+        BigInteger factorial3 = f.factorialBigInteger(n-m);
         return factorial1.divide(factorial2.multiply(factorial3));
     }
 }

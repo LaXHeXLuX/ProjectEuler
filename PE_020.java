@@ -9,7 +9,7 @@ public class PE_020 {
     }
     public static int sumOfDigitsOfFactorial(int n) {
         Factorial f = new Factorial();
-        BigInteger factorial = f.factorial(n);
+        BigInteger factorial = f.factorialBigInteger(n);
         Converter c = new Converter();
         int[] digits = c.digitArray(factorial);
         int sumOfDigits = 0;
