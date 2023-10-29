@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Divisors {
     public long[] divisors(long n) {
-        if (n < 1) return null;
+        if (n < 1) return new long[] {};
         if (n == 1) return new long[] {1};
         List<Long> divisors = new ArrayList<>();
         divisors.add(1L);
@@ -23,5 +23,13 @@ public class Divisors {
         divisors.add(n);
         Converter c = new Converter();
         return c.listToArrLong(divisors);
+    }
+    public long sumOfDivisors(long n) {
+        long[] divisors = divisors(n);
+        long sum = 0;
+        for (int i = 0; i < divisors.length-1; i++) {
+            sum += divisors[i];
+        }
+        return sum;
     }
 }

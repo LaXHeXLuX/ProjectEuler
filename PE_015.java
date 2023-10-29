@@ -1,3 +1,5 @@
+import UsefulFunctions.Factorial;
+
 import java.math.BigInteger;
 
 public class PE_015 {
@@ -45,19 +47,11 @@ public class PE_015 {
         if (n == 1 || m == 1) return BigInteger.ONE;
         return recLatticePaths2(n-1, m).add(recLatticePaths2(n, m-1));
     }
-    private static BigInteger factorial(int n) {
-        if (n < 0) return BigInteger.ZERO;
-        if (n < 2) return BigInteger.ONE;
-        BigInteger factorial = BigInteger.ONE;
-        for (int i = 2; i <= n; i++) {
-            factorial = factorial.multiply(BigInteger.valueOf(i));
-        }
-        return factorial;
-    }
     private static BigInteger nChooseM(int n, int m) {
-        BigInteger factorial1 = factorial(n);
-        BigInteger factorial2 = factorial(m);
-        BigInteger factorial3 = factorial(n-m);
+        Factorial f = new Factorial();
+        BigInteger factorial1 = f.factorial(n);
+        BigInteger factorial2 = f.factorial(m);
+        BigInteger factorial3 = f.factorial(n-m);
         return factorial1.divide(factorial2.multiply(factorial3));
     }
 }
