@@ -57,4 +57,14 @@ public class Converter {
         }
         return reverse(listToArrInt(digitArray));
     }
+    public long digitFromArrayLong(int[] digitArray) {
+        long n = 0;
+        for (int digit : digitArray) n = 10*n + digit;
+        return n;
+    }
+    public BigInteger digitFromArrayBigInteger(int[] digitArray) {
+        BigInteger n = BigInteger.ZERO;
+        for (int digit : digitArray) n = n.multiply(BigInteger.TEN).add(BigInteger.valueOf(digit));
+        return n;
+    }
 }
