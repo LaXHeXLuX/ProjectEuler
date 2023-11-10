@@ -19,6 +19,20 @@ public class Converter {
         }
         return arr;
     }
+    public long[][] arrListToArrLong(List<long[]> list) {
+        long[][] arr = new long[list.size()][];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = list.get(i);
+        }
+        return arr;
+    }
+    public int[][] arrListToArrInt(List<int[]> list) {
+        int[][] arr = new int[list.size()][];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = list.get(i);
+        }
+        return arr;
+    }
     public int[] reverse(int[] arr) {
         int[] reversed = new int[arr.length];
         for (int i = 0; i < arr.length; i++) {
