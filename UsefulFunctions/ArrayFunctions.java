@@ -127,7 +127,7 @@ public class ArrayFunctions {
         return sorted;
     }
     public int[] mergeSort(int[] arr) {
-        if (arr.length == 1) return arr;
+        if (arr.length <= 1) return arr;
         int[] arr1 = new int[arr.length/2];
         int[] arr2 = new int[arr.length - arr.length/2];
         System.arraycopy(arr, 0, arr1, 0, arr1.length);
