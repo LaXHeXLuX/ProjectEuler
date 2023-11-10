@@ -170,4 +170,16 @@ public class ArrayFunctions {
         }
         return sorted;
     }
+    public int[] removeIndex(int[] arr, int index) {
+        int[] newArr = new int[arr.length-1];
+        System.arraycopy(arr, 0, newArr, 0, index);
+        System.arraycopy(arr, index+1, newArr, index, newArr.length-index);
+        return newArr;
+    }
+    public long[] removeIndex(long[] arr, int index) {
+        long[] newArr = new long[arr.length-1];
+        System.arraycopy(arr, 0, newArr, 0, index);
+        System.arraycopy(arr, index+1, newArr, index, newArr.length-index);
+        return newArr;
+    }
 }
