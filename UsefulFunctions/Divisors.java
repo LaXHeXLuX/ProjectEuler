@@ -32,4 +32,17 @@ public class Divisors {
         }
         return sum;
     }
+    public long greatestCommonDivisor(long a, long b) {
+        if (a < b) {
+            long temp = a;
+            a = b;
+            b = temp;
+        }
+        return greatestCommonDivisorHelper(a, b);
+    }
+    private long greatestCommonDivisorHelper(long a, long b) {
+        if (a == 0) return b;
+        if (b == 0) return a;
+        return greatestCommonDivisor(b, a%b);
+    }
 }
