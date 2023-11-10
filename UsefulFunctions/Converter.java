@@ -67,4 +67,15 @@ public class Converter {
         for (int digit : digitArray) n = n.multiply(BigInteger.TEN).add(BigInteger.valueOf(digit));
         return n;
     }
+    public int[] convertToBase(long n, int base) {
+        if (n == 0) return new int[] {0};
+
+        int[] convertedDigits = new int[(int)(Math.log(n)/Math.log(base))+1];
+        for (int i = 0; i < convertedDigits.length; i++) {
+            convertedDigits[convertedDigits.length-i-1] = (int) (n%base);
+            n /= base;
+        }
+
+        return convertedDigits;
+    }
 }
