@@ -1,6 +1,7 @@
 package UsefulFunctions;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Objects;
 
 public class ArrayFunctions {
@@ -23,6 +24,30 @@ public class ArrayFunctions {
         return false;
     }
     public boolean contains(BigInteger el, BigInteger[] arr) {
+        for (BigInteger element : arr) {
+            if (Objects.equals(el, element)) return true;
+        }
+        return false;
+    }
+    public boolean contains(String el, List<String> arr) {
+        for (String element : arr) {
+            if (Objects.equals(el, element)) return true;
+        }
+        return false;
+    }
+    public boolean contains(int el, List<Integer> arr) {
+        for (int element : arr) {
+            if (el == element) return true;
+        }
+        return false;
+    }
+    public boolean contains(long el, List<Long> arr) {
+        for (long element : arr) {
+            if (el == element) return true;
+        }
+        return false;
+    }
+    public boolean contains(BigInteger el, List<BigInteger> arr) {
         for (BigInteger element : arr) {
             if (Objects.equals(el, element)) return true;
         }
