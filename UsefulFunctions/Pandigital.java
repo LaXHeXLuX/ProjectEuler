@@ -5,24 +5,9 @@ public class Pandigital {
         Converter c = new Converter();
         int[] digits = c.digitArray(n);
 
-        ArrayFunctions af = new ArrayFunctions();
-        digits = af.mergeSort(digits);
-
-        for (int i = 0; i < digits.length; i++) {
-            if (digits[i] != i+1) return false;
-        }
-        return true;
+        return isPandigital(digits);
     }
     public boolean isPandigital(int[] digits) {
-        ArrayFunctions af = new ArrayFunctions();
-        digits = af.mergeSort(digits);
-
-        for (int i = 0; i < digits.length; i++) {
-            if (digits[i] != i+1) return false;
-        }
-        return true;
-    }
-    public boolean isPandigital(long[] digits) {
         ArrayFunctions af = new ArrayFunctions();
         digits = af.mergeSort(digits);
 
