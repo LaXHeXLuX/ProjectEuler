@@ -1,44 +1,36 @@
 package UsefulFunctions;
 
 public class Pandigital {
-    public boolean isPandigital(long n) {
-        Converter c = new Converter();
-        int[] digits = c.digitArray(n);
-
-        return isPandigital(digits);
+    public static boolean isPandigital(long n) {
+        return isPandigital(n, 1);
     }
-    public boolean isPandigital(int[] digits) {
-        ArrayFunctions af = new ArrayFunctions();
-        digits = af.mergeSort(digits);
+    public static boolean isPandigital(int[] digits) {
+        return isPandigital(digits, 1);
+    }
+    public static boolean isPandigital(long n, int startingDigit) {
+        int[] digits = Converter.digitArray(n);
+
+        return isPandigital(digits, startingDigit);
+    }
+    public static boolean isPandigital(int[] digits, int startingDigit) {
+        digits = ArrayFunctions.mergeSort(digits);
 
         for (int i = 0; i < digits.length; i++) {
-            if (digits[i] != i+1) return false;
+            if (digits[i] != i+startingDigit) return false;
         }
         return true;
     }
-    public boolean groupIsPandigital(int[] numbers) {
+    public static boolean groupIsPandigital(int[] numbers) {
         int[][] groupDigits = new int[numbers.length][];
-        Converter c = new Converter();
         int sum = 0;
         for (int i = 0; i < numbers.length; i++) {
-            groupDigits[i] = c.digitArray(numbers[i]);
+            groupDigits[i] = Converter.digitArray(numbers[i]);
             sum += groupDigits[i].length;
         }
 
         return groupIsPandigitalHelper(groupDigits, sum);
     }
-    public boolean groupIsPandigital(long[] numbers) {
-        int[][] groupDigits = new int[numbers.length][];
-        Converter c = new Converter();
-        int sum = 0;
-        for (int i = 0; i < numbers.length; i++) {
-            groupDigits[i] = c.digitArray(numbers[i]);
-            sum += groupDigits[i].length;
-        }
-
-        return groupIsPandigitalHelper(groupDigits, sum);
-    }
-    private boolean groupIsPandigitalHelper(int[][] groupDigits, int sum) {
+    private static boolean groupIsPandigitalHelper(int[][] groupDigits, int sum) {
         if (sum != 9) return false;
         int[] digits = new int[sum];
         int index = 0;
@@ -49,8 +41,7 @@ public class Pandigital {
             }
         }
 
-        ArrayFunctions af = new ArrayFunctions();
-        digits = af.mergeSort(digits);
+        digits = ArrayFunctions.mergeSort(digits);
 
         for (int i = 0; i < digits.length; i++) {
             if (digits[i] != i+1) return false;

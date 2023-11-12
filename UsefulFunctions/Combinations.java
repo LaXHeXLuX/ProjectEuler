@@ -2,9 +2,9 @@ package UsefulFunctions;
 
 import java.math.BigInteger;
 
-public class Factorial {
+public class Combinations {
 
-    public BigInteger factorialBigInteger(int n) {
+    public static BigInteger factorialBigInteger(int n) {
         if (n < 0) return BigInteger.ZERO;
         if (n < 2) return BigInteger.ONE;
         BigInteger factorial = BigInteger.ONE;
@@ -13,8 +13,7 @@ public class Factorial {
         }
         return factorial;
     }
-
-    public long factorialLong(int n) {
+    public static long factorialLong(int n) {
         if (n < 0) return 0L;
         if (n < 2) return 1L;
         long factorial = 1;
@@ -22,5 +21,11 @@ public class Factorial {
             factorial *= i;
         }
         return factorial;
+    }
+    public static BigInteger nChooseMBigInteger(int n, int m) {
+        BigInteger factorial1 = factorialBigInteger(n);
+        BigInteger factorial2 = factorialBigInteger(m);
+        BigInteger factorial3 = factorialBigInteger(n-m);
+        return factorial1.divide(factorial2.multiply(factorial3));
     }
 }

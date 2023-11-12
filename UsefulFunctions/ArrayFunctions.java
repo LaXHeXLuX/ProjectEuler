@@ -1,59 +1,54 @@
 package UsefulFunctions;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class ArrayFunctions {
-    public boolean contains(String el, String[] arr) {
+    public static boolean contains(String el, String[] arr) {
         for (String element : arr) {
             if (Objects.equals(el, element)) return true;
         }
         return false;
     }
-    public boolean contains(int el, int[] arr) {
+    public static boolean contains(int el, int[] arr) {
         for (int element : arr) {
             if (el == element) return true;
         }
         return false;
     }
-    public boolean contains(long el, long[] arr) {
+    public static boolean contains(long el, long[] arr) {
         for (long element : arr) {
             if (el == element) return true;
         }
         return false;
     }
-    public boolean contains(BigInteger el, BigInteger[] arr) {
-        for (BigInteger element : arr) {
-            if (Objects.equals(el, element)) return true;
-        }
-        return false;
-    }
-    public boolean contains(String el, List<String> arr) {
+    public static boolean contains(String el, List<String> arr) {
         for (String element : arr) {
             if (Objects.equals(el, element)) return true;
         }
         return false;
     }
-    public boolean contains(int el, List<Integer> arr) {
+    public static boolean contains(int el, List<Integer> arr) {
         for (int element : arr) {
             if (el == element) return true;
         }
         return false;
     }
-    public boolean contains(long el, List<Long> arr) {
+    public static boolean contains(long el, List<Long> arr) {
         for (long element : arr) {
             if (el == element) return true;
         }
         return false;
     }
-    public boolean contains(BigInteger el, List<BigInteger> arr) {
+    public static boolean contains(BigInteger el, List<BigInteger> arr) {
         for (BigInteger element : arr) {
             if (Objects.equals(el, element)) return true;
         }
         return false;
     }
-    public boolean sortedContains(int el, int[] arr) {
+    public static boolean sortedContains(int el, int[] arr) {
         if (arr.length == 0) return false;
         if (arr.length == 1) return arr[0] == el;
         int lowIndex = 0;
@@ -70,7 +65,7 @@ public class ArrayFunctions {
         }
         return arr[lowIndex] == el;
     }
-    public boolean sortedContains(long el, long[] arr) {
+    public static boolean sortedContains(long el, long[] arr) {
         if (arr.length == 0) return false;
         if (arr.length == 1) return arr[0] == el;
         int lowIndex = 0;
@@ -87,7 +82,7 @@ public class ArrayFunctions {
         }
         return arr[lowIndex] == el;
     }
-    public boolean sortedContains(BigInteger el, BigInteger[] arr) {
+    public static boolean sortedContains(BigInteger el, BigInteger[] arr) {
         if (arr.length == 0) return false;
         if (arr.length == 1) return Objects.equals(arr[0], el);
         int lowIndex = 0;
@@ -104,7 +99,7 @@ public class ArrayFunctions {
         }
         return Objects.equals(arr[lowIndex], el);
     }
-    public String[] mergeSort(String[] arr) {
+    public static String[] mergeSort(String[] arr) {
         if (arr.length == 1) return arr;
         String[] arr1 = new String[arr.length/2];
         String[] arr2 = new String[arr.length - arr.length/2];
@@ -126,7 +121,7 @@ public class ArrayFunctions {
         }
         return sorted;
     }
-    public int[] mergeSort(int[] arr) {
+    public static int[] mergeSort(int[] arr) {
         if (arr.length <= 1) return arr;
         int[] arr1 = new int[arr.length/2];
         int[] arr2 = new int[arr.length - arr.length/2];
@@ -148,7 +143,7 @@ public class ArrayFunctions {
         }
         return sorted;
     }
-    public long[] mergeSort(long[] arr)  {
+    public static long[] mergeSort(long[] arr)  {
         if (arr.length == 1) return arr;
         long[] arr1 = new long[arr.length/2];
         long[] arr2 = new long[arr.length - arr.length/2];
@@ -170,16 +165,27 @@ public class ArrayFunctions {
         }
         return sorted;
     }
-    public int[] removeIndex(int[] arr, int index) {
+    public static int[] removeIndex(int[] arr, int index) {
         int[] newArr = new int[arr.length-1];
         System.arraycopy(arr, 0, newArr, 0, index);
         System.arraycopy(arr, index+1, newArr, index, newArr.length-index);
         return newArr;
     }
-    public long[] removeIndex(long[] arr, int index) {
+    public static long[] removeIndex(long[] arr, int index) {
         long[] newArr = new long[arr.length-1];
         System.arraycopy(arr, 0, newArr, 0, index);
         System.arraycopy(arr, index+1, newArr, index, newArr.length-index);
+        return newArr;
+    }
+    public static int[] subArray(int[] arr, int startIndex, int endIndex) {
+        if (startIndex < 0 || endIndex >= arr.length) throw new RuntimeException("invalid parameters: " + Arrays.toString(arr) + ", " + startIndex + ", " + endIndex);
+        int[] newArr = new int[endIndex-startIndex+1];
+        System.arraycopy(arr, startIndex, newArr, 0, newArr.length);
+        return newArr;
+    }
+    public static long[] subArray(long[] arr, int startIndex, int endIndex) {
+        long[] newArr = new long[endIndex-startIndex+1];
+        System.arraycopy(arr, startIndex, newArr, 0, newArr.length);
         return newArr;
     }
 }

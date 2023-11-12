@@ -5,35 +5,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Converter {
-    public long[] listToArrLong(List<Long> list) {
+    public static long[] listToArrLong(List<Long> list) {
         long[] arr = new long[list.size()];
         for (int i = 0; i < arr.length; i++) {
             arr[i] = list.get(i);
         }
         return arr;
     }
-    public int[] listToArrInt(List<Integer> list) {
+    public static int[] listToArrInt(List<Integer> list) {
         int[] arr = new int[list.size()];
         for (int i = 0; i < arr.length; i++) {
             arr[i] = list.get(i);
         }
         return arr;
     }
-    public long[][] arrListToArrLong(List<long[]> list) {
+    public static long[][] arrListToArrLong(List<long[]> list) {
         long[][] arr = new long[list.size()][];
         for (int i = 0; i < arr.length; i++) {
             arr[i] = list.get(i);
         }
         return arr;
     }
-    public int[][] arrListToArrInt(List<int[]> list) {
+    public static int[][] arrListToArrInt(List<int[]> list) {
         int[][] arr = new int[list.size()][];
         for (int i = 0; i < arr.length; i++) {
             arr[i] = list.get(i);
         }
         return arr;
     }
-    public int[] reverse(int[] arr) {
+    public static int[] reverse(int[] arr) {
         int[] reversed = new int[arr.length];
         for (int i = 0; i < arr.length; i++) {
             int index = reversed.length-i-1;
@@ -41,7 +41,7 @@ public class Converter {
         }
         return reversed;
     }
-    public int[] digitArray(long n) {
+    public static int[] digitArray(long n) {
         List<Integer> digitArray = new ArrayList<>();
         while (n > 0) {
             digitArray.add((int) (n % 10));
@@ -49,7 +49,7 @@ public class Converter {
         }
         return reverse(listToArrInt(digitArray));
     }
-    public int[] digitArray(BigInteger n) {
+    public static int[] digitArray(BigInteger n) {
         List<Integer> digitArray = new ArrayList<>();
         while (n.compareTo(BigInteger.ZERO) != 0) {
             digitArray.add(n.remainder(BigInteger.TEN).intValue());
@@ -57,17 +57,17 @@ public class Converter {
         }
         return reverse(listToArrInt(digitArray));
     }
-    public long digitFromArrayLong(int[] digitArray) {
+    public static long digitFromArrayLong(int[] digitArray) {
         long n = 0;
         for (int digit : digitArray) n = 10*n + digit;
         return n;
     }
-    public BigInteger digitFromArrayBigInteger(int[] digitArray) {
+    public static BigInteger digitFromArrayBigInteger(int[] digitArray) {
         BigInteger n = BigInteger.ZERO;
         for (int digit : digitArray) n = n.multiply(BigInteger.TEN).add(BigInteger.valueOf(digit));
         return n;
     }
-    public int[] convertToBase(long n, int base) {
+    public static int[] convertToBase(long n, int base) {
         if (n == 0) return new int[] {0};
 
         int[] convertedDigits = new int[(int)(Math.log(n)/Math.log(base))+1];
