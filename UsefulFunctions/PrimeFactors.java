@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PrimeFactors {
-    public long[] findPrimeFactors(long n) {
+    public static long[] findPrimeFactors(long n) {
         List<Long> primeFactors = new ArrayList<>();
         while (n > 1) {
             boolean nIsPrime = true;
@@ -21,7 +21,6 @@ public class PrimeFactors {
                 break;
             }
         }
-        Converter c = new Converter();
-        return c.listToArrLong(primeFactors);
+        return Converter.listToArrLong(primeFactors);
     }
 }

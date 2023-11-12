@@ -3,7 +3,7 @@ package UsefulFunctions;
 import java.util.Arrays;
 
 public class SieveOfPrimes {
-    public boolean[] sieveOfPrimes(int limit) {
+    public static boolean[] sieveOfPrimes(int limit) {
         boolean[] primes = new boolean[limit];
         Arrays.fill(primes, true);
         primes[0] = false;
@@ -16,7 +16,7 @@ public class SieveOfPrimes {
         }
         return primes;
     }
-    public void removeProductsOfN(boolean[] primes, int n) {
+    public static void removeProductsOfN(boolean[] primes, int n) {
         int compositeNumber = n*n;
         while (compositeNumber < primes.length) {
             if (compositeNumber < 0) return;
