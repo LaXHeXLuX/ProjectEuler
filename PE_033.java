@@ -24,19 +24,19 @@ public class PE_033 {
 
     private static int[][] findCuriousFractions(int limit) {
         List<int[]> curiousFractions = new ArrayList<>();
+
         for (int i = limit/10; i < limit; i++) {
             for (int j = i + 1; j < limit; j++) {
                 if (isCuriousFraction(i, j)) curiousFractions.add(new int[] {i, j});
             }
         }
-        Converter c = new Converter();
-        return c.arrListToArrInt(curiousFractions);
+
+        return Converter.arrListToArrInt(curiousFractions);
     }
 
     private static boolean isCuriousFraction(int a, int b) {
-        Converter c = new Converter();
-        int[] digitsA = c.digitArray(a);
-        int[] digitsB = c.digitArray(b);
+        int[] digitsA = Converter.digitArray(a);
+        int[] digitsB = Converter.digitArray(b);
 
         return isCuriousFraction(digitsA, digitsB);
     }
@@ -46,12 +46,10 @@ public class PE_033 {
             if (digitsA[i] == 0) continue;
             for (int j = 0; j < digitsB.length; j++) {
                 if (digitsA[i] == digitsB[j]) {
-                    ArrayFunctions af = new ArrayFunctions();
-                    Converter c = new Converter();
-                    int a = (int) c.digitFromArrayLong(digitsA);
-                    int b = (int) c.digitFromArrayLong(digitsB);
-                    int newA = (int) c.digitFromArrayLong(af.removeIndex(digitsA, i));
-                    int newB = (int) c.digitFromArrayLong(af.removeIndex(digitsB, j));
+                    int a = (int) Converter.digitFromArrayLong(digitsA);
+                    int b = (int) Converter.digitFromArrayLong(digitsB);
+                    int newA = (int) Converter.digitFromArrayLong(ArrayFunctions.removeIndex(digitsA, i));
+                    int newB = (int) Converter.digitFromArrayLong(ArrayFunctions.removeIndex(digitsB, j));
 
                     int[] fraction = simplifyFraction(a, b);
                     int[] newFraction = simplifyFraction(newA, newB);
@@ -64,8 +62,7 @@ public class PE_033 {
     }
 
     private static int[] simplifyFraction(int a, int b) {
-        Divisors d = new Divisors();
-        int gcd = (int) d.greatestCommonDivisor(a, b);
+        int gcd = (int) Divisors.greatestCommonDivisor(a, b);
         return new int[] {a/gcd, b/gcd};
     }
 }

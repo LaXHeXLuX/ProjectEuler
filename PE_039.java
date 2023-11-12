@@ -27,8 +27,7 @@ public class PE_039 {
             }
         }
 
-        Converter c = new Converter();
-        return c.arrListToArrInt(triangles);
+        return Converter.arrListToArrInt(triangles);
     }
 
     private static int sumWitMostTriangles(int limit) {

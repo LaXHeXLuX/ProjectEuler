@@ -14,16 +14,15 @@ public class PE_040 {
 
     private static int[] constantDigitsUntil(int limit) {
         List<Integer> constantDigits = new ArrayList<>();
-        Converter c = new Converter();
 
         int i = 1;
         while (constantDigits.size() < limit) {
-            int[] digits = c.digitArray(i);
+            int[] digits = Converter.digitArray(i);
             for (int digit : digits) constantDigits.add(digit);
             i++;
         }
 
-        return c.listToArrInt(constantDigits);
+        return Converter.listToArrInt(constantDigits);
     }
 
     private static long productOfConstantDigits(int[] indexes) {

@@ -10,8 +10,7 @@ public class PE_017 {
         System.out.println(sum + 3 + 8);
     }
     private static int lettersInNumber(long n) {
-        Converter c = new Converter();
-        int[] digits = c.digitArray(n);
+        int[] digits = Converter.digitArray(n);
         int hundred = 7;
         int and = 3;
         if (digits.length < 3) return lettersInNumberUnder100(n);

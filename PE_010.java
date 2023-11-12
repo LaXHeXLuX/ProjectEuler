@@ -3,8 +3,7 @@ import UsefulFunctions.SieveOfPrimes;
 public class PE_010 {
     public static void main(String[] args) {
         int n = 2_000_000;
-        SieveOfPrimes sop = new SieveOfPrimes();
-        System.out.println(sumOfAllTrueElements(sop.sieveOfPrimes(n)));
+        System.out.println(sumOfAllTrueElements(SieveOfPrimes.sieveOfPrimes(n)));
     }
     private static long sumOfAllTrueElements(boolean[] elements) {
         long sum = 0;

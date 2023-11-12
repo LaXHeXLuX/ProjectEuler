@@ -18,8 +18,7 @@ public class PE_016 {
     }
     private static long sumOfDigits(BigInteger n) {
         long sum = 0;
-        Converter c = new Converter();
-        int[] digitArray = c.digitArray(n);
+        int[] digitArray = Converter.digitArray(n);
         for (int digit : digitArray) {
             sum += digit;
         }

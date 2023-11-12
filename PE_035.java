@@ -39,15 +39,13 @@ public class PE_035 {
 
     private static int[] findCyclicPrimesUnder(int limit) {
         int primeLimit = (int) Math.pow(10, (int)Math.log10(1_250_062)+1);
-        SieveOfPrimes sop = new SieveOfPrimes();
-        boolean[] primes = sop.sieveOfPrimes(primeLimit);
+        boolean[] primes = SieveOfPrimes.sieveOfPrimes(primeLimit);
         List<Integer> cyclicPrimes = new ArrayList<>();
 
         for (int i = 1; i < limit; i++) {
             if (isCyclicPrime(i, primes)) cyclicPrimes.add(i);
         }
 
-        Converter c = new Converter();
-        return c.listToArrInt(cyclicPrimes);
+        return Converter.listToArrInt(cyclicPrimes);
     }
 }

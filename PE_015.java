@@ -1,27 +1,25 @@
-import UsefulFunctions.Factorial;
+import UsefulFunctions.Combinations;
 
 import java.math.BigInteger;
 
 public class PE_015 {
     public static void main(String[] args) {
-        int n = 25_000;
+        int n = 15;
 
-        /*
-        long start = System.currentTimeMillis();
+        long start1 = System.currentTimeMillis();
         System.out.println(recLatticePaths2(n+1, n+1));
-        long end = System.currentTimeMillis();
-        System.out.println("AEG: " + (end-start));
+        long end1 = System.currentTimeMillis();
+        System.out.println("AEG: " + (end1-start1));
 
-        long start = System.currentTimeMillis();
+        long start2 = System.currentTimeMillis();
         System.out.println(recLatticePaths(n, n));
-        long end = System.currentTimeMillis();
-        System.out.println("AEG: " + (end-start));
-         */
+        long end2 = System.currentTimeMillis();
+        System.out.println("AEG: " + (end2-start2));
 
-        long start = System.currentTimeMillis();
-        System.out.println(nChooseM(n*2, n));
-        long end = System.currentTimeMillis();
-        System.out.println("AEG: " + (end-start));
+        long start3 = System.currentTimeMillis();
+        System.out.println(Combinations.nChooseMBigInteger(n*2, n));
+        long end3 = System.currentTimeMillis();
+        System.out.println("AEG: " + (end3-start3));
     }
     private static BigInteger recLatticePaths(int n, int m) {
         n++;
@@ -46,12 +44,5 @@ public class PE_015 {
     private static BigInteger recLatticePaths2(int n, int m) {
         if (n == 1 || m == 1) return BigInteger.ONE;
         return recLatticePaths2(n-1, m).add(recLatticePaths2(n, m-1));
-    }
-    private static BigInteger nChooseM(int n, int m) {
-        Factorial f = new Factorial();
-        BigInteger factorial1 = f.factorialBigInteger(n);
-        BigInteger factorial2 = f.factorialBigInteger(m);
-        BigInteger factorial3 = f.factorialBigInteger(n-m);
-        return factorial1.divide(factorial2.multiply(factorial3));
     }
 }

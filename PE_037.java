@@ -16,8 +16,7 @@ public class PE_037 {
     }
 
     private static long[] getTruncations(long n) {
-        Converter c = new Converter();
-        int[] digits = c.digitArray(n);
+        int[] digits = Converter.digitArray(n);
         int[][] truncations = new int[digits.length*2-1][];
 
         for (int i = 0; i < digits.length; i++) {
@@ -32,7 +31,7 @@ public class PE_037 {
 
         long[] truncatedNumbers = new long[truncations.length];
         for (int i = 0; i < truncations.length; i++) {
-            truncatedNumbers[i] = c.digitFromArrayLong(truncations[i]);
+            truncatedNumbers[i] = Converter.digitFromArrayLong(truncations[i]);
         }
         return truncatedNumbers;
     }
@@ -47,8 +46,7 @@ public class PE_037 {
 
     private static long[] findAllTruncatablePrimes() {
         int limit = 1_000_000;
-        SieveOfPrimes sop = new SieveOfPrimes();
-        boolean[] primes = sop.sieveOfPrimes(limit);
+        boolean[] primes = SieveOfPrimes.sieveOfPrimes(limit);
         List<Long> truncatables = new ArrayList<>();
 
         for (long i = 10; i < limit-1; i++) {
@@ -57,7 +55,6 @@ public class PE_037 {
             }
         }
 
-        Converter c = new Converter();
-        return c.listToArrLong(truncatables);
+        return Converter.listToArrLong(truncatables);
     }
 }

@@ -15,8 +15,7 @@ public class PE_030 {
     }
 
     private static long sumOfNthPowersOfDigits(int n, long number) {
-        Converter c = new Converter();
-        int[] digits = c.digitArray(number);
+        int[] digits = Converter.digitArray(number);
         long sum = 0;
         for (int digit : digits) {
             sum += Math.pow(digit, n);
@@ -32,7 +31,6 @@ public class PE_030 {
             if (sumOfNthPowersOfDigits(power, i) == i) numbers.add(i);
         }
 
-        Converter c = new Converter();
-        return c.listToArrLong(numbers);
+        return Converter.listToArrLong(numbers);
     }
 }

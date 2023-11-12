@@ -22,13 +22,14 @@ public class PE_002 {
         fibonacciNumbers.add(2L);
         long fibo2 = 2L;
         long temp;
+
         while (fibo2 < limit) {
             temp = fibo2;
             fibo2 += fibo1;
             fibo1 = temp;
             fibonacciNumbers.add(fibo2);
         }
-        Converter c = new Converter();
-        return c.listToArrLong(fibonacciNumbers);
+
+        return Converter.listToArrLong(fibonacciNumbers);
     }
 }

@@ -11,13 +11,12 @@ public class PE_021 {
         System.out.println(sum);
     }
     private static int amicablePair(int n) {
-        Divisors d = new Divisors();
-        long[] divisors = d.divisors(n);
+        long[] divisors = Divisors.divisors(n);
         int sum = 0;
         for (long divisor : divisors) sum += divisor;
         sum -= n;
         int otherNumber = sum;
-        divisors = d.divisors(otherNumber);
+        divisors = Divisors.divisors(otherNumber);
         sum = 0;
         for (long divisor : divisors) sum += divisor;
         sum -= otherNumber;

@@ -24,10 +24,8 @@ public class PE_036 {
     }
 
     private static boolean isPalindromeInBases(long n, int[] bases) {
-        Converter c = new Converter();
-
         for (int base : bases) {
-            int[] baseArray = c.convertToBase(n, base);
+            int[] baseArray = Converter.convertToBase(n, base);
             if (!isPalindrome(baseArray)) return false;
         }
 
@@ -41,7 +39,6 @@ public class PE_036 {
             if (isPalindromeInBases(i, bases)) palindromes.add(i);
         }
 
-        Converter c = new Converter();
-        return c.listToArrLong(palindromes);
+        return Converter.listToArrLong(palindromes);
     }
 }

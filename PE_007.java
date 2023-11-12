@@ -7,8 +7,7 @@ public class PE_007 {
     }
     private static int nthPrime(int n) {
         int upperBound = upperBoundForNthPrime(n);
-        SieveOfPrimes sop = new SieveOfPrimes();
-        boolean[] primes = sop.sieveOfPrimes(upperBound);
+        boolean[] primes = SieveOfPrimes.sieveOfPrimes(upperBound);
         int counter = 0;
         for (int i = 0; i <= upperBound; i++) {
             if (primes[i]) counter++;

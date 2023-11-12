@@ -17,9 +17,8 @@ public class PE_005 {
     }
     private static long firstToDivide(long[] numbers) {
         long[][] allPrimeFactors = new long[numbers.length][];
-        PrimeFactors pf = new PrimeFactors();
         for (int i = 0; i < numbers.length; i++) {
-            allPrimeFactors[i] = pf.findPrimeFactors(numbers[i]);
+            allPrimeFactors[i] = PrimeFactors.findPrimeFactors(numbers[i]);
         }
         Map<Long, Long> biggestTerms = getBiggestTerms(allPrimeFactors);
         long product = 1;

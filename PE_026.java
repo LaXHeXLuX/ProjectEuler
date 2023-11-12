@@ -15,7 +15,8 @@ public class PE_026 {
         int longest = 0;
         int longestNumber = 0;
         for (int i = 2; i < limit; i++) {
-            int[][] reciprocal = reciprocalCycle(1, i);
+            int a = 1;
+            int[][] reciprocal = reciprocalCycle(a, i);
             if (reciprocal[1].length > longest) {
                 longest = reciprocal[1].length;
                 longestNumber = i;
@@ -33,8 +34,7 @@ public class PE_026 {
         List<Integer> modCycle = new ArrayList<>();
         int divisible = a;
 
-        ArrayFunctions af = new ArrayFunctions();
-        while (!af.contains(divisible, modCycle) && divisible != 0) {
+        while (!ArrayFunctions.contains(divisible, modCycle) && divisible != 0) {
             modCycle.add(divisible);
             divisible *= 10;
             while (divisible < b) {
@@ -46,8 +46,7 @@ public class PE_026 {
             divisible = divisible % b;
         }
 
-        Converter c = new Converter();
-        return convertToFraction(divisible, c.listToArrInt(modCycle), c.listToArrInt(reciprocalCycle));
+        return convertToFraction(divisible, Converter.listToArrInt(modCycle), Converter.listToArrInt(reciprocalCycle));
     }
 
     private static int[][] convertToFraction(int divisible, int[] modCycle, int[] reciprocalCycle) {

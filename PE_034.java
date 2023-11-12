@@ -1,5 +1,5 @@
+import UsefulFunctions.Combinations;
 import UsefulFunctions.Converter;
-import UsefulFunctions.Factorial;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,13 +16,11 @@ public class PE_034 {
     }
 
     private static boolean isDigitFactorial(long n) {
-        Converter c = new Converter();
-        Factorial f = new Factorial();
-        int[] digits = c.digitArray(n);
+        int[] digits = Converter.digitArray(n);
         long sum = 0;
 
         for (int digit : digits) {
-            sum += f.factorialLong(digit);
+            sum += Combinations.factorialLong(digit);
         }
 
         return sum == n;
@@ -36,7 +34,6 @@ public class PE_034 {
             if (isDigitFactorial(i)) digitFactorials.add(i);
         }
 
-        Converter c = new Converter();
-        return c.listToArrInt(digitFactorials);
+        return Converter.listToArrInt(digitFactorials);
     }
 }

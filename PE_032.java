@@ -19,16 +19,14 @@ public class PE_032 {
 
     private static int[][] findPandigitalProductGroups() {
         List<int[]> pandigitalProductGroups = new ArrayList<>();
-        Pandigital p = new Pandigital();
 
         for (int i = 0; i < 1_000; i++) {
             for (int j = i+1; j < 10_000; j++) {
                 int[] productGroup = {i, j, i*j};
-                if (p.groupIsPandigital(productGroup)) pandigitalProductGroups.add(productGroup);
+                if (Pandigital.groupIsPandigital(productGroup)) pandigitalProductGroups.add(productGroup);
             }
         }
 
-        Converter c = new Converter();
-        return c.arrListToArrInt(pandigitalProductGroups);
+        return Converter.arrListToArrInt(pandigitalProductGroups);
     }
 }

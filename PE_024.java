@@ -1,5 +1,5 @@
 import UsefulFunctions.ArrayFunctions;
-import UsefulFunctions.Factorial;
+import UsefulFunctions.Combinations;
 
 import java.util.Arrays;
 
@@ -12,8 +12,8 @@ public class PE_024 {
     private static int[][] findPermutations(int[] arr) {
         if (arr.length == 0) return new int[][] {};
         if (arr.length == 1) return new int[][] {arr};
-        int[][] permutations = new int[(int) new Factorial().factorialLong(arr.length)][];
-        arr = new ArrayFunctions().mergeSort(arr);
+        int[][] permutations = new int[(int) Combinations.factorialLong(arr.length)][];
+        arr = ArrayFunctions.mergeSort(arr);
         int[] newArr0 = new int[arr.length];
         System.arraycopy(arr, 0, newArr0, 0, newArr0.length);
         permutations[0] = newArr0;
@@ -43,7 +43,7 @@ public class PE_024 {
 
         int[] arrToBeSorted = new int[arr.length-i-1];
         System.arraycopy(arr, i+1, arrToBeSorted, 0, arrToBeSorted.length);
-        arrToBeSorted = new ArrayFunctions().mergeSort(arrToBeSorted);
+        arrToBeSorted = ArrayFunctions.mergeSort(arrToBeSorted);
         int[] restOfArr = new int[i+1];
         System.arraycopy(arr, 0, restOfArr, 0, restOfArr.length);
         return concatenate(restOfArr, arrToBeSorted);

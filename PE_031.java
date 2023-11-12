@@ -1,7 +1,5 @@
 import UsefulFunctions.ArrayFunctions;
 
-import java.util.Arrays;
-
 public class PE_031 {
     public static void main(String[] args) {
         long[] coins = {1, 2, 5, 10, 20, 50, 100};
@@ -10,8 +8,7 @@ public class PE_031 {
     }
 
     private static long waysToMake(long goal, long[] coins) {
-        ArrayFunctions af = new ArrayFunctions();
-        coins = af.mergeSort(coins);
+        coins = ArrayFunctions.mergeSort(coins);
         return waysToMake(goal, coins, 0);
     }
     private static long waysToMake(long remaining, long[] coins, int index) {
