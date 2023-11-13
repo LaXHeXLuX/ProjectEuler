@@ -24,6 +24,12 @@ public class ArrayFunctions {
         }
         return false;
     }
+    public static boolean contains(BigInteger el, BigInteger[] arr) {
+        for (BigInteger element : arr) {
+            if (Objects.equals(el, element)) return true;
+        }
+        return false;
+    }
     public static boolean contains(String el, List<String> arr) {
         for (String element : arr) {
             if (Objects.equals(el, element)) return true;
