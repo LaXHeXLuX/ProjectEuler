@@ -1,6 +1,9 @@
 package UsefulFunctions;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static UsefulFunctions.ArrayFunctions.concatenate;
 
@@ -30,6 +33,32 @@ public class Combinations {
         BigInteger factorial3 = factorialBigInteger(n-m);
         return factorial1.divide(factorial2.multiply(factorial3));
     }
+    public static long[] findPermutations(long n) {
+        int[] digits = Converter.digitArray(n);
+        int[][] permutations = findPermutations(digits);
+        List<Long> perms = new ArrayList<>();
+
+        for (int[] permutation : permutations) {
+            long perm = Converter.digitFromArrayLong(permutation);
+            if (Converter.digitArray(perm).length != digits.length) continue;
+            perms.add(perm);
+        }
+
+        return Converter.listToArrLong(perms);
+    }
+    public static int[] findPermutations(int n) {
+        int[] digits = Converter.digitArray(n);
+        int[][] permutations = findPermutations(digits);
+        List<Integer> perms = new ArrayList<>();
+
+        for (int[] permutation : permutations) {
+            int perm = (int) Converter.digitFromArrayLong(permutation);
+            if (Converter.digitArray(perm).length != digits.length) continue;
+            perms.add(perm);
+        }
+
+        return Converter.listToArrInt(perms);
+    }
     public static int[][] findPermutations(int[] arr) {
         if (arr.length == 0) return new int[][] {};
         if (arr.length == 1) return new int[][] {arr};
@@ -53,6 +82,7 @@ public class Combinations {
                 break;
             }
         }
+        if (i < 0) return arr;
         int ceilingIndex = i + 1;
         for (int j = i+1; j < arr.length; j++) {
             if (arr[j] <= arr[i]) continue;
@@ -68,5 +98,10 @@ public class Combinations {
         int[] restOfArr = new int[i+1];
         System.arraycopy(arr, 0, restOfArr, 0, restOfArr.length);
         return concatenate(restOfArr, arrToBeSorted);
+    }
+    public static boolean isPermutationOf(int[] arr1, int[] arr2) {
+        arr1 = ArrayFunctions.mergeSort(arr1);
+        arr2 = ArrayFunctions.mergeSort(arr2);
+        return Arrays.equals(arr1, arr2);
     }
 }
