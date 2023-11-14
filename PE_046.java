@@ -9,7 +9,7 @@ public class PE_046 {
 
     private static void findNumbers(int limit) {
         boolean[] primes = SieveOfPrimes.sieveOfPrimes(limit);
-        int[] primesArr = booleanArrToIntArr(primes);
+        int[] primesArr = Converter.booleanArrToIntArr(primes);
 
         for (int i = 9; i < limit; i++) {
             if (!isOddComposite(i, primes)) continue;
@@ -19,23 +19,6 @@ public class PE_046 {
 
     private static boolean isOddComposite(int n, boolean[] primes) {
         return n % 2 == 1 && !primes[n];
-    }
-
-    private static int[] booleanArrToIntArr(boolean[] arr) {
-        int counter = 0;
-        for (boolean value : arr) if (value) counter++;
-
-        int[] newArr = new int[counter];
-
-        int index = 0;
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i]) {
-                newArr[index] = i;
-                index++;
-            }
-        }
-
-        return newArr;
     }
 
     private static boolean canBeWrittenAsSumOfPrimeAndTwoSquares(int n, int[] primes) {
