@@ -1,3 +1,4 @@
+import UsefulFunctions.Converter;
 import UsefulFunctions.SieveOfPrimes;
 
 public class PE_046 {
