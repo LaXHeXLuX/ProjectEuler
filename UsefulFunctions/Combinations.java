@@ -104,4 +104,25 @@ public class Combinations {
         arr2 = ArrayFunctions.mergeSort(arr2);
         return Arrays.equals(arr1, arr2);
     }
+    public static int[][] combinationsOfGrowingNumbers(int start, int end, int amount) {
+        if (amount == 1) {
+            int[][] combinations = new int[end-start+1][];
+
+            for (int i = 0; i <= end-start; i++) {
+                combinations[i] = new int[] {start+i};
+            }
+
+            return combinations;
+        }
+
+        List<int[]> combinations = new ArrayList<>();
+        for (int i = start; i <= end; i++) {
+            int[][] nextCombinations = combinationsOfGrowingNumbers(i, end, amount-1);
+
+            for (int[] nextCombination : nextCombinations) {
+                combinations.add(ArrayFunctions.concatenate(new int[] {i}, nextCombination));
+            }
+        }
+        return Converter.arrListToArrInt(combinations);
+    }
 }
