@@ -33,6 +33,13 @@ public class Converter {
         }
         return arr;
     }
+    public static int[][] listListToArrArrInt(List<List<Integer>> list) {
+        int[][] arr = new int[list.size()][];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = listToArrInt(list.get(i));
+        }
+        return arr;
+    }
     public static int[] reverse(int[] arr) {
         int[] reversed = new int[arr.length];
         for (int i = 0; i < arr.length; i++) {
