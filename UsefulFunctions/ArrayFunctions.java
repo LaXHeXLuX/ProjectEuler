@@ -200,4 +200,40 @@ public class ArrayFunctions {
         System.arraycopy(arr2, 0, newArr, arr1.length, arr2.length);
         return newArr;
     }
+    public static int[] add(int[] arr, int el) {
+        int[] newArr = new int[arr.length];
+
+        for (int i = 0; i < arr.length; i++) {
+            newArr[i] = arr[i] + el;
+        }
+
+        return newArr;
+    }
+    public static long[] add(long[] arr, long el) {
+        long[] newArr = new long[arr.length];
+
+        for (int i = 0; i < arr.length; i++) {
+            newArr[i] = arr[i] + el;
+        }
+
+        return newArr;
+    }
+    public static int[] multiply(int[] arr, int el) {
+        int[] newArr = new int[arr.length];
+
+        for (int i = 0; i < arr.length; i++) {
+            newArr[i] = arr[i]*el;
+        }
+
+        return newArr;
+    }
+    public static long[] multiply(long[] arr, long el) {
+        long[] newArr = new long[arr.length];
+
+        for (int i = 0; i < arr.length; i++) {
+            newArr[i] = arr[i]*el;
+        }
+
+        return newArr;
+    }
 }
