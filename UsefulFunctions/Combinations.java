@@ -24,6 +24,7 @@ public class Combinations {
         long factorial = 1;
         for (int i = 2; i <= n; i++) {
             factorial *= i;
+            if (factorial < 0) throw new RuntimeException("Arguments too large!");
         }
         return factorial;
     }
@@ -32,6 +33,42 @@ public class Combinations {
         BigInteger factorial2 = factorialBigInteger(m);
         BigInteger factorial3 = factorialBigInteger(n-m);
         return factorial1.divide(factorial2.multiply(factorial3));
+    }
+    public static long nChooseMOrderMattersLong(int n, int m) {
+        long factorial1 = factorialLong(n);
+        long factorial2 = factorialLong(n-m);
+        if (factorial1 < 0 || factorial2 < 0) throw new RuntimeException("Arguments too large!");
+        return factorial1 / factorial2;
+    }
+    public static int[][] chooseNElements(int[] arr, int n) {
+        return chooseNElements(arr, n, false);
+    }
+    public static int[][] chooseNElementsOrderMatters(int[] arr, int n) {
+        return chooseNElements(arr, n, true);
+    }
+    public static int[][] chooseNElements(int[] arr, int n, boolean orderMatters) {
+        if (n == 0) return new int[][] {};
+        if (n == 1) {
+            int[][] output = new int[arr.length][];
+            for (int i = 0; i < arr.length; i++) {
+                output[i] = new int[] {arr[i]};
+            }
+            return output;
+        }
+        List<int[]> chosen = new ArrayList<>();
+
+        for (int i = 0; i < arr.length; i++) {
+            int[] chooseNextFrom;
+            if (orderMatters) chooseNextFrom = ArrayFunctions.removeIndex(arr, i);
+            else chooseNextFrom = ArrayFunctions.subArray(arr, i, arr.length-1);
+            int[][] previousOutput = chooseNElements(chooseNextFrom, n-1, orderMatters);
+
+            for (int[] ints : previousOutput) {
+                chosen.add(ArrayFunctions.concatenate(new int[] {arr[i]}, ints));
+            }
+        }
+
+        return Converter.arrListToArrInt(chosen);
     }
     public static long[] findPermutations(long n) {
         int[] digits = Converter.digitArray(n);
