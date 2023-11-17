@@ -102,6 +102,12 @@ public class ArrayFunctions {
         System.arraycopy(arr, startIndex, newArr, 0, newArr.length);
         return newArr;
     }
+    public static boolean[] subArray(boolean[] arr, int startIndex, int endIndex) {
+        if (startIndex < 0 || endIndex >= arr.length) throw new RuntimeException("invalid parameters: " + Arrays.toString(arr) + ", " + startIndex + ", " + endIndex);
+        boolean[] newArr = new boolean[endIndex-startIndex+1];
+        System.arraycopy(arr, startIndex, newArr, 0, newArr.length);
+        return newArr;
+    }
     public static int[] concatenate(int[] arr1, int[] arr2) {
         int[] newArr = new int[arr1.length+ arr2.length];
         System.arraycopy(arr1, 0, newArr, 0, arr1.length);
