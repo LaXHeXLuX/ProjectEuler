@@ -85,6 +85,16 @@ public class Converter {
 
         return convertedDigits;
     }
+    public static long convertFromBase(int[] digits, int base) {
+        if (digits.length == 0) return 0;
+
+        long convertedNumber = 0;
+        for (int i = 0; i < digits.length; i++) {
+            convertedNumber += digits[digits.length-i-1] * Math.pow(base, i);
+        }
+
+        return convertedNumber;
+    }
 
     public static int[] booleanArrToIntArr(boolean[] arr) {
         int counter = 0;
@@ -101,6 +111,24 @@ public class Converter {
         }
 
         return newArr;
+    }
+    public static boolean[] booleanConversion(int[] arr) {
+        boolean[] output = new boolean[arr.length];
+
+        for (int i = 0; i < output.length; i++) {
+            output[i] = arr[i] != 0;
+        }
+
+        return output;
+    }
+    public static int[] booleanConversion(boolean[] arr) {
+        int[] output = new int[arr.length];
+
+        for (int i = 0; i < output.length; i++) {
+            output[i] = arr[i] ? 1 : 0;
+        }
+
+        return output;
     }
 
 }
