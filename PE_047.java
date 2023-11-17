@@ -1,4 +1,4 @@
-import UsefulFunctions.PrimeFactors;
+import UsefulFunctions.Primes;
 
 import java.util.Arrays;
 
@@ -35,7 +35,7 @@ public class PE_047 {
     }
 
     public static int countDistinctPrimeFactors(long n) {
-        long[] primeFactors = PrimeFactors.findPrimeFactors(n);
+        long[] primeFactors = Primes.findPrimeFactors(n);
         int distinctCount = 1;
 
         for (int i = 1; i < primeFactors.length; i++) {

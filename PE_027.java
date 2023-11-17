@@ -1,4 +1,4 @@
-import UsefulFunctions.SieveOfPrimes;
+import UsefulFunctions.Primes;
 
 import java.util.Arrays;
 
@@ -11,7 +11,7 @@ public class PE_027 {
     }
 
     private static int[] findBestQuadraticFormulaWithLimits(int limitA, int limitB) {
-        boolean[] primes = SieveOfPrimes.sieveOfPrimes(100_000_000);
+        boolean[] primes = Primes.sieveOfPrimes(100_000_000);
 
         int bestScore = 0;
         int[] bestAB = {0, 0};

@@ -1,6 +1,6 @@
 import UsefulFunctions.Combinations;
 import UsefulFunctions.Converter;
-import UsefulFunctions.SieveOfPrimes;
+import UsefulFunctions.Primes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +17,7 @@ public class PE_049 {
 
     private static int[][] findUnusualTermsUnder(int limit) {
         int inARow = 4;
-        boolean[] primes = SieveOfPrimes.sieveOfPrimes(limit);
+        boolean[] primes = Primes.sieveOfPrimes(limit);
         List<int[]> unusualTerms = new ArrayList<>();
 
         for (int startingNumber = 1; startingNumber < limit; startingNumber++) {

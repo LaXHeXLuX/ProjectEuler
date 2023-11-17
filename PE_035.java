@@ -1,5 +1,5 @@
 import UsefulFunctions.Converter;
-import UsefulFunctions.SieveOfPrimes;
+import UsefulFunctions.Primes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,7 +39,7 @@ public class PE_035 {
 
     private static int[] findCyclicPrimesUnder(int limit) {
         int primeLimit = (int) Math.pow(10, (int)Math.log10(1_250_062)+1);
-        boolean[] primes = SieveOfPrimes.sieveOfPrimes(primeLimit);
+        boolean[] primes = Primes.sieveOfPrimes(primeLimit);
         List<Integer> cyclicPrimes = new ArrayList<>();
 
         for (int i = 1; i < limit; i++) {

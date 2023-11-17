@@ -1,4 +1,4 @@
-import UsefulFunctions.PrimeFactors;
+import UsefulFunctions.Primes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ public class PE_005 {
     private static long firstToDivide(long[] numbers) {
         long[][] allPrimeFactors = new long[numbers.length][];
         for (int i = 0; i < numbers.length; i++) {
-            allPrimeFactors[i] = PrimeFactors.findPrimeFactors(numbers[i]);
+            allPrimeFactors[i] = Primes.findPrimeFactors(numbers[i]);
         }
         Map<Long, Long> biggestTerms = getBiggestTerms(allPrimeFactors);
         long product = 1;

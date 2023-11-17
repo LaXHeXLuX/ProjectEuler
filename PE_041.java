@@ -1,5 +1,5 @@
 import UsefulFunctions.Pandigital;
-import UsefulFunctions.SieveOfPrimes;
+import UsefulFunctions.Primes;
 
 public class PE_041 {
     public static void main(String[] args) {
@@ -8,7 +8,7 @@ public class PE_041 {
 
     private static int largestPandigitalPrime() {
         int limit = 1_000_000_000;
-        boolean[] primes = SieveOfPrimes.sieveOfPrimes(limit);
+        boolean[] primes = Primes.sieveOfPrimes(limit);
         System.out.println("sieve done");
 
         for (int i = limit-1; i > 0; i--) {

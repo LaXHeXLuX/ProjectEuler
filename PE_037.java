@@ -1,5 +1,5 @@
 import UsefulFunctions.Converter;
-import UsefulFunctions.SieveOfPrimes;
+import UsefulFunctions.Primes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,7 +46,7 @@ public class PE_037 {
 
     private static long[] findAllTruncatablePrimes() {
         int limit = 1_000_000;
-        boolean[] primes = SieveOfPrimes.sieveOfPrimes(limit);
+        boolean[] primes = Primes.sieveOfPrimes(limit);
         List<Long> truncatables = new ArrayList<>();
 
         for (long i = 10; i < limit-1; i++) {

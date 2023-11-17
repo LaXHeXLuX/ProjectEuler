@@ -1,5 +1,5 @@
 import UsefulFunctions.Converter;
-import UsefulFunctions.SieveOfPrimes;
+import UsefulFunctions.Primes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +23,7 @@ public class PE_050 {
     }
 
     private static int[] largestArrayOfConsecutivePrimes(int limit) {
-        boolean[] primesBool = SieveOfPrimes.sieveOfPrimes(limit);
+        boolean[] primesBool = Primes.sieveOfPrimes(limit);
         int[] primes = Converter.booleanArrToIntArr(primesBool);
         int[] sums = generateSums(primes);
 

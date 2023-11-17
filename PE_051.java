@@ -1,6 +1,6 @@
 import UsefulFunctions.Combinations;
 import UsefulFunctions.Converter;
-import UsefulFunctions.SieveOfPrimes;
+import UsefulFunctions.Primes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +21,7 @@ public class PE_051 {
 
     private static int[][] firstPrimeDigitReplacementFamily(int familySize) {
         long start = System.currentTimeMillis();
-        boolean[] primes = SieveOfPrimes.sieveOfPrimes((int) Math.pow(10, familySize-1));
+        boolean[] primes = Primes.sieveOfPrimes((int) Math.pow(10, familySize-1));
         long end = System.currentTimeMillis();
         System.out.println("Primes found time: " + (end-start));
         int targetDigitCount = 2;

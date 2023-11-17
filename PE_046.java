@@ -1,5 +1,5 @@
 import UsefulFunctions.Converter;
-import UsefulFunctions.SieveOfPrimes;
+import UsefulFunctions.Primes;
 
 public class PE_046 {
     public static void main(String[] args) {
@@ -9,7 +9,7 @@ public class PE_046 {
     }
 
     private static void findNumbers(int limit) {
-        boolean[] primes = SieveOfPrimes.sieveOfPrimes(limit);
+        boolean[] primes = Primes.sieveOfPrimes(limit);
         int[] primesArr = Converter.booleanArrToIntArr(primes);
 
         for (int i = 9; i < limit; i++) {
