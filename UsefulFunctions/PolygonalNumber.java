@@ -24,13 +24,14 @@ public class PolygonalNumber {
         double n = (-b + Math.sqrt(b*b - 4*a*c))/(2*a);
         return n == Math.floor(n);
     }
-    public static long[] isPolygonalNumber(long x) {
-        List<Long> possibleSides = new ArrayList<>();
+    public static int[] isPolygonalNumber(long x) {
+        List<Integer> possibleSides = new ArrayList<>();
 
-        for (long sides = 3; sides < x; sides++) {
+        for (int sides = 3; sides < x; sides++) {
+            if (sides < 0) break;
             if (isPolygonalNumber(sides, x)) possibleSides.add(sides);
         }
 
-        return Converter.listToArrLong(possibleSides);
+        return Converter.listToArrInt(possibleSides);
     }
 }

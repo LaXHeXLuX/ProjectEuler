@@ -96,6 +96,12 @@ public class ArrayFunctions {
         System.arraycopy(arr, index+1, newArr, index, newArr.length-index);
         return newArr;
     }
+    public static int[][] removeIndex(int[][] arr, int index) {
+        int[][] newArr = new int[arr.length-1][];
+        System.arraycopy(arr, 0, newArr, 0, index);
+        System.arraycopy(arr, index+1, newArr, index, newArr.length-index);
+        return newArr;
+    }
     public static int[] subArray(int[] arr, int startIndex, int endIndex) {
         if (startIndex < 0 || endIndex >= arr.length) throw new RuntimeException("invalid parameters: " + Arrays.toString(arr) + ", " + startIndex + ", " + endIndex);
         int[] newArr = new int[endIndex-startIndex+1];
