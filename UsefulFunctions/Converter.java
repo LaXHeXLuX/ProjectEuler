@@ -19,8 +19,8 @@ public class Converter {
         }
         return arr;
     }
-    public static long[][] arrListToArrLong(List<long[]> list) {
-        long[][] arr = new long[list.size()][];
+    public static BigInteger[] listToArrBigInteger(List<BigInteger> list) {
+        BigInteger[] arr = new BigInteger[list.size()];
         for (int i = 0; i < arr.length; i++) {
             arr[i] = list.get(i);
         }
@@ -67,11 +67,6 @@ public class Converter {
     public static long digitFromArrayLong(int[] digitArray) {
         long n = 0;
         for (int digit : digitArray) n = 10*n + digit;
-        return n;
-    }
-    public static BigInteger digitFromArrayBigInteger(int[] digitArray) {
-        BigInteger n = BigInteger.ZERO;
-        for (int digit : digitArray) n = n.multiply(BigInteger.TEN).add(BigInteger.valueOf(digit));
         return n;
     }
     public static int[] convertToBase(long n, int base) {
