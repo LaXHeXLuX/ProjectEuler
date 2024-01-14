@@ -1,7 +1,3 @@
-import UsefulFunctions.ArrayFunctions;
-import UsefulFunctions.Divisors;
-import UsefulFunctions.Primes;
-
 public class PE_058 {
     public static void main(String[] args) {
         int[] fraction = {1, 10};
@@ -24,9 +20,18 @@ public class PE_058 {
 
     private static int compareTo(int[] fraction1, int[] fraction2) {
         int gcd = (int) Divisors.greatestCommonDivisor(fraction1[1], fraction2[1]);
-        int[] newFraction1 = ArrayFunctions.multiply(fraction1, fraction2[1]/gcd);
-        int[] newFraction2 = ArrayFunctions.multiply(fraction2, fraction1[1]/gcd);
+        int[] newFraction1 = multiply(fraction1, fraction2[1]/gcd);
+        int[] newFraction2 = multiply(fraction2, fraction1[1]/gcd);
         return Integer.compare(newFraction1[0], newFraction2[0]);
+    }
+
+    private static int[] multiply(int[] arr, int el) {
+        int[] newArr = new int[arr.length];
+        System.arraycopy(arr, 0, newArr, 0, newArr.length);
+        for (int i = 0; i < newArr.length; i++) {
+            newArr[i] = arr[i]*el;
+        }
+        return newArr;
     }
 
     private static int[] numbersInDiagonalsOfSpiralOfLength(int n) {

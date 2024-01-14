@@ -1,5 +1,3 @@
-import UsefulFunctions.Converter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +20,7 @@ public class PE_040 {
             i++;
         }
 
-        return Converter.listToArrInt(constantDigits);
+        return Converter.listToArr(constantDigits);
     }
 
     private static long productOfConstantDigits(int[] indexes) {

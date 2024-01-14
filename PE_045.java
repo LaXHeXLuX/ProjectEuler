@@ -1,6 +1,3 @@
-import UsefulFunctions.ArrayFunctions;
-import UsefulFunctions.PolygonalNumber;
-
 public class PE_045 {
     public static void main(String[] args) {
         int[] sides = {3, 5, 6};

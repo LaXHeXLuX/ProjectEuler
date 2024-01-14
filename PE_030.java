@@ -1,5 +1,3 @@
-import UsefulFunctions.Converter;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +29,6 @@ public class PE_030 {
             if (sumOfNthPowersOfDigits(power, i) == i) numbers.add(i);
         }
 
-        return Converter.listToArrLong(numbers);
+        return Converter.listToArr(numbers);
     }
 }

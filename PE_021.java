@@ -1,5 +1,3 @@
-import UsefulFunctions.Divisors;
-
 public class PE_021 {
     public static void main(String[] args) {
         int limit = 10_000;

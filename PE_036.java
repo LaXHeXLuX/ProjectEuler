@@ -1,5 +1,3 @@
-import UsefulFunctions.Converter;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,6 +37,6 @@ public class PE_036 {
             if (isPalindromeInBases(i, bases)) palindromes.add(i);
         }
 
-        return Converter.listToArrLong(palindromes);
+        return Converter.listToArr(palindromes);
     }
 }

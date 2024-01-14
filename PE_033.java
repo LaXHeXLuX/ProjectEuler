@@ -1,7 +1,3 @@
-import UsefulFunctions.ArrayFunctions;
-import UsefulFunctions.Converter;
-import UsefulFunctions.Divisors;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +27,7 @@ public class PE_033 {
             }
         }
 
-        return Converter.arrListToArrInt(curiousFractions);
+        return Converter.listToArr(curiousFractions);
     }
 
     private static boolean isCuriousFraction(int a, int b) {

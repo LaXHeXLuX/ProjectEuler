@@ -1,5 +1,3 @@
-import UsefulFunctions.Primes;
-
 import java.util.HashMap;
 import java.util.Map;
 

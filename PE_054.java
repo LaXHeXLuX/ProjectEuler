@@ -1,6 +1,3 @@
-import UsefulFunctions.ArrayFunctions;
-import UsefulFunctions.Converter;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -146,7 +143,7 @@ public class PE_054 {
             multiples.add(startingMultiples);
         }
 
-        return Converter.listListToArrArrInt(multiples);
+        return Converter.deepListToArr(multiples);
     }
     private static int[] highestCardScores(int[][] multiples) {
         List<Integer> highCardsList = new ArrayList<>();
@@ -156,8 +153,8 @@ public class PE_054 {
             highCardsList.add(multiple[0]);
         }
 
-        int[] highCards = Converter.listToArrInt(highCardsList);
-        return Converter.reverse(ArrayFunctions.mergeSort(highCards));
+        int[] highCards = Converter.listToArr(highCardsList);
+        return ArrayFunctions.reverseArray(ArrayFunctions.mergeSort(highCards));
     }
     private static int highestPair(int[][] multiples) {
         int[] pairs = pairs(multiples);
@@ -176,7 +173,7 @@ public class PE_054 {
             }
         }
 
-        return Converter.reverse(ArrayFunctions.mergeSort(pairs));
+        return ArrayFunctions.reverseArray(ArrayFunctions.mergeSort(pairs));
     }
     private static int threeOfAKind(int[][] multiples) {
         for (int[] multiple : multiples) {

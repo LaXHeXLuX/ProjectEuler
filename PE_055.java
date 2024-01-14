@@ -1,5 +1,3 @@
-import UsefulFunctions.Converter;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +16,7 @@ public class PE_055 {
             if (iterationsToProducePalindrome(i) < 0) lychrelNumbers.add(i);
         }
 
-        return Converter.listToArrInt(lychrelNumbers);
+        return Converter.listToArr(lychrelNumbers);
     }
 
     public static int iterationsToProducePalindrome(long n) {

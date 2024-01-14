@@ -1,7 +1,3 @@
-import UsefulFunctions.ArrayFunctions;
-import UsefulFunctions.Converter;
-import UsefulFunctions.PolygonalNumber;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +46,7 @@ public class PE_061 {
             }
         }
 
-        return Converter.arrListToArrInt(finalCombinations);
+        return Converter.listToArr(finalCombinations);
     }
 
     private static int[][] generateWorkingNumbersRec(int[] currentCombination, int[][] usablePolygons) {
@@ -68,7 +64,7 @@ public class PE_061 {
             }
         }
 
-        return Converter.arrListToArrInt(newCombinations);
+        return Converter.listToArr(newCombinations);
     }
 
     private static int[][] generateWorkingNumbersLast(int[] currentCombination, int[] usablePolygons) {
@@ -81,7 +77,7 @@ public class PE_061 {
             }
         }
 
-        return Converter.arrListToArrInt(newCombinations);
+        return Converter.listToArr(newCombinations);
     }
 
     private static int[][] generate4DigitPolygonalNumbers(int firstPolygonals, int digits) {
@@ -110,7 +106,7 @@ public class PE_061 {
             polygonalNumber = (int) PolygonalNumber.polygonalNumberLong(sides, index);
         }
 
-        return Converter.listToArrInt(polygonalNumbers);
+        return Converter.listToArr(polygonalNumbers);
     }
 
     private static boolean pairIsCyclic(int a, int b) {

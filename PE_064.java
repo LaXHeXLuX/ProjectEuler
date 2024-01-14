@@ -1,7 +1,3 @@
-import UsefulFunctions.ArrayFunctions;
-import UsefulFunctions.Converter;
-import UsefulFunctions.Divisors;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -80,7 +76,7 @@ public class PE_064 {
             a.removeFirst();
         }
 
-        return Converter.listToArrInt(a);
+        return Converter.listToArr(a);
     }
 
     private static boolean contains(int[] arr, List<int[]> list) {

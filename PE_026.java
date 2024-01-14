@@ -1,6 +1,3 @@
-import UsefulFunctions.ArrayFunctions;
-import UsefulFunctions.Converter;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +43,7 @@ public class PE_026 {
             divisible = divisible % b;
         }
 
-        return convertToFraction(divisible, Converter.listToArrInt(modCycle), Converter.listToArrInt(reciprocalCycle));
+        return convertToFraction(divisible, Converter.listToArr(modCycle), Converter.listToArr(reciprocalCycle));
     }
 
     private static int[][] convertToFraction(int divisible, int[] modCycle, int[] reciprocalCycle) {

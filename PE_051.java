@@ -1,7 +1,3 @@
-import UsefulFunctions.Combinations;
-import UsefulFunctions.Converter;
-import UsefulFunctions.Primes;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -93,7 +89,7 @@ public class PE_051 {
             if (primes[(int) Converter.digitFromArrayLong(injectedNumber)]) injectedNumbersThatArePrime.add(injectedNumber);
         }
         //System.out.println("returning: " + Arrays.deepToString(Converter.arrListToArrInt(injectedNumbersThatArePrime)));
-        return Converter.arrListToArrInt(injectedNumbersThatArePrime);
+        return Converter.listToArr(injectedNumbersThatArePrime);
     }
 
     private static int[] injectDigit(int[] digits, int[] injectionPlaces, int injectableDigit) {

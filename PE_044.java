@@ -1,5 +1,3 @@
-import UsefulFunctions.PolygonalNumber;
-
 public class PE_044 {
     public static void main(String[] args) {
         int n = 5;

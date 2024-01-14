@@ -1,5 +1,3 @@
-import UsefulFunctions.Primes;
-
 import java.util.Arrays;
 
 public class PE_027 {

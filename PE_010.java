@@ -1,5 +1,3 @@
-import UsefulFunctions.Primes;
-
 public class PE_010 {
     public static void main(String[] args) {
         int n = 2_000_000;

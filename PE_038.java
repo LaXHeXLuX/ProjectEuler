@@ -1,6 +1,3 @@
-import UsefulFunctions.Converter;
-import UsefulFunctions.Pandigital;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +18,7 @@ public class PE_038 {
             i++;
         }
 
-        return Converter.listToArrInt(productDigits);
+        return Converter.listToArr(productDigits);
     }
 
     private static int[] biggestPandigitalProduct() {

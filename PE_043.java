@@ -1,8 +1,3 @@
-import UsefulFunctions.ArrayFunctions;
-import UsefulFunctions.Combinations;
-import UsefulFunctions.Converter;
-import UsefulFunctions.Pandigital;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +25,7 @@ public class PE_043 {
             numbers.add(number);
         }
 
-        return Converter.listToArrLong(numbers);
+        return Converter.listToArr(numbers);
     }
 
     private static boolean hasSubStringDivisibility(long n) {

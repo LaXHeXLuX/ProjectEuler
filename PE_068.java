@@ -1,5 +1,3 @@
-import UsefulFunctions.Converter;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -75,7 +73,7 @@ public class PE_068 {
             taken[i] = false;
         }
 
-        return Converter.arrListToArrInt(finalRings);
+        return Converter.listToArr(finalRings);
     }
 
     private static int[][] findNGonRings(int[] currentRing, int index, int sum, boolean[] taken) {
@@ -110,7 +108,7 @@ public class PE_068 {
             currentRing[index] = 0;
             currentRing[index+3] = 0;
         }
-        return Converter.arrListToArrInt(finalRings);
+        return Converter.listToArr(finalRings);
     }
 
     private static int[] minAndMaxSumOfRowInNGonRing(int n) {

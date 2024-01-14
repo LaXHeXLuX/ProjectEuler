@@ -1,5 +1,3 @@
-import UsefulFunctions.Converter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +28,6 @@ public class PE_002 {
             fibonacciNumbers.add(fibo2);
         }
 
-        return Converter.listToArrLong(fibonacciNumbers);
+        return Converter.listToArr(fibonacciNumbers);
     }
 }

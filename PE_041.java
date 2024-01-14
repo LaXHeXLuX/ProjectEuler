@@ -1,6 +1,3 @@
-import UsefulFunctions.Pandigital;
-import UsefulFunctions.Primes;
-
 public class PE_041 {
     public static void main(String[] args) {
         System.out.println(largestPandigitalPrime());

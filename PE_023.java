@@ -1,7 +1,3 @@
-import UsefulFunctions.ArrayFunctions;
-import UsefulFunctions.Converter;
-import UsefulFunctions.Divisors;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +26,7 @@ public class PE_023 {
             if (isAbundant(i)) abundantNumbers.add(i);
         }
 
-        return Converter.listToArrLong(abundantNumbers);
+        return Converter.listToArr(abundantNumbers);
     }
     public static boolean isSumOfTwoAbundantNumbers(long n, long[] abundantNumbers) {
         for (long abundantNumber : abundantNumbers) {

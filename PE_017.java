@@ -1,5 +1,3 @@
-import UsefulFunctions.Converter;
-
 public class PE_017 {
     public static void main(String[] args) {
         int sum = 0;

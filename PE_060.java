@@ -1,8 +1,3 @@
-import UsefulFunctions.ArrayFunctions;
-import UsefulFunctions.Combinations;
-import UsefulFunctions.Converter;
-import UsefulFunctions.Primes;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,7 +48,7 @@ public class PE_060 {
 
         List<int[]> firstPrimeSetsList = new ArrayList<>();
         for (int prime : primesInt) firstPrimeSetsList.add(new int[] {prime});
-        int[][] primeSets = Converter.arrListToArrInt(firstPrimeSetsList);
+        int[][] primeSets = Converter.listToArr(firstPrimeSetsList);
 
         for (int i = 1; i < n; i++) {
             primeSets = generateNextPrimeSetSize(primesInt, primeSets, primes);
@@ -70,7 +65,7 @@ public class PE_060 {
             nextPrimeSets.addAll(Arrays.asList(nextPrimeSubSets));
         }
 
-        return Converter.arrListToArrInt(nextPrimeSets);
+        return Converter.listToArr(nextPrimeSets);
     }
 
     private static int[][] generateNextPrimeSetSize(int[] primes, int[] currentPrimeSet, boolean[] primesBool) {
@@ -90,11 +85,11 @@ public class PE_060 {
             if (isPrimePairSet(newPrimeSet, primesBool)) primeSets.add(newPrimeSet);
         }
 
-        return Converter.arrListToArrInt(primeSets);
+        return Converter.listToArr(primeSets);
     }
 
     private static boolean isPrimePairSet(int[] numbers, boolean[] primes) {
-        int[][] possiblePairs = Combinations.chooseNElementsOrderMatters(numbers, 2);
+        int[][] possiblePairs = Combinations.chooseNElements(numbers, 2, true);
 
         for (int[] pair : possiblePairs) {
             if (!isPrimePair(pair, primes)) return false;

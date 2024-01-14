@@ -1,6 +1,3 @@
-import UsefulFunctions.Converter;
-import UsefulFunctions.Pandigital;
-
 import java.util.*;
 
 public class PE_032 {
@@ -27,6 +24,6 @@ public class PE_032 {
             }
         }
 
-        return Converter.arrListToArrInt(pandigitalProductGroups);
+        return Converter.listToArr(pandigitalProductGroups);
     }
 }

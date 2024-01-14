@@ -1,5 +1,3 @@
-import UsefulFunctions.Converter;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +25,7 @@ public class PE_039 {
             }
         }
 
-        return Converter.arrListToArrInt(triangles);
+        return Converter.listToArr(triangles);
     }
 
     private static int sumWitMostTriangles(int limit) {

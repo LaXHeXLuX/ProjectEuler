@@ -1,6 +1,3 @@
-import UsefulFunctions.ArrayFunctions;
-import UsefulFunctions.Converter;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -73,9 +70,9 @@ public class PE_059 {
             allArrs.get(i%3).add(chars[i]);
         }
 
-        int[] chars1 = Converter.listToArrInt(allArrs.get(0));
-        int[] chars2 = Converter.listToArrInt(allArrs.get(1));
-        int[] chars3 = Converter.listToArrInt(allArrs.get(2));
+        int[] chars1 = Converter.listToArr(allArrs.get(0));
+        int[] chars2 = Converter.listToArr(allArrs.get(1));
+        int[] chars3 = Converter.listToArr(allArrs.get(2));
         return new int[][] {chars1, chars2, chars3};
     }
 

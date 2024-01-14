@@ -1,6 +1,3 @@
-import UsefulFunctions.Combinations;
-import UsefulFunctions.Converter;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,6 +31,6 @@ public class PE_034 {
             if (isDigitFactorial(i)) digitFactorials.add(i);
         }
 
-        return Converter.listToArrInt(digitFactorials);
+        return Converter.listToArr(digitFactorials);
     }
 }

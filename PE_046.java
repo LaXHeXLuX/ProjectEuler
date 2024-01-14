@@ -1,6 +1,3 @@
-import UsefulFunctions.Converter;
-import UsefulFunctions.Primes;
-
 public class PE_046 {
     public static void main(String[] args) {
         int limit = 100_000_000;

@@ -1,6 +1,3 @@
-import UsefulFunctions.Converter;
-import UsefulFunctions.Primes;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -65,7 +62,7 @@ public class PE_050 {
                 if (sum >= n) break;
             }
 
-            if (sum == n) return Converter.listToArrInt(currentPrimes);
+            if (sum == n) return Converter.listToArr(currentPrimes);
         }
 
         return new int[] {};

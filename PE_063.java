@@ -1,5 +1,3 @@
-import UsefulFunctions.Converter;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +27,7 @@ public class PE_063 {
                 digits = Converter.digitArray(power);
             }
         }
-        return Converter.listToArrBigInteger(solutions);
+        return Converter.listToArr(solutions);
     }
 
     private static BigInteger power(int a, int b) {

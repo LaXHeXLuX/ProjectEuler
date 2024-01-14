@@ -1,6 +1,3 @@
-import UsefulFunctions.Converter;
-import UsefulFunctions.Primes;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,6 +43,6 @@ public class PE_035 {
             if (isCyclicPrime(i, primes)) cyclicPrimes.add(i);
         }
 
-        return Converter.listToArrInt(cyclicPrimes);
+        return Converter.listToArr(cyclicPrimes);
     }
 }

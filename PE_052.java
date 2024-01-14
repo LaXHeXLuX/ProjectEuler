@@ -1,7 +1,3 @@
-import UsefulFunctions.ArrayFunctions;
-import UsefulFunctions.Combinations;
-import UsefulFunctions.Converter;
-
 public class PE_052 {
     public static void main(String[] args) {
         int[] multiples = {2, 3, 4, 5, 6};

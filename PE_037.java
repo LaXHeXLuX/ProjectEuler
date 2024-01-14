@@ -1,6 +1,3 @@
-import UsefulFunctions.Converter;
-import UsefulFunctions.Primes;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -55,6 +52,6 @@ public class PE_037 {
             }
         }
 
-        return Converter.listToArrLong(truncatables);
+        return Converter.listToArr(truncatables);
     }
 }

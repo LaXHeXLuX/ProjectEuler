@@ -1,7 +1,3 @@
-import UsefulFunctions.Combinations;
-import UsefulFunctions.Converter;
-import UsefulFunctions.Primes;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +22,7 @@ public class PE_049 {
             addUnusualTerms(startingNumber, validAdders, inARow, unusualTerms);
         }
 
-        return Converter.arrListToArrInt(unusualTerms);
+        return Converter.listToArr(unusualTerms);
     }
 
     private static void addUnusualTerms(int startingNumber, int[] adders, int inARow, List<int[]> unusualTerms) {
@@ -51,7 +47,7 @@ public class PE_049 {
             if (isUnusual(n, adder, primes, inARow)) adders.add(adder);
         }
 
-        return Converter.listToArrInt(adders);
+        return Converter.listToArr(adders);
     }
 
     private static boolean isUnusual(int n, int adder, boolean[] primes, int inARow) {

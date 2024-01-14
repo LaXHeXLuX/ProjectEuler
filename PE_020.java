@@ -1,6 +1,3 @@
-import UsefulFunctions.Combinations;
-import UsefulFunctions.Converter;
-
 import java.math.BigInteger;
 public class PE_020 {
     public static void main(String[] args) {

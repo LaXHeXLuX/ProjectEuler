@@ -1,5 +1,3 @@
-import UsefulFunctions.ArrayFunctions;
-
 public class PE_031 {
     public static void main(String[] args) {
         long[] coins = {1, 2, 5, 10, 20, 50, 100};
