@@ -4,7 +4,7 @@ import java.util.List;
 
 public class PE_068 {
     public static void main(String[] args) {
-        int size = 10;
+        int size = 5;
         int[][] rings = magicNGonRings(size);
         for (int[] ring : rings) {
             System.out.println(Arrays.toString(ring));
@@ -108,6 +108,7 @@ public class PE_068 {
             currentRing[index] = 0;
             currentRing[index+3] = 0;
         }
+        if (finalRings.size() == 0) return new int[0][];
         return Converter.listToArr(finalRings);
     }
 
