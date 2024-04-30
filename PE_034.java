@@ -17,7 +17,7 @@ public class PE_034 {
         long sum = 0;
 
         for (int digit : digits) {
-            sum += Combinations.factorialLong(digit);
+            sum += Combinations.factorial(digit);
         }
 
         return sum == n;

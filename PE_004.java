@@ -1,9 +1,11 @@
 public class PE_004 {
     public static void main(String[] args) {
         double start = System.currentTimeMillis();
-        for (int i = 1; i < 7; i++) {
+
+        for (int i = 1; i < 6; i++) {
             System.out.println(i + ": " + largestPalindromeNumberMadeFromTwoNDigitNumbers(i));
         }
+
         System.out.println("Aeg: " + (System.currentTimeMillis()-start) + " ms");
     }
     private static long largestPalindromeNumberMadeFromTwoNDigitNumbers(long n) {
