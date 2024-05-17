@@ -43,12 +43,6 @@ public class PE_079 {
         for (int i = 1; i < passcodes.length; i++) {
             int[] passcode = Converter.digitArray(passcodes[i]);
 
-            System.out.println(STR."Current passcode: \{Arrays.toString(passcode)}, current possible passwords:");
-            for (int[] possiblePassword : possiblePasswords) {
-                System.out.println(Arrays.toString(possiblePassword));
-            }
-            System.out.println();
-
             List<int[]> newPossiblePasswords = new ArrayList<>();
             for (int[] possiblePassword : possiblePasswords) {
                 newPossiblePasswords.addAll(newPasswords(possiblePassword, passcode));
