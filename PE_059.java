@@ -1,5 +1,3 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,8 +43,7 @@ public class PE_059 {
     }
 
     private static int[] parse(String filename) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(filename));
-        String line = br.readLine();
+        String line = Parser.parseStringRows(filename)[0];
         String[] numbers = line.split(",");
         int[] numbersInt = new int[numbers.length];
 
