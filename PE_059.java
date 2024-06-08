@@ -26,7 +26,7 @@ public class PE_059 {
 
     private static void decode(int[] chars) {
         int[][] likelyKeys = findLikelyKeys(chars);
-        System.out.println("Found keys: " + Arrays.deepToString(likelyKeys));
+        System.out.println(STR."Found keys: \{Arrays.deepToString(likelyKeys)}");
         for (int i = 0; i < likelyKeys[0].length; i++) {
             if (likelyKeys[0][i] < 97 || likelyKeys[0][i] > 122) continue;
             System.out.println();
@@ -36,7 +36,7 @@ public class PE_059 {
                     if (likelyKeys[2][k] < 97 || likelyKeys[2][k] > 122) continue;
                     int[] key = {likelyKeys[0][i], likelyKeys[1][j], likelyKeys[2][k]};
                     int[] decodedChars = XOR(chars, key);
-                    System.out.println(asciiToString(key) + ": " + asciiToString(decodedChars));
+                    System.out.println(STR."\{asciiToString(key)}: \{asciiToString(decodedChars)}");
                 }
             }
         }
@@ -75,13 +75,13 @@ public class PE_059 {
 
     private static int[][] findLikelyKeys(int[] chars) {
         int[][] threeSets = divideIntoThree(chars);
-        System.out.println("3S: " + Arrays.deepToString(threeSets));
+        System.out.println(STR."3S: \{Arrays.deepToString(threeSets)}");
         int[][] likelyKeys = new int[3][3];
         int mostLikelyChar = 'e';
         for (int i = 0; i < threeSets.length; i++) {
             threeSets[i] = ArrayFunctions.mergeSort(threeSets[i]);
             int[] commonElements = nMostCommonElements(threeSets[i]);
-            System.out.println(i + ": " + Arrays.toString(commonElements));
+            System.out.println(STR."\{i}: \{Arrays.toString(commonElements)}");
             likelyKeys[i] = XOR(commonElements, new int[] {mostLikelyChar});
         }
 
