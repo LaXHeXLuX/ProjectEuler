@@ -43,7 +43,7 @@ public class PE_059 {
     }
 
     private static int[] parse(String filename) throws IOException {
-        String line = Parser.parseStringRows(filename)[0];
+        String line = Parser.parseStrings(filename)[0];
         String[] numbers = line.split(",");
         int[] numbersInt = new int[numbers.length];
 
