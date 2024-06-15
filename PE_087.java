@@ -11,7 +11,6 @@ public class PE_087 {
         System.out.println(Arrays.toString(primes));
 
         int[] powerTriplets = getPowerTriplets(limit);
-        System.out.println(Arrays.toString(powerTriplets));
         System.out.println(powerTriplets.length);
 
         long end = System.currentTimeMillis();
