@@ -9,7 +9,7 @@ import java.util.List;
 public class PE_059 {
     public static void main(String[] args) {
         System.out.println(PE());
-    }
+    } // help here
 
     public static long PE() {
         // lowercase letters at 97-122 included

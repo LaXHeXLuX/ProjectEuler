@@ -22,7 +22,7 @@ public class PE_035 {
 
         for (int i = 1; i < cyclicNumbers.length; i++) {
             int lastDigit = n%10;
-            n = (int) (n/10 + lastDigit*Math.pow(10, cyclicNumbers.length-1));
+            n = n / 10 + lastDigit* (int) Math.pow(10, cyclicNumbers.length-1);
             cyclicNumbers[i] = n;
         }
 

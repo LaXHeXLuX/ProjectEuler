@@ -27,7 +27,7 @@ public class PE_075 {
             if (perimeters.get(integer).length == n) oneSolutionPerimeters.add(integer);
         }
 
-        if (oneSolutionPerimeters.size() == 0) return new int[0];
+        if (oneSolutionPerimeters.isEmpty()) return new int[0];
         return Converter.listToArr(oneSolutionPerimeters);
     }
 

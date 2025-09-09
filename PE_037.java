@@ -34,7 +34,7 @@ public class PE_037 {
         return true;
     }
 
-    private static List<Integer> findAllTruncatablePrimesHelper(int digitAmount, int lastDigit) {
+    private static List<Integer> findAllTruncatablePrimesHelper(int digitAmount) {
         if (digitAmount == 0) return new ArrayList<>();
         List<Integer> truncatablePrimes = new ArrayList<>();
         if (digitAmount == 1) {
@@ -47,7 +47,7 @@ public class PE_037 {
 
         int[] options = new int[] {1, 3, 7, 9};
         for (int option : options) {
-            List<Integer> nextTruncatablePrimes = findAllTruncatablePrimesHelper(digitAmount-1, option);
+            List<Integer> nextTruncatablePrimes = findAllTruncatablePrimesHelper(digitAmount-1);
             for (Integer ntp : nextTruncatablePrimes) {
                 int truncatablePrimeContender = ntp * 10 + option;
                 if (primes[truncatablePrimeContender]) {
@@ -66,7 +66,7 @@ public class PE_037 {
 
         int digitAmount = 2;
         while (truncatables.size() < 11) {
-            List<Integer> truncatablePrimeContenders = findAllTruncatablePrimesHelper(digitAmount, -1);
+            List<Integer> truncatablePrimeContenders = findAllTruncatablePrimesHelper(digitAmount);
             for (Integer tpc : truncatablePrimeContenders) {
                 if (isTruncatablePrime(tpc)) truncatables.add(tpc);
             }

@@ -61,7 +61,7 @@ public class PE_074 {
             int[] digits = Converter.digitArray(n);
             int sum = 0;
             for (int digit : digits) {
-                sum += Combinations.factorial(digit);
+                sum += (int) Combinations.factorial(digit);
             }
             digitFactorialSums[n] = sum;
             return sum;

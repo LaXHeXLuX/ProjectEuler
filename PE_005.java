@@ -9,7 +9,8 @@ public class PE_005 {
     }
 
     public static long PE() {
-        return firstToDivide(arrOfNFirstElements(20));
+        int n = 20;
+        return firstToDivide(arrOfNFirstElements(n));
     }
 
     private static long[] arrOfNFirstElements(int n) {
