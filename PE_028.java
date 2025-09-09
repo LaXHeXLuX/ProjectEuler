@@ -1,7 +1,11 @@
 public class PE_028 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int limit = 1001;
-        System.out.println(numberSpiralDiagonalSum(limit));
+        return numberSpiralDiagonalSum(limit);
     }
 
     private static int numberSpiralDiagonalSum(int spiralSize) {

@@ -1,14 +1,14 @@
 public class PE_085 {
     public static void main(String[] args) {
-        long start = System.currentTimeMillis();
+        System.out.println(PE());
+    }
 
+    public static long PE() {
         long limit = 2_000_000L;
         int[] result = closestForLimit(limit);
-        System.out.println(STR."closest area and limit: \{result[0] * result[1]} - \{rectangleCount(result[0], result[1])}");
-
-        long end = System.currentTimeMillis();
-        System.out.println(STR."Time: \{end - start} ms");
+        return (long) result[0] * result[1];
     }
+
     private static int[] closestForLimit(long limit) {
         int closestFor1 = findLimitFor(1, limit);
         int[] closest = {1, closestFor1};
@@ -29,6 +29,7 @@ public class PE_085 {
 
         return closest;
     }
+
     private static int findLimitFor(int x, long limit) {
         int y = 0;
         long count = rectangleCount(x, y);
@@ -45,14 +46,16 @@ public class PE_085 {
 
         return y;
     }
+
     private static long rectangleCount(int x, int y) {
         if (x > y) {
-            int temp = y;
-            y = x;
-            x = temp;
+            int[] swap = {y, x};
+            x = swap[0];
+            y = swap[1];
         }
         return rectangleCountInGrid(x, y);
     }
+
     private static long rectangleCountInGrid(int x, int y) {
         if (x <= 0)
             return 0;

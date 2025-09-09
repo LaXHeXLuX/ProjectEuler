@@ -1,3 +1,6 @@
+import util.Converter;
+import util.Primes;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -5,18 +8,17 @@ import java.util.Map;
 public class PE_077 {
     private static int[] primes;
     private static Map<String, Long> waysToSumWithPrimes;
-    public static void main(String[] args) {
-        long start = System.currentTimeMillis();
 
+    public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         waysToSumWithPrimes = new HashMap<>();
         int primeLimit = 10_000_000;
         primes = getPrimesBelow(primeLimit);
-        System.out.println(STR."Primes done in \{System.currentTimeMillis() - start} ms");
         int n = 5_000;
-        System.out.println(firstToSumInOverNWays(n));
-
-        long end = System.currentTimeMillis();
-        System.out.println(STR."Time: \{end - start} ms");
+        return firstToSumInOverNWays(n);
     }
 
     private static int firstToSumInOverNWays(int n) {

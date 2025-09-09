@@ -1,23 +1,17 @@
-import java.io.IOException;
-import java.util.Arrays;
+import util.Parser;
 
 public class PE_081 {
-    public static void main(String[] args) throws IOException {
-        long start = System.currentTimeMillis();
-
-        String filename = "PE_081_matrix.txt";
-        int[][] matrix = parser(filename);
-        for (int[] ints : matrix) {
-            System.out.println(Arrays.toString(ints));
-        }
-
-        System.out.println(minimumSum(matrix));
-
-        long end = System.currentTimeMillis();
-        System.out.println(STR."Time: \{end - start} ms");
+    public static void main(String[] args) {
+        System.out.println(PE());
     }
 
-    private static int[][] parser(String filename) throws IOException {
+    public static long PE() {
+        String filename = "PE_081_matrix.txt";
+        int[][] matrix = parser(filename);
+        return minimumSum(matrix);
+    }
+
+    private static int[][] parser(String filename) {
         int[][] rows = Parser.parseManyInts(filename, ",");
 
         int[][] ints = new int[rows.length + rows[0].length - 1][];

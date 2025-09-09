@@ -2,10 +2,14 @@ import java.math.BigInteger;
 
 public class PE_048 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int limit = 1000;
         int[] arr = arrayOfNFirstDigits(limit);
         BigInteger answer = selfPowersSum(arr);
-        System.out.println(answer.remainder(BigInteger.valueOf(10_000_000_000L)));
+        return answer.remainder(BigInteger.valueOf(10_000_000_000L)).longValue();
     }
 
     private static int[] arrayOfNFirstDigits(int n) {

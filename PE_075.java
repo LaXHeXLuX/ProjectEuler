@@ -1,22 +1,23 @@
+import util.ArrayFunctions;
+import util.Converter;
+import util.Divisors;
+
 import java.util.*;
 
 public class PE_075 {
     public static void main(String[] args) {
-        long start = System.currentTimeMillis();
+        System.out.println(PE());
+    }
 
+    public static long PE() {
         int perimeterLimit = 1_500_000;
 
         int n = 1;
         int[][] rightTriangles = getRightTriangles(perimeterLimit);
-        System.out.println("Time for right triangles " + (System.currentTimeMillis()-start) + " ms");
         Map<Integer, int[][]> perimeters = getPerimeters(rightTriangles);
-        System.out.println("Time for perimeters " + (System.currentTimeMillis()-start) + " ms");
 
         int[] oneSolutionPerimeters = ArrayFunctions.mergeSort(getNSolutionPerimeters(n, perimeters));
-        System.out.println(oneSolutionPerimeters.length);
-
-        long end = System.currentTimeMillis();
-        System.out.println("Time: " + (end-start) + " ms");
+        return oneSolutionPerimeters.length;
     }
 
     private static int[] getNSolutionPerimeters(int n, Map<Integer, int[][]> perimeters) {

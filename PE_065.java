@@ -1,16 +1,20 @@
+import util.Converter;
+
 import java.math.BigInteger;
-import java.util.Arrays;
 
 public class PE_065 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int n = 100;
         BigInteger[] fraction = computeNthConvergentOfE(n);
-        System.out.println(Arrays.toString(fraction));
         int[] digits = Converter.digitArray(fraction[0]);
 
         int sum = 0;
         for (int digit : digits) sum += digit;
-        System.out.println(sum);
+        return sum;
     }
 
     private static BigInteger[] computeNthConvergentOfE(int n) {

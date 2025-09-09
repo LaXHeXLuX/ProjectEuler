@@ -1,18 +1,26 @@
+import util.Converter;
+import util.Primes;
+
 public class PE_046 {
     public static void main(String[] args) {
-        int limit = 100_000_000;
-
-        findNumbers(limit);
+        System.out.println(PE());
     }
 
-    private static void findNumbers(int limit) {
+    public static long PE() {
+        int limit = 1_000_000;
+        return smallestConjectureContradiction(limit);
+    }
+
+    private static int smallestConjectureContradiction(int limit) {
         boolean[] primes = Primes.sieveOfPrimes(limit);
         int[] primesArr = Converter.booleanArrToIntArr(primes);
 
         for (int i = 9; i < limit; i++) {
             if (!isOddComposite(i, primes)) continue;
-            if (!canBeWrittenAsSumOfPrimeAndTwoSquares(i, primesArr)) System.out.println(i);
+            if (!canBeWrittenAsSumOfPrimeAndTwoSquares(i, primesArr)) return i;
         }
+
+        return -1;
     }
 
     private static boolean isOddComposite(int n, boolean[] primes) {

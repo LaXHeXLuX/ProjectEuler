@@ -1,16 +1,19 @@
+import util.Converter;
+import util.Primes;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PE_050 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int limit = 1_000_000;
 
         int[] combination = largestArrayOfConsecutivePrimes(limit);
-        System.out.println();
-        System.out.println(Arrays.toString(combination));
-        System.out.println(combination.length);
-        System.out.println(sumOfArray(combination));
+        return (sumOfArray(combination));
     }
 
     private static int sumOfArray(int[] arr) {
@@ -52,7 +55,7 @@ public class PE_050 {
 
         for (int startingPrime = 0; startingPrime < primes.length; startingPrime++) {
             int sum = primes[startingPrime];
-            if (sum == n) return new int[] {};
+            if (sum == n) return new int[0];
             List<Integer> currentPrimes = new ArrayList<>();
             currentPrimes.add(sum);
 
@@ -65,6 +68,6 @@ public class PE_050 {
             if (sum == n) return Converter.listToArr(currentPrimes);
         }
 
-        return new int[] {};
+        return new int[0];
     }
 }

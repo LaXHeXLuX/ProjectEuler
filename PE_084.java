@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class PE_084 {
     private static final int G2J = 30;
     private static final int CH1 = 7;
@@ -8,22 +6,24 @@ public class PE_084 {
     private static final int CC1 = 2;
     private static final int CC2 = 17;
     private static final int CC3 = 33;
+
     public static void main(String[] args) {
-        long start = System.currentTimeMillis();
-
-        int diceSides = 4;
-        int moves = 10_000_000;
-        int[] boardMoves = simulateMoves(moves, diceSides);
-        System.out.println(Arrays.toString(boardMoves));
-
-        int[][] sorted = mergeSort(boardMoves);
-        System.out.println(Arrays.toString(sorted[1]));
-        int n = 3;
-        System.out.println(Arrays.toString(topN(sorted[1], n)));
-
-        long end = System.currentTimeMillis();
-        System.out.println(STR."Time: \{end - start} ms");
+        System.out.println(PE());
     }
+
+    public static long PE() {
+        int diceSides = 4;
+        int moves = 1_000_000;
+        int[] boardMoves = simulateMoves(moves, diceSides);
+        int[][] sorted = mergeSort(boardMoves);
+        StringBuilder modalString = new StringBuilder();
+        for (int i = 1; i < 4; i++) {
+            int el = sorted[1][sorted[1].length-i];
+            modalString.append(el);
+        }
+        return Long.parseLong(modalString.toString());
+    }
+
     private static int[][] mergeSort(int[] scores) {
         int[] positions = new int[scores.length];
         for (int i = 0; i < positions.length; i++) {
@@ -32,6 +32,7 @@ public class PE_084 {
 
         return mergeSort(scores, positions);
     }
+
     private static int[][] mergeSort(int[] scores, int[] positions) {
         if (scores.length <= 1) return new int[][] {scores, positions};
 
@@ -82,15 +83,7 @@ public class PE_084 {
 
         return new int[][] {totalScores, totalPositions};
     }
-    private static int[] topN(int[] positions, int n) {
-        int[] topN = new int[n];
 
-        for (int i = positions.length - n; i < positions.length; i++) {
-            topN[topN.length - (i - (positions.length - n)) - 1] = positions[i];
-        }
-
-        return topN;
-    }
     private static int[] simulateMoves(int moves, int diceSides) {
         int[] board = new int[40];
         int position = 0;
@@ -136,6 +129,7 @@ public class PE_084 {
 
         deck[deck.length-1] = first;
     }
+
     private static int makeMove(int position, int diceSides) {
         int rolls = 0;
         int[] roll = rollDice(diceSides);
@@ -154,9 +148,11 @@ public class PE_084 {
 
         return position;
     }
+
     private static int addRollToPosition(int position, int[] roll) {
         return (position + roll[0] + roll[1]) % 40;
     }
+
     private static int[] rollDice(int diceSides) {
         return new int[] {(int) (Math.random() * diceSides + 1), (int) (Math.random() * diceSides + 1)};
     }

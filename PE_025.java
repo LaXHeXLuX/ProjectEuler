@@ -2,9 +2,14 @@ import java.math.BigInteger;
 
 public class PE_025 {
     public static void main(String[] args) {
-        long n = 1_000L;
-        System.out.println(firstFibonacciWithNDigits(n));
+        System.out.println(PE());
     }
+
+    public static long PE() {
+        long n = 1000;
+        return firstFibonacciWithNDigits(n);
+    }
+
     private static long firstFibonacciWithNDigits(long n) {
         BigInteger fibo1 = BigInteger.ONE;
         BigInteger fibo2 = BigInteger.ONE;
@@ -15,9 +20,9 @@ public class PE_025 {
             fibo1 = temp;
             indexOfFibo2++;
         }
-        System.out.println(fibo2);
         return indexOfFibo2;
     }
+
     private static long numberOfDigits(BigInteger n) {
         if (n.compareTo(BigInteger.ZERO) == 0) return 0;
         long digitCount = 1;

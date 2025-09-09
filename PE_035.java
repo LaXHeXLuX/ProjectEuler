@@ -1,14 +1,19 @@
+import util.Converter;
+import util.Primes;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PE_035 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int limit = 1_000_000;
         int[] cyclicPrimes = findCyclicPrimesUnder(limit);
 
-        System.out.println(Arrays.toString(cyclicPrimes));
-        System.out.println(cyclicPrimes.length);
+        return cyclicPrimes.length;
     }
 
     private static int[] generateCyclicNumbers(int n) {

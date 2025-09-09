@@ -1,15 +1,20 @@
+import util.Primes;
+
 public class PE_072 {
     public static void main(String[] args) {
-        int limitD = 1_000_000;
-        System.out.println(elementCountForAllFractions(limitD));
+        System.out.println(PE());
+    }
+
+    public static long PE() {
+        int limit = 1_000_000;
+        return elementCountForAllFractions(limit);
     }
 
     private static long elementCountForAllFractions(int limitD) {
         long answer = 0;
-        for (int i = 2; i < limitD; i++) {
-            answer += Primes.eulersTotient(i)+1;
+        for (int i = 2; i <= limitD; i++) {
+            answer += Primes.eulersTotient(i);
         }
-        answer += Primes.eulersTotient(limitD)+1 - limitD;
         return answer;
     }
 }

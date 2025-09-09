@@ -1,7 +1,14 @@
+import util.Converter;
+import util.Primes;
+
 public class PE_069 {
     public static void main(String[] args) {
-        long limit = 1_000_000_000_000L;
-        System.out.println(highestNumberScore(limit));
+        System.out.println(PE());
+    }
+
+    public static long PE() {
+        long limit = 1_000_000L;
+        return highestNumberScore(limit);
     }
 
     private static long highestNumberScore(long limit) {

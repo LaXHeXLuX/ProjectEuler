@@ -1,62 +1,37 @@
+import util.Primes;
+
 public class PE_058 {
+
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int[] fraction = {1, 10};
-        System.out.println(firstSpiralLengthWherePrimeDiagonalRatioBelow(fraction));
+        return firstSpiralLengthWithPrimeDiagonalRatioBelow(fraction);
     }
 
-    private static int firstSpiralLengthWherePrimeDiagonalRatioBelow(int[] fraction) {
-        boolean[] primes = Primes.sieveOfPrimes(1_000_000_000);
-        int spiralLength = 3;
-        int[] currentFraction = {3, 5};
-
-        while (compareTo(currentFraction, fraction) >= 0) {
-            spiralLength += 2;
-            int[] diagonalNumbers = numbersInDiagonalsOfSpiralOfLength(spiralLength);
-            currentFraction = new int[] {amountOfPrimesInArray(diagonalNumbers, primes), diagonalNumbers.length};
-        }
-
-        return spiralLength;
-    }
-
-    private static int compareTo(int[] fraction1, int[] fraction2) {
-        int gcd = (int) Divisors.greatestCommonDivisor(fraction1[1], fraction2[1]);
-        int[] newFraction1 = multiply(fraction1, fraction2[1]/gcd);
-        int[] newFraction2 = multiply(fraction2, fraction1[1]/gcd);
-        return Integer.compare(newFraction1[0], newFraction2[0]);
-    }
-
-    private static int[] multiply(int[] arr, int el) {
-        int[] newArr = new int[arr.length];
-        System.arraycopy(arr, 0, newArr, 0, newArr.length);
-        for (int i = 0; i < newArr.length; i++) {
-            newArr[i] = arr[i]*el;
-        }
-        return newArr;
-    }
-
-    private static int[] numbersInDiagonalsOfSpiralOfLength(int n) {
-        if (n % 2 == 0) return new int[0];
-        int[] numbers = new int[1 + (n-1)*2];
-        numbers[0] = 1;
-        int currentNumber = 1;
-
-        for (int i = 0; i < (n-1)/2; i++) {
-            for (int j = 0; j < 4; j++) {
-                currentNumber += (i+1)*2;
-                numbers[1 + 4*i + j] = currentNumber;
+    private static int firstSpiralLengthWithPrimeDiagonalRatioBelow(int[] fraction) {
+        int e1 = fraction[0];
+        int d1 = fraction[1];
+        int length = 3;
+        int primeCounter = 3;
+        while (e1 * (2*length-1) <= primeCounter * d1) {
+            length += 2;
+            long[] corners = cornerNumbersForLength(length);
+            for (long corner : corners) {
+                if (Primes.isPrime(corner)) primeCounter++;
             }
         }
-
-        return numbers;
+        return length;
     }
 
-    private static int amountOfPrimesInArray(int[] numbers, boolean[] primes) {
-        int counter = 0;
-
-        for (int number : numbers) {
-            if (primes[number]) counter++;
+    private static long[] cornerNumbersForLength(int length) {
+        long lastCorner = (long) (length - 2) * (length-2);
+        long[] corners = new long[4];
+        for (int i = 0; i < 4; i++) {
+            corners[i] = lastCorner + (long) (length - 1) * (i+1);
         }
-
-        return counter;
+        return corners;
     }
 }

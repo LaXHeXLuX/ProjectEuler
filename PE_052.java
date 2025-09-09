@@ -1,7 +1,15 @@
+import util.ArrayFunctions;
+import util.Combinations;
+import util.Converter;
+
 public class PE_052 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int[] multiples = {2, 3, 4, 5, 6};
-        System.out.println(smallestNumberWithPermutedMultiples(multiples));
+        return  smallestNumberWithPermutedMultiples(multiples);
     }
 
     private static int smallestNumberWithPermutedMultiples(int[] multiples) {
@@ -25,7 +33,7 @@ public class PE_052 {
 
         for (int j : multiples) {
             int multiple = n * j;
-            if (!Combinations.isPermutationOf(digits, Converter.digitArray(multiple))) return false;
+            if (!Combinations.isPermutation(digits, Converter.digitArray(multiple))) return false;
         }
 
         return true;

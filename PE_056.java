@@ -1,10 +1,16 @@
+import util.Converter;
+
 import java.math.BigInteger;
-import java.util.Arrays;
 
 public class PE_056 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int limit = 100;
-        System.out.println(Arrays.toString(biggestDigitsSumOfPower(limit, limit)));
+        int[] digitSum = biggestDigitsSumOfPower(limit, limit);
+        return digitSum[2];
     }
 
     private static int[] biggestDigitsSumOfPower(int limitA, int limitB) {

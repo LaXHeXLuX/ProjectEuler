@@ -1,6 +1,5 @@
 public class PE_011 {
-    public static void main(String[] args) {
-        String numbers = """
+    public static final String INPUT = """
                 08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
                 49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
                 81 49 31 73 55 79 14 29 93 71 40 67 53 88 30 03 49 13 36 65
@@ -21,13 +20,19 @@ public class PE_011 {
                 20 69 36 41 72 30 23 88 34 62 99 69 82 67 59 85 74 04 36 16
                 20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
                 01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48""";
-        int[][] intNumbers = parseNumbers(numbers);
-        int n = 4;
-        System.out.println(productOfNConsecutiveNumbers(intNumbers, 4, 6, 8, "DI"));
-        System.out.println(biggestProductOfNNumbersInAnyDirection(n, intNumbers));
+
+    public static void main(String[] args) {
+        System.out.println(PE());
     }
-    private static int[][] parseNumbers(String numbers) {
-        String[] rows = numbers.split("\n");
+
+    public static long PE() {
+        int[][] intNumbers = parseNumbers();
+        int n = 4;
+        return biggestProductOfNNumbersInAnyDirection(n, intNumbers);
+    }
+
+    private static int[][] parseNumbers() {
+        String[] rows = PE_011.INPUT.split("\n");
         int[][] parsedNumbers = new int[rows.length][];
         for (int i = 0; i < parsedNumbers.length; i++) {
             String[] rowOfNumbers = rows[i].split(" ");
@@ -39,6 +44,7 @@ public class PE_011 {
         }
         return parsedNumbers;
     }
+
     private static long biggestProductOfNNumbersInAnyDirection(int n, int[][] numbers) {
         long biggestProduct = 0;
         for (int i = 0; i < numbers.length-n; i++) {
@@ -54,6 +60,7 @@ public class PE_011 {
         }
         return biggestProduct;
     }
+
     private static long productOfNConsecutiveNumbers(int[][] numbers, int n, int startRow, int startCol, String direction) {
         long product = numbers[startRow][startCol];
         int increaseRight = 1;

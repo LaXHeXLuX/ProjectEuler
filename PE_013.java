@@ -1,8 +1,7 @@
 import java.math.BigInteger;
 
 public class PE_013 {
-    public static void main(String[] args) {
-        String text = """
+    public static final String INPUT = """
                 37107287533902102798797998220837590246510135740250
                 46376937677490009712648124896970078050417018260538
                 74324986199524741059474233309513058123726617309629
@@ -103,19 +102,26 @@ public class PE_013 {
                 72107838435069186155435662884062257473692284509516
                 20849603980134001723930671666823555245252804609722
                 53503534226472524250874054075591789781264330331690""";
-        BigInteger[] numbers = parser(text);
-        System.out.println(sumOfArrElements(numbers));
-        int n = 10;
-        System.out.println(firstNDigits(sumOfArrElements(numbers), n));
+
+    public static void main(String[] args) {
+        System.out.println(PE());
     }
-    private static BigInteger[] parser(String text) {
-        String[] textNumbers = text.split("\n");
+
+    public static long PE() {
+        BigInteger[] numbers = parser();
+        int n = 10;
+        return firstNDigits(sumOfArrElements(numbers), n).longValue();
+    }
+
+    private static BigInteger[] parser() {
+        String[] textNumbers = PE_013.INPUT.split("\n");
         BigInteger[] numbers = new BigInteger[textNumbers.length];
         for (int i = 0; i < textNumbers.length; i++) {
             numbers[i] = new BigInteger(textNumbers[i]);
         }
         return numbers;
     }
+
     private static BigInteger sumOfArrElements(BigInteger[] arr) {
         BigInteger sum = BigInteger.ZERO;
         for (BigInteger number : arr) {
@@ -123,6 +129,7 @@ public class PE_013 {
         }
         return sum;
     }
+
     private static BigInteger firstNDigits(BigInteger number, int n) {
         int amountOfDigits = amountOfDigits(number);
         while (amountOfDigits > n) {
@@ -131,6 +138,7 @@ public class PE_013 {
         }
         return number;
     }
+
     private static int amountOfDigits(BigInteger number) {
         int amountOfDigits = 0;
         while (number.compareTo(BigInteger.ZERO) > 0) {

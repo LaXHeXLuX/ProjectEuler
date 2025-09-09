@@ -1,36 +1,37 @@
+import util.ArrayFunctions;
+import util.Converter;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PE_079 {
-    public static void main(String[] args) throws IOException { // assuming only one character each
-        long start = System.currentTimeMillis();
-
-        String filename = "PE_079_keylog.txt";
-        int[] passcodes = parseUnique(filename);
-        System.out.println(Arrays.toString(passcodes));
-
-        List<int[]> shortestPasswords = shortestPossiblePassword(passcodes);
-        for (int[] shortestPassword : shortestPasswords) {
-            System.out.println(Arrays.toString(shortestPassword));
-        }
-
-        long end = System.currentTimeMillis();
-        System.out.println(STR."Time: \{end - start} ms");
+    public static void main(String[] args) { // assuming only one character each
+        System.out.println(PE());
     }
 
-    private static int[] parseUnique(String filename) throws IOException {
-        List<Integer> numbers = new ArrayList<>();
-        BufferedReader br = new BufferedReader(new FileReader(filename));
+    public static long PE() {
+        String filename = "PE_079_keylog.txt";
+        int[] passcodes = parseUnique(filename);
 
-        String line = br.readLine();
-        while (line != null) {
-            int number = Integer.parseInt(line);
-            if (!numbers.contains(number)) numbers.add(number);
-            line = br.readLine();
+        List<int[]> shortestPasswords = shortestPossiblePassword(passcodes);
+        return Converter.fromDigitArray(shortestPasswords.getFirst());
+    }
+
+    private static int[] parseUnique(String filename) {
+        List<Integer> numbers = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String line = br.readLine();
+            while (line != null) {
+                int number = Integer.parseInt(line);
+                if (!numbers.contains(number)) numbers.add(number);
+                line = br.readLine();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         return Converter.listToArr(numbers);

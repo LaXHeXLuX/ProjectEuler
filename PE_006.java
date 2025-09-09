@@ -1,8 +1,13 @@
 public class PE_006 {
     public static void main(String[] args) {
-        int n = 100;
-        System.out.println(difference(arrOfNFirstElements(n)));
+        System.out.println(PE());
     }
+
+    public static long PE() {
+        int n = 100;
+        return difference(arrOfNFirstElements(n));
+    }
+
     private static long[] arrOfNFirstElements(int n) {
         long[] arr = new long[n];
         for (int i = 1; i < n+1; i++) {
@@ -10,6 +15,7 @@ public class PE_006 {
         }
         return arr;
     }
+
     private static long sumOfSquares(long[] numbers) {
         long sum = 0;
         for (long number : numbers) {
@@ -17,6 +23,7 @@ public class PE_006 {
         }
         return sum;
     }
+
     private static long squareOfSums(long[] numbers) {
         long sum = 0;
         for (long number : numbers) {
@@ -24,6 +31,7 @@ public class PE_006 {
         }
         return sum*sum;
     }
+
     private static long difference(long[] numbers) {
         return squareOfSums(numbers)-sumOfSquares(numbers);
     }

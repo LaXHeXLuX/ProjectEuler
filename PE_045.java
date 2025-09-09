@@ -1,19 +1,25 @@
+import util.ArrayFunctions;
+import util.PolygonalNumber;
+
 public class PE_045 {
     public static void main(String[] args) {
-        int[] sides = {3, 5, 6};
-        findNumbersPolygonalIn(sides);
+        System.out.println(PE());
     }
 
-    private static void findNumbersPolygonalIn(int[] sides) {
+    public static long PE() {
+        int[] sides = {3, 5, 6};
+        int lowerLimit = 40755 + 1;
+        return findNextNumberPolygonalIn(sides, lowerLimit);
+    }
+
+    private static long findNextNumberPolygonalIn(int[] sides, int lowerLimit) {
         sides = ArrayFunctions.mergeSort(sides);
 
-        int i = 1;
-        long maxPolygonal;
-        while (true) {
-            maxPolygonal = PolygonalNumber.polygonalNumberLong(sides[sides.length-1], i);
-            if (maxPolygonal <= 0) break;
-            boolean isPolygonal = true;
+        for (int i = 0; true; i++) {
+            long maxPolygonal = PolygonalNumber.polygonalNumberLong(sides[sides.length-1], i);
+            if (maxPolygonal < lowerLimit) continue;
 
+            boolean isPolygonal = true;
             for (int j = sides.length-2; j >= 0; j--) {
                 if (!PolygonalNumber.isPolygonalNumber(sides[j], maxPolygonal)) {
                     isPolygonal = false;
@@ -21,10 +27,7 @@ public class PE_045 {
                 }
             }
 
-            if (isPolygonal) {
-                System.out.println(maxPolygonal);
-            }
-            i++;
+            if (isPolygonal) return maxPolygonal;
         }
     }
 }

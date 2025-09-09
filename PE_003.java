@@ -1,7 +1,12 @@
-import java.util.Arrays;
+import util.Primes;
 
 public class PE_003 {
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(Primes.findPrimeFactors(600851475143L)));
+        System.out.println(PE());
+    }
+
+    public static long PE() {
+        long[] pf = Primes.findPrimeFactors(600851475143L);
+        return pf[pf.length-1];
     }
 }

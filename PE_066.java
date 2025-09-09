@@ -2,16 +2,19 @@ import java.math.BigInteger;
 
 public class PE_066 {
     private static boolean[] squares;
+
     public static void main(String[] args) {
-        squares = makeSquares();
-
-        int limit = 1000;
-
-        System.out.println(maxMinimalSolution(limit));
+        System.out.println(PE());
     }
 
-    private static BigInteger[] getNthConvergent(int squareroot, int[] cycle, int n) {
-        BigInteger first = BigInteger.valueOf((long) Math.sqrt(squareroot));
+    public static long PE() {
+        squares = makeSquares();
+        int limit = 1000;
+        return maxMinimalSolution(limit);
+    }
+
+    private static BigInteger[] getNthConvergent(int squareRoot, int[] cycle, int n) {
+        BigInteger first = BigInteger.valueOf((long) Math.sqrt(squareRoot));
         if (n == 1) return new BigInteger[] {first, BigInteger.ONE};
         n--;
         int cycleIndex = (n-1) % cycle.length;
@@ -46,7 +49,6 @@ public class PE_066 {
             if (squares[D]) continue;
             BigInteger minimalSolution = minimalSolutionForX(D);
             if (minimalSolution.compareTo(max) > 0) {
-                System.out.println("new max: " + D + ", " + minimalSolution);
                 max = minimalSolution;
                 maxD = D;
             }

@@ -1,27 +1,26 @@
+import util.Combinations;
+import util.Converter;
+import util.Primes;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class PE_051 {
     public static void main(String[] args) {
-        long start = System.currentTimeMillis();
+        System.out.println(PE());
+    }
 
-        int size = 9;
+    public static long PE() {
+        int size = 8;
         int[][] first = firstPrimeDigitReplacementFamily(size);
-        for (int[] f : first) System.out.println(Arrays.toString(f));
-
-        long end = System.currentTimeMillis();
-        System.out.println("TIME: " + (end-start));
-
+        return Converter.fromDigitArray(first[0]);
     }
 
     private static int[][] firstPrimeDigitReplacementFamily(int familySize) {
-        long start = System.currentTimeMillis();
         boolean[] primes = Primes.sieveOfPrimes((int) Math.pow(10, familySize-1));
-        long end = System.currentTimeMillis();
-        System.out.println("Primes found time: " + (end-start));
         int targetDigitCount = 2;
-        int[][] firstPrimeDigitReplacementFamily = new int[][] {};
+        int[][] firstPrimeDigitReplacementFamily = new int[0][];
 
         boolean found = false;
         while (!found) {
@@ -36,7 +35,7 @@ public class PE_051 {
                     int[][] injectionCombinations = Combinations.combinationsOfGrowingNumbers(0, amountOfStartingDigits, amountOfInjections);
                     int[][] bestInjectionFamily = bestInjectionCombination(injectionCombinations, digits, primes);
                     if (bestInjectionFamily.length >= familySize) {
-                        int firstNumber = (int) Converter.digitFromArrayLong(bestInjectionFamily[0]);
+                        int firstNumber = (int) Converter.fromDigitArray(bestInjectionFamily[0]);
                         found = true;
                         if (smallestPrimeWithProperty == -1 || smallestPrimeWithProperty > firstNumber) {
                             smallestPrimeWithProperty = firstNumber;
@@ -55,12 +54,12 @@ public class PE_051 {
     private static int[][] bestInjectionCombination(int[][] injectionCombinations, int[] digits, boolean[] primes) {
         int smallestPrimeWithProperty = -1;
         int largestFamilySize = -1;
-        int[][] bestInjectionCombinationFamily = new int[][] {};
+        int[][] bestInjectionCombinationFamily = new int[0][];
 
         for(int[] injectionCombination : injectionCombinations) {
             int[][] goodInjections = injectionsThatArePrime(digits, injectionCombination, primes);
             if (goodInjections.length == 0) continue;
-            int firstNumber = (int) Converter.digitFromArrayLong(goodInjections[0]);
+            int firstNumber = (int) Converter.fromDigitArray(goodInjections[0]);
             int familySize = goodInjections.length;
             if (familySize > largestFamilySize) {
                 largestFamilySize = familySize;
@@ -77,7 +76,6 @@ public class PE_051 {
     }
 
     private static int[][] injectionsThatArePrime(int[] digits, int[] injectionPlaces, boolean[] primes) {
-        //System.out.println("injectionsThatArePrime. d: " + Arrays.toString(digits) + ", places: " + Arrays.toString(injectionPlaces));
         List<int[]> injectedNumbersThatArePrime = new ArrayList<>();
         int start = 0;
         if (injectionPlaces[0] == 0) start = 1;
@@ -86,14 +84,13 @@ public class PE_051 {
             int[] injectionPlacesCopy = new int[injectionPlaces.length];
             System.arraycopy(injectionPlaces, 0, injectionPlacesCopy, 0, injectionPlacesCopy.length);
             int[] injectedNumber = injectDigit(digits, injectionPlacesCopy, i);
-            if (primes[(int) Converter.digitFromArrayLong(injectedNumber)]) injectedNumbersThatArePrime.add(injectedNumber);
+            if (primes[(int) Converter.fromDigitArray(injectedNumber)]) injectedNumbersThatArePrime.add(injectedNumber);
         }
-        //System.out.println("returning: " + Arrays.deepToString(Converter.arrListToArrInt(injectedNumbersThatArePrime)));
-        return Converter.listToArr(injectedNumbersThatArePrime);
+
+        return Converter.listToArr(injectedNumbersThatArePrime, int[].class);
     }
 
     private static int[] injectDigit(int[] digits, int[] injectionPlaces, int injectableDigit) {
-        //System.out.println("injectDigit. d: " + Arrays.toString(digits) + ", places: " + Arrays.toString(injectionPlaces) + ", adding: " + injectableDigit);
         int[] newDigits = new int[digits.length + injectionPlaces.length];
         Arrays.fill(newDigits, -1);
 

@@ -1,5 +1,9 @@
 public class PE_014 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         long biggestChainLength = 0;
         long biggestI = 0;
         for (int i = 1; i < 1_000_000; i++) {
@@ -9,9 +13,9 @@ public class PE_014 {
                 biggestI = i;
             }
         }
-        System.out.println(biggestI);
-        System.out.println(biggestChainLength);
+        return biggestI;
     }
+
     private static long collatzChainLength(long n) {
         if (n == 1) return 1;
         if (n % 2 == 0) n /= 2;

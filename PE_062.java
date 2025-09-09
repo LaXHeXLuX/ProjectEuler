@@ -1,43 +1,74 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import util.ArrayFunctions;
+import util.Converter;
+
+import java.util.*;
 
 public class PE_062 {
+    private static final Map<String, Set<Long>> powerPermutations = new HashMap<>();
+
     public static void main(String[] args) {
-        long start = System.currentTimeMillis();
-
-        int n = 5;
-        System.out.println(Arrays.toString(firstCubeWithNPermutations(n)));
-
-        long end = System.currentTimeMillis();
-        System.out.println("TIME: " + (end-start));
+        System.out.println(PE());
     }
 
-    private static long[] permutationCubes(long cube, List<Long> cubes) {
-        List<Long> permutationCubes = new ArrayList<>();
-
-        for (long otherCube : cubes) {
-            int[] digitsCube = Converter.digitArray(cube);
-            int[] digitsOtherCube = Converter.digitArray(otherCube);
-            if (Combinations.isPermutationOf(digitsCube, digitsOtherCube)) permutationCubes.add(otherCube);
+    public static long PE() {
+        int power = 3;
+        int count = 5;
+        Set<Long> result = powerPermutations(power, count);
+        long min = Long.MAX_VALUE;
+        for (Long el : result) {
+            if (el < min) min = el;
         }
-
-        return Converter.listToArr(permutationCubes);
+        return min;
     }
 
-    private static long[] firstCubeWithNPermutations(int n) {
-        List<Long> cubes = new ArrayList<>();
-        long i = 1;
-        long cube = i*i*i;
-
-        while (cube > 0) {
-            cubes.add(cube);
-            long[] permutations = permutationCubes(cube, cubes);
-            if (permutations.length == n) return permutations;
-            i++;
-            cube = i*i*i;
+    private static String digitArrayToString(int[] arr) {
+        StringBuilder s = new StringBuilder();
+        for (int i : arr) {
+            s.append(i);
         }
+        return s.toString();
+    }
 
-        return new long[0];
+    private static Set<Long> lowestCandidate(Set<String> candidates) {
+        long lowest = Long.MAX_VALUE;
+        Set<Long> lowestCandidate = new HashSet<>();
+        for (String candidate : candidates) {
+            Set<Long> perms = powerPermutations.get(candidate);
+            for (Long perm : perms) {
+                if (perm < lowest) {
+                    lowest = perm;
+                    lowestCandidate = perms;
+                }
+            }
+        }
+        return lowestCandidate;
+    }
+
+    private static Set<Long> powerPermutations(int power, int count) {
+        Set<String> candidates = new HashSet<>();
+        int n = 1;
+        int nextThreshold = 10;
+        while (true) {
+            long p = (long) Math.pow(n, power);
+            if (p > nextThreshold) {
+                if (!candidates.isEmpty()) {
+                    return lowestCandidate(candidates);
+                }
+                nextThreshold *= 10;
+            }
+            String firstPermutation = digitArrayToString(ArrayFunctions.mergeSort(Converter.digitArray(p)));
+            if (!powerPermutations.containsKey(firstPermutation))
+                powerPermutations.put(firstPermutation, new HashSet<>());
+            Set<Long> permutation = powerPermutations.get(firstPermutation);
+            permutation.add(p);
+            if (permutation.size() == count) {
+                candidates.add(firstPermutation);
+            }
+            else if (permutation.size() > count) {
+                candidates.remove(firstPermutation);
+            }
+
+            n++;
+        }
     }
 }

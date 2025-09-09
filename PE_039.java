@@ -1,14 +1,16 @@
+import util.Converter;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PE_039 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int limit = 1_001;
-        int mostTriangles = sumWitMostTriangles(limit);
-        System.out.println(mostTriangles);
-        int[][] triangles = findAllTrianglesForSum(mostTriangles);
-        for (int[] triangle : triangles) System.out.println(Arrays.toString(triangle));
+        return sumWitMostTriangles(limit);
     }
 
     private static boolean isTriangle(int a, int b, int c) {
@@ -25,7 +27,7 @@ public class PE_039 {
             }
         }
 
-        return Converter.listToArr(triangles);
+        return Converter.listToArr(triangles, int[].class);
     }
 
     private static int sumWitMostTriangles(int limit) {

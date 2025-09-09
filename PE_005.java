@@ -1,11 +1,17 @@
+import util.Primes;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class PE_005 {
     public static void main(String[] args) {
-        int n = 100;
-        System.out.println(firstToDivide(arrOfNFirstElements(n)));
+        System.out.println(PE());
     }
+
+    public static long PE() {
+        return firstToDivide(arrOfNFirstElements(20));
+    }
+
     private static long[] arrOfNFirstElements(int n) {
         long[] arr = new long[n];
         for (int i = 1; i < n+1; i++) {
@@ -13,6 +19,7 @@ public class PE_005 {
         }
         return arr;
     }
+
     private static long firstToDivide(long[] numbers) {
         long[][] allPrimeFactors = new long[numbers.length][];
         for (int i = 0; i < numbers.length; i++) {
@@ -21,10 +28,11 @@ public class PE_005 {
         Map<Long, Long> biggestTerms = getBiggestTerms(allPrimeFactors);
         long product = 1;
         for (long key : biggestTerms.keySet()) {
-            product *= Math.pow(key, biggestTerms.get(key));
+            product *= (long) Math.pow(key, biggestTerms.get(key));
         }
         return product;
     }
+
     private static Map<Long, Long> getBiggestTerms(long[][] allTerms) {
         Map<Long, Long> biggestTerms = new HashMap<>();
         for (long[] allTerm : allTerms) {
@@ -39,6 +47,7 @@ public class PE_005 {
         }
         return biggestTerms;
     }
+
     private static Map<Long, Long> arrToMap(long[] terms) {
         Map<Long, Long> refactoredTerms = new HashMap<>();
         for (long term : terms) {

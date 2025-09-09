@@ -1,17 +1,21 @@
+import util.Converter;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PE_036 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int[] bases = {2, 10};
         int limit = 1_000_000;
         long[] palindromes = findPalindromesInBases(limit, bases);
 
         long sum = 0;
         for (long palindrome : palindromes) sum += palindrome;
-        System.out.println(Arrays.toString(palindromes));
-        System.out.println(sum);
+        return sum;
     }
 
     private static boolean isPalindrome(int[] digitArray) {
@@ -26,7 +30,6 @@ public class PE_036 {
             int[] baseArray = Converter.convertToBase(n, base);
             if (!isPalindrome(baseArray)) return false;
         }
-
         return true;
     }
 

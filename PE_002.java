@@ -1,11 +1,18 @@
+import util.Converter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class PE_002 {
     public static void main(String[] args) {
-        long n = 4_000_000L;
-        System.out.println(sumOfEvenElements(fibonacciNumbersUntil(n)));
+        System.out.println(PE());
     }
+
+    public static long PE() {
+        long n = 4_000_000L;
+        return sumOfEvenElements(fibonacciNumbersUntil(n));
+    }
+
     private static long sumOfEvenElements(long[] arr) {
         long sum = 0;
         for (long element : arr) {
@@ -13,6 +20,7 @@ public class PE_002 {
         }
         return sum;
     }
+
     private static long[] fibonacciNumbersUntil(long limit) {
         List<Long> fibonacciNumbers = new ArrayList<>();
         fibonacciNumbers.add(1L);

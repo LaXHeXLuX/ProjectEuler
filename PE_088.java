@@ -1,17 +1,22 @@
-import java.util.*;
+import util.ArrayFunctions;
+import util.Divisors;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class PE_088 {
     private static final Map<Integer, long[]> allDivisors = new HashMap<>();
-    public static void main(String[] args) {
-        long start = System.currentTimeMillis();
 
+    public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int limit = 12_000;
         Set<Integer> numbers = minimalProductSumNumbers(limit);
-        System.out.println(numbers);
-        System.out.println(sum(numbers));
-
-        long end = System.currentTimeMillis();
-        System.out.println(STR."Time: \{end - start} ms");
+        return sum(numbers);
     }
 
     private static Set<Integer> minimalProductSumNumbers(int limit) {

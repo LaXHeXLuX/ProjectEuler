@@ -1,6 +1,5 @@
 public class PE_018 {
-    public static void main(String[] args) {
-        String triangle = """
+    public static final String INPUT = """
                 75
                 95 64
                 17 47 82
@@ -16,11 +15,18 @@ public class PE_018 {
                 91 71 52 38 17 14 91 43 58 50 27 29 48
                 63 66 04 68 89 53 67 30 73 16 69 87 40 31
                 04 62 98 27 23 09 70 98 73 93 38 53 60 04 23""";
-        int[][] intTriangle = parse(triangle);
-        System.out.println(maximumSum(intTriangle));
+
+    public static void main(String[] args) {
+        System.out.println(PE());
     }
-    private static int[][] parse(String triangle) {
-        String[] triangleRows = triangle.split("\n");
+
+    public static long PE() {
+        int[][] triangle = parse();
+        return maximumSum(triangle);
+    }
+
+    private static int[][] parse() {
+        String[] triangleRows = PE_018.INPUT.split("\n");
         String[][] triangleCells = new String[triangleRows.length][];
         for (int i = 0; i < triangleRows.length; i++) {
             triangleCells[i] = triangleRows[i].split(" ");
@@ -34,6 +40,7 @@ public class PE_018 {
         }
         return triangleNumbers;
     }
+
     private static int maximumSum(int[][] triangle) {
         if (triangle.length == 1) return triangle[0][0];
         int[][] newTriangle = new int[triangle.length-1][];

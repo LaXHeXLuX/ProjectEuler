@@ -1,11 +1,17 @@
-import java.io.IOException;
+import util.ArrayFunctions;
+import util.Converter;
+import util.Parser;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class PE_059 {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        System.out.println(PE());
+    }
 
+    public static long PE() {
         // lowercase letters at 97-122 included
 
         String filename = "PE_059_cipher.txt";
@@ -15,7 +21,7 @@ public class PE_059 {
 
         int[] key = {'e', 'x', 'p'};
         int[] answer = XOR(chars, key);
-        System.out.println(sum(answer));
+        return sum(answer);
     }
 
     private static int sum(int[] arr) {
@@ -26,23 +32,20 @@ public class PE_059 {
 
     private static void decode(int[] chars) {
         int[][] likelyKeys = findLikelyKeys(chars);
-        System.out.println(STR."Found keys: \{Arrays.deepToString(likelyKeys)}");
         for (int i = 0; i < likelyKeys[0].length; i++) {
             if (likelyKeys[0][i] < 97 || likelyKeys[0][i] > 122) continue;
-            System.out.println();
             for (int j = 0; j < likelyKeys[1].length; j++) {
                 if (likelyKeys[1][j] < 97 || likelyKeys[1][j] > 122) continue;
                 for (int k = 0; k < likelyKeys[2].length; k++) {
                     if (likelyKeys[2][k] < 97 || likelyKeys[2][k] > 122) continue;
                     int[] key = {likelyKeys[0][i], likelyKeys[1][j], likelyKeys[2][k]};
                     int[] decodedChars = XOR(chars, key);
-                    System.out.println(STR."\{asciiToString(key)}: \{asciiToString(decodedChars)}");
                 }
             }
         }
     }
 
-    private static int[] parse(String filename) throws IOException {
+    private static int[] parse(String filename) {
         String line = Parser.parseStrings(filename)[0];
         String[] numbers = line.split(",");
         int[] numbersInt = new int[numbers.length];
@@ -58,30 +61,28 @@ public class PE_059 {
         List<Integer> arr1 = new ArrayList<>();
         List<Integer> arr2 = new ArrayList<>();
         List<Integer> arr3 = new ArrayList<>();
-        List<List<Integer>> allArrs = new ArrayList<>();
-        allArrs.add(arr1);
-        allArrs.add(arr2);
-        allArrs.add(arr3);
+        List<List<Integer>> allLists = new ArrayList<>();
+        allLists.add(arr1);
+        allLists.add(arr2);
+        allLists.add(arr3);
 
         for (int i = 0; i < chars.length; i++) {
-            allArrs.get(i%3).add(chars[i]);
+            allLists.get(i%3).add(chars[i]);
         }
 
-        int[] chars1 = Converter.listToArr(allArrs.get(0));
-        int[] chars2 = Converter.listToArr(allArrs.get(1));
-        int[] chars3 = Converter.listToArr(allArrs.get(2));
+        int[] chars1 = Converter.listToArr(allLists.get(0));
+        int[] chars2 = Converter.listToArr(allLists.get(1));
+        int[] chars3 = Converter.listToArr(allLists.get(2));
         return new int[][] {chars1, chars2, chars3};
     }
 
     private static int[][] findLikelyKeys(int[] chars) {
         int[][] threeSets = divideIntoThree(chars);
-        System.out.println(STR."3S: \{Arrays.deepToString(threeSets)}");
         int[][] likelyKeys = new int[3][3];
         int mostLikelyChar = 'e';
         for (int i = 0; i < threeSets.length; i++) {
             threeSets[i] = ArrayFunctions.mergeSort(threeSets[i]);
             int[] commonElements = nMostCommonElements(threeSets[i]);
-            System.out.println(STR."\{i}: \{Arrays.toString(commonElements)}");
             likelyKeys[i] = XOR(commonElements, new int[] {mostLikelyChar});
         }
 

@@ -1,15 +1,14 @@
-import java.util.*;
+import util.Divisors;
 
 public class PE_071 {
     public static void main(String[] args) {
-        long start = System.currentTimeMillis();
+        System.out.println(PE());
+    }
 
+    public static long PE() {
         int limitD = 1_000_000;
         int[] fraction = {3, 7};
-        System.out.println("answer: " + Arrays.toString(findFractionBefore(limitD, fraction)));
-
-        long end = System.currentTimeMillis();
-        System.out.println("Time: " + (end-start) + " ms");
+        return findFractionBefore(limitD, fraction)[0];
     }
 
     private static int numerator(int[] fraction, int d) {

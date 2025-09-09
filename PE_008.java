@@ -1,6 +1,5 @@
 public class PE_008 {
-    public static void main(String[] args) {
-        String number = """
+    public static final String INPUT = """
                 73167176531330624919225119674426574742355349194934
                 96983520312774506326239578318016984801869478851843
                 85861560789112949495459501737958331952853208805511
@@ -21,11 +20,18 @@ public class PE_008 {
                 84580156166097919133875499200524063689912560717606
                 05886116467109405077541002256983155200055935729725
                 71636269561882670428252483600823257530420752963450""";
-        number = number.replace("\n", "");
-        int n = 13;
-        System.out.println(biggestProductOfNConsequtiveDigits(n, number));
+
+    public static void main(String[] args) {
+        System.out.println(PE());
     }
-    private static long biggestProductOfNConsequtiveDigits(int n, String number) {
+
+    public static long PE() {
+        String number = INPUT.replace("\n", "");
+        int n = 13;
+        return biggestProductOfNConsecutiveDigits(n, number);
+    }
+
+    private static long biggestProductOfNConsecutiveDigits(int n, String number) {
         long biggestProduct = 0;
         for (int i = 0; i < number.length()-n; i++) {
             long currentProduct = 1;

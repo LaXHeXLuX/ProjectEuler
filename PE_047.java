@@ -1,17 +1,21 @@
-import java.util.Arrays;
+import util.Primes;
 
 public class PE_047 {
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(findFirstNConsecutiveNumbersToHaveMDistinctPrimeFactors(2, 6)));
+        System.out.println(PE());
     }
 
-    public static long[] findFirstNConsecutiveNumbersToHaveMDistinctPrimeFactors(int n, int m) {
+    public static long PE() {
+        long[] result = firstNConsecutiveNumbersToHaveMDistinctPrimeFactors(4, 4);
+        return result[0];
+    }
+
+    public static long[] firstNConsecutiveNumbersToHaveMDistinctPrimeFactors(int n, int m) {
         long i = 2;
         boolean solved = false;
 
         while (!solved) {
-            if (i % 100_000 == 0) System.out.println(i);
-            if (i < 0) return new long[] {};
+            if (i < 0) return new long[0];
             solved = true;
             for (int j = 0; j < n; j++) {
                 if (countDistinctPrimeFactors(i+j) != m) {

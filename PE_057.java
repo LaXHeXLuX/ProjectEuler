@@ -1,9 +1,15 @@
+import util.Converter;
+
 import java.math.BigInteger;
 
 public class PE_057 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int limit = 1000;
-        System.out.println(countExceedsUnder(limit));
+        return countExceedsUnder(limit);
     }
 
     private static int countExceedsUnder(int limit) {

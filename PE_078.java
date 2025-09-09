@@ -1,3 +1,5 @@
+import util.PolygonalNumber;
+
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
@@ -6,16 +8,14 @@ public class PE_078 {
     private static Map<Integer, BigInteger> eulersFunction;
 
     public static void main(String[] args) {
-        long start = System.currentTimeMillis();
+        System.out.println(PE());
+    }
 
+    public static long PE() {
         eulersFunction = new HashMap<>();
 
         int n = 1_000_000;
-        int answer = firstToDivideN(n);
-        System.out.println(STR."\{answer}: \{eulersFunction(answer)}");
-
-        long end = System.currentTimeMillis();
-        System.out.println(STR."Time: \{end - start} ms");
+        return firstToDivideN(n);
     }
 
     private static int firstToDivideN(int n) {

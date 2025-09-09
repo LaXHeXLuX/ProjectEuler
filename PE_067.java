@@ -1,11 +1,14 @@
-import java.io.IOException;
+import util.Parser;
 
 public class PE_067 {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         String filename = "PE_067_triangle.txt";
         int[][] triangle = Parser.parseManyInts(filename);
-
-        System.out.println(maximumSum(triangle));
+        return maximumSum(triangle);
     }
 
     private static int maximumSum(int[][] triangle) {

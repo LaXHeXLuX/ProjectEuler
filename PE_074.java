@@ -1,18 +1,20 @@
+import util.Combinations;
+import util.Converter;
+
 import java.util.*;
 
 public class PE_074 {
     private static int[] digitFactorialSums;
-    public static void main(String[] args) {
-        long start = System.currentTimeMillis();
 
-        int n = 1_000_000;
+    public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {        int n = 1_000_000;
         digitFactorialSums = new int[10_000_000];
         Arrays.fill(digitFactorialSums, -1);
         int[] longest = longestChainLengthBelow(n);
-        System.out.println(longest.length);
-
-        long end = System.currentTimeMillis();
-        System.out.println("Time: " + (end-start) + " ms");
+        return longest.length;
     }
 
     private static int[] longestChainLengthBelow(int limit) {
@@ -42,7 +44,7 @@ public class PE_074 {
         factorialSumsList.add(n);
 
         int element = getSumOfDigitFactorials(n);
-        if (element == n) return new int[] {};
+        if (element == n) return new int[0];
         while (!factorialSumsMap.containsKey(element)) {
             factorialSumsMap.put(element, factorialSumsList.size());
             factorialSumsList.add(element);

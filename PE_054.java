@@ -1,3 +1,6 @@
+import util.ArrayFunctions;
+import util.Converter;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -6,7 +9,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PE_054 {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         String file = "PE_054_poker.txt";
         String[][][] hands = parse(file);
 
@@ -17,19 +24,22 @@ public class PE_054 {
             if (winnerIsFirst) {
                 counter++;
             }
-            System.out.println(Arrays.deepToString(handPair) + " -> " + winnerIsFirst);
         }
 
-        System.out.println(counter);
+        return counter;
     }
 
-    private static String[][][] parse(String filename) throws IOException {
+    private static String[][][] parse(String filename) {
         List<String[]> handsList = new ArrayList<>();
-        BufferedReader br = new BufferedReader(new FileReader(filename));
-        String line = br.readLine();
-        while (line != null) {
-            handsList.add(line.split(" "));
-            line = br.readLine();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String line = br.readLine();
+            while (line != null) {
+                handsList.add(line.split(" "));
+                line = br.readLine();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         String[][][] hands = new String[handsList.size()][][];
@@ -59,7 +69,7 @@ public class PE_054 {
 
         int fourOfAKind1 = fourOfAKind(multiples1);
         int fourOfAKind2 = fourOfAKind(multiples2);
-        if (fourOfAKind1 > 0 && fourOfAKind1 == fourOfAKind2) System.out.println("SAMA 4");
+        if (fourOfAKind1 > 0 && fourOfAKind1 == fourOfAKind2) System.out.println("SAME 4");
         if (fourOfAKind1 < fourOfAKind2) return false;
         else if (fourOfAKind1 > fourOfAKind2) return true;
 
@@ -74,7 +84,7 @@ public class PE_054 {
 
         boolean flush1 = flush(hand1);
         boolean flush2 = flush(hand2);
-        if (flush1 && flush2) System.out.println("MÕLEMAD FLUSH");
+        if (flush1 && flush2) System.out.println("BOTH FLUSH");
         if (!flush1 && flush2) return false;
         else if (flush1 && !flush2) return true;
 
@@ -107,7 +117,7 @@ public class PE_054 {
 
         int[] highCards1 = highestCardScores(multiples1);
         int[] highCards2 = highestCardScores(multiples2);
-        if (highCards1.length != highCards2.length) throw new RuntimeException("MÄDA: " + Arrays.toString(hand1) + ", " + Arrays.toString(hand2));
+        if (highCards1.length != highCards2.length) throw new RuntimeException("BAD: " + Arrays.toString(hand1) + ", " + Arrays.toString(hand2));
         for (int i = 0; i < highCards1.length; i++) {
             if (highCards1[i] < highCards2[i]) return false;
             else if (highCards1[i] > highCards2[i]) return true;
@@ -143,6 +153,7 @@ public class PE_054 {
             multiples.add(startingMultiples);
         }
 
+        if (multiples.isEmpty()) return new int[0][];
         return Converter.deepListToArr(multiples);
     }
     private static int[] highestCardScores(int[][] multiples) {

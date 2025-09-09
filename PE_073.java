@@ -1,9 +1,15 @@
+import util.Divisors;
+
 public class PE_073 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int[] fraction1 = {1, 3};
         int[] fraction2 = {1, 2};
-        int limitD = 12_000;
-        System.out.println(findNumberOfFractionsBetween(fraction1, fraction2, limitD));
+        int limit = 12_000;
+        return findNumberOfFractionsBetween(fraction1, fraction2, limit);
     }
 
     private static int findNumberOfFractionsBetween(int[] fraction1, int[] fraction2, int limitD) {

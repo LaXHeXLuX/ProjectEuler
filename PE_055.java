@@ -1,18 +1,23 @@
+import util.Converter;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PE_055 {
     public static void main(String[] args) {
-        int[] answer = findLychrelNumbersUnder10_000();
-        System.out.println(Arrays.toString(answer));
-        System.out.println(answer.length);
+        System.out.println(PE());
     }
 
-    public static int[] findLychrelNumbersUnder10_000() {
+    public static long PE() {
+        int limit = 10_000;
+        int[] answer = findLychrelNumbersUnder(limit);
+        return answer.length;
+    }
+
+    public static int[] findLychrelNumbersUnder(int limit) {
         List<Integer> lychrelNumbers = new ArrayList<>();
 
-        for (int i = 5; i < 10_000; i++) {
+        for (int i = 5; i < limit; i++) {
             if (iterationsToProducePalindrome(i) < 0) lychrelNumbers.add(i);
         }
 

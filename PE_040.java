@@ -1,13 +1,19 @@
+import util.Converter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class PE_040 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int[] indexes = {1, 10, 100, 1_000, 10_000, 100_000, 1_000_000};
         for (int i = 0; i < indexes.length; i++) {
             indexes[i]--;
         }
-        System.out.println(productOfConstantDigits(indexes));
+        return productOfConstantDigits(indexes);
     }
 
     private static int[] constantDigitsUntil(int limit) {
@@ -30,7 +36,6 @@ public class PE_040 {
 
         for (int index : indexes) {
             product *= constantDigits[index];
-            System.out.println(index + ", " + constantDigits[index] + ", " + product);
         }
 
         return product;

@@ -1,9 +1,14 @@
 public class PE_001 {
     public static void main(String[] args) {
-        int[] dividers = {3, 5};
-        int n = 100;
-        System.out.println(sumOfMultiplesOf(dividers, n));
+        System.out.println(PE());
     }
+
+    public static long PE() {
+        int[] dividers = {3, 5};
+        int n = 1000;
+        return sumOfMultiplesOf(dividers, n);
+    }
+
     private static long sumOfMultiplesOf(int[] dividers, long limit) {
         long sum = 0;
         for (int i = 1; i < limit; i++) {
@@ -11,6 +16,7 @@ public class PE_001 {
         }
         return sum;
     }
+
     private static boolean isMultipleOf(int[] dividers, long n) {
         for (int divider : dividers) {
             if (n % divider == 0) return true;

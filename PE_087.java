@@ -1,20 +1,18 @@
-import java.util.Arrays;
+import util.Converter;
+import util.Primes;
 
 public class PE_087 {
     private static int[] primes;
-    public static void main(String[] args) {
-        long start = System.currentTimeMillis();
 
+    public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int limit = 50_000_000;
         primes = makePrimes(limit);
-
-        System.out.println(Arrays.toString(primes));
-
         int[] powerTriplets = getPowerTriplets(limit);
-        System.out.println(powerTriplets.length);
-
-        long end = System.currentTimeMillis();
-        System.out.println(STR."Time: \{end - start} ms");
+        return powerTriplets.length;
     }
 
     private static int[] makePrimes(int limit) {

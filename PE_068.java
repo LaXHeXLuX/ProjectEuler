@@ -1,24 +1,44 @@
+import util.Converter;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PE_068 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int size = 5;
-        int[][] rings = magicNGonRings(size);
-        for (int[] ring : rings) {
-            System.out.println(Arrays.toString(ring));
-            int[][] converted = convertToRing(ring);
-            for (int[] ints : converted) {
-                System.out.println(Arrays.toString(ints));
-            }
-            System.out.println();
-        }
+        int digitRestriction = 15;
+        int[][] nGons = magicNGonRings(size);
+        return maxConcatRing(nGons, digitRestriction);
     }
 
     private static int[][] magicNGonRings(int n) {
         int[] nGonRing= new int[n*2];
         return findNGonRings(nGonRing);
+    }
+
+    private static long maxConcatRing(int[][] nGons, int digitRestriction) {
+        long limit = (long) Math.pow(10, digitRestriction+1);
+        long biggest = 0;
+        for (int[] nGon : nGons) {
+            long asLong = convertToLong(nGon);
+            if (asLong > biggest && (digitRestriction == -1 || asLong < limit)) biggest = asLong;
+        }
+        return biggest;
+    }
+
+    private static long convertToLong(int[] nGon) {
+        int[][] ring = convertToRing(nGon);
+        StringBuilder n = new StringBuilder();
+        for (int[] ints : ring) {
+            for (int i : ints) {
+                n.append(i);
+            }
+        }
+        return Long.parseLong(String.valueOf(n));
     }
 
     private static int[][] convertToRing(int[] nGon) {
@@ -108,7 +128,7 @@ public class PE_068 {
             currentRing[index] = 0;
             currentRing[index+3] = 0;
         }
-        if (finalRings.size() == 0) return new int[0][];
+        if (finalRings.isEmpty()) return new int[0][];
         return Converter.listToArr(finalRings);
     }
 

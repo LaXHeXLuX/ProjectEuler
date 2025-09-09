@@ -1,37 +1,59 @@
+import util.Combinations;
+import util.Converter;
+import util.LongFraction;
+import util.Primes;
+
 public class PE_070 {
+    private static boolean[] primes;
+    private static int[] smallPrimes;
+
     public static void main(String[] args) {
-        long start = System.currentTimeMillis();
+        System.out.println(PE());
+    }
 
+    public static long PE() {
         int limit = 10_000_000;
-        int[] allPrimes = Converter.booleanArrToIntArr(Primes.sieveOfPrimes(limit));
-        System.out.println("Time to make all primes: " + (System.currentTimeMillis()-start) + " ms");
-        int answer = (int) findNumberWithPropertyWithSmallestScore(limit, allPrimes);
-        System.out.println(answer + " - " + Primes.eulersTotient(answer));
-
-        long end = System.currentTimeMillis();
-        System.out.println("Time: " + (end-start) + " ms");
+        primes = Primes.sieveOfPrimes(limit);
+        smallPrimes = Converter.booleanArrToIntArr(Primes.sieveOfPrimes(100));
+        return findNumberWithPropertyWithSmallestScore();
     }
 
     private static boolean hasProperty(long n, long totient) {
         int[] primeDigits = Converter.digitArray(n);
         int[] numberDigits = Converter.digitArray(totient);
-        return Combinations.isPermutationOf(primeDigits, numberDigits);
+        return Combinations.isPermutation(primeDigits, numberDigits);
     }
-    private static long findNumberWithPropertyWithSmallestScore(int limit, int[] primes) {
-        int indexLimit = primes.length-1;
-        int limitSqrt = (int) Math.sqrt(limit);
-        while (primes[indexLimit] > limitSqrt) indexLimit--;
 
-        for (int primeIndex1 = indexLimit; primeIndex1 >= 0; primeIndex1--) {
-            int upperBound = Primes.upperBoundForNumberOfSmallerPrimes(limit/primes[primeIndex1]);
-            if (upperBound >= primes.length) upperBound = primes.length-1;
-
-            for (int primeIndex2 = upperBound; primeIndex2 >= primeIndex1; primeIndex2--) {
-                long number = (long) primes[primeIndex1] * primes[primeIndex2];
-                long totient = Primes.eulersTotient(number);
-                if (hasProperty(number, totient)) return number;
+    private static int findNumberWithPropertyWithSmallestScore() {
+        LongFraction smallestScore = new LongFraction(-1, 1);
+        int smallestN = -1;
+        for (int i = primes.length-1; i > 1; i-=2) {
+            boolean skip = false;
+            for (int smallPrime : smallPrimes) {
+                if (i % smallPrime == 0) {
+                    skip = true;
+                    break;
+                }
+            }
+            if (skip) continue;
+            int totient;
+            LongFraction score;
+            if (primes[i]) {
+                totient = i-1;
+                if (smallestScore.numerator >= 0 && smallestScore.compareTo(new LongFraction(i, totient)) < 0) {
+                    return smallestN;
+                }
+                continue;
+            }
+            totient = Math.toIntExact(Primes.eulersTotient(i));
+            if (!hasProperty(i, totient)) continue;
+            score = new LongFraction(i, totient);
+            if (smallestScore.numerator < 0 || score.compareTo(smallestScore) < 0) {
+                smallestN = i;
+                smallestScore = score;
             }
         }
-        return -1;
+
+        return smallestN;
     }
 }

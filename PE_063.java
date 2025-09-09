@@ -1,13 +1,17 @@
+import util.Converter;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PE_063 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         BigInteger[] solutions = solve();
-        System.out.println(Arrays.toString(solutions));
-        System.out.println(solutions.length);
+        return solutions.length;
     }
 
     private static BigInteger[] solve() {

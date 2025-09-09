@@ -4,9 +4,13 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class PE_042 {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         String file = "PE_042_words.txt";
-        System.out.println(countTriangleWords(parse(file)));
+        return countTriangleWords(parse(file));
     }
 
     private static int getWordValue(String word) {
@@ -40,9 +44,14 @@ public class PE_042 {
         return triangleNumbers[value];
     }
 
-    private static String[] parse(String filename) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(filename));
-        String line = br.readLine();
+    private static String[] parse(String filename) {
+        String line;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            line = br.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         String[] words = line.split(",");
 
         for (int i = 0; i < words.length; i++) {

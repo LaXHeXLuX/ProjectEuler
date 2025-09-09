@@ -1,11 +1,14 @@
-import java.util.Arrays;
+import util.Primes;
 
 public class PE_027 {
     public static void main(String[] args) {
-        int limit = 50_000;
+        System.out.println(PE());
+    }
+
+    public static long PE() {
+        int limit = 1_000;
         int[] bestAB = findBestQuadraticFormulaWithLimits(limit, limit);
-        System.out.println(Arrays.toString(bestAB));
-        System.out.println(bestAB[0]*bestAB[1]);
+        return (long) bestAB[0] * bestAB[1];
     }
 
     private static int[] findBestQuadraticFormulaWithLimits(int limitA, int limitB) {
@@ -40,6 +43,4 @@ public class PE_027 {
         if (n <= 1) return false;
         return primes[n];
     }
-
-
 }

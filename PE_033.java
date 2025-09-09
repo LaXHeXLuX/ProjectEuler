@@ -1,12 +1,19 @@
+import util.ArrayFunctions;
+import util.Converter;
+import util.Divisors;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class PE_033 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int limit = 100;
         int[][] curiousFractions = findCuriousFractions(limit);
-        for (int[] curiousFraction : curiousFractions) System.out.println(Arrays.toString(curiousFraction));
 
         int a = 1;
         int b = 1;
@@ -15,7 +22,7 @@ public class PE_033 {
             b *= fraction[1];
         }
 
-        System.out.println(simplifyFraction(a, b)[1]);
+        return simplifyFraction(a, b)[1];
     }
 
     private static int[][] findCuriousFractions(int limit) {
@@ -42,10 +49,10 @@ public class PE_033 {
             if (digitsA[i] == 0) continue;
             for (int j = 0; j < digitsB.length; j++) {
                 if (digitsA[i] == digitsB[j]) {
-                    int a = (int) Converter.digitFromArrayLong(digitsA);
-                    int b = (int) Converter.digitFromArrayLong(digitsB);
-                    int newA = (int) Converter.digitFromArrayLong(ArrayFunctions.removeIndex(digitsA, i));
-                    int newB = (int) Converter.digitFromArrayLong(ArrayFunctions.removeIndex(digitsB, j));
+                    int a = (int) Converter.fromDigitArray(digitsA);
+                    int b = (int) Converter.fromDigitArray(digitsB);
+                    int newA = (int) Converter.fromDigitArray(ArrayFunctions.removeIndex(digitsA, i));
+                    int newB = (int) Converter.fromDigitArray(ArrayFunctions.removeIndex(digitsB, j));
 
                     int[] fraction = simplifyFraction(a, b);
                     int[] newFraction = simplifyFraction(newA, newB);

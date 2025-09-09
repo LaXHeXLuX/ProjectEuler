@@ -4,10 +4,13 @@ import java.util.Set;
 
 public class PE_029 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int limit = 100;
         Set<BigInteger> powers = distinctPowers(limit, limit);
-        System.out.println(powers);
-        System.out.println(powers.size());
+        return powers.size();
     }
 
     private static Set<BigInteger> distinctPowers(int limitA, int limitB) {

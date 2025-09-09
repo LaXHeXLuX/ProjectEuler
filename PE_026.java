@@ -1,9 +1,13 @@
-import java.util.Arrays;
+import util.LongFraction;
 
 public class PE_026 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int limit = 1001;
-        System.out.println(longestReciprocalCycleUnder(limit));
+        return longestReciprocalCycleUnder(limit);
     }
 
     private static int longestReciprocalCycleUnder(int limit) {
@@ -16,7 +20,6 @@ public class PE_026 {
             if (reciprocal[1].length > longest) {
                 longest = reciprocal[1].length;
                 longestNumber = i;
-                System.out.println(i + ", " + longest + ": " + Arrays.deepToString(reciprocal));
             }
         }
         return longestNumber;

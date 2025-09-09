@@ -1,11 +1,17 @@
+import util.Converter;
+import util.Pandigital;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PE_038 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int[] biggest = biggestPandigitalProduct();
-        System.out.println(Arrays.toString(biggest));
+        return biggest[biggest.length-1];
     }
 
     private static int[] concatenatedProductsOf(long n) {
@@ -30,7 +36,7 @@ public class PE_038 {
 
             if (!Pandigital.isPandigital(concatenatedProduct)) continue;
 
-            int product = (int) Converter.digitFromArrayLong(concatenatedProduct);
+            int product = (int) Converter.fromDigitArray(concatenatedProduct);
 
             if (product > biggestProduct) {
                 biggestProduct = product;

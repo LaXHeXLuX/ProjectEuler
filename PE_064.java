@@ -1,13 +1,19 @@
+import util.ArrayFunctions;
+import util.Converter;
+import util.Divisors;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class PE_064 {
     public static void main(String[] args) {
-        int limit = 10_000;
-        System.out.println(countOdds(limit));
+        System.out.println(PE());
+    }
 
-        System.out.println(Arrays.toString(getCycle(7)));
+    public static long PE() {
+        int limit = 10_000;
+        return countOdds(limit);
     }
 
     private static int countOdds(int limit) {

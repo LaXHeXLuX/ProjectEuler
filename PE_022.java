@@ -1,20 +1,31 @@
-import java.io.*;
-import java.util.Arrays;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class PE_022 {
-    public static void main(String[] args) throws IOException {
-        String filename = "PE_022_names.txt";
-        String[] names = parse(filename);
-        names = mergeSort(names);
-        System.out.println(Arrays.toString(names));
-        System.out.println(sumOfAllScores(names));
+    public static void main(String[] args) {
+        System.out.println(PE());
     }
-    private static String[] parse(String filename) throws IOException {
-        BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(filename)));
-        String names = bf.readLine();
+
+    public static long PE() {
+        String[] names = parse();
+        names = mergeSort(names);
+        return sumOfAllScores(names);
+    }
+
+    private static String[] parse() {
+        String names;
+        try {
+            BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream("PE_022_names.txt")));
+            names = bf.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         names = names.replaceAll("\"", "");
         return names.split(",");
     }
+
     private static String[] mergeSort(String[] arr) {
         if (arr.length == 1) return arr;
         String[] arr1 = new String[arr.length/2];
@@ -37,6 +48,7 @@ public class PE_022 {
         }
         return sorted;
     }
+
     private static int nameValue(String name) {
         int valueConstant = -64;
         int sum = 0;
@@ -46,6 +58,7 @@ public class PE_022 {
         }
         return sum;
     }
+
     private static int sumOfAllScores(String[] words) {
         int sum = 0;
         for (int i = 0; i < words.length; i++) {

@@ -1,7 +1,12 @@
 public class PE_019 {
     public static void main(String[] args) {
-        System.out.println(countingSundays());
+        System.out.println(PE());
     }
+
+    public static long PE() {
+        return countingSundays();
+    }
+
     private static int countingSundays() {
         int[] months = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         // the day is monday, 01.01.1901
@@ -20,6 +25,7 @@ public class PE_019 {
         }
         return sundays;
     }
+
     private static boolean isLeapYear(int year) {
         if (year % 4 != 0) return false;
         if (year % 100 != 0) return true;

@@ -6,15 +6,13 @@ public class PE_076 {
     private static Map<String, Long> waysToSum;
 
     public static void main(String[] args) {
-        long start = System.currentTimeMillis();
+        System.out.println(PE());
+    }
 
+    public static long PE() {
         waysToSum = new HashMap<>();
-
         int n = 100;
-        System.out.println(waysToSum(n));
-
-        long end = System.currentTimeMillis();
-        System.out.println("Time: " + (end-start) + " ms");
+        return waysToSum(n);
     }
 
     private static long waysToSum(int n) {

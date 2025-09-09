@@ -1,11 +1,18 @@
+import util.Converter;
+
 import java.math.BigInteger;
 
 public class PE_016 {
     public static void main(String[] args) {
-        int n = 2;
-        int power = 1000;
-        System.out.println(sumOfDigits(power(n ,power)));
+        System.out.println(PE());
     }
+
+    public static long PE() {
+        int n = 2;
+        int p = 1000;
+        return sumOfDigits(power(n, p));
+    }
+
     private static BigInteger power(int n, int power) {
         BigInteger startingNumber = BigInteger.valueOf(n);
         BigInteger answer = startingNumber;
@@ -14,6 +21,7 @@ public class PE_016 {
         }
         return answer;
     }
+
     private static long sumOfDigits(BigInteger n) {
         long sum = 0;
         int[] digitArray = Converter.digitArray(n);
@@ -22,5 +30,4 @@ public class PE_016 {
         }
         return sum;
     }
-
 }

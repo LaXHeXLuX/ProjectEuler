@@ -1,109 +1,106 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import util.ArrayFunctions;
+import util.Converter;
+import util.Primes;
+
+import java.util.*;
+
 
 public class PE_060 {
+    private static boolean[] primes;
+    private static int[] primesInt;
+    private static Set<Integer> lowestSumPrimeSet;
+    private static int lowestSum = Integer.MAX_VALUE;
+    private static final Map<Integer, Set<Integer>> primePairs = new HashMap<>();
+
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int size = 5;
-        int[][] set = generateNthPrimeSetSize(size);
-        System.out.println(Arrays.deepToString(set));
-        System.out.println(set.length);
-        set = mergeSortBySum(set);
-        System.out.println(sum(set[0]));
+        Set<Integer> set = nthPrimeSet(size);
+        return sum(set);
     }
 
-    private static int[][] mergeSortBySum(int[][] arr) {
-        if (arr.length <= 1) return arr;
-        int[][] arr1 = new int[arr.length/2][];
-        int[][] arr2 = new int[arr.length - arr.length/2][];
-        System.arraycopy(arr, 0, arr1, 0, arr1.length);
-        System.arraycopy(arr, arr1.length, arr2, 0, arr2.length);
-        arr1 = mergeSortBySum(arr1);
-        arr2 = mergeSortBySum(arr2);
-        int[][] sorted = new int[arr.length][];
-        int index1 = 0;
-        int index2 = 0;
-        for (int i = 0; i < sorted.length; i++) {
-            if (index2 == arr2.length || index1 < arr1.length && sum(arr1[index1]) <= sum(arr2[index2])) {
-                sorted[i] = arr1[index1];
-                index1++;
-            } else {
-                sorted[i] = arr2[index2];
-                index2++;
-            }
-        }
-        return sorted;
-    }
-
-    private static int sum(int[] arr) {
+    private static int sum(Set<Integer> set) {
         int sum = 0;
-        for (int a : arr) sum += a;
+        for (int a : set) sum += a;
         return sum;
     }
 
-    private static int[][] generateNthPrimeSetSize(int n) {
-        boolean[] primes = Primes.sieveOfPrimes(1_000_000_000);
-        System.out.println("Primes done");
-        int[] primesInt = Converter.booleanArrToIntArr(ArrayFunctions.subArray(primes, 0, (int) Math.min(Math.pow(10, n+1), 10_000)));
+    private static Set<Integer> nthPrimeSet(int n) {
+        if (n < 2) throw new RuntimeException("n (" + n + ") can't be smaller than 2!");
+        primes = Primes.sieveOfPrimes(1_000_000);
+        primesInt = Converter.booleanArrToIntArr(primes);
+        int biggestPrimeLimit = primesInt[primesInt.length-1];
 
-        List<int[]> firstPrimeSetsList = new ArrayList<>();
-        for (int prime : primesInt) firstPrimeSetsList.add(new int[] {prime});
-        int[][] primeSets = Converter.listToArr(firstPrimeSetsList);
-
-        for (int i = 1; i < n; i++) {
-            primeSets = generateNextPrimeSetSize(primesInt, primeSets, primes);
-        }
-
-        return primeSets;
-    }
-
-    private static int[][] generateNextPrimeSetSize(int[] primes, int[][] currentPrimeSets, boolean[] primesBool) {
-        List<int[]> nextPrimeSets = new ArrayList<>();
-
-        for (int[] currentPrimeSet : currentPrimeSets) {
-            int[][] nextPrimeSubSets = generateNextPrimeSetSize(primes, currentPrimeSet, primesBool);
-            nextPrimeSets.addAll(Arrays.asList(nextPrimeSubSets));
-        }
-
-        return Converter.listToArr(nextPrimeSets);
-    }
-
-    private static int[][] generateNextPrimeSetSize(int[] primes, int[] currentPrimeSet, boolean[] primesBool) {
-        int hasDivisibleOf3 = -1;
-        for (int prime : currentPrimeSet) {
-            if (prime % 3 != 0) {
-                hasDivisibleOf3 = prime % 3;
-                break;
+        for (int prime : primesInt) {
+            if (prime > biggestPrimeLimit) break;
+            if (!primePairs.containsKey(prime)) primePairs.put(prime, primePairSetFor(prime));
+            Set<Set<Integer>> workingPrimeSets = primeSet(n-1, primePairs.get(prime));
+            for (Set<Integer> workingPrimeSet : workingPrimeSets) {
+                workingPrimeSet.add(prime);
+            }
+            for (Set<Integer> workingPrimeSet : workingPrimeSets) {
+                int sum = sum(workingPrimeSet);
+                if (lowestSumPrimeSet == null || lowestSum > sum) {
+                    lowestSumPrimeSet = workingPrimeSet;
+                    lowestSum = sum;
+                    if (biggestPrimeLimit > sum) {
+                        biggestPrimeLimit = sum;
+                    }
+                }
             }
         }
 
-        List<int[]> primeSets = new ArrayList<>();
-        for (int i = 1; i < primes.length; i++) {
-            if (primes[i] <= currentPrimeSet[currentPrimeSet.length-1]) continue;
-            if (hasDivisibleOf3 != -1 && primes[i] % 3 != hasDivisibleOf3) continue;
-            int[] newPrimeSet = ArrayFunctions.concatenate(currentPrimeSet, new int[] {primes[i]});
-            if (isPrimePairSet(newPrimeSet, primesBool)) primeSets.add(newPrimeSet);
-        }
-
-        return Converter.listToArr(primeSets);
+        return lowestSumPrimeSet;
     }
 
-    private static boolean isPrimePairSet(int[] numbers, boolean[] primes) {
-        int[][] possiblePairs = Combinations.chooseNElements(numbers, 2, true);
+    private static Set<Set<Integer>> primeSet(int size, Set<Integer> primePairSet) {
+        Set<Set<Integer>> validPrimeSets = new HashSet<>();
+        if (size == 1) {
+            for (Integer prime : primePairSet) {
+                validPrimeSets.add(new TreeSet<>(Collections.singleton(prime)));
+            }
+            return validPrimeSets;
+        }
+        if (size > primePairSet.size()) return validPrimeSets;
+        if (sum(primePairSet) > lowestSum) return validPrimeSets;
 
-        for (int[] pair : possiblePairs) {
-            if (!isPrimePair(pair, primes)) return false;
+        for (Integer i : primePairSet) {
+            TreeSet<Integer> union = new TreeSet<>(primePairs.get(i));
+            union.retainAll(primePairSet);
+            Set<Set<Integer>> nextValidSets = primeSet(size-1, union);
+            for (Set<Integer> nextValidSet : nextValidSets) {
+                Set<Integer> validSet = new TreeSet<>(nextValidSet);
+                validSet.add(i);
+                validPrimeSets.add(validSet);
+            }
         }
 
-        return true;
+        return validPrimeSets;
     }
 
-    private static boolean isPrimePair(int[] pair, boolean[] primes) {
-        int[] digits1 = Converter.digitArray(pair[0]);
-        int[] digits2 = Converter.digitArray(pair[1]);
-        int[] concatenationDigits = ArrayFunctions.concatenate(digits1, digits2);
-        int concatenation = (int) Converter.digitFromArrayLong(concatenationDigits);
+    private static TreeSet<Integer> primePairSetFor(int p1) {
+        TreeSet<Integer> primePairSet = new TreeSet<>();
+        for (int p2 : primesInt) {
+            if (p2 >= p1) break;
+            if (isPrimePair(p1, p2)) primePairSet.add(p2);
+        }
+        return primePairSet;
+    }
 
-        return primes[concatenation];
+    private static boolean isPrimePair(int p1, int p2) {
+        int[] digits1 = Converter.digitArray(p1);
+        int[] digits2 = Converter.digitArray(p2);
+        long p12 = Converter.fromDigitArray(ArrayFunctions.concatenate(digits1, digits2));
+        long p21 = Converter.fromDigitArray(ArrayFunctions.concatenate(digits2, digits1));
+
+        return isPrime(p12) && isPrime(p21);
+    }
+
+    private static boolean isPrime(long n) {
+        if (n < primes.length && n >= 0) return primes[Math.toIntExact(n)];
+        return Primes.isPrime(n);
     }
 }

@@ -1,23 +1,23 @@
+import util.ArrayFunctions;
+import util.Converter;
+import util.PolygonalNumber;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class PE_061 {
     public static void main(String[] args) {
-        long start = System.currentTimeMillis();
+        System.out.println(PE());
+    }
 
+    public static long PE() {
         int n = 6;
         int[][] combinations = generateNWorkingNumbers(n);
 
-        System.out.println("Answer:");
-        for (int[] comb : combinations) System.out.println(Arrays.toString(comb));
-
         int sum = 0;
         for (int num : combinations[0]) sum += num;
-        System.out.println(sum);
-
-        long end = System.currentTimeMillis();
-        System.out.println("TIME: " + (end-start));
+        return sum;
     }
 
     private static int[][] generateNWorkingNumbers(int n) {
@@ -30,7 +30,6 @@ public class PE_061 {
         }
         
         allPolygons = ArrayFunctions.removeIndex(allPolygons, 0);
-        System.out.println(Arrays.deepToString(currentCombinations));
         List<int[]> workingCombinations = new ArrayList<>();
 
         for (int[] currentCombination : currentCombinations) {
@@ -38,7 +37,6 @@ public class PE_061 {
             workingCombinations.addAll(Arrays.stream(newCombinations).toList());
         }
 
-        System.out.println();
         List<int[]> finalCombinations = new ArrayList<>();
         for (int[] workingCombination : workingCombinations) {
             if (pairIsCyclic(workingCombination[workingCombination.length-1], workingCombination[0])) {
@@ -46,6 +44,7 @@ public class PE_061 {
             }
         }
 
+        if (finalCombinations.isEmpty()) return new int[0][];
         return Converter.listToArr(finalCombinations);
     }
 
@@ -64,6 +63,7 @@ public class PE_061 {
             }
         }
 
+        if (newCombinations.isEmpty()) return new int[0][];
         return Converter.listToArr(newCombinations);
     }
 
@@ -77,6 +77,7 @@ public class PE_061 {
             }
         }
 
+        if (newCombinations.isEmpty()) return new int[0][];
         return Converter.listToArr(newCombinations);
     }
 

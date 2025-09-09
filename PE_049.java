@@ -1,18 +1,34 @@
+import util.Combinations;
+import util.Converter;
+import util.Primes;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PE_049 {
     public static void main(String[] args) {
-        int limit = 100_000;
+        System.out.println(PE());
+    }
+
+    public static long PE() {
+        int limit = 10_000;
         int[][] unusualTerms = findUnusualTermsUnder(limit);
         for (int[] unusualTerm : unusualTerms) {
-            System.out.println(Arrays.toString(unusualTerm));
+            if (unusualTerm[0] != 1487) return concatenate(unusualTerm);
         }
+        return -1;
+    }
+
+    private static long concatenate(int[] arr) {
+        StringBuilder n = new StringBuilder();
+        for (int i : arr) {
+            n.append(i);
+        }
+        return Long.parseLong(n.toString());
     }
 
     private static int[][] findUnusualTermsUnder(int limit) {
-        int inARow = 4;
+        int inARow = 3;
         boolean[] primes = Primes.sieveOfPrimes(limit);
         List<int[]> unusualTerms = new ArrayList<>();
 
@@ -22,7 +38,7 @@ public class PE_049 {
             addUnusualTerms(startingNumber, validAdders, inARow, unusualTerms);
         }
 
-        return Converter.listToArr(unusualTerms);
+        return Converter.listToArr(unusualTerms, int[].class);
     }
 
     private static void addUnusualTerms(int startingNumber, int[] adders, int inARow, List<int[]> unusualTerms) {
@@ -47,7 +63,7 @@ public class PE_049 {
             if (isUnusual(n, adder, primes, inARow)) adders.add(adder);
         }
 
-        return Converter.listToArr(adders);
+        return Converter.listToArr(adders, Integer.class);
     }
 
     private static boolean isUnusual(int n, int adder, boolean[] primes, int inARow) {
@@ -57,7 +73,7 @@ public class PE_049 {
             if (!primes[n]) return false;
             int[] originalDigits = Converter.digitArray(originalN);
             int[] nDigits = Converter.digitArray(n);
-            if (!Combinations.isPermutationOf(originalDigits, nDigits)) return false;
+            if (!Combinations.isPermutation(originalDigits, nDigits)) return false;
         }
 
         return true;

@@ -1,55 +1,76 @@
+import util.Converter;
+import util.Primes;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PE_037 {
+    private static boolean[] primes;
+
     public static void main(String[] args) {
-        long[] all = findAllTruncatablePrimes();
-        System.out.println(Arrays.toString(all));
+        System.out.println(PE());
+    }
+
+    public static long PE() {
+        int[] all = findAllTruncatablePrimes();
 
         long sum = 0;
         for (long a : all) sum += a;
-        System.out.println(sum);
+        return sum;
     }
 
-    private static long[] getTruncations(long n) {
-        int[] digits = Converter.digitArray(n);
-        int[][] truncations = new int[digits.length*2-1][];
-
-        for (int i = 0; i < digits.length; i++) {
-            truncations[i] = new int[i+1];
-            System.arraycopy(digits, 0, truncations[i], 0, truncations[i].length);
+    private static boolean isTruncatablePrime(int n) {
+        int x = n;
+        while (x > 0) {
+            if (!primes[x]) return false;
+            x /= 10;
         }
-        for (int i = 0; i < digits.length-1; i++) {
-            int truncationIndex = digits.length+i;
-            truncations[truncationIndex] = new int[digits.length-i-1];
-            System.arraycopy(digits, i+1, truncations[truncationIndex], 0, truncations[truncationIndex].length);
-        }
-
-        long[] truncatedNumbers = new long[truncations.length];
-        for (int i = 0; i < truncations.length; i++) {
-            truncatedNumbers[i] = Converter.digitFromArrayLong(truncations[i]);
-        }
-        return truncatedNumbers;
-    }
-
-    private static boolean isTruncatablePrime(long n, boolean[] primes) {
-        long[] truncations = getTruncations(n);
-        for (long truncation : truncations) {
-            if (!primes[(int) truncation]) return false;
+        x = 10;
+        while (x < n) {
+            int truncation = n % x;
+            if (!primes[truncation]) return false;
+            x *= 10;
         }
         return true;
     }
 
-    private static long[] findAllTruncatablePrimes() {
-        int limit = 1_000_000;
-        boolean[] primes = Primes.sieveOfPrimes(limit);
-        List<Long> truncatables = new ArrayList<>();
+    private static List<Integer> findAllTruncatablePrimesHelper(int digitAmount, int lastDigit) {
+        if (digitAmount == 0) return new ArrayList<>();
+        List<Integer> truncatablePrimes = new ArrayList<>();
+        if (digitAmount == 1) {
+            truncatablePrimes.add(2);
+            truncatablePrimes.add(3);
+            truncatablePrimes.add(5);
+            truncatablePrimes.add(7);
+            return truncatablePrimes;
+        }
 
-        for (long i = 10; i < limit-1; i++) {
-            if (isTruncatablePrime(i, primes)) {
-                truncatables.add(i);
+        int[] options = new int[] {1, 3, 7, 9};
+        for (int option : options) {
+            List<Integer> nextTruncatablePrimes = findAllTruncatablePrimesHelper(digitAmount-1, option);
+            for (Integer ntp : nextTruncatablePrimes) {
+                int truncatablePrimeContender = ntp * 10 + option;
+                if (primes[truncatablePrimeContender]) {
+                    truncatablePrimes.add(truncatablePrimeContender);
+                }
             }
+        }
+
+        return truncatablePrimes;
+    }
+
+    private static int[] findAllTruncatablePrimes() {
+        primes = Primes.sieveOfPrimes(1_000_000);
+
+        List<Integer> truncatables = new ArrayList<>();
+
+        int digitAmount = 2;
+        while (truncatables.size() < 11) {
+            List<Integer> truncatablePrimeContenders = findAllTruncatablePrimesHelper(digitAmount, -1);
+            for (Integer tpc : truncatablePrimeContenders) {
+                if (isTruncatablePrime(tpc)) truncatables.add(tpc);
+            }
+            digitAmount++;
         }
 
         return Converter.listToArr(truncatables);

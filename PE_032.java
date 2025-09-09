@@ -1,24 +1,34 @@
-import java.util.*;
+import util.Converter;
+import util.Pandigital;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class PE_032 {
     public static void main(String[] args) {
+        System.out.println(PE());
+    }
+
+    public static long PE() {
         int[][] pandigitalProductGroups = findPandigitalProductGroups();
         Set<Integer> products = new HashSet<>();
         for (int[] pandigitalProductGroup : pandigitalProductGroups) {
-            System.out.println(Arrays.toString(pandigitalProductGroup));
             products.add(pandigitalProductGroup[2]);
         }
 
         int sum = 0;
         for (int product : products) sum += product;
-        System.out.println(sum);
+        return sum;
     }
 
     private static int[][] findPandigitalProductGroups() {
         List<int[]> pandigitalProductGroups = new ArrayList<>();
 
-        for (int i = 0; i < 1_000; i++) {
-            for (int j = i+1; j < 10_000; j++) {
+        for (int i = 0; i < 100; i++) {
+            int jLimit = i < 10 ? 10_000 : 1_000;
+            for (int j = i+1; j < jLimit; j++) {
                 int[] productGroup = {i, j, i*j};
                 if (Pandigital.groupIsPandigital(productGroup)) pandigitalProductGroups.add(productGroup);
             }

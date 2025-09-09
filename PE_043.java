@@ -1,58 +1,78 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PE_043 {
+    private static final int[] primes = {2, 3, 5, 7, 11, 13, 17};
+
     public static void main(String[] args) {
-        long[] numbers = findNumbersWithSubStringDivisibility();
-        System.out.println(Arrays.toString(numbers));
+        System.out.println(PE());
+    }
 
+    public static long PE() {
+        Set<String> numbers = pandigitalNumbersWithSubstringDivisibility();
+        return sum(numbers);
+    }
+    
+    private static long sum(Set<String> set) {
         long sum = 0;
-        for(long number : numbers) sum += number;
-        System.out.println(sum);
+        for (String s : set) {
+            sum += Long.parseLong(s);
+        }
+        return sum;
     }
 
-    private static long[] findNumbersWithSubStringDivisibility() {
-        List<Long> numbers = new ArrayList<>();
-        int[] digits = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-        int[][] permutations = Combinations.findPermutations(digits);
-
-        for (int[] permutation : permutations) {
-            permutation = Converter.digitArray(Converter.digitFromArrayLong(permutation));
-            if (!Pandigital.isPandigital(permutation, 0)) continue;
-            long number = Converter.digitFromArrayLong(permutation);
-            if (!hasSubStringDivisibility(number)) continue;
-            numbers.add(number);
+    private static Set<String> pandigitalNumbersWithSubstringDivisibility() {
+        return pandigitalNumbersWithSubstringDivisibilityOfSize(7, "");
+    }
+    
+    private static Set<String> pandigitalNumbersWithSubstringDivisibilityOfSize(int size, String currentNumber) {
+        Set<String> result = new HashSet<>();
+        if (size == 0) {
+            Set<Character> remaining = extraDigits(currentNumber);
+            for (Character c : remaining) {
+                result.add(c + currentNumber);
+            }
+            return result;
         }
-
-        return Converter.listToArr(numbers);
+        if (size == 7) {
+            for (int i = 0; i < 1000; i+=17) {
+                String number = String.format("%03d", i);
+                if (i % 17 != 0) continue;
+                if (hasDuplicates(number)) continue;
+                result.addAll(pandigitalNumbersWithSubstringDivisibilityOfSize(size-1, number));
+            }
+            return result;
+        }
+        for (int i = 0; i < 10; i++) {
+            String number = i + currentNumber;
+            long n = Long.parseLong(number);
+            for (int j = 0; j < 7-size; j++) {
+                n /= 10;
+            }
+            if (n % primes[size-1] != 0) continue;
+            if (hasDuplicates(number)) continue;
+            result.addAll(pandigitalNumbersWithSubstringDivisibilityOfSize(size-1, number));
+        }
+        return result;
     }
 
-    private static boolean hasSubStringDivisibility(long n) {
-        int[] dividers = {1, 2, 3, 5, 7, 11, 13, 17, 23, 29, 31, 37, 41, 43, 47, 53};
-        int lengthOfOne = 3;
-        long[] subStrings = divideIntoSubStrings(n, lengthOfOne);
-
-        for (int i = 1; i < subStrings.length; i++) {
-            if (subStrings[i] % dividers[i] != 0) return false;
+    private static boolean hasDuplicates(String n) {
+        Set<Character> elements = new HashSet<>();
+        for (int i = 0; i < n.length(); i++) {
+            char c = n.charAt(i);
+            if (elements.contains(c)) return true;
+            elements.add(c);
         }
 
-        return true;
+        return false;
     }
-
-    private static long[] divideIntoSubStrings(long n, int lengthOfOneSubString) {
-        int[] digitArray = Converter.digitArray(n);
-
-        int[][] subStringDigitArrays = new int[digitArray.length+1-lengthOfOneSubString][];
-        for (int i = 0; i < subStringDigitArrays.length; i++) {
-            subStringDigitArrays[i] = ArrayFunctions.subArray(digitArray, i, i+lengthOfOneSubString-1);
+    
+    private static Set<Character> extraDigits(String n) {
+        Set<Character> digits = new HashSet<>(Set.of('1', '2', '3', '4', '5', '6' ,'7', '8', '9', '0'));
+        for (int i = 0; i < n.length(); i++) {
+            char c = n.charAt(i);
+            digits.remove(c);
         }
-
-        long[] subStrings = new long[subStringDigitArrays.length];
-        for (int i = 0; i < subStrings.length; i++) {
-            subStrings[i] = Converter.digitFromArrayLong(subStringDigitArrays[i]);
-        }
-
-        return subStrings;
+        return digits;
     }
 }
