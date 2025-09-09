@@ -101,6 +101,7 @@ public class test {
         if (l1 != l2) throw new AssertionError(l1 + " != " + l2);
     }
     public static void tests() {
+        double allStart = System.currentTimeMillis();
         for (Class<?> cls : tests.keySet()) {
             System.out.print(cls.getName() + "\r");
             double start = System.currentTimeMillis();
@@ -115,5 +116,7 @@ public class test {
             double time = end - start;
             if (time > 500) System.out.println(cls.getName() + ": " + (end - start) + " ms");
         }
+        double allEnd = System.currentTimeMillis();
+        System.out.println("Total time: " + (allEnd - allStart) + " ms");
     }
 }
