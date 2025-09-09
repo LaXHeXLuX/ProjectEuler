@@ -3,7 +3,7 @@ import util.PolygonalNumber;
 public class PE_044 {
     public static void main(String[] args) {
         System.out.println(PE());
-    }
+    } // help here
 
     public static long PE() {
         return findSmallestDifferenceWithProperty();
@@ -19,7 +19,8 @@ public class PE_044 {
             for (int n1 = n0+1; 3L*n1 + 1 <= p0; n1++) {
 
                 long p1 = PolygonalNumber.polygonalNumberLong(5, n1);
-                int[] xContenders = quadraticSolutions(3, 6*n1-1, -n0*(3*n0-1));
+                int a = 3;
+                int[] xContenders = quadraticSolutions(a, 6*n1-1, -n0*(3*n0-1));
                 //System.out.println(n0 + ": " + p0 + ", " + n1 + ": " + p1 + ", " + Arrays.toString(xContenders));
                 for (int x : xContenders) {
                     if (x <= 0) continue;

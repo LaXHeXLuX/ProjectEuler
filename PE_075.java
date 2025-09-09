@@ -59,7 +59,7 @@ public class PE_075 {
             }
         }
         
-        if (rightTriangles.size() == 0) return new int[0][];
+        if (rightTriangles.isEmpty()) return new int[0][];
         return Converter.listToArr(rightTriangles);
     }
 
