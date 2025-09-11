@@ -1,18 +1,20 @@
+import util.ArrayFunctions;
 import util.Converter;
 import util.Primes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PE_050 {
+    private static boolean[] primesBool;
+    private static int[] primes;
     public static void main(String[] args) {
         System.out.println(PE());
     }
 
     public static long PE() {
         int limit = 1_000_000;
+        primesBool = Primes.sieveOfPrimes(limit);
+        primes = Converter.booleanArrToIntArr(primesBool);
 
-        int[] combination = largestArrayOfConsecutivePrimes(limit);
+        int[] combination = largestArrayOfConsecutivePrimesSummingToPrime();
         return (sumOfArray(combination));
     }
 
@@ -22,52 +24,37 @@ public class PE_050 {
         return sum;
     }
 
-    private static int[] largestArrayOfConsecutivePrimes(int limit) {
-        boolean[] primesBool = Primes.sieveOfPrimes(limit);
-        int[] primes = Converter.booleanArrToIntArr(primesBool);
-        int[] sums = generateSums(primes);
-
-        int[] largest = {};
-        int minPrime = 2;
-        for (int i = primes.length-1; primes[i] >= minPrime; i--) {
-            int[] combination = findConsecutivePrimesThatSumToN(primes[i], primes);
-            if (combination.length > largest.length) {
-                largest = combination;
-                minPrime = sums[largest.length];
+    private static int[] largestArrayOfConsecutivePrimesSummingToPrime() {
+        int largestStart = 0;
+        int largestEnd = 0;
+        for (int startIndex = 0; ; startIndex++) {
+            if (startIndex + (largestEnd-largestStart) > primesBool.length) break;
+            int sum = 0;
+            boolean flag = true;
+            int i;
+            for (i = 0; i < largestEnd-largestStart; i++) {
+                if (startIndex+i >= primes.length) {
+                    flag = false;
+                    break;
+                }
+                sum += primes[startIndex + i];
+                if (sum >= primesBool.length) {
+                    flag = false;
+                    break;
+                }
             }
-        }
-
-        return largest;
-    }
-
-    private static int[] generateSums(int[] arr) {
-        int[] sums = new int[arr.length];
-        sums[0] = arr[0];
-
-        for (int i = 1; i < arr.length; i++) {
-            sums[i] = sums[i-1] + arr[i];
-        }
-
-        return sums;
-    }
-
-    private static int[] findConsecutivePrimesThatSumToN(int n , int[] primes) {
-
-        for (int startingPrime = 0; startingPrime < primes.length; startingPrime++) {
-            int sum = primes[startingPrime];
-            if (sum == n) return new int[0];
-            List<Integer> currentPrimes = new ArrayList<>();
-            currentPrimes.add(sum);
-
-            for (int i = startingPrime+1; i < primes.length; i++) {
-                sum += primes[i];
-                currentPrimes.add(primes[i]);
-                if (sum >= n) break;
+            if (!flag) continue;
+            sum += primes[startIndex + i];
+            while (sum < primesBool.length) {
+                if (primesBool[sum]) {
+                    largestStart = startIndex;
+                    largestEnd = startIndex + i;
+                }
+                i++;
+                sum += primes[startIndex + i];
             }
-
-            if (sum == n) return Converter.listToArr(currentPrimes);
+            if (i < largestEnd-largestStart) break;
         }
-
-        return new int[0];
+        return ArrayFunctions.subArray(primes, largestStart, largestEnd);
     }
 }
