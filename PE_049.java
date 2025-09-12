@@ -2,80 +2,75 @@ import util.Combinations;
 import util.Converter;
 import util.Primes;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class PE_049 {
+
     public static void main(String[] args) {
         System.out.println(PE());
     }
 
     public static long PE() {
         int limit = 10_000;
-        int[][] unusualTerms = findUnusualTermsUnder(limit);
-        for (int[] unusualTerm : unusualTerms) {
-            if (unusualTerm[0] != 1487) return concatenate(unusualTerm);
+        int inARow = 3;
+        List<List<Integer>> unusualTerms = unusualTermsUnder(limit, inARow);
+        for (List<Integer> unusualTerm : unusualTerms) {
+            if (unusualTerm.getFirst() != 1487) return concat(unusualTerm, inARow);
         }
         return -1;
     }
 
-    private static long concatenate(int[] arr) {
-        StringBuilder n = new StringBuilder();
-        for (int i : arr) {
-            n.append(i);
+    private static long concat(List<Integer> arr, int inARow) {
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < inARow; i++) {
+            s.append(arr.getFirst() + arr.get(1)*i);
         }
-        return Long.parseLong(n.toString());
+        return Long.parseLong(s.toString());
     }
 
-    private static int[][] findUnusualTermsUnder(int limit) {
-        int inARow = 3;
+    private static List<List<Integer>> unusualTermsUnder(int limit, int inARow) {
         boolean[] primes = Primes.sieveOfPrimes(limit);
-        List<int[]> unusualTerms = new ArrayList<>();
+        List<List<Integer>> unusualTerms = new ArrayList<>();
+        Set<Integer> skip = new HashSet<>();
 
-        for (int startingNumber = 1; startingNumber < limit; startingNumber++) {
-            int[] validAdders = findAddersToMakeNUnusual(startingNumber, primes, inARow);
-            if (validAdders.length == 0) continue;
-            addUnusualTerms(startingNumber, validAdders, inARow, unusualTerms);
-        }
-
-        return Converter.listToArr(unusualTerms, int[].class);
-    }
-
-    private static void addUnusualTerms(int startingNumber, int[] adders, int inARow, List<int[]> unusualTerms) {
-        for (int adder : adders) {
-            int[] unusualTerm = new int[inARow];
-
-            for (int i = 0; i < inARow; i++) {
-                unusualTerm[i] = startingNumber + adder*i;
+        for (int i1 = limit/10; i1 < limit; i1++) {
+            if (!primes[i1] || skip.contains(i1)) continue;
+            int[] digits = Converter.digitArray(i1);
+            int[][] perms = Combinations.permutations(digits);
+            Set<Integer> primePermsSet = new HashSet<>();
+            List<Integer> primePerms = new ArrayList<>();
+            for (int[] perm : perms) {
+                int permInt = Math.toIntExact(Converter.fromDigitArray(perm));
+                if (permInt < limit/10 || !primes[permInt]) continue;
+                primePerms.add(permInt);
+                primePermsSet.add(permInt);
+                skip.add(permInt);
             }
-
-            unusualTerms.add(unusualTerm);
+            addUnusualTerms(primePerms, primePermsSet, inARow, unusualTerms);
         }
+
+        return unusualTerms;
     }
 
-    private static int[] findAddersToMakeNUnusual(int n, boolean[] primes, int inARow) {
-        if (!primes[n]) return new int[0];
-        int limit = (int) Math.pow(10, (int)Math.log10(n)+1);
-        int adderLimit = (limit-n) / (inARow-1);
-        List<Integer> adders = new ArrayList<>();
-
-        for (int adder = 2; adder < adderLimit; adder+=2) {
-            if (isUnusual(n, adder, primes, inARow)) adders.add(adder);
+    private static void addUnusualTerms(List<Integer> perms, Set<Integer> permsSet, int inARow, List<List<Integer>> unusualTerms) {
+        for (int i = 0; i < perms.size(); i++) {
+            int p1 = perms.get(i);
+            for (int j = i+1; j < perms.size(); j++) {
+                int p2 = perms.get(j);
+                int diff = p2 - p1;
+                int temp = p2;
+                boolean flag = true;
+                for (int k = 0; k < inARow-2; k++) {
+                    temp += diff;
+                    if (!permsSet.contains(temp)) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag) {
+                    unusualTerms.add(List.of(p1, diff));
+                }
+            }
         }
-
-        return Converter.listToArr(adders, Integer.class);
-    }
-
-    private static boolean isUnusual(int n, int adder, boolean[] primes, int inARow) {
-        int originalN = n;
-        for (int i = 0; i < inARow-1; i++) {
-            n += adder;
-            if (!primes[n]) return false;
-            int[] originalDigits = Converter.digitArray(originalN);
-            int[] nDigits = Converter.digitArray(n);
-            if (!Combinations.isPermutation(originalDigits, nDigits)) return false;
-        }
-
-        return true;
     }
 }
