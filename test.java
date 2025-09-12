@@ -63,7 +63,7 @@ public class test {
         put(PE_057.class, 153L);
         put(PE_058.class, 26241L);
         put(PE_059.class, 129448L);
-        //put(PE_060.class, 26033L);
+        put(PE_060.class, 26033L);
         put(PE_061.class, 28684L);
         put(PE_062.class, 127035954683L);
         put(PE_063.class, 49L);

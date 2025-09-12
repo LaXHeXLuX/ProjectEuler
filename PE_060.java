@@ -1,9 +1,7 @@
-import util.ArrayFunctions;
 import util.Converter;
 import util.Primes;
 
 import java.util.*;
-
 
 public class PE_060 {
     private static boolean[] primes;
@@ -13,12 +11,16 @@ public class PE_060 {
     private static final Map<Integer, Set<Integer>> primePairs = new HashMap<>();
 
     public static void main(String[] args) {
+        double start = System.currentTimeMillis();
         System.out.println(PE());
+        double end = System.currentTimeMillis();
+        System.out.println((end - start) + " ms");
     }
 
     public static long PE() {
         int size = 5;
         Set<Integer> set = nthPrimeSet(size);
+        System.out.println(set);
         return sum(set);
     }
 
@@ -30,14 +32,15 @@ public class PE_060 {
 
     private static Set<Integer> nthPrimeSet(int n) {
         if (n < 2) throw new RuntimeException("n (" + n + ") can't be smaller than 2!");
-        primes = Primes.sieveOfPrimes(1_000_000);
+        primes = Primes.sieveOfPrimes(10_000_000);
         primesInt = Converter.booleanArrToIntArr(primes);
         int biggestPrimeLimit = primesInt[primesInt.length-1];
-
         for (int prime : primesInt) {
             if (prime > biggestPrimeLimit) break;
-            if (!primePairs.containsKey(prime)) primePairs.put(prime, primePairSetFor(prime));
-            Set<Set<Integer>> workingPrimeSets = primeSet(n-1, primePairs.get(prime));
+            primePairs.put(prime, primePairSetFor(prime));
+            Set<Integer> currentPrimePairs = primePairs.get(prime);
+
+            Set<Set<Integer>> workingPrimeSets = primeSet(n-1, currentPrimePairs);
             for (Set<Integer> workingPrimeSet : workingPrimeSets) {
                 workingPrimeSet.add(prime);
             }
@@ -58,21 +61,21 @@ public class PE_060 {
 
     private static Set<Set<Integer>> primeSet(int size, Set<Integer> primePairSet) {
         Set<Set<Integer>> validPrimeSets = new HashSet<>();
+        if (size == 0) return validPrimeSets;
         if (size == 1) {
             for (Integer prime : primePairSet) {
-                validPrimeSets.add(new TreeSet<>(Collections.singleton(prime)));
+                validPrimeSets.add(Set.of(prime));
             }
             return validPrimeSets;
         }
         if (size > primePairSet.size()) return validPrimeSets;
-        if (sum(primePairSet) > lowestSum) return validPrimeSets;
 
         for (Integer i : primePairSet) {
-            TreeSet<Integer> union = new TreeSet<>(primePairs.get(i));
+            Set<Integer> union = new HashSet<>(primePairs.get(i));
             union.retainAll(primePairSet);
             Set<Set<Integer>> nextValidSets = primeSet(size-1, union);
             for (Set<Integer> nextValidSet : nextValidSets) {
-                Set<Integer> validSet = new TreeSet<>(nextValidSet);
+                Set<Integer> validSet = new HashSet<>(nextValidSet);
                 validSet.add(i);
                 validPrimeSets.add(validSet);
             }
@@ -81,8 +84,8 @@ public class PE_060 {
         return validPrimeSets;
     }
 
-    private static TreeSet<Integer> primePairSetFor(int p1) {
-        TreeSet<Integer> primePairSet = new TreeSet<>();
+    private static Set<Integer> primePairSetFor(int p1) {
+        Set<Integer> primePairSet = new HashSet<>();
         for (int p2 : primesInt) {
             if (p2 >= p1) break;
             if (isPrimePair(p1, p2)) primePairSet.add(p2);
@@ -91,10 +94,10 @@ public class PE_060 {
     }
 
     private static boolean isPrimePair(int p1, int p2) {
-        int[] digits1 = Converter.digitArray(p1);
-        int[] digits2 = Converter.digitArray(p2);
-        long p12 = Converter.fromDigitArray(ArrayFunctions.concatenate(digits1, digits2));
-        long p21 = Converter.fromDigitArray(ArrayFunctions.concatenate(digits2, digits1));
+        String p1s = String.valueOf(p1);
+        String p2s = String.valueOf(p2);
+        long p12 = Long.parseLong(p1s + p2s);
+        long p21 = Long.parseLong(p2s + p1s);
 
         return isPrime(p12) && isPrime(p21);
     }
