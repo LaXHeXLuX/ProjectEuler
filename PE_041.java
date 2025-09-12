@@ -11,10 +11,10 @@ public class PE_041 {
     }
 
     private static int largestPandigitalPrime() {
-        int limit = 10_000_000; // 1 through 9 (as well as 1 through 8) would divide 3
-        boolean[] primes = Primes.sieveOfPrimes(limit);
+        int limit = 7_654_321; // 1 through 9 (as well as 1 through 8) would divide 3
+        boolean[] primes = Primes.sieveOfPrimes(limit+1);
 
-        for (int i = limit-1; i > 0; i--) {
+        for (int i = limit; i > 0; i-=2) {
             if (!primes[i]) continue;
             if (!Pandigital.isPandigital(i)) continue;
             return i;
