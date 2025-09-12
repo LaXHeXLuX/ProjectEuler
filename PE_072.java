@@ -1,5 +1,3 @@
-import util.Primes;
-
 public class PE_072 {
     private static int[] totients;
 
