@@ -11,10 +11,7 @@ public class PE_060 {
     private static final Map<Integer, Set<Integer>> primePairs = new HashMap<>();
 
     public static void main(String[] args) {
-        double start = System.currentTimeMillis();
         System.out.println(PE());
-        double end = System.currentTimeMillis();
-        System.out.println((end - start) + " ms");
     }
 
     public static long PE() {
