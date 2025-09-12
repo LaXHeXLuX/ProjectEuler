@@ -17,7 +17,6 @@ public class PE_060 {
     public static long PE() {
         int size = 5;
         Set<Integer> set = nthPrimeSet(size);
-        System.out.println(set);
         return sum(set);
     }
 
