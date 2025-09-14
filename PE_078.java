@@ -1,11 +1,10 @@
 import util.PolygonalNumber;
 
-import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PE_078 {
-    private static Map<Integer, BigInteger> eulersFunction;
+    private static Map<Integer, Long> eulersFunction;
 
     public static void main(String[] args) {
         System.out.println(PE());
@@ -20,43 +19,31 @@ public class PE_078 {
 
     private static int firstToDivideN(int n) {
         int answer = 1;
-        BigInteger ways = eulersFunction(answer);
+        long ways = eulersFunction(answer, n);
 
-        while (!divides(ways, n)) {
+        while (ways != 0) {
             answer++;
-            ways = eulersFunction(answer);
+            ways = eulersFunction(answer, n);
         }
 
         return answer;
     }
 
-    private static boolean divides(BigInteger n, int divider) {
-        BigInteger dividerBigInteger = BigInteger.valueOf(divider);
-        return n.remainder(dividerBigInteger).equals(BigInteger.ZERO);
-    }
-
-    private static int getNthStep(int n) {
-        return (int) PolygonalNumber.polygonalNumberLong(5, n);
-    }
-
-    private static BigInteger eulersFunction(int n) {
-        if (n < 0) return BigInteger.ZERO;
-        if (n == 0) return BigInteger.ONE;
+    private static long eulersFunction(int n, int mod) {
+        if (n < 0) return 0;
+        if (n == 0) return 1;
 
         if (eulersFunction.containsKey(n)) return eulersFunction.get(n);
 
         int step = 1;
-        BigInteger sum = BigInteger.ZERO;
+        long sum = 0;
         while (step <= n) {
-            int nthStep = getNthStep(step);
+            int nthStep = (int) PolygonalNumber.polygonalNumberLong(5, step);
             if (nthStep > n) break;
-            if (step % 2 == 1) {
-                sum = sum.add(eulersFunction(n-nthStep));
-                sum = sum.add(eulersFunction(n-nthStep-step));
-            } else {
-                sum = sum.subtract(eulersFunction(n-nthStep));
-                sum = sum.subtract(eulersFunction(n-nthStep-step));
-            }
+            int coefficient = (step % 2) * 2 - 1;
+            sum += coefficient * eulersFunction(n-nthStep, mod);
+            sum += coefficient * eulersFunction(n-nthStep-step, mod);
+            sum = sum % mod;
             step++;
         }
 
