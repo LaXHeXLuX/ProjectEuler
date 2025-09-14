@@ -6,7 +6,7 @@ public class PE_067 {
     }
 
     public static long PE() {
-        String filename = "PE_067_triangle.txt";
+        String filename = "inputs/PE_067_triangle.txt";
         int[][] triangle = Parser.parseManyInts(filename);
         return maximumSum(triangle);
     }

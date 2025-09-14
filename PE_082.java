@@ -7,7 +7,7 @@ public class PE_082 {
     }
 
     public static long PE() {
-        int[][] matrix = Parser.parseManyInts("PE_082_matrix.txt", ",");
+        int[][] matrix = Parser.parseManyInts("inputs/PE_082_matrix.txt", ",");
         Graph graph = makeGraph(matrix);
         return graph.djikstra("start", "end");
     }

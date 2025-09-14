@@ -17,7 +17,7 @@ public class PE_022 {
     private static String[] parse() {
         String names;
         try {
-            BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream("PE_022_names.txt")));
+            BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream("inputs/PE_022_names.txt")));
             names = bf.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -14,7 +14,7 @@ public class PE_054 {
     }
 
     public static long PE() {
-        String file = "PE_054_poker.txt";
+        String file = "inputs/PE_054_poker.txt";
         String[][][] hands = parse(file);
 
         int counter = 0;

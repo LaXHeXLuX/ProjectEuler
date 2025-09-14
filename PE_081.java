@@ -6,7 +6,7 @@ public class PE_081 {
     }
 
     public static long PE() {
-        String filename = "PE_081_matrix.txt";
+        String filename = "inputs/PE_081_matrix.txt";
         int[][] matrix = parser(filename);
         return minimumSum(matrix);
     }

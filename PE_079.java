@@ -13,7 +13,7 @@ public class PE_079 {
     }
 
     public static long PE() {
-        String filename = "PE_079_keylog.txt";
+        String filename = "inputs/PE_079_keylog.txt";
         int[] passcodes = parseUnique(filename);
 
         List<int[]> shortestPasswords = shortestPossiblePassword(passcodes);

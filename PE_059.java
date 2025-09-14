@@ -14,7 +14,7 @@ public class PE_059 {
     public static long PE() {
         // lowercase letters at 97-122 included
 
-        String filename = "PE_059_cipher.txt";
+        String filename = "inputs/PE_059_cipher.txt";
         int[] chars = parse(filename);
 
         decode(chars);

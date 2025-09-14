@@ -9,7 +9,7 @@ public class PE_042 {
     }
 
     public static long PE() {
-        String file = "PE_042_words.txt";
+        String file = "inputs/PE_042_words.txt";
         return countTriangleWords(parse(file));
     }
 
