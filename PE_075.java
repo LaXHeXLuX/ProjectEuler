@@ -1,4 +1,3 @@
-import util.ArrayFunctions;
 import util.Converter;
 import util.Divisors;
 
@@ -13,18 +12,18 @@ public class PE_075 {
         int perimeterLimit = 1_500_000;
 
         int n = 1;
-        int[][] rightTriangles = getRightTriangles(perimeterLimit);
-        Map<Integer, int[][]> perimeters = getPerimeters(rightTriangles);
+        List<int[]> rightTriangles = getRightTriangles(perimeterLimit);
+        Map<Integer, List<int[]>> perimeters = getPerimeters(rightTriangles);
 
-        int[] oneSolutionPerimeters = ArrayFunctions.mergeSort(getNSolutionPerimeters(n, perimeters));
+        int[] oneSolutionPerimeters = getNSolutionPerimeters(n, perimeters);
         return oneSolutionPerimeters.length;
     }
 
-    private static int[] getNSolutionPerimeters(int n, Map<Integer, int[][]> perimeters) {
+    private static int[] getNSolutionPerimeters(int n, Map<Integer, List<int[]>> perimeters) {
         List<Integer> oneSolutionPerimeters = new ArrayList<>();
 
         for (Integer integer : perimeters.keySet()) {
-            if (perimeters.get(integer).length == n) oneSolutionPerimeters.add(integer);
+            if (perimeters.get(integer).size() == n) oneSolutionPerimeters.add(integer);
         }
 
         if (oneSolutionPerimeters.isEmpty()) return new int[0];
@@ -39,11 +38,11 @@ public class PE_075 {
         return sum;
     }
 
-    private static int[][] getRightTriangles(int perimeterLimit) {
+    private static List<int[]> getRightTriangles(int perimeterLimit) {
         List<int[]> rightTriangles = new ArrayList<>();
 
         for (int n = 1; n < Math.sqrt(perimeterLimit)/2; n++) {
-            int step = (n % 2 == 1) ? 2 : 1;
+            int step = n % 2 + 1;
             for (int m = n+1; 2*m*(m+n) < perimeterLimit; m += step) {
                 if (Divisors.greatestCommonDivisor(n, m) != 1) continue;
                 for (int k = 1; k <= perimeterLimit/(2*m*(m+n)); k++) {
@@ -53,17 +52,15 @@ public class PE_075 {
                     int b = k*(2*m*n);
                     int c = k*(m2 + n2);
                     int[] triangle = {a, b, c};
-                    if (a + b + c > perimeterLimit) System.out.println("ERROR: " + Arrays.toString(triangle) + ". n,m,k: " + Arrays.toString(new int[]{n, m, k}));
                     rightTriangles.add(triangle);
                 }
             }
         }
-        
-        if (rightTriangles.isEmpty()) return new int[0][];
-        return Converter.listToArr(rightTriangles);
+
+        return rightTriangles;
     }
 
-    private static Map<Integer, int[][]> getPerimeters(int[][] rightTriangles) {
+    private static Map<Integer, List<int[]>> getPerimeters(List<int[]> rightTriangles) {
         Map<Integer, List<int[]>> perimeters = new HashMap<>();
 
         for (int[] rightTriangle : rightTriangles) {
@@ -76,9 +73,9 @@ public class PE_075 {
             else perimeters.get(perimeter).add(rightTriangle);
         }
 
-        Map<Integer, int[][]> betterPerimeters = new HashMap<>();
+        Map<Integer, List<int[]>> betterPerimeters = new HashMap<>();
         for (Integer integer : perimeters.keySet()) {
-            betterPerimeters.put(integer, Converter.listToArr(perimeters.get(integer)));
+            betterPerimeters.put(integer, perimeters.get(integer));
         }
         return betterPerimeters;
     }
