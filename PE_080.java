@@ -1,7 +1,6 @@
 import java.math.BigInteger;
 
 public class PE_080 {
-    static boolean[] squares;
     public static void main(String[] args) {
         System.out.println(PE());
     }
@@ -12,23 +11,16 @@ public class PE_080 {
         return totalOfDigitSums(limit, precision);
     }
 
-    private static void makeSquares(int limit) {
-        squares = new boolean[limit+1];
-        int i = 0;
-        int i2 = 0;
-        while (i2 < squares.length) {
-            squares[i2] = true;
-            i++;
-            i2 = i*i;
-        }
+    private static boolean isSquare(long n) {
+        long root = (long) Math.sqrt(n);
+        return root * root == n;
     }
 
     private static int totalOfDigitSums(int limit, int precision) {
-        makeSquares(limit);
         int total = 0;
 
         for (int i = 0; i <= limit; i++) {
-            if (squares[i]) continue;
+            if (isSquare(i)) continue;
             total += digitSumOfSquareRootOf(i, precision);
         }
 
