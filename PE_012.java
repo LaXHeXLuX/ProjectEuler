@@ -1,5 +1,4 @@
 import util.Divisors;
-import util.PolygonalNumber;
 
 public class PE_012 {
     public static void main(String[] args) {
@@ -7,14 +6,21 @@ public class PE_012 {
     }
 
     public static long PE() {
+        int count = 500;
+        return leastTriangleNumber(count);
+    }
+
+    private static long leastTriangleNumber(int divisorCount) {
         int n = 1;
-        long triangleNumber = PolygonalNumber.polygonalNumberLong(3, n);
-        long[] divisors = Divisors.divisors(triangleNumber);
-        while (divisors.length <= 500) {
+        int divisors = Divisors.divisors(n).length;
+        int nextDivisors = Divisors.divisors((n+1)/2).length;
+        int totalDivisorCount = divisors * nextDivisors;
+        while (totalDivisorCount <= divisorCount) {
             n++;
-            triangleNumber = PolygonalNumber.polygonalNumberLong(3, n);
-            divisors = Divisors.divisors(triangleNumber);
+            divisors = nextDivisors;
+            nextDivisors = Divisors.divisors((n+1)/(n % 2 + 1)).length;
+            totalDivisorCount = divisors * nextDivisors;
         }
-        return triangleNumber;
+        return (long) n * (n+1) / 2;
     }
 }
