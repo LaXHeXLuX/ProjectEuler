@@ -6,7 +6,7 @@ public class PE_065 {
     }
 
     public static long PE() {
-        int n = 10_000;
+        int n = 100;
         BigInteger[] fraction = computeNthConvergentOfE(n);
         BigInteger first = fraction[0];
 
