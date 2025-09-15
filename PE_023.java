@@ -1,46 +1,37 @@
-import util.Converter;
 import util.Divisors;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class PE_023 {
+    private static final Set<Integer> abundantNumberSet = new LinkedHashSet<>();
+
     public static void main(String[] args) {
         System.out.println(PE());
     }
 
     public static long PE() {
         int limit = 28123;
-        long[] abundantNumbers = findAbundantNumbers(limit);
+        makeAbundantNumbers(limit);
         int sum = 0;
         for (int i = 1; i < limit; i++) {
-            if (!isSumOfTwoAbundantNumbers(i, abundantNumbers)) {
+            if (!isSumOfTwoAbundantNumbers(i)) {
                 sum += i;
             }
         }
         return sum;
     }
-
-    private static boolean isAbundant(long n) {
-        return n < Divisors.sumOfDivisors(n);
-    }
-
-    private static long[] findAbundantNumbers(long limit) {
-        List<Long> abundantNumbers = new ArrayList<>();
-
-        for (long i = 2; i < limit; i++) {
-            if (isAbundant(i)) abundantNumbers.add(i);
+    private static void makeAbundantNumbers(long limit) {
+        for (int i = 2; i < limit; i++) {
+            if (i < Divisors.sumOfDivisors(i)) abundantNumberSet.add(i);
         }
-
-        return Converter.listToArr(abundantNumbers);
     }
 
-    private static boolean isSumOfTwoAbundantNumbers(long n, long[] abundantNumbers) {
-        for (long abundantNumber : abundantNumbers) {
+    private static boolean isSumOfTwoAbundantNumbers(int n) {
+        for (int abundantNumber : abundantNumberSet) {
             if (abundantNumber > n) break;
-            long j = n - abundantNumber;
-            if (Arrays.binarySearch(abundantNumbers, j) >= 0) return true;
+            int j = n - abundantNumber;
+            if (abundantNumberSet.contains(j)) return true;
         }
 
         return false;

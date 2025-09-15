@@ -1,18 +1,14 @@
-import util.PolygonalNumber;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class PE_078 {
-    private static Map<Integer, Long> eulersFunction;
+    private static final Map<Integer, Long> eulersFunction = new HashMap<>();
 
     public static void main(String[] args) {
         System.out.println(PE());
     }
 
     public static long PE() {
-        eulersFunction = new HashMap<>();
-
         int n = 1_000_000;
         return firstToDivideN(n);
     }
@@ -38,7 +34,7 @@ public class PE_078 {
         int step = 1;
         long sum = 0;
         while (step <= n) {
-            int nthStep = (int) PolygonalNumber.polygonalNumberLong(5, step);
+            int nthStep = step * (3*step-1)/2;
             if (nthStep > n) break;
             int coefficient = (step % 2) * 2 - 1;
             sum += coefficient * eulersFunction(n-nthStep, mod);

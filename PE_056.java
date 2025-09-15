@@ -1,5 +1,3 @@
-import util.Converter;
-
 import java.math.BigInteger;
 
 public class PE_056 {
@@ -17,8 +15,8 @@ public class PE_056 {
         int[] biggests = new int[3];
         biggests[2] = -1;
 
-        for (int a = 0; a < limitA; a++) {
-            for (int b = 0; b < limitB; b++) {
+        for (int a = limitA; a > 0; a--) {
+            for (int b = limitB; b > 0; b--) {
                 BigInteger power = power(a, b);
                 int digitSum = digitSum(power);
                 if (digitSum > biggests[2]) {
@@ -44,11 +42,11 @@ public class PE_056 {
     }
 
     private static int digitSum(BigInteger n) {
-        int[] digits = Converter.digitArray(n);
         int sum = 0;
-
-        for (int digit : digits) sum += digit;
-
+        while (n.compareTo(BigInteger.ZERO) > 0) {
+            sum += n.remainder(BigInteger.TEN).intValue();
+            n = n.divide(BigInteger.TEN);
+        }
         return sum;
     }
 }
