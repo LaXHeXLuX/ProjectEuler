@@ -2,30 +2,37 @@ import java.math.BigInteger;
 
 public class PE_025 {
     public static void main(String[] args) {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
-        long n = 1000;
+        int n = 1000;
         return firstFibonacciWithNDigits(n);
     }
 
-    private static long firstFibonacciWithNDigits(long n) {
+    private static long firstFibonacciWithNDigits(int n) {
         BigInteger fibo1 = BigInteger.ONE;
         BigInteger fibo2 = BigInteger.ONE;
-        long indexOfFibo2 = 2;
-        while (numberOfDigits(fibo2) < n) {
-            BigInteger temp = fibo2;
-            fibo2 = fibo2.add(fibo1);
-            fibo1 = temp;
-            indexOfFibo2++;
+        int indexOfFibo2 = 2;
+        int diff = n - numberOfDigits(fibo2);
+        while (diff > 0) {
+            for (int i = 0; i < diff; i++) {
+                BigInteger temp = fibo2;
+                fibo2 = fibo2.add(fibo1);
+                fibo1 = temp;
+                indexOfFibo2++;
+            }
+            diff = n - numberOfDigits(fibo2);
         }
         return indexOfFibo2;
     }
 
-    private static long numberOfDigits(BigInteger n) {
+    private static int numberOfDigits(BigInteger n) {
         if (n.compareTo(BigInteger.ZERO) == 0) return 0;
-        long digitCount = 1;
+        int digitCount = 1;
         while(n.compareTo(BigInteger.TEN) >= 0) {
             digitCount++;
             n = n.divide(BigInteger.TEN);
