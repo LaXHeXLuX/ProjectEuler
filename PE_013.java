@@ -114,7 +114,7 @@ public class PE_013 {
     }
 
     private static BigInteger[] parser() {
-        String[] textNumbers = PE_013.INPUT.split("\n");
+        String[] textNumbers = INPUT.split("\n");
         BigInteger[] numbers = new BigInteger[textNumbers.length];
         for (int i = 0; i < textNumbers.length; i++) {
             numbers[i] = new BigInteger(textNumbers[i]);
@@ -134,7 +134,7 @@ public class PE_013 {
         int amountOfDigits = amountOfDigits(number);
         while (amountOfDigits > n) {
             number = number.divide(BigInteger.TEN);
-            amountOfDigits = amountOfDigits(number);
+            amountOfDigits--;
         }
         return number;
     }

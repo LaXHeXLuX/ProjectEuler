@@ -1,5 +1,3 @@
-import util.Converter;
-
 import java.math.BigInteger;
 
 public class PE_065 {
@@ -8,12 +6,16 @@ public class PE_065 {
     }
 
     public static long PE() {
-        int n = 100;
+        int n = 10_000;
         BigInteger[] fraction = computeNthConvergentOfE(n);
-        int[] digits = Converter.digitArray(fraction[0]);
+        BigInteger first = fraction[0];
 
         int sum = 0;
-        for (int digit : digits) sum += digit;
+        while (first.compareTo(BigInteger.ZERO) > 0) {
+            BigInteger[] divRem = first.divideAndRemainder(BigInteger.TEN);
+            sum += divRem[1].intValue();
+            first = divRem[0];
+        }
         return sum;
     }
 

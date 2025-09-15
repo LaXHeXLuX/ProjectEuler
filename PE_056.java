@@ -44,8 +44,9 @@ public class PE_056 {
     private static int digitSum(BigInteger n) {
         int sum = 0;
         while (n.compareTo(BigInteger.ZERO) > 0) {
-            sum += n.remainder(BigInteger.TEN).intValue();
-            n = n.divide(BigInteger.TEN);
+            BigInteger[] divRem = n.divideAndRemainder(BigInteger.TEN);
+            sum += divRem[1].intValue();
+            n = divRem[0];
         }
         return sum;
     }

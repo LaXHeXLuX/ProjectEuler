@@ -1,5 +1,4 @@
 import util.Combinations;
-import util.Converter;
 
 import java.math.BigInteger;
 
@@ -15,9 +14,12 @@ public class PE_020 {
 
     public static int sumOfDigitsOfFactorial(int n) {
         BigInteger factorial = Combinations.factorialBigInteger(n);
-        int[] digits = Converter.digitArray(factorial);
         int sumOfDigits = 0;
-        for (int digit : digits) sumOfDigits += digit;
+        while (factorial.compareTo(BigInteger.ZERO) > 0) {
+            BigInteger[] divRem = factorial.divideAndRemainder(BigInteger.TEN);
+            sumOfDigits += divRem[1].intValue();
+            factorial = divRem[0];
+        }
         return sumOfDigits;
     }
 }

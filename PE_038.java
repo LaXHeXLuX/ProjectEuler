@@ -14,13 +14,16 @@ public class PE_038 {
         return biggest[biggest.length-1];
     }
 
-    private static int[] concatenatedProductsOf(long n) {
+    private static int[] concatenatedProductsOf(int n) {
         List<Integer> productDigits = new ArrayList<>();
 
         int i = 1;
         while (productDigits.size() < 9) {
-            int[] digits = Converter.digitArray(n*i);
-            for (int digit : digits) productDigits.add(digit);
+            int temp = n*i;
+            while (temp > 0) {
+                productDigits.add(temp % 10);
+                temp /= 10;
+            }
             i++;
         }
 

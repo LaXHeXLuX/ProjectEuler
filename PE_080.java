@@ -40,8 +40,9 @@ public class PE_080 {
         int sum = 0;
 
         while (!bi.equals(BigInteger.ZERO)) {
-            sum += bi.remainder(BigInteger.TEN).intValue();
-            bi = bi.divide(BigInteger.TEN);
+            BigInteger[] divRem = bi.divideAndRemainder(BigInteger.TEN);
+            sum += divRem[1].intValue();
+            bi = divRem[0];
         }
 
         return sum;
