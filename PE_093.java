@@ -4,6 +4,8 @@ import java.util.*;
 
 public class PE_093 {
     private static int[] digits;
+    private static final int[] factorials = {1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880};
+    private static final int[] powersOf4 = {1, 4, 16, 64, 256, 1024, 4096, 16384, 65536, 262144};
 
     public static void main(String[] args) {
         double s = System.currentTimeMillis();
@@ -67,8 +69,8 @@ public class PE_093 {
         Set<Integer> resultsSet = new HashSet<>();
         int[][] permutations = Combinations.permutations(digits);
         for (int[] permutation : permutations) {
-            for (int parenthesis = 0; parenthesis < Combinations.factorial(digits.length-1); parenthesis++) {
-                for (int ops = 0; ops < Math.pow(4, digits.length-1); ops++) {
+            for (int parenthesis = 0; parenthesis < factorials[digits.length-1]; parenthesis++) {
+                for (int ops = 0; ops < powersOf4[digits.length-1]; ops++) {
                     int result;
                     try {
                         result = compute(permutation, parenthesis, ops);
@@ -92,22 +94,20 @@ public class PE_093 {
             parenthesis /= i;
             int currentOp = ops % 4;
             ops /= 4;
-            double result = compute(results.get(currentPos), results.get(currentPos+1), currentOp);
+            double i1 = results.get(currentPos);
+            double i2 = results.get(currentPos+1);
+            double result = switch (currentOp) {
+                case 0 -> i1 + i2;
+                case 1 -> i1 - i2;
+                case 2 -> i1 * i2;
+                case 3 -> i1 / i2;
+                default -> throw new IllegalStateException("Unexpected value: " + currentOp);
+            };
             results.set(currentPos, result);
             results.remove(currentPos+1);
         }
         int resultInt = (int) (double) results.getFirst();
         if ((double) resultInt != results.getFirst()) throw new ArithmeticException("Result not integer: " + results.getFirst());
         return resultInt;
-    }
-
-    private static double compute(double i1, double i2, int op) {
-        return switch (op) {
-            case 0 -> i1 + i2;
-            case 1 -> i1 - i2;
-            case 2 -> i1 * i2;
-            case 3 -> i1 / i2;
-            default -> throw new IllegalStateException("Unexpected value: " + op);
-        };
     }
 }
