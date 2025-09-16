@@ -10,7 +10,6 @@ public class PE_094 {
         int limit = 1_000_000_000;
         long sum = 0;
         List<Long> perimeters = perimeters(limit);
-        System.out.println(perimeters.size() + " - " + perimeters);
         for (long p : perimeters) {
             sum += p;
         }
@@ -21,7 +20,7 @@ public class PE_094 {
         List<Long> perimeters = new ArrayList<>();
         int baseLimit = perimeterLimit / 3 / 2;
         long n;
-        for (n = 2; n < baseLimit; n+=2) { // help here
+        for (n = 2; n < baseLimit; n++) { // help here
             if (isSquare(3*n*n + 4*n + 1)) {
                 //System.out.println("3*n*n + 4*n + 1: " + n);
                 perimeters.add(6*n + 2);
