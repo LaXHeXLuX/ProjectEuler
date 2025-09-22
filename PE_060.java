@@ -11,13 +11,16 @@ public class PE_060 {
     private static final Map<Integer, Set<Integer>> primePairs = new HashMap<>();
 
     public static void main(String[] args) {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
         int size = 5;
-        Set<Integer> set = nthPrimeSet(size);
-        return sum(set);
+        nthPrimeSet(size);
+        return sum(lowestSumPrimeSet);
     }
 
     private static int sum(Set<Integer> set) {
@@ -26,13 +29,12 @@ public class PE_060 {
         return sum;
     }
 
-    private static Set<Integer> nthPrimeSet(int n) {
+    private static void nthPrimeSet(int n) {
         if (n < 2) throw new RuntimeException("n (" + n + ") can't be smaller than 2!");
-        primes = Primes.sieveOfPrimes(10_000_000);
+        primes = Primes.sieveOfPrimes(100_000_000);
         primesInt = Converter.booleanArrToIntArr(primes);
-        int biggestPrimeLimit = primesInt[primesInt.length-1];
         for (int prime : primesInt) {
-            if (prime > biggestPrimeLimit) break;
+            if (prime > lowestSum) break;
             primePairs.put(prime, primePairSetFor(prime));
             Set<Integer> currentPrimePairs = primePairs.get(prime);
 
@@ -45,14 +47,9 @@ public class PE_060 {
                 if (lowestSumPrimeSet == null || lowestSum > sum) {
                     lowestSumPrimeSet = workingPrimeSet;
                     lowestSum = sum;
-                    if (biggestPrimeLimit > sum) {
-                        biggestPrimeLimit = sum;
-                    }
                 }
             }
         }
-
-        return lowestSumPrimeSet;
     }
 
     private static Set<Set<Integer>> primeSet(int size, Set<Integer> primePairSet) {
