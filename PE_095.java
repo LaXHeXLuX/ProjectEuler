@@ -5,19 +5,13 @@ public class PE_095 {
     private static boolean[] skip;
 
     public static void main(String[] args) {
-        double s = System.currentTimeMillis();
         System.out.println(PE());
-        double e = System.currentTimeMillis();
-        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
-        double s = System.currentTimeMillis();
         int limit = 1_000_000;
         makeDivisorSums(limit);
         skip = new boolean[limit+1];
-        double e = System.currentTimeMillis();
-        System.out.println((e-s) + " divisor ms");
         Set<Integer> longestChain = longestChain();
         System.out.println(longestChain);
         return Collections.min(longestChain);
