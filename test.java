@@ -99,6 +99,8 @@ public class test {
         put(PE_093.class, 1258L);
         put(PE_094.class, 518408346L);
         put(PE_095.class, 14316L);
+        put(PE_096.class, 24702L);
+        put(PE_097.class, 8739992577L);
     }};
 
     public static void main(String[] args) {
