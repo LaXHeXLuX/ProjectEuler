@@ -8,7 +8,10 @@ public class PE_070 {
     private static int[] smallPrimes;
 
     public static void main(String[] args) {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
@@ -16,12 +19,6 @@ public class PE_070 {
         primes = Primes.sieveOfPrimes(limit);
         smallPrimes = Converter.booleanArrToIntArr(Primes.sieveOfPrimes(100));
         return findNumberWithPropertyWithSmallestScore();
-    }
-
-    private static boolean hasProperty(long n, long totient) {
-        int[] primeDigits = Converter.digitArray(n);
-        int[] numberDigits = Converter.digitArray(totient);
-        return Combinations.isPermutation(primeDigits, numberDigits);
     }
 
     private static int findNumberWithPropertyWithSmallestScore() {
@@ -55,5 +52,11 @@ public class PE_070 {
         }
 
         return smallestN;
+    }
+
+    private static boolean hasProperty(long n, long totient) {
+        int[] primeDigits = Converter.digitArray(n);
+        int[] numberDigits = Converter.digitArray(totient);
+        return Combinations.isPermutation(primeDigits, numberDigits);
     }
 }
