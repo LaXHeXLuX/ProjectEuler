@@ -1,7 +1,8 @@
-import util.Combinations;
 import util.Converter;
 import util.LongFraction;
 import util.Primes;
+
+import java.util.*;
 
 public class PE_070 {
     private static boolean[] primes;
@@ -55,8 +56,22 @@ public class PE_070 {
     }
 
     private static boolean hasProperty(long n, long totient) {
-        int[] primeDigits = Converter.digitArray(n);
-        int[] numberDigits = Converter.digitArray(totient);
-        return Combinations.isPermutation(primeDigits, numberDigits);
+        Map<Integer, Integer> digits = new HashMap<>();
+        while (n > 0) {
+            int digit = Math.toIntExact(n % 10);
+            digits.put(digit, digits.getOrDefault(digit, 0) + 1);
+            n /= 10;
+        }
+        while (totient > 0) {
+            int digit = Math.toIntExact(totient % 10);
+            int current = digits.getOrDefault(digit, 0);
+            if (current == 0) return  false;
+            if (current == 1) digits.remove(digit);
+            else digits.put(digit, current-1);
+
+            totient /= 10;
+        }
+
+        return digits.isEmpty();
     }
 }
