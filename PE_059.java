@@ -1,25 +1,18 @@
-import util.ArrayFunctions;
 import util.Converter;
 import util.Parser;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class PE_059 {
     public static void main(String[] args) {
         System.out.println(PE());
-    } // help here
+    }
 
     public static long PE() {
-        // lowercase letters at 97-122 included
-
         String filename = "inputs/PE_059_cipher.txt";
         int[] chars = parse(filename);
 
-        decode(chars);
-
-        int[] key = {'e', 'x', 'p'};
+        int[] key = findLikelyKey(chars);
         int[] answer = XOR(chars, key);
         return sum(answer);
     }
@@ -28,21 +21,6 @@ public class PE_059 {
         int sum = 0;
         for (int a : arr) sum += a;
         return sum;
-    }
-
-    private static void decode(int[] chars) {
-        int[][] likelyKeys = findLikelyKeys(chars);
-        for (int i = 0; i < likelyKeys[0].length; i++) {
-            if (likelyKeys[0][i] < 97 || likelyKeys[0][i] > 122) continue;
-            for (int j = 0; j < likelyKeys[1].length; j++) {
-                if (likelyKeys[1][j] < 97 || likelyKeys[1][j] > 122) continue;
-                for (int k = 0; k < likelyKeys[2].length; k++) {
-                    if (likelyKeys[2][k] < 97 || likelyKeys[2][k] > 122) continue;
-                    int[] key = {likelyKeys[0][i], likelyKeys[1][j], likelyKeys[2][k]};
-                    int[] decodedChars = XOR(chars, key);
-                }
-            }
-        }
     }
 
     private static int[] parse(String filename) {
@@ -76,58 +54,24 @@ public class PE_059 {
         return new int[][] {chars1, chars2, chars3};
     }
 
-    private static int[][] findLikelyKeys(int[] chars) {
+    private static int[] findLikelyKey(int[] chars) {
         int[][] threeSets = divideIntoThree(chars);
-        int[][] likelyKeys = new int[3][3];
-        int mostLikelyChar = 'e';
+        int[] likelyKey = new int[3];
         for (int i = 0; i < threeSets.length; i++) {
-            threeSets[i] = ArrayFunctions.mergeSort(threeSets[i]);
-            int[] commonElements = nMostCommonElements(threeSets[i]);
-            likelyKeys[i] = XOR(commonElements, new int[] {mostLikelyChar});
+            likelyKey[i] = XOR(mostCommonElement(threeSets[i]), ' ');
         }
 
-        return likelyKeys;
+        return likelyKey;
     }
 
-    private static int[] nMostCommonElements(int[] arr) {
-        int[] arrClone = ArrayFunctions.mergeSort(arr);
-        int[] nMostCommonElements = new int[3];
-        int[] numberOfMostCommonElements = new int[3];
-        Arrays.fill(numberOfMostCommonElements, -1);
-        Arrays.fill(nMostCommonElements, -1);
-
-        int currentStreak = 1;
-        for (int i = 1; i < arrClone.length; i++) {
-            if (arrClone[i] == arrClone[i-1]) {
-                currentStreak++;
-                continue;
-            }
-            int smallestIndex = 0;
-            int smallest = numberOfMostCommonElements[0];
-            for (int j = 1; j < numberOfMostCommonElements.length; j++) {
-                if (numberOfMostCommonElements[j] < smallest) {
-                    smallest = numberOfMostCommonElements[j];
-                    smallestIndex = j;
-                }
-            }
-            if (currentStreak > numberOfMostCommonElements[smallestIndex]) {
-                numberOfMostCommonElements[smallestIndex] = currentStreak;
-                nMostCommonElements = ArrayFunctions.switchElement(nMostCommonElements, nMostCommonElements[smallestIndex], arrClone[i-1]);
-            }
-            currentStreak = 1;
+    private static int mostCommonElement(int[] arr) {
+        Map<Integer, Integer> freqMap = new HashMap<>();
+        int mostCommon = arr[0];
+        for (int num : arr) {
+            freqMap.put(num, freqMap.getOrDefault(num, 0) + 1);
+            if (freqMap.get(num) > freqMap.get(mostCommon)) mostCommon = num;
         }
-
-        return nMostCommonElements;
-    }
-
-    private static String asciiToString(int[] chars) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (int c : chars) {
-            stringBuilder.append((char) c);
-        }
-
-        return stringBuilder.toString();
+        return mostCommon;
     }
 
     private static int[] XOR(int[] input, int[] key) {
