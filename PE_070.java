@@ -38,7 +38,6 @@ public class PE_070 {
     }
 
     private static int findNumberWithPropertyWithSmallestScore() {
-        // x = (-a + sqrt(aa - ab + bb))/(b-a)
         LongFraction smallestScore = new LongFraction(-1, 1);
         int smallestN = -1;
         for (int i = totients.length-1; i > 1; i-=2) {
