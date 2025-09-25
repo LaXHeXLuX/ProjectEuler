@@ -8,10 +8,7 @@ public class PE_093 {
     private static final int[] powersOf4 = {1, 4, 16, 64, 256, 1024, 4096, 16384, 65536, 262144};
 
     public static void main(String[] args) {
-        double s = System.currentTimeMillis();
         System.out.println(PE());
-        double e = System.currentTimeMillis();
-        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {

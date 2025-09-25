@@ -13,7 +13,6 @@ public class PE_095 {
         makeDivisorSums(limit);
         skip = new boolean[limit+1];
         Set<Integer> longestChain = longestChain();
-        System.out.println(longestChain);
         return Collections.min(longestChain);
     }
 

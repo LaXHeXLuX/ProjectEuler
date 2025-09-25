@@ -22,11 +22,9 @@ public class PE_094 {
         long n;
         for (n = 2; n < baseLimit; n++) { // help here
             if (isSquare(3*n*n + 4*n + 1)) {
-                //System.out.println("3*n*n + 4*n + 1: " + n);
                 perimeters.add(6*n + 2);
             }
             if (isSquare(3*n*n + 2*n)) {
-                //System.out.println("3*n*n + 2*n: " + n);
                 perimeters.add(6*n + 4);
             }
         }
