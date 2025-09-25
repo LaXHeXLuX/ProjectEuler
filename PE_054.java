@@ -69,7 +69,6 @@ public class PE_054 {
 
         int fourOfAKind1 = fourOfAKind(multiples1);
         int fourOfAKind2 = fourOfAKind(multiples2);
-        if (fourOfAKind1 > 0 && fourOfAKind1 == fourOfAKind2) System.out.println("SAME 4");
         if (fourOfAKind1 < fourOfAKind2) return false;
         else if (fourOfAKind1 > fourOfAKind2) return true;
 
@@ -84,13 +83,11 @@ public class PE_054 {
 
         boolean flush1 = flush(hand1);
         boolean flush2 = flush(hand2);
-        if (flush1 && flush2) System.out.println("BOTH FLUSH");
         if (!flush1 && flush2) return false;
         else if (flush1 && !flush2) return true;
 
         int straight1 = straight(multiples1);
         int straight2 = straight(multiples2);
-        if (straight1 > 0 && straight2 > 0) System.out.println("BOTH STRAIGHT");
         if (straight1 < straight2) return false;
         else if (straight1 > straight2) return true;
 
