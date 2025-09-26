@@ -1,4 +1,5 @@
 import util.Graph;
+import util.Primes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,20 +35,19 @@ public class PE_060 {
     private static void nthPrimeSet(int n) {
         if (n < 2) throw new RuntimeException("n (" + n + ") can't be smaller than 2!");
         int limit = 100_000_000;
-        composites = new boolean[limit];
+        composites = new boolean[limit/2];
         composites[0] = true;
-        composites[1] = true;
-        for (int i = 2; i < Math.sqrt(limit); i++) {
-            if (composites[i]) continue;
+        for (int i = 3; i < Math.sqrt(limit); i+=2) {
+            if (composites[i/2]) continue;
             int prod = i*i;
             while (prod < limit && prod > 0) {
-                composites[prod] = true;
-                prod += i;
+                composites[prod/2] = true;
+                prod += 2*i;
             }
             primesInt.add(i);
         }
         for (int prime : primesInt) {
-            if (prime > lowestSum) break;
+            if (prime > lowestSum) return;
             String primeString = String.valueOf(prime);
             List<Integer> primePairSet = primePairSetFor(prime);
             primePairGraph.addNode(primeString);
@@ -83,6 +83,11 @@ public class PE_060 {
         int p12 = Integer.parseInt(p1s + p2s);
         int p21 = Integer.parseInt(p2s + p1s);
 
-        return !composites[p12] && !composites[p21];
+        return isPrime(p12) && isPrime(p21);
+    }
+
+    private static boolean isPrime(int p) {
+        if (p/2 < composites.length) return !composites[p/2];
+        return Primes.isPrime(p);
     }
 }
