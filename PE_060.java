@@ -1,17 +1,22 @@
 import util.Graph;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PE_060 {
-    private static boolean[] primes;
+    private static boolean[] composites;
     private static final List<Integer> primesInt = new ArrayList<>();
     private static Set<Integer> lowestSumPrimeSet;
     private static int lowestSum = Integer.MAX_VALUE;
     private static final Graph primePairGraph = new Graph();
 
     public static void main(String[] args) {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
@@ -29,15 +34,14 @@ public class PE_060 {
     private static void nthPrimeSet(int n) {
         if (n < 2) throw new RuntimeException("n (" + n + ") can't be smaller than 2!");
         int limit = 100_000_000;
-        primes = new boolean[limit];
-        Arrays.fill(primes, true);
-        primes[0] = false;
-        primes[1] = false;
+        composites = new boolean[limit];
+        composites[0] = true;
+        composites[1] = true;
         for (int i = 2; i < Math.sqrt(limit); i++) {
-            if (!primes[i]) continue;
+            if (composites[i]) continue;
             int prod = i*i;
             while (prod < limit && prod > 0) {
-                primes[prod] = false;
+                composites[prod] = true;
                 prod += i;
             }
             primesInt.add(i);
@@ -45,7 +49,7 @@ public class PE_060 {
         for (int prime : primesInt) {
             if (prime > lowestSum) break;
             String primeString = String.valueOf(prime);
-            Set<Integer> primePairSet = primePairSetFor(prime);
+            List<Integer> primePairSet = primePairSetFor(prime);
             primePairGraph.addNode(primeString);
             for (Integer i : primePairSet) {
                 String node = String.valueOf(i);
@@ -64,8 +68,8 @@ public class PE_060 {
         }
     }
 
-    private static Set<Integer> primePairSetFor(int p1) {
-        Set<Integer> primePairSet = new HashSet<>();
+    private static List<Integer> primePairSetFor(int p1) {
+        List<Integer> primePairSet = new ArrayList<>();
         for (int p2 : primesInt) {
             if (p2 >= p1) break;
             if (isPrimePair(p1, p2)) primePairSet.add(p2);
@@ -79,6 +83,6 @@ public class PE_060 {
         int p12 = Integer.parseInt(p1s + p2s);
         int p21 = Integer.parseInt(p2s + p1s);
 
-        return primes[p12] && primes[p21];
+        return !composites[p12] && !composites[p21];
     }
 }
