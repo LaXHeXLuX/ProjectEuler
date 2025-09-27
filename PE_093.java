@@ -4,8 +4,6 @@ import java.util.*;
 
 public class PE_093 {
     private static int[] digits;
-    private static final int[] factorials = {1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880};
-    private static final int[] powersOf4 = {1, 4, 16, 64, 256, 1024, 4096, 16384, 65536, 262144};
 
     public static void main(String[] args) {
         System.out.println(PE());
@@ -51,6 +49,7 @@ public class PE_093 {
 
     private static int consecutiveScore(int[] digits) {
         List<Integer> results = results(digits);
+        results.sort(Integer::compareTo);
         int startIndex = Collections.binarySearch(results, 1);
         if (startIndex < 0) return 0;
         int last = results.get(startIndex);
@@ -63,48 +62,40 @@ public class PE_093 {
     }
 
     private static List<Integer> results(int[] digits) {
-        Set<Integer> resultsSet = new HashSet<>();
-        int[][] permutations = Combinations.permutations(digits);
-        for (int[] permutation : permutations) {
-            for (int parenthesis = 0; parenthesis < factorials[digits.length-1]; parenthesis++) {
-                for (int ops = 0; ops < powersOf4[digits.length-1]; ops++) {
-                    int result;
-                    try {
-                        result = compute(permutation, parenthesis, ops);
-                    } catch (ArithmeticException _) {
-                        continue;
-                    }
-                    resultsSet.add(result);
+        Set<Double> results = new HashSet<>();
+        int[][] perms = Combinations.permutations(digits);
+        for (int[] perm : perms) {
+            List<Integer> permList = new ArrayList<>();
+            for (int i : perm) permList.add(i);
+            results.addAll(resultsRec(permList));
+        }
+
+        List<Integer> resultsInt = new ArrayList<>();
+        for (Double d : results) {
+            int i = (int) (double) d;
+            if (i == d) resultsInt.add(i);
+        }
+
+        return resultsInt;
+    }
+
+    private static Set<Double> resultsRec(List<Integer> digits) {
+        if (digits.size() == 1) {
+            return Set.of((double) digits.getFirst());
+        }
+        Set<Double> results = new HashSet<>();
+        for (int leftSize = 1; leftSize < digits.size(); leftSize++) {
+            Set<Double> leftResults = resultsRec(digits.subList(0, leftSize));
+            Set<Double> rightResults = resultsRec(digits.subList(leftSize, digits.size()));
+            for (Double l : leftResults) {
+                for (Double r : rightResults) {
+                    results.add(l + r);
+                    results.add(l - r);
+                    results.add(l * r);
+                    results.add(l / r);
                 }
             }
         }
-
-        List<Integer> results = new ArrayList<>(resultsSet);
-        results.sort(Integer::compareTo);
         return results;
-    }
-
-    private static int compute(int[] permutation, int parenthesis, int ops) {
-        List<Double> results = new ArrayList<>(Arrays.stream(permutation).asDoubleStream().boxed().toList());
-        for (int i = permutation.length-1; i > 0; i--) {
-            int currentPos = parenthesis % i;
-            parenthesis /= i;
-            int currentOp = ops % 4;
-            ops /= 4;
-            double i1 = results.get(currentPos);
-            double i2 = results.get(currentPos+1);
-            double result = switch (currentOp) {
-                case 0 -> i1 + i2;
-                case 1 -> i1 - i2;
-                case 2 -> i1 * i2;
-                case 3 -> i1 / i2;
-                default -> throw new IllegalStateException("Unexpected value: " + currentOp);
-            };
-            results.set(currentPos, result);
-            results.remove(currentPos+1);
-        }
-        int resultInt = (int) (double) results.getFirst();
-        if ((double) resultInt != results.getFirst()) throw new ArithmeticException("Result not integer: " + results.getFirst());
-        return resultInt;
     }
 }
