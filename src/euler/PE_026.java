@@ -1,6 +1,6 @@
-package src.euler;
+package euler;
 
-import util.LongFraction;
+import utils.LongFraction;
 
 public class PE_026 {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package src.euler;
+package euler;
 
 public class PE_014 {
     private static boolean[] skip;

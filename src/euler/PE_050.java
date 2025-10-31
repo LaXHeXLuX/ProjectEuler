@@ -1,8 +1,8 @@
-package src.euler;
+package euler;
 
-import util.ArrayFunctions;
-import util.Converter;
-import util.Primes;
+import utils.ArrayFunctions;
+import utils.Converter;
+import utils.Primes;
 
 public class PE_050 {
     private static boolean[] primesBool;

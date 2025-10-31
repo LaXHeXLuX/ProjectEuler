@@ -1,7 +1,7 @@
-package src.euler;
+package euler;
 
-import util.Converter;
-import util.Primes;
+import utils.Converter;
+import utils.Primes;
 
 public class PE_087 {
     private static int[] primes;

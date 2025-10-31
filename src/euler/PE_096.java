@@ -1,6 +1,6 @@
-package src.euler;
+package euler;
 
-import util.Parser;
+import utils.Parser;
 
 import java.util.*;
 

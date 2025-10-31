@@ -1,6 +1,6 @@
-package src.euler;
+package euler;
 
-import util.Converter;
+import utils.Converter;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

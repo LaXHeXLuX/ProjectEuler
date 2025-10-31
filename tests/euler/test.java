@@ -1,6 +1,4 @@
-package tests.euler;
-
-import src.euler.*;
+package euler;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedHashMap;

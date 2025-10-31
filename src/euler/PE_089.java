@@ -1,6 +1,6 @@
-package src.euler;
+package euler;
 
-import util.Parser;
+import utils.Parser;
 
 public class PE_089 {
     public static void main(String[] args) {

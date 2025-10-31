@@ -1,6 +1,6 @@
-package src.euler;
+package euler;
 
-import util.Converter;
+import utils.Converter;
 
 public class PE_017 {
     public static void main(String[] args) {

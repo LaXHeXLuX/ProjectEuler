@@ -1,7 +1,7 @@
-package src.euler;
+package euler;
 
-import util.Graph;
-import util.Parser;
+import utils.Graph;
+import utils.Parser;
 
 public class PE_082 {
     public static void main(String[] args) {

@@ -1,7 +1,7 @@
-package src.euler;
+package euler;
 
-import util.Combinations;
-import util.Converter;
+import utils.Combinations;
+import utils.Converter;
 
 public class PE_024 {
     public static void main(String[] args) {

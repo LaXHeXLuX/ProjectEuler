@@ -1,4 +1,4 @@
-package src.euler;
+package euler;
 
 public class PE_084 {
     private static final int G2J = 30;

@@ -1,6 +1,6 @@
-package src.euler;
+package euler;
 
-import util.Primes;
+import utils.Primes;
 
 public class PE_003 {
     public static void main(String[] args) {

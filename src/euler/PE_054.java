@@ -1,7 +1,7 @@
-package src.euler;
+package euler;
 
-import util.ArrayFunctions;
-import util.Converter;
+import utils.ArrayFunctions;
+import utils.Converter;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

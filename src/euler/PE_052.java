@@ -1,8 +1,8 @@
-package src.euler;
+package euler;
 
-import util.ArrayFunctions;
-import util.Combinations;
-import util.Converter;
+import utils.ArrayFunctions;
+import utils.Combinations;
+import utils.Converter;
 
 public class PE_052 {
     public static void main(String[] args) {

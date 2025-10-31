@@ -1,7 +1,7 @@
-package src.euler;
+package euler;
 
-import util.Converter;
-import util.Pandigital;
+import utils.Converter;
+import utils.Pandigital;
 
 import java.util.ArrayList;
 import java.util.HashSet;

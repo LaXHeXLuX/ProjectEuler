@@ -1,4 +1,4 @@
-package src.euler;
+package euler;
 
 public class PE_008 {
     public static final String INPUT = """

@@ -1,6 +1,6 @@
-package src.euler;
+package euler;
 
-import util.Divisors;
+import utils.Divisors;
 
 public class PE_071 {
     public static void main(String[] args) {

@@ -1,7 +1,7 @@
-package src.euler;
+package euler;
 
-import util.ArrayFunctions;
-import util.PolygonalNumber;
+import utils.ArrayFunctions;
+import utils.PolygonalNumber;
 
 public class PE_045 {
     public static void main(String[] args) {

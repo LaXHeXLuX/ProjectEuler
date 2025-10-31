@@ -1,6 +1,6 @@
-package src.euler;
+package euler;
 
-import util.Primes;
+import utils.Primes;
 
 import java.util.HashMap;
 import java.util.Map;

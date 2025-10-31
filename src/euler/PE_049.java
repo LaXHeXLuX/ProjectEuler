@@ -1,8 +1,8 @@
-package src.euler;
+package euler;
 
-import util.Combinations;
-import util.Converter;
-import util.Primes;
+import utils.Combinations;
+import utils.Converter;
+import utils.Primes;
 
 import java.util.*;
 

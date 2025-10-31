@@ -1,6 +1,6 @@
-package src.euler;
+package euler;
 
-import util.LongFraction;
+import utils.LongFraction;
 
 import java.util.*;
 

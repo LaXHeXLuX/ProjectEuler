@@ -1,4 +1,4 @@
-package src.euler;
+package euler;
 
 public class PE_028 {
     public static void main(String[] args) {

@@ -1,7 +1,7 @@
-package src.euler;
+package euler;
 
-import util.Pandigital;
-import util.Primes;
+import utils.Pandigital;
+import utils.Primes;
 
 public class PE_041 {
     public static void main(String[] args) {

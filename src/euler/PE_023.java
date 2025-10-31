@@ -1,6 +1,6 @@
-package src.euler;
+package euler;
 
-import util.Divisors;
+import utils.Divisors;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

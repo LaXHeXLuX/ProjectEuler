@@ -1,6 +1,6 @@
-package src.euler;
+package euler;
 
-import util.Combinations;
+import utils.Combinations;
 
 public class PE_015 {
     public static void main(String[] args) {

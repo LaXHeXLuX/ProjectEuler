@@ -1,6 +1,6 @@
-package src.euler;
+package euler;
 
-import util.ArrayFunctions;
+import utils.ArrayFunctions;
 
 public class PE_031 {
     public static void main(String[] args) {

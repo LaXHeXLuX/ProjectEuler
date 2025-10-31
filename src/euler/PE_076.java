@@ -1,4 +1,4 @@
-package src.euler;
+package euler;
 
 import java.util.Arrays;
 import java.util.HashMap;

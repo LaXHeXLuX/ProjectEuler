@@ -1,7 +1,7 @@
-package src.euler;
+package euler;
 
-import util.Converter;
-import util.Divisors;
+import utils.Converter;
+import utils.Divisors;
 
 import java.util.*;
 

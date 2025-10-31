@@ -1,8 +1,8 @@
-package src.euler;
+package euler;
 
-import util.ArrayFunctions;
-import util.Converter;
-import util.Divisors;
+import utils.ArrayFunctions;
+import utils.Converter;
+import utils.Divisors;
 
 import java.util.ArrayList;
 import java.util.Arrays;

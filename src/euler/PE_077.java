@@ -1,7 +1,7 @@
-package src.euler;
+package euler;
 
-import util.Converter;
-import util.Primes;
+import utils.Converter;
+import utils.Primes;
 
 import java.util.Arrays;
 import java.util.HashMap;

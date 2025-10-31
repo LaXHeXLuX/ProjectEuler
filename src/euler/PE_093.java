@@ -1,6 +1,6 @@
-package src.euler;
+package euler;
 
-import util.Combinations;
+import utils.Combinations;
 
 import java.util.*;
 

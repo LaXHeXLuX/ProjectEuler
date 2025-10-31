@@ -1,4 +1,4 @@
-package src.euler;
+package euler;
 
 public class PE_092 {
     private static int[] chainEnds;

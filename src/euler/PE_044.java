@@ -1,6 +1,6 @@
-package src.euler;
+package euler;
 
-import util.PolygonalNumber;
+import utils.PolygonalNumber;
 
 public class PE_044 {
     public static void main(String[] args) {

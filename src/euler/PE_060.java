@@ -1,7 +1,7 @@
-package src.euler;
+package euler;
 
-import util.Graph;
-import util.Primes;
+import utils.Graph;
+import utils.Primes;
 
 import java.util.ArrayList;
 import java.util.List;

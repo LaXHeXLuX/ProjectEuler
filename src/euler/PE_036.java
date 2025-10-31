@@ -1,6 +1,6 @@
-package src.euler;
+package euler;
 
-import util.Converter;
+import utils.Converter;
 
 import java.util.ArrayList;
 import java.util.List;
