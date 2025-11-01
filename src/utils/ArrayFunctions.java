@@ -40,8 +40,7 @@ public class ArrayFunctions {
         return switchElement(arr, oldElement, newElement, true);
     }
     public static <T> T[] switchElement(T[] arr, T oldElement, T newElement, boolean onlyFirst) {
-        T[] newArr = (T[]) Array.newInstance(arr.getClass().getComponentType(), arr.length);
-        System.arraycopy(arr, 0, newArr, 0, newArr.length);
+        T[] newArr = Arrays.copyOf (arr, arr.length);
 
         for (int i = 0; i < arr.length; i++) {
             if (arr[i].equals(oldElement)) {
@@ -59,10 +58,8 @@ public class ArrayFunctions {
     }
     public static <T> T[] mergeSort(T[] arr, Comparator<T> comparator) {
         if (arr.length <= 1) return arr;
-        T[] arr1 = (T[]) Array.newInstance(arr.getClass().getComponentType(), arr.length/2);
-        T[] arr2 = (T[]) Array.newInstance(arr.getClass().getComponentType(), arr.length - arr.length/2);
-        System.arraycopy(arr, 0, arr1, 0, arr1.length);
-        System.arraycopy(arr, arr1.length, arr2, 0, arr2.length);
+        T[] arr1 = Arrays.copyOfRange(arr, 0, arr.length/2);
+        T[] arr2 = Arrays.copyOfRange (arr, arr.length/2, arr.length);
         arr1 = mergeSort(arr1, comparator);
         arr2 = mergeSort(arr2, comparator);
         T[] sorted = (T[]) Array.newInstance(arr.getClass().getComponentType(), arr.length);
