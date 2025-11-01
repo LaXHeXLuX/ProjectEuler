@@ -20,27 +20,6 @@ public class ArrayFunctions {
     public static <T> boolean contains(T el, T arr) {
         return contains((Object) el, Converter.toWrapperArray(arr));
     }
-    public static <T> boolean sortedContains(T el, T[] arr) {
-        if (arr.length == 0) return false;
-        if (arr.length == 1) return Generifier.compareTo(arr[0], el) == 0;
-        int lowIndex = 0;
-        int highIndex = arr.length-1;
-        while (lowIndex != highIndex) {
-            int middleIndex = (lowIndex + highIndex)/2;
-            int compareResult = Generifier.compareTo(arr[middleIndex], el);
-            if (compareResult < 0) {
-                lowIndex = middleIndex+1;
-            }
-            else if (compareResult > 0) {
-                highIndex = middleIndex;
-            }
-            else return true;
-        }
-        return arr[lowIndex].equals(el);
-    }
-    public static <T> boolean sortedContains(T el, T arr) {
-        return sortedContains((Object) el, Converter.toWrapperArray(arr));
-    }
     public static <T> T switchElement(T arr, Object oldElement, Object newElement, boolean onlyFirst) {
         try {
             oldElement = Converter.convertNumberTo(arr.getClass().getComponentType(), (Number) oldElement);
@@ -120,17 +99,6 @@ public class ArrayFunctions {
         T[] newArr = (T[]) Array.newInstance(arr.getClass().getComponentType(), arr.length-1);
         System.arraycopy(arr, 0, newArr, 0, index);
         System.arraycopy(arr, index+1, newArr, index, newArr.length-index);
-        return newArr;
-    }
-    public static <T> T subArray(T arr, int startIndex, int endIndex) {
-        return Converter.toPrimitiveArray(subArray(Converter.toWrapperArray(arr), startIndex, endIndex));
-    }
-    public static <T> T[] subArray(T[] arr, int startIndex, int endIndex) {
-        if (startIndex < 0 || endIndex >= arr.length) {
-            throw new RuntimeException("invalid parameters: " + Arrays.toString(arr) + ", " + startIndex + ", " + endIndex);
-        }
-        T[] newArr = (T[]) Array.newInstance(arr.getClass().getComponentType(), endIndex-startIndex+1);
-        System.arraycopy(arr, startIndex, newArr, 0, newArr.length);
         return newArr;
     }
     public static <T> T concatenate(T array1, T array2) {

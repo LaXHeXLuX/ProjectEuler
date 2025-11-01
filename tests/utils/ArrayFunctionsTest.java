@@ -37,27 +37,6 @@ class ArrayFunctionsTest {
         assertFalse(ArrayFunctions.contains("", arrString));
     }
     @Test
-    void sortedContains() {
-        assertFalse(ArrayFunctions.sortedContains(0, new int[] {}));
-        assertTrue(ArrayFunctions.sortedContains(0, new int[] {0}));
-
-        int[] arrInt = {0, 1, 5, 6, 77, 321};
-        assertTrue(ArrayFunctions.sortedContains(77, arrInt));
-        assertTrue(ArrayFunctions.sortedContains(0, arrInt));
-        assertTrue(ArrayFunctions.sortedContains(321, arrInt));
-        assertFalse(ArrayFunctions.sortedContains(-1, arrInt));
-        assertFalse(ArrayFunctions.sortedContains(7, arrInt));
-        assertFalse(ArrayFunctions.sortedContains(323, arrInt));
-
-        String[] arrString = {"a", "b", "c", "x", "y", "z"};
-        assertTrue(ArrayFunctions.sortedContains("a", arrString));
-        assertTrue(ArrayFunctions.sortedContains("c", arrString));
-        assertTrue(ArrayFunctions.sortedContains("y", arrString));
-        assertFalse(ArrayFunctions.sortedContains("d", arrString));
-        assertFalse(ArrayFunctions.sortedContains("m", arrString));
-        assertFalse(ArrayFunctions.sortedContains("", arrString));
-    }
-    @Test
     void switchElement() {
         Object[] arrObject = {1, 'a', 3.5f, "good", 'a', 'b', 10, 1};
         assertArrayEquals(arrObject, ArrayFunctions.switchElement(arrObject, null, "not null"));
@@ -138,20 +117,6 @@ class ArrayFunctionsTest {
         assertArrayEquals(new int[] {1, 4, 2, 3}, ArrayFunctions.removeIndex(new int[] {1, 5, 4, 2, 3}, 1));
 
         assertArrayEquals(new String[] {"yes", "no"}, ArrayFunctions.removeIndex(new String[] {"yes", "maybe", "no"}, 1));
-    }
-    @Test
-    void subArray() {
-        Object[] arrObject = {0, 'a', "hello", 1_000_000_000_000L, 2.5, true};
-        assertArrayEquals(new Object[] {'a'}, ArrayFunctions.subArray(arrObject, 1, 1));
-        assertArrayEquals(arrObject, ArrayFunctions.subArray(arrObject, 0, arrObject.length-1));
-
-        assertArrayEquals(new int[] {3, 4, 5}, ArrayFunctions.subArray(new int[] {1, 2, 3, 4, 5}, 2, 4));
-
-        boolean[] arrBoolean = {true, true, false};
-        assertArrayEquals(new boolean[] {true, false}, ArrayFunctions.subArray(arrBoolean, 1, 2));
-
-        assertThrows(RuntimeException.class, () -> ArrayFunctions.subArray(new String[0], -1, 0));
-        assertThrows(RuntimeException.class, () -> ArrayFunctions.subArray(new String[0], 0, 1));
     }
     @Test
     void concatenate() {
