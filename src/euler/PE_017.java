@@ -25,7 +25,6 @@ public class PE_017 {
     }
 
     private static int lettersInNumberUnder100(long n) {
-        if (n < 0 || n > 99) return -1;
         int[] singles = {0, 3, 3, 5, 4, 4, 3, 5, 5, 4};
         int[] teens = {3, 6, 6, 8, 8, 7, 7, 9, 8, 8};
         int[] tens = {0, 3, 6, 6, 5, 5, 5, 7, 6, 6};

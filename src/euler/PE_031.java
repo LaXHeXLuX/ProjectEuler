@@ -21,7 +21,6 @@ public class PE_031 {
     private static long waysToMake(long remaining, long[] coins, int index) {
         if (remaining < 0) return 0;
         if (remaining == 0) return 1;
-        if (coins.length == 0) return 1;
 
         long sum = 0;
         for (int i = index; i < coins.length; i++) {
