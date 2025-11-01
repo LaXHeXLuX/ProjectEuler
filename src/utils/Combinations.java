@@ -16,12 +16,12 @@ public class Combinations {
         return factorial;
     }
     public static long factorial(int n) {
-        if (n < 0) throw new RuntimeException("Argument can't be negative!");
+        if (n < 0) throw new IllegalArgumentException("Argument can't be negative!");
+        if (n > 20) throw new IllegalArgumentException("Argument too large, will cause overflow");
         if (n < 2) return 1L;
         long factorial = 1;
         for (int i = 2; i <= n; i++) {
             factorial *= i;
-            if (factorial < 0) throw new RuntimeException("Arguments too large!");
         }
         return factorial;
     }

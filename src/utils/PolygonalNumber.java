@@ -9,12 +9,14 @@ public class PolygonalNumber {
         return ((sides - 2)*n*n - (sides - 4)*n)/2;
     }
     public static BigInteger polygonalNumberBigInteger(long sides, long n) {
+        BigInteger s = BigInteger.valueOf(sides);
         BigInteger bigN = BigInteger.valueOf(n);
-        BigInteger bigSides = BigInteger.valueOf(sides);
-        BigInteger firstPart = bigSides.subtract(BigInteger.valueOf(2)).multiply(bigN).multiply(bigN);
-        BigInteger secondPart = bigSides.subtract(BigInteger.valueOf(4)).multiply(bigN);
-
-        return firstPart.subtract(secondPart).divide(BigInteger.TWO);
+        return bigN.multiply(
+                s.subtract(BigInteger.valueOf(2))
+                        .multiply(bigN.subtract(BigInteger.ONE))
+                        .divide(BigInteger.TWO)
+                        .add(BigInteger.ONE)
+        );
     }
     public static boolean isPolygonalNumber(long sides, long x) {
         if (sides == x) return true;

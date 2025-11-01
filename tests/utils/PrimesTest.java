@@ -30,6 +30,7 @@ class PrimesTest {
         assertArrayEquals(new long[] {7}, Primes.findPrimeFactors(7));
         assertArrayEquals(new long[] {2, 2, 3}, Primes.findPrimeFactors(12));
         assertArrayEquals(new long[] {3, 23}, Primes.findPrimeFactors(69));
+        assertArrayEquals(new long[] {7, 11}, Primes.findPrimeFactors(77));
         assertArrayEquals(new long[] {2, 2, 2, 2, 2, 2, 2, 2}, Primes.findPrimeFactors(256));
         assertArrayEquals(new long[] {2, 2, 2, 2, 2, 5, 5, 5, 5, 5}, Primes.findPrimeFactors(100000));
     }
@@ -37,6 +38,9 @@ class PrimesTest {
     void isPrime() {
         assertFalse(Primes.isPrime(1));
         assertTrue(Primes.isPrime(2));
+        assertTrue(Primes.isPrime(3));
+        assertFalse(Primes.isPrime(9));
+        assertFalse(Primes.isPrime(77));
         assertFalse(Primes.isPrime(120));
         assertFalse(Primes.isPrime(121));
 

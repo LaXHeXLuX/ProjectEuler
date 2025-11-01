@@ -10,49 +10,64 @@ public class Primes {
         Arrays.fill(primes, true);
         primes[0] = false;
         primes[1] = false;
-        primes[2] = true;
-        removeProductsOfN(primes, 2);
-        for (int i = 3; i < Math.pow(primes.length, 0.5)+1; i+=2) {
-            if (!primes[i]) continue;
-            removeProductsOfN(primes, i);
+        for (int j = 4; j < limit; j += 2) {
+            primes[j] = false;
+        }
+        for (int j = 9; j < limit; j += 6) {
+            primes[j] = false;
+        }
+        int l = (int) Math.sqrt(primes.length);
+        for (int i = 6; i <= l; i+=6) {
+            for (int x = i-1; x <= i+1; x+=2) {
+                if (primes[x]) {
+                    for (int j = x * x; j < limit; j += 2*x) {
+                        primes[j] = false;
+                    }
+                }
+            }
         }
         return primes;
     }
-    public static void removeProductsOfN(boolean[] primes, int n) {
-        int compositeNumber = n*n;
-        while (compositeNumber < primes.length) {
-            primes[compositeNumber] = false;
-            compositeNumber += n;
-        }
-    }
     public static long[] findPrimeFactors(long n) {
         List<Long> primeFactors = new ArrayList<>();
-        while (n > 1) {
-            boolean nIsPrime = true;
-            for (long i = 2; i < Math.pow(n, 0.5)+1; i++) {
-                if (n % i == 0) {
-                    n /= i;
-                    primeFactors.add(i);
-                    nIsPrime = false;
-                    break;
-                }
+
+        while (n % 2 == 0) {
+            primeFactors.add(2L);
+            n /= 2;
+        }
+
+        while (n % 3 == 0) {
+            primeFactors.add(3L);
+            n /= 3;
+        }
+
+        long limit = (long) Math.sqrt(n);
+        for (long i = 5; i <= limit; i += 6) {
+            while (n % i == 0) {
+                primeFactors.add(i);
+                n /= i;
+                limit = (long) Math.sqrt(n);
             }
-            if (nIsPrime) {
-                primeFactors.add(n);
-                break;
+            while (n % (i+2) == 0) {
+                primeFactors.add(i+2);
+                n /= i+2;
+                limit = (long) Math.sqrt(n);
             }
         }
+
+        if (n > 1) primeFactors.add(n);
+
         if (primeFactors.isEmpty()) return new long[0];
         return Converter.listToArr(primeFactors);
     }
     public static boolean isPrime(long n) {
-        if (n < 0) throw new RuntimeException("n can't be negative!");
         if (n < 2) return false;
-        if (n == 2) return true;
-        if (n % 2 == 0) return false;
+        if (n == 2 || n == 3) return true;
+        if (n % 2 == 0 || n % 3 == 0) return false;
 
-        for (int i = 3; i <= Math.sqrt(n); i+=2) {
-            if (n % i == 0) return false;
+        long limit = (long) Math.sqrt(n);
+        for (long i = 5; i <= limit; i+=6) {
+            if (n % i == 0 || n % (i+2) == 0) return false;
         }
 
         return true;
