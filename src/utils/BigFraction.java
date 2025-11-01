@@ -21,7 +21,7 @@ public class BigFraction extends Fraction<BigInteger> {
 
     @Override
     public BigFraction add(Fraction<BigInteger> fraction) {
-        BigInteger gcd = Divisors.greatestBigCommonDivisor(denominator, fraction.denominator);
+        BigInteger gcd = denominator.gcd(fraction.denominator);
         BigInteger newDenominator = denominator.multiply(fraction.denominator).divide(gcd);
         BigInteger newNumerator1 = numerator.multiply(newDenominator).divide(denominator);
         BigInteger newNumerator2 = fraction.numerator.multiply(newDenominator).divide(fraction.denominator);
@@ -74,7 +74,7 @@ public class BigFraction extends Fraction<BigInteger> {
 
     @Override
     public BigFraction simplify() {
-        BigInteger gcd = Divisors.greatestBigCommonDivisor(numerator, denominator);
+        BigInteger gcd = numerator.gcd(denominator);
         return new BigFraction(numerator.divide(gcd), denominator.divide(gcd));
     }
 

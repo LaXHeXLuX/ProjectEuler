@@ -102,12 +102,13 @@ public class Combinations {
         if (arr1.length != arr2.length) return false;
         Map<T, Integer> countMap = new HashMap<>();
         for (T el : arr1) {
-            countMap.put(el, countMap.getOrDefault(el, 0) + 1);
+            countMap.merge(el, 1, Integer::sum);
         }
         for (T el : arr2) {
-            if (!countMap.containsKey(el)) return false;
-            countMap.put(el, countMap.get(el) - 1);
-            if (countMap.get(el) == 0) countMap.remove(el);
+            Integer c = countMap.get(el);
+            if (c == null) return false;
+            if (c == 1) countMap.remove(el);
+            else countMap.put(el, c-1);
         }
 
         return countMap.isEmpty();

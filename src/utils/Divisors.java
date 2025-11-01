@@ -1,6 +1,5 @@
 package utils;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,14 +40,6 @@ public class Divisors {
         while (b != 0) {
             long t = b;
             b = a % b;
-            a = t;
-        }
-        return a;
-    }
-    public static BigInteger greatestBigCommonDivisor(BigInteger a, BigInteger b) {
-        while (!b.equals(BigInteger.ZERO)) {
-            BigInteger t = b;
-            b = a.remainder(b);
             a = t;
         }
         return a;
