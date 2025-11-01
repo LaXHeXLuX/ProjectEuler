@@ -88,11 +88,4 @@ class PrimesTest {
 
         assertEquals(79180, Primes.eulersTotient(87109));
     }
-    @Test
-    void upperBoundForNumberOfSmallerPrimes() {
-        assertEquals(0, Primes.upperBoundForNumberOfSmallerPrimes(1));
-        assertTrue(Primes.upperBoundForNumberOfSmallerPrimes(10) >= 4);
-        assertTrue(Primes.upperBoundForNumberOfSmallerPrimes(100) >= 25);
-        assertTrue(Primes.upperBoundForNumberOfSmallerPrimes(1_000_000) >= 78_498);
-    }
 }

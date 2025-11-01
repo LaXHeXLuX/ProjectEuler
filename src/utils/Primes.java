@@ -89,12 +89,6 @@ public class Primes {
         double logN = Math.log(n);
         return (int) (n*logN + n*Math.log(logN));
     }
-    public static int upperBoundForNumberOfSmallerPrimes(int n) {
-        if (n <= 1) {
-            return 0;
-        }
-        return (int) ((n / Math.log(n)) * (1 + 1.2762 / Math.log(n)));
-    }
     public static boolean areRelativePrimes(long n1, long n2) {
         return Divisors.greatestCommonDivisor(n1, n2) == 1;
     }
