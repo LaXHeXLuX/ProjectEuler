@@ -50,7 +50,7 @@ public class Combinations {
         for (int i = 0; i < arr.length; i++) {
             int[] chooseNextFrom;
             if (orderMatters) chooseNextFrom = ArrayFunctions.removeIndex(arr, i);
-            else chooseNextFrom = ArrayFunctions.subArray(arr, i, arr.length-1);
+            else chooseNextFrom = Arrays.copyOfRange(arr, i, arr.length);
             int[][] previousOutput = chooseNElements(chooseNextFrom, n-1, orderMatters);
 
             for (int[] ints : previousOutput) {
@@ -115,16 +115,14 @@ public class Combinations {
     public static <T> T nthPermutation(T arr, long n) {
         return Converter.toPrimitiveArray(nthPermutation(Converter.toWrapperArray(arr), n));
     }
-    @SuppressWarnings("unchecked")
     public static <T> T[] nthPermutation(T[] arr, long n) {
-        T[] newArr = (T[]) Array.newInstance(arr.getClass().getComponentType(), arr.length);
-        System.arraycopy(arr, 0, newArr, 0, newArr.length);
+        T[] newArr = Arrays.copyOf(arr, arr.length);
         if (n == 0 || arr.length < 2) return newArr;
         int[] plan = permutationPlan(n);
         for (int i = 0; i < plan.length; i++) {
             if (plan[i] == 0) continue;
             T el = newArr[i + plan[i]];
-            T[] result = ArrayFunctions.subArray(newArr, i, newArr.length-1);
+            T[] result = Arrays.copyOfRange(newArr, i, newArr.length);
             result = ArrayFunctions.removeIndex(result, plan[i]);
             newArr[i] = el;
             System.arraycopy(result, 0, newArr, i+1, result.length);
