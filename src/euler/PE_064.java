@@ -1,6 +1,5 @@
 package euler;
 
-import utils.ArrayFunctions;
 import utils.Converter;
 import utils.Divisors;
 
@@ -74,7 +73,7 @@ public class PE_064 {
         while (!contains(fraction, existingFractions)) {
             a.add(fraction[0]);
             existingFractions.add(fraction);
-            fraction = ArrayFunctions.subArray(fraction, 1, fraction.length-1);
+            fraction = Arrays.copyOfRange(fraction, 1, fraction.length);
 
             fraction = nextIterationOfFraction(fraction);
         }

@@ -1,8 +1,9 @@
 package euler;
 
-import utils.ArrayFunctions;
 import utils.Converter;
 import utils.Primes;
+
+import java.util.Arrays;
 
 public class PE_050 {
     private static boolean[] primesBool;
@@ -57,6 +58,6 @@ public class PE_050 {
             }
             if (i < largestEnd-largestStart) break;
         }
-        return ArrayFunctions.subArray(primes, largestStart, largestEnd);
+        return Arrays.copyOfRange(primes, largestStart, largestEnd+1);
     }
 }

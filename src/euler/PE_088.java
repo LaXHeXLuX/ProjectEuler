@@ -1,12 +1,8 @@
 package euler;
 
-import utils.ArrayFunctions;
 import utils.Divisors;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class PE_088 {
     private static final Map<Integer, long[]> allDivisors = new HashMap<>();
@@ -43,7 +39,7 @@ public class PE_088 {
         long[] divisors;
         if (!allDivisors.containsKey(i)) {
             divisors = Divisors.divisors(i);
-            divisors = ArrayFunctions.subArray(divisors, 1, divisors.length-2);
+            divisors = Arrays.copyOfRange(divisors, 1, divisors.length-1);
             allDivisors.put(i, divisors);
         } else {
             divisors = allDivisors.get(i);
