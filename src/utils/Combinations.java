@@ -138,11 +138,10 @@ public class Combinations {
             if (prod > n) break;
         }
         int[] plan = new int[i-1];
-        for (i = 0; i < plan.length; i++) {
+        for (i = 0; n > 0; i++) {
             long f = factorial(plan.length - i);
             plan[i] = Math.toIntExact(n / f);
             n = n % f;
-            if (n == 0) break;
         }
         return plan;
     }
