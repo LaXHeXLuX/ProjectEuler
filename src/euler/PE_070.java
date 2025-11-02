@@ -1,7 +1,5 @@
 package euler;
 
-import utils.LongFraction;
-
 import java.util.*;
 
 public class PE_070 {
@@ -39,20 +37,26 @@ public class PE_070 {
         }
     }
 
+    private static int compare(int[] fraction1, int[] fraction2) {
+        long prod1 = (long) fraction1[0] * fraction2[1];
+        long prod2 = (long) fraction2[0] * fraction1[1];
+        return Long.compare(prod1, prod2);
+    }
+
     private static int findNumberWithPropertyWithSmallestScore() {
-        LongFraction smallestScore = new LongFraction(-1, 1);
+        int[] smallestScore = {-1, 1};
         int smallestN = -1;
         for (int i = totients.length-1; i > 1; i-=2) {
-            LongFraction score;
+            int[] score;
             if (totients[i] == i-1) {
-                if (smallestScore.numerator >= 0 && smallestScore.compareTo(new LongFraction(i, totients[i])) < 0) {
+                if (smallestScore[0] >= 0 && compare(smallestScore, new int[] {i, totients[i]}) < 0) {
                     return smallestN;
                 }
                 continue;
             }
             if (!hasProperty(i, totients[i])) continue;
-            score = new LongFraction(i, totients[i]);
-            if (smallestScore.numerator < 0 || score.compareTo(smallestScore) < 0) {
+            score = new int[] {i, totients[i]};
+            if (smallestScore[0] < 0 || compare(score, smallestScore)< 0) {
                 smallestN = i;
                 smallestScore = score;
             }
