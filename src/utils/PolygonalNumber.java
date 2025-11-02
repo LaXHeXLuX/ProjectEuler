@@ -29,8 +29,8 @@ public class PolygonalNumber {
     public static int[] isPolygonalNumber(long x) {
         List<Integer> possibleSides = new ArrayList<>();
 
-        for (int sides = 3; sides < x/3 + 2; sides++) {
-            if (sides < 0) break;
+        int limit = Math.toIntExact(Math.min(x/3, Integer.MAX_VALUE));
+        for (int sides = 3; sides < limit + 2; sides++) {
             if (isPolygonalNumber(sides, x)) possibleSides.add(sides);
         }
         if (possibleSides.isEmpty()) return new int[0];

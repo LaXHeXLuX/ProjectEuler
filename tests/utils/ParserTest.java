@@ -26,6 +26,8 @@ class ParserTest {
     }
     @Test
     void parseStrings() throws IOException {
+        assertThrows(RuntimeException.class, () -> Parser.parseStrings("dummy.txt"));
+
         assertArrayEquals(new String[] {}, Parser.parseStrings(filename));
 
         FileWriter fw1 = new FileWriter(filename);
