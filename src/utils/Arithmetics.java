@@ -1,11 +1,16 @@
 package utils;
 
 import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.Map;
 
-public final class Arithmetics {
+public class Arithmetics {
     interface Arithmetic<T> {
         T add(T a, T b);
-        T sub(T a, T b);
+        T neg(T a);
+        default T sub(T a, T b) {
+            return add(a, neg(b));
+        }
         T mul(T a, T b);
         T div(T a, T b);
         T rem(T a, T b);
@@ -14,13 +19,18 @@ public final class Arithmetics {
         }
         T zero();
         T one();
+        T ten();
+        T valueOf(long n);
+        T valueOf(String s);
+        int intValue(T a);
+        int compare(T a, T b);
     }
     static final Arithmetic<Integer> INT = new Arithmetic<>() {
         public Integer add(Integer a, Integer b) {
             return a + b;
         }
-        public Integer sub(Integer a, Integer b) {
-            return a - b;
+        public Integer neg(Integer a) {
+            return -a;
         }
         public Integer mul(Integer a, Integer b) {
             return a * b;
@@ -45,13 +55,29 @@ public final class Arithmetics {
         public Integer one() {
             return 1;
         }
+        public Integer ten() {
+            return 10;
+        }
+        public Integer valueOf(long n) {
+            if (n > Integer.MAX_VALUE) throw new IllegalArgumentException("n too large");
+            return (int) n;
+        }
+        public Integer valueOf(String s) {
+            return Integer.parseInt(s);
+        }
+        public int intValue(Integer a) {
+            return a;
+        }
+        public int compare(Integer a, Integer b) {
+            return Integer.compare(a, b);
+        }
     };
     static final Arithmetic<Long> LONG = new Arithmetic<>() {
         public Long add(Long a, Long b) {
             return a + b;
         }
-        public Long sub(Long a, Long b) {
-            return a - b;
+        public Long neg(Long a) {
+            return -a;
         }
         public Long mul(Long a, Long b) {
             return a * b;
@@ -76,13 +102,28 @@ public final class Arithmetics {
         public Long one() {
             return 1L;
         }
+        public Long ten() {
+            return 10L;
+        }
+        public Long valueOf(long n) {
+            return n;
+        }
+        public Long valueOf(String s) {
+            return Long.parseLong(s);
+        }
+        public int intValue(Long a) {
+            return a.intValue();
+        }
+        public int compare(Long a, Long b) {
+            return Long.compare(a, b);
+        }
     };
     static final Arithmetic<Double> DOUBLE = new Arithmetic<>() {
         public Double add(Double a, Double b) {
             return a + b;
         }
-        public Double sub(Double a, Double b) {
-            return a - b;
+        public Double neg(Double a) {
+            return -a;
         }
         public Double mul(Double a, Double b) {
             return a * b;
@@ -99,13 +140,28 @@ public final class Arithmetics {
         public Double one() {
             return 1.0;
         }
+        public Double ten() {
+            return 10.0;
+        }
+        public Double valueOf(long n) {
+            return (double) n;
+        }
+        public Double valueOf(String s) {
+            return Double.parseDouble(s);
+        }
+        public int intValue(Double a) {
+            return a.intValue();
+        }
+        public int compare(Double a, Double b) {
+            return Double.compare(a, b);
+        }
     };
     static final Arithmetic<BigInteger> BIG = new Arithmetic<>() {
         public BigInteger add(BigInteger a, BigInteger b) {
             return a.add(b);
         }
-        public BigInteger sub(BigInteger a, BigInteger b) {
-            return a.subtract(b);
+        public BigInteger neg(BigInteger a) {
+            return a.negate();
         }
         public BigInteger mul(BigInteger a, BigInteger b) {
             return a.multiply(b);
@@ -125,6 +181,34 @@ public final class Arithmetics {
         public BigInteger one() {
             return BigInteger.ONE;
         }
+        public BigInteger ten() {
+            return BigInteger.TEN;
+        }
+        public BigInteger valueOf(long n) {
+            return BigInteger.valueOf(n);
+        }
+        public BigInteger valueOf(String s) {
+            return new BigInteger(s);
+        }
+        public int intValue(BigInteger a) {
+            return a.intValue();
+        }
+        public int compare(BigInteger a, BigInteger b) {
+            return a.compareTo(b);
+        }
     };
+    static final Map<Class<?>, Arithmetic<?>> MAP = new HashMap<>() {{
+        put(Integer.class, INT);
+        put(Long.class, LONG);
+        put(BigInteger.class, BIG);
+        put(Double.class, DOUBLE);
+    }};
+    @SuppressWarnings("unchecked")
+    static <T> Arithmetic<T> of(Class<?> cls) {
+        Arithmetic<?> a = MAP.get(cls);
+        if (a == null)
+            throw new IllegalArgumentException("No Arithmetic defined for " + cls);
+        return (Arithmetic<T>) a;
+    }
     private Arithmetics() {}
 }
