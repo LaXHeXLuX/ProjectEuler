@@ -4,7 +4,10 @@ import utils.Divisors;
 
 public class PE_073 {
     public static void main(String[] args) {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println("Time: " + (e-s) + " ms");
     }
 
     public static long PE() {
@@ -19,7 +22,12 @@ public class PE_073 {
         for (int i = 2; i <= limit; i++) {
             int start = i * fraction1[0] / fraction1[1] + 1;
             int end = (i-1) * fraction2[0] / fraction2[1];
-            for (int j = start; j <= end; j++) {
+            int step = 1;
+            if (i % 2 == 0) {
+                step = 2;
+                start += (start+1) % 2;
+            }
+            for (int j = start; j <= end; j+=step) {
                 if (Divisors.greatestCommonDivisor(i, j) == 1) count++;
             }
         }
