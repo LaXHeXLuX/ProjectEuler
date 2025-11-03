@@ -3,8 +3,19 @@ package euler;
 import java.util.*;
 
 public class PE_074 {
-    private static Map<Integer, List<Integer>> digitFactorialChain;
-    private static int[] digitFactorialSums;
+    private static final Map<Integer, Integer> digitFactorialChain = new HashMap<>() {{
+        put(169, 3);
+        put(363601, 3);
+        put(1454, 3);
+        put(871, 2);
+        put(872, 2);
+        put(45361, 2);
+        put(45362, 2);
+        put(1, 1);
+        put(2, 1);
+        put(145, 1);
+        put(40585, 1);
+    }};
     private static final int[] FACTORIALS = {1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880};
 
     public static void main(String[] args) {
@@ -13,9 +24,6 @@ public class PE_074 {
 
     public static long PE() {
         int n = 1_000_000;
-        digitFactorialChain = new HashMap<>();
-        digitFactorialSums = new int[5_000_000];
-        Arrays.fill(digitFactorialSums, -1);
         List<Integer> longest = longestChainLengths(n);
         return longest.size();
     }
@@ -26,17 +34,12 @@ public class PE_074 {
         int maxChainLength = 1;
 
         for (int i = 2; i < limit; i++) {
-            List<Integer> chain;
-            if (!digitFactorialChain.containsKey(i)) {
-                chain = getFactorialCycle(i);
-                digitFactorialChain.put(i, chain);
-            }
-            chain = digitFactorialChain.get(i);
-            if (chain.size() == maxChainLength) {
+            int chain = chainLength(i);
+            if (chain == maxChainLength) {
                 maxList.add(i);
             }
-            else if (chain.size() > maxChainLength) {
-                maxChainLength = chain.size();
+            else if (chain > maxChainLength) {
+                maxChainLength = chain;
                 maxList = new ArrayList<>();
                 maxList.add(i);
             }
@@ -44,45 +47,27 @@ public class PE_074 {
         return maxList;
     }
 
-    private static List<Integer> getFactorialCycle(int n) {
-        Map<Integer, Integer> factorialSumsMap = new HashMap<>();
-
-        List<Integer> factorialSumsList = new ArrayList<>();
-        factorialSumsList.add(n);
-
-        factorialSumsMap.put(n, factorialSumsList.size());
-        int last = -1;
-        int element = getSumOfDigitFactorials(n);
-        while (!factorialSumsMap.containsKey(element)) {
-            if (digitFactorialChain.containsKey(element)) {
-                List<Integer> chain = digitFactorialChain.get(element);
-                int endPoint = Collections.binarySearch(chain, last);
-                if (endPoint < 0) {
-                    factorialSumsList.addAll(chain);
-                    return factorialSumsList;
-                }
-            }
-            factorialSumsMap.put(element, factorialSumsList.size());
-            factorialSumsList.add(element);
-
-            last = element;
-            element = getSumOfDigitFactorials(element);
+    private static int chainLength(int n) {
+        if (digitFactorialChain.containsKey(n)) return digitFactorialChain.get(n);
+        List<Integer> chain = new ArrayList<>();
+        while (!digitFactorialChain.containsKey(n)) {
+            chain.add(n);
+            n = sumOfDigitFactorials(n);
         }
-
-        return factorialSumsList;
-
+        for (int i = 0; i < chain.size(); i++) {
+            digitFactorialChain.put(chain.get(i), chain.size()-i + digitFactorialChain.get(n));
+        }
+        return digitFactorialChain.get(chain.getFirst());
     }
 
-    private static int getSumOfDigitFactorials(int n) {
-        if (digitFactorialSums[n] == -1) {
-            int sum = 0;
-            while (n > 9) {
-                sum += FACTORIALS[n % 10];
-                n /= 10;
-            }
-            sum += FACTORIALS[n];
-            digitFactorialSums[n] = sum;
+    private static int sumOfDigitFactorials(int n) {
+        int sum = 0;
+        int temp = n;
+        while (temp > 9) {
+            sum += FACTORIALS[temp % 10];
+            temp /= 10;
         }
-        return digitFactorialSums[n];
+        sum += FACTORIALS[temp];
+        return sum;
     }
 }

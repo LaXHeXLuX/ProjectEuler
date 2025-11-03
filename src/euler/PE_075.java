@@ -1,6 +1,5 @@
 package euler;
 
-import utils.Converter;
 import utils.Divisors;
 
 import java.util.*;
@@ -14,34 +13,24 @@ public class PE_075 {
         int perimeterLimit = 1_500_000;
 
         int n = 1;
-        List<int[]> rightTriangles = getRightTriangles(perimeterLimit);
-        Map<Integer, List<int[]>> perimeters = getPerimeters(rightTriangles);
+        Map<Integer, Integer> perimeters = getPerimeters(perimeterLimit);
 
-        int[] oneSolutionPerimeters = getNSolutionPerimeters(n, perimeters);
-        return oneSolutionPerimeters.length;
+        List<Integer> oneSolutionPerimeters = getNSolutionPerimeters(n, perimeters);
+        return oneSolutionPerimeters.size();
     }
 
-    private static int[] getNSolutionPerimeters(int n, Map<Integer, List<int[]>> perimeters) {
-        List<Integer> oneSolutionPerimeters = new ArrayList<>();
+    private static List<Integer> getNSolutionPerimeters(int n, Map<Integer, Integer> perimeters) {
+        List<Integer> nSolutionPerimeters = new ArrayList<>();
 
         for (Integer integer : perimeters.keySet()) {
-            if (perimeters.get(integer).size() == n) oneSolutionPerimeters.add(integer);
+            if (perimeters.get(integer) == n) nSolutionPerimeters.add(integer);
         }
 
-        if (oneSolutionPerimeters.isEmpty()) return new int[0];
-        return Converter.listToArr(oneSolutionPerimeters);
+        return nSolutionPerimeters;
     }
 
-    private static int perimeter(int[] triangle) {
-        int sum = 0;
-        for (int i : triangle) {
-            sum += i;
-        }
-        return sum;
-    }
-
-    private static List<int[]> getRightTriangles(int perimeterLimit) {
-        List<int[]> rightTriangles = new ArrayList<>();
+    private static Map<Integer, Integer> getPerimeters(int perimeterLimit) {
+        Map<Integer, Integer> perimeters = new HashMap<>();
 
         for (int n = 1; n < Math.sqrt(perimeterLimit)/2; n++) {
             int step = n % 2 + 1;
@@ -53,32 +42,12 @@ public class PE_075 {
                     int a = k*(m2 - n2);
                     int b = k*(2*m*n);
                     int c = k*(m2 + n2);
-                    int[] triangle = {a, b, c};
-                    rightTriangles.add(triangle);
+                    int perimeter = a + b + c;
+                    perimeters.merge(perimeter, 1, Integer::sum);
                 }
             }
         }
 
-        return rightTriangles;
-    }
-
-    private static Map<Integer, List<int[]>> getPerimeters(List<int[]> rightTriangles) {
-        Map<Integer, List<int[]>> perimeters = new HashMap<>();
-
-        for (int[] rightTriangle : rightTriangles) {
-            int perimeter = perimeter(rightTriangle);
-            if (!perimeters.containsKey(perimeter)) {
-                List<int[]> triangles = new ArrayList<>();
-                triangles.add(rightTriangle);
-                perimeters.put(perimeter, triangles);
-            }
-            else perimeters.get(perimeter).add(rightTriangle);
-        }
-
-        Map<Integer, List<int[]>> betterPerimeters = new HashMap<>();
-        for (Integer integer : perimeters.keySet()) {
-            betterPerimeters.put(integer, perimeters.get(integer));
-        }
-        return betterPerimeters;
+        return perimeters;
     }
 }

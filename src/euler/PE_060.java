@@ -36,7 +36,8 @@ public class PE_060 {
         int limit = 100_000_000;
         composites = new boolean[limit/2];
         composites[0] = true;
-        for (int i = 3; i < Math.sqrt(limit); i+=2) {
+        int sqrtLimit = (int) Math.sqrt(limit);
+        for (int i = 3; i < sqrtLimit; i+=2) {
             if (composites[i/2]) continue;
             int prod = i*i;
             while (prod < limit && prod > 0) {
@@ -77,10 +78,10 @@ public class PE_060 {
     }
 
     private static boolean isPrimePair(int p1, int p2) {
-        String p1s = String.valueOf(p1);
-        String p2s = String.valueOf(p2);
-        int p12 = Integer.parseInt(p1s + p2s);
-        int p21 = Integer.parseInt(p2s + p1s);
+        int len1 = (int) Math.log10(p1) + 1;
+        int len2 = (int) Math.log10(p2) + 1;
+        int p12 = p1 * (int)Math.pow(10, len2) + p2;
+        int p21 = p2 * (int)Math.pow(10, len1) + p1;
 
         return isPrime(p12) && isPrime(p21);
     }
