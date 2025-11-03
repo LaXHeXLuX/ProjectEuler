@@ -2,47 +2,35 @@ package euler;
 
 public class PE_044 {
     public static void main(String[] args) {
-        double s = System.currentTimeMillis();
         System.out.println(PE());
-        double e = System.currentTimeMillis();
-        System.out.println("Time: " + (e-s) + " ms");
     }
 
     public static long PE() {
         return smallestDifferenceWithProperty();
     }
 
-    private static long pentagonNumber(long n) {
-        return (3*n*n - n)/2;
+    private static long pentagonal(long n) {
+        return n*(3*n - 1) / 2;
+    }
+
+    private static boolean isPentagonal(long x) {
+        long n = (long) ((Math.sqrt(24 * x + 1) + 1) / 6);
+        return pentagonal(n) == x;
     }
 
     private static long smallestDifferenceWithProperty() {
-        int n0 = 1;
-        long p0 = pentagonNumber(n0);
-
-        while (p0 > 0) {
-            int maxN1 = (3*n0*n0 - n0 - 2)/6;
-            for (int n1 = 3; n1 <= maxN1 ; n1+=3) {
-                if (indexesWork(n0, n1)) {
-                    return p0;
+        long smallestDiff = Long.MAX_VALUE;
+        for (long j = 2; ; j++) {
+            long pj = pentagonal(j);
+            for (long k = j - 1; k > 0; k--) {
+                long pk = pentagonal(k);
+                long diff = pj - pk;
+                if (diff >= smallestDiff) break;
+                if (isPentagonal(diff) && isPentagonal(pj + pk)) {
+                    smallestDiff = diff;
                 }
             }
-
-            n0+=3;
-            p0 = pentagonNumber(n0);
+            if (smallestDiff < 3*j - 2) return smallestDiff;
         }
-
-        return -1;
-    }
-
-    private static boolean indexesWork(int n0, int n1) {
-        long n0Step = n0*(3L*n0-1);
-        long n1Step = n1*(3L*n1-1);
-        long n2sqrt = 1 + 12*n0Step + 12*n1Step;
-        long n3sqrt = 1 + 12*n0Step + 24*n1Step;
-        long n2s = (long) Math.sqrt(n2sqrt);
-        long n3s = (long) Math.sqrt(n3sqrt);
-        if (n2s * n2s != n2sqrt || n3s * n3s != n3sqrt) return false;
-        return (1 + n2s) % 6 == 0 && (1 + n3s) % 6 == 0;
     }
 }
