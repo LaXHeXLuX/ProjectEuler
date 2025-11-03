@@ -1,17 +1,18 @@
 package euler;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class PE_078 {
-    private static final Map<Integer, Long> eulersFunction = new HashMap<>();
+    private static long[] eulersFunction;
 
     public static void main(String[] args) {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
         int n = 1_000_000;
+        eulersFunction = new long[n+1];
         return firstToDivideN(n);
     }
 
@@ -31,7 +32,7 @@ public class PE_078 {
         if (n < 0) return 0;
         if (n == 0) return 1;
 
-        if (eulersFunction.containsKey(n)) return eulersFunction.get(n);
+        if (eulersFunction[n] > 0) return eulersFunction[n];
 
         int step = 1;
         long sum = 0;
@@ -41,11 +42,11 @@ public class PE_078 {
             int coefficient = (step % 2) * 2 - 1;
             sum += coefficient * eulersFunction(n-nthStep, mod);
             sum += coefficient * eulersFunction(n-nthStep-step, mod);
-            sum = sum % mod;
+            sum = ((sum % mod) + mod) % mod;
             step++;
         }
 
-        eulersFunction.put(n, sum);
+        eulersFunction[n] = sum;
 
         return sum;
     }
