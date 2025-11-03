@@ -1,19 +1,24 @@
 package euler;
 
-import utils.PolygonalNumber;
-
 public class PE_044 {
     public static void main(String[] args) {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println("Time: " + (e-s) + " ms");
     }
 
     public static long PE() {
         return smallestDifferenceWithProperty();
     }
 
+    private static long pentagonNumber(long n) {
+        return (3*n*n - n)/2;
+    }
+
     private static long smallestDifferenceWithProperty() {
         int n0 = 1;
-        long p0 = PolygonalNumber.polygonalNumberLong(5, n0);
+        long p0 = pentagonNumber(n0);
 
         while (p0 > 0) {
             int maxN1 = (3*n0*n0 - n0 - 2)/6;
@@ -24,7 +29,7 @@ public class PE_044 {
             }
 
             n0+=3;
-            p0 = PolygonalNumber.polygonalNumberLong(5, n0);
+            p0 = pentagonNumber(n0);
         }
 
         return -1;
