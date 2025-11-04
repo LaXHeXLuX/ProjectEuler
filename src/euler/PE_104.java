@@ -4,10 +4,7 @@ public class PE_104 {
     private static final double LOG_GOLDEN = Math.log10((1 + Math.sqrt(5))/2);
     private static final double LOG_SQRT5 = Math.log10(5) / 2;
     public static void main(String[] args) {
-        double s = System.currentTimeMillis();
         System.out.println(PE());
-        double e = System.currentTimeMillis();
-        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
