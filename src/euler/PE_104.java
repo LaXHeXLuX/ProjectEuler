@@ -1,0 +1,92 @@
+package euler;
+
+import java.math.BigInteger;
+import java.util.*;
+
+public class PE_104 {
+    private static final List<BigInteger[]> pow2Fibo = new ArrayList<>();
+    public static void main(String[] args) {
+        double s = System.currentTimeMillis();
+        System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
+    }
+
+    public static long PE() {
+       makePow2Fibo();
+        return firstFibonacciWithProperty();
+    }
+
+    private static void makePow2Fibo() {
+        BigInteger[] m = {BigInteger.ONE, BigInteger.ONE, BigInteger.ONE, BigInteger.ZERO};
+        pow2Fibo.add(m);
+        for (int i = 1; i < 20; i++) {
+            m = square(m);
+            pow2Fibo.add(m);
+        }
+    }
+
+    private static BigInteger[] pow(int n) {
+        BigInteger[] m = {BigInteger.ONE, BigInteger.ZERO, BigInteger.ZERO, BigInteger.ONE};
+        for (int i = 0; i < 32 - Integer.numberOfLeadingZeros(n); i++) {
+            if ((n & (1 << i)) != 0) multiply(m, pow2Fibo.get(i));
+        }
+        return m;
+    }
+
+    private static BigInteger[] square(BigInteger[] m) {
+        return new BigInteger[] {
+                m[0].pow(2).add(m[1].multiply(m[2])),
+                m[0].multiply(m[1]).add(m[1].multiply(m[3])),
+                m[2].multiply(m[0]).add(m[3].multiply(m[2])),
+                m[2].multiply(m[1]).add(m[3].pow(2))
+        };
+    }
+
+    private static void multiply(BigInteger[] m1, BigInteger[] m2) {
+        BigInteger t0 = m1[0].multiply(m2[0]).add(m1[1].multiply(m2[2]));
+        BigInteger t1 = m1[0].multiply(m2[1]).add(m1[1].multiply(m2[3]));
+        BigInteger t2 = m1[2].multiply(m2[0]).add(m1[3].multiply(m2[2]));
+        BigInteger t3 = m1[2].multiply(m2[1]).add(m1[3].multiply(m2[3]));
+        m1[0] = t0; m1[1] = t1; m1[2] = t2; m1[3] = t3;
+    }
+
+    private static int firstFibonacciWithProperty() {
+        int f1 = 1;
+        int f2 = 1;
+        int counter = 2;
+        while (true) {
+            int temp = f2;
+            f2 = (f2 + f1) % 1_000_000_000;
+            f1 = temp;
+            counter++;
+            if (isPandigitalBack(f2)) {
+                BigInteger fn = pow(counter)[1];
+                if (isPandigitalFront(fn.toString())) return counter;
+            }
+        }
+    }
+
+    private static boolean isPandigitalBack(int n) {
+        if (n < 123456789) return false;
+        boolean[] digits = new boolean[9];
+        while (n > 0) {
+            int digit = n % 10;
+            if (digit == 0 || digits[digit-1]) return false;
+            digits[digit-1] = true;
+            n /= 10;
+        }
+        return true;
+    }
+
+    private static boolean isPandigitalFront(String s) {
+        if (s.length() < 100) return false;
+        boolean[] digits = new boolean[9];
+        for (int i = 0; i < 9; i++) {
+            int digit = s.charAt(i) - '0';
+            if (digit == 0 || digits[digit-1]) return false;
+            digits[digit-1] = true;
+        }
+        return true;
+    }
+}
