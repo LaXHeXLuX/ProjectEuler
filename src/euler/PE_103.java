@@ -3,7 +3,7 @@ package euler;
 import java.util.*;
 
 public class PE_103 {
-    private static Map<Integer, List<List<Integer>>> setSums = new HashMap<>();
+    private static Set<Integer> setSums;
 
     public static void main(String[] args) {
         double s = System.currentTimeMillis();
@@ -14,7 +14,10 @@ public class PE_103 {
 
     public static long PE() {
         int n = 7;
-        return setString(smallestSpecialSumSet2(n));
+        for (int i = 1; i < n; i++) {
+            System.out.println(i + ": " + smallestSpecialSumSet(i));
+        }
+        return setString(smallestSpecialSumSet(n));
     }
 
     private static long setString(List<Integer> set) {
@@ -25,25 +28,15 @@ public class PE_103 {
         return Long.parseLong(s.toString());
     }
 
-    private static int sum(List<Integer> set) {
-        int sum = 0;
-        for (Integer i : set) sum += i;
-        return sum;
-    }
-
-    private static List<Integer> smallestSpecialSumSet2(int size) {
-        int minSum = sum(smallestSpecialSumSet(size-1, 1));
-        return smallestSpecialSumSet(size, minSum);
-    }
-
-    private static List<Integer> smallestSpecialSumSet(int size, int minSum) {
-        for (int sum = minSum; true; sum++) {
+    private static List<Integer> smallestSpecialSumSet(int size) {
+        for (int sum = 1; true; sum++) {
             List<Integer> ssss = smallestSpecialSumSet(new ArrayList<>(), size, sum);
             if (!ssss.isEmpty()) return ssss;
         }
     }
 
     private static List<Integer> smallestSpecialSumSet(List<Integer> current, int size, int sum) {
+        if (!current.isEmpty() && !isSpecialSumSet(current)) return new ArrayList<>();
         if (size == 1) {
             if (current.isEmpty() || sum > current.getLast()) {
                 List<Integer> copy = new ArrayList<>(current);
@@ -54,7 +47,6 @@ public class PE_103 {
             }
             return new ArrayList<>();
         }
-        if (!current.isEmpty() && !isSpecialSumSet(current)) return new ArrayList<>();
         int start = 1;
         if (!current.isEmpty()) start += current.getLast();
         int end = sum/size+1;
@@ -72,33 +64,37 @@ public class PE_103 {
     }
 
     private static boolean isSpecialSumSet(List<Integer> set) {
+        if (set.size() < 3) return true;
         boolean b1 = isSumOrdered(set);
         if (!b1) return false;
         return noDisjointSubSetsWithSameSum(set);
     }
 
     private static boolean noDisjointSubSetsWithSameSum(List<Integer> set) {
-        setSums = new HashMap<>();
-        return noDisjointSubSetsWithSameSum(set, new ArrayList<>(), 0, 0);
+        setSums = new HashSet<>();
+        makeSetSums(set.subList(0, set.size()-1), 0, 0);
+        int x = set.getLast();
+        Set<Integer> diffs = new HashSet<>();
+        for (Integer setSum : setSums) {
+            if (x == setSum || diffs.contains(setSum)) {
+                return false;
+            }
+            diffs.add(setSum + x);
+            if (setSum > x) diffs.add(setSum - x);
+        }
+        return true;
     }
 
-    private static boolean noDisjointSubSetsWithSameSum(List<Integer> set, List<Integer> current, int sum, int index) {
+    private static void makeSetSums(List<Integer> set, int sum, int index) {
         if (index == set.size()) {
-            if (current.isEmpty()) return true;
-            if (!setSums.containsKey(sum)) {
-                setSums.put(sum, new ArrayList<>());
-                setSums.get(sum).add(List.copyOf(current));
-                return true;
-            }
-            return false;
+            if (sum > 0) setSums.add(sum);
+            setSums.add(sum);
+            return;
         }
         int el = set.get(index);
         index++;
-        if (!noDisjointSubSetsWithSameSum(set, current, sum, index)) return false;
-        current.add(el);
-        if (!noDisjointSubSetsWithSameSum(set, current, sum + el, index)) return false;
-        current.removeLast();
-        return true;
+        makeSetSums(set, sum, index);
+        makeSetSums(set, sum+el, index);
     }
 
     private static boolean isSumOrdered(List<Integer> set) {
