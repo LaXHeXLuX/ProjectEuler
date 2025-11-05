@@ -14,7 +14,7 @@ public class PE_103 {
 
     public static long PE() {
         int n = 7;
-        return setString(smallestSpecialSumSet(n));
+        return setString(smallestSpecialSumSet2(n));
     }
 
     private static long setString(List<Integer> set) {
@@ -25,9 +25,19 @@ public class PE_103 {
         return Long.parseLong(s.toString());
     }
 
-    private static List<Integer> smallestSpecialSumSet(int size) {
-        for (int sum = 1; true; sum++) {
-            //System.out.println("sum: " + sum);
+    private static int sum(List<Integer> set) {
+        int sum = 0;
+        for (Integer i : set) sum += i;
+        return sum;
+    }
+
+    private static List<Integer> smallestSpecialSumSet2(int size) {
+        int minSum = sum(smallestSpecialSumSet(size-1, 1));
+        return smallestSpecialSumSet(size, minSum);
+    }
+
+    private static List<Integer> smallestSpecialSumSet(int size, int minSum) {
+        for (int sum = minSum; true; sum++) {
             List<Integer> ssss = smallestSpecialSumSet(new ArrayList<>(), size, sum);
             if (!ssss.isEmpty()) return ssss;
         }
