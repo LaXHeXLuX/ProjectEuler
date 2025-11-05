@@ -23,10 +23,10 @@ class DiophantineTest {
         assertArrayEquals(new long[] {9, 4}, Diophantine.pell(5));
         assertArrayEquals(new long[] {649, 180}, Diophantine.pell(13));
         assertArrayEquals(new long[] {197, 42}, Diophantine.pell(22));
-
-        assertArrayEquals(new long[] {}, Diophantine.pell(100));
         assertEquals(158070671986249L, Diophantine.pell(109)[0]);
-        assertEquals(2469645423824185801L, Diophantine.pell(181)[0]);
+
+        assertArrayEquals(new BigInteger[] {}, Diophantine.pellBig(100));
+        assertEquals( new BigInteger("25052977273092427986049"), Diophantine.pellBig(409)[0]);
         assertEquals(new BigInteger("3879474045914926879468217167061449"), Diophantine.pellBig(421)[0]);
     }
     @Test
