@@ -106,7 +106,9 @@ public class test {
         put(PE_098.class, 18769L);
         put(PE_099.class, 709L);
         put(PE_100.class, 756872327473L);
+        //put(PE_101.class, ???L);
         put(PE_102.class, 228L);
+        put(PE_103.class, 20313839404245L);
         put(PE_104.class, 329468L);
     }};
 
