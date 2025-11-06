@@ -81,12 +81,13 @@ public class PE_103 {
     private static boolean isSpecialSumSet(List<Integer> set) {
         if (set.size() < 3) return true;
         if (set.size() == 3) return set.get(0) + set.get(1) > set.get(2);
-        boolean b1 = isSumOrdered(set);
-        if (!b1) return false;
+        boolean sumOrdered = isSumOrdered(set);
+        if (!sumOrdered) return false;
+        if (set.size() == 4) return set.get(0) + set.get(3) != set.get(1) + set.get(2);
         return noDisjointSubSetsWithSameSum(set);
     }
 
-    private static boolean noDisjointSubSetsWithSameSum(List<Integer> set) {
+    public static boolean noDisjointSubSetsWithSameSum(List<Integer> set) {
         int n = set.size();
         int x = set.getLast();
         Set<Integer> setSums = new HashSet<>();
@@ -108,14 +109,14 @@ public class PE_103 {
         return true;
     }
 
-    private static boolean isSumOrdered(List<Integer> set) {
+    public static boolean isSumOrdered(List<Integer> set) {
         int n = set.size();
         int forwardSums = set.getFirst();
         int backwardSums = 0;
         for (int i = 1; i < n; i++) {
             forwardSums += set.get(i);
             backwardSums += set.get(n-i);
-            if (forwardSums < backwardSums) return false;
+            if (forwardSums <= backwardSums) return false;
         }
         return true;
     }
