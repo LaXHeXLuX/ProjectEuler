@@ -4,7 +4,10 @@ import java.util.*;
 
 public class PE_103 {
     public static void main(String[] args) {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
@@ -22,10 +25,26 @@ public class PE_103 {
     }
 
     private static List<Integer> smallestSpecialSumSet(int size) {
-        for (int sum = 1; true; sum++) {
-            List<Integer> ssss = smallestSpecialSumSet(new ArrayList<>(), size, sum);
-            if (ssss != null) return ssss;
+        if (size == 1) return List.of(1);
+        if (size == 2) return List.of(1, 2);
+        List<Integer> last = smallestSpecialSumSet(size-1);
+        int middle = last.get(last.size() / 2);
+        int upperSum = middle * size;
+        for (Integer i : last) {
+            upperSum += i;
         }
+        List<Integer> lastWorking = smallestSpecialSumSet(new ArrayList<>(), size, upperSum);
+        int lossStreak = 0;
+        for (int sum = upperSum-1; sum > 0; sum--) {
+            List<Integer> ssss = smallestSpecialSumSet(new ArrayList<>(), size, sum);
+            if (ssss != null) {
+                lossStreak = 0;
+                lastWorking = ssss;
+            }
+            else lossStreak++;
+            if (lossStreak >= size) return lastWorking;
+        }
+        throw new RuntimeException("Failure at " + size + ", upperSum bound didn't work");
     }
 
     private static List<Integer> smallestSpecialSumSet(List<Integer> current, int size, int sum) {
