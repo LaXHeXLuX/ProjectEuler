@@ -29,6 +29,9 @@ class FractionTest {
         assertThrows(IllegalArgumentException.class, () -> new Fraction<>(0, 0));
         assertFractionEquals(0, 1, new Fraction<>(0, 1));
         assertFractionEquals(-1, 1, new Fraction<>(1, -1));
+        assertFractionEquals(-1, 1, new Fraction<>(-1));
+        assertFractionEquals(-1, 1, new Fraction<>(-1));
+        assertFractionEquals(99, 1, new Fraction<>(99));
     }
     @Test
     void simplifyFraction() {

@@ -8,6 +8,12 @@ public class Fraction<T> {
     public T den;
     private final Arithmetics.Arithmetic<T> op;
 
+    public Fraction(T num) {
+        this.op = Arithmetics.of(num.getClass());
+        this.num = num;
+        this.den = op.one();
+    }
+
     public Fraction(T num, T den) {
         this.op = Arithmetics.of(num.getClass());
         if (den.equals(op.zero())) throw new IllegalArgumentException("util.Fraction: denominator can't be zero!");
