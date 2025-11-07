@@ -2,7 +2,6 @@ package euler;
 
 public class PE_014 {
     private static boolean[] skip;
-    private static int limit;
 
     public static void main(String[] args) {
         System.out.println(PE());
@@ -11,9 +10,10 @@ public class PE_014 {
     public static long PE() {
         long biggestChainLength = 0;
         long biggestI = 0;
-        limit = 1_000_000;
+        int limit = 1_000_000;
         skip = new boolean[limit];
-        for (int i = 1; i < limit; i++) {
+        int start = limit/2 - 1;
+        for (int i = start; i < limit; i++) {
             if (skip[i]) continue;
             long chainLength = collatzChainLength(i);
             if (chainLength > biggestChainLength) {
@@ -24,12 +24,15 @@ public class PE_014 {
         return biggestI;
     }
 
-    private static int collatzChainLength(long n) {
+    private static int collatzChainLength(int n) {
         int chainLength = 1;
         while (n > 1) {
-            if (n < limit) skip[Math.toIntExact(n)] = true;
-            if (n % 2 == 0) n /= 2;
-            else n = 3*n+1;
+            if (n < skip.length) skip[n] = true;
+            if ((n & 1) == 0) n = n >> 1;
+            else {
+                n = 3*(n >> 1) + 2;
+                chainLength++;
+            }
             chainLength++;
         }
         return chainLength;

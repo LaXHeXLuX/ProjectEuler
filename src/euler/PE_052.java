@@ -1,8 +1,6 @@
 package euler;
 
 import utils.ArrayFunctions;
-import utils.Combinations;
-import utils.Converter;
 
 public class PE_052 {
     public static void main(String[] args) {
@@ -17,27 +15,46 @@ public class PE_052 {
     private static int smallestNumberWithPermutedMultiples(int[] multiples) {
         multiples = ArrayFunctions.mergeSort(multiples);
         int biggestMultiple = multiples[multiples.length-1];
+        int limit = 10/biggestMultiple;
 
         int x = 0;
         while (x >= 0)  {
             x++;
-            int[] digits = Converter.digitArray(x);
-            int limit = 10/biggestMultiple;
-            if (digits[0] > limit) continue;
+            if (firstDigit(x) > limit) continue;
             if (hasPermutedMultiples(x, multiples)) return x;
         }
 
         return -1;
     }
 
-    private static boolean hasPermutedMultiples(int n, int[] multiples) {
-        int[] digits = Converter.digitArray(n);
+    private static int firstDigit(int n) {
+        while (n >= 10) {
+            n /= 10;
+        }
+        return n;
+    }
 
+    private static boolean hasPermutedMultiples(int n, int[] multiples) {
         for (int j : multiples) {
             int multiple = n * j;
-            if (!Combinations.isPermutation(digits, Converter.digitArray(multiple))) return false;
+            if (!isPermutation(n, multiple)) return false;
         }
+        return true;
+    }
 
+    private static boolean isPermutation(int n1, int n2) {
+        int[] digits = new int[10];
+        while (n1 > 0) {
+            digits[n1 % 10]++;
+            n1 /= 10;
+        }
+        while (n2 > 0) {
+            digits[n2 % 10]--;
+            n2 /= 10;
+        }
+        for (int digit : digits) {
+            if (digit != 0) return false;
+        }
         return true;
     }
 }
