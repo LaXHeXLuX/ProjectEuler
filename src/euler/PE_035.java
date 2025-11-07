@@ -1,21 +1,21 @@
 package euler;
 
-import utils.Converter;
 import utils.Primes;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PE_035 {
+    private static boolean[] primes;
     public static void main(String[] args) {
         System.out.println(PE());
     }
 
     public static long PE() {
         int limit = 1_000_000;
-        int[] cyclicPrimes = findCyclicPrimesUnder(limit);
-
-        return cyclicPrimes.length;
+        primes = Primes.sieveOfPrimes(limit);
+        List<Integer> cyclicPrimes = findCyclicPrimesUnder(limit);
+        return cyclicPrimes.size();
     }
 
     private static int[] generateCyclicNumbers(int n) {
@@ -41,15 +41,15 @@ public class PE_035 {
         return true;
     }
 
-    private static int[] findCyclicPrimesUnder(int limit) {
-        int primeLimit = (int) Math.pow(10, (int)Math.log10(1_250_062)+1);
-        boolean[] primes = Primes.sieveOfPrimes(primeLimit);
+    private static List<Integer> findCyclicPrimesUnder(int limit) {
         List<Integer> cyclicPrimes = new ArrayList<>();
+        cyclicPrimes.add(2);
 
-        for (int i = 1; i < limit; i++) {
+        for (int i = 3; i < limit; i+=2) {
+            if (!primes[i]) continue;
             if (isCyclicPrime(i, primes)) cyclicPrimes.add(i);
         }
 
-        return Converter.listToArr(cyclicPrimes);
+        return cyclicPrimes;
     }
 }

@@ -12,9 +12,9 @@ public class PE_075 {
     public static long PE() {
         int perimeterLimit = 1_500_000;
 
-        int n = 1;
         Map<Integer, Integer> perimeters = getPerimeters(perimeterLimit);
 
+        int n = 1;
         List<Integer> oneSolutionPerimeters = getNSolutionPerimeters(n, perimeters);
         return oneSolutionPerimeters.size();
     }
@@ -32,11 +32,13 @@ public class PE_075 {
     private static Map<Integer, Integer> getPerimeters(int perimeterLimit) {
         Map<Integer, Integer> perimeters = new HashMap<>();
 
-        for (int n = 1; n < Math.sqrt(perimeterLimit)/2; n++) {
+        int limitN = (int) Math.sqrt(perimeterLimit)/2;
+        for (int n = 1; n < limitN; n++) {
             int step = n % 2 + 1;
             for (int m = n+1; 2*m*(m+n) < perimeterLimit; m += step) {
                 if (Divisors.greatestCommonDivisor(n, m) != 1) continue;
-                for (int k = 1; k <= perimeterLimit/(2*m*(m+n)); k++) {
+                int limitK = perimeterLimit/(2*m*(m+n));
+                for (int k = 1; k <= limitK; k++) {
                     int m2 = m * m;
                     int n2 = n * n;
                     int a = k*(m2 - n2);

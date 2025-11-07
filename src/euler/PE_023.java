@@ -1,7 +1,5 @@
 package euler;
 
-import utils.Divisors;
-
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -23,9 +21,19 @@ public class PE_023 {
         }
         return sum;
     }
-    private static void makeAbundantNumbers(long limit) {
+    private static void makeAbundantNumbers(int limit) {
+        int[] sumOfDivisors = new int[limit];
+        int sqrt = (int) Math.sqrt(limit);
+        for (int i = 2; i < sqrt; i++) {
+            for (int j = 2*i; j < limit; j+=i) {
+                sumOfDivisors[j] += i;
+                int other = j / i;
+                if (other >= sqrt) sumOfDivisors[j] += other;
+            }
+        }
+        if (sqrt*sqrt < limit) sumOfDivisors[sqrt*sqrt] += sqrt;
         for (int i = 2; i < limit; i++) {
-            if (i < Divisors.sumOfDivisors(i)) abundantNumberSet.add(i);
+            if (i < sumOfDivisors[i]+1) abundantNumberSet.add(i);
         }
     }
 

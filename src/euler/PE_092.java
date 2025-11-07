@@ -11,7 +11,7 @@ public class PE_092 {
         int limit = 10_000_000;
         int otherLimit = (int) Math.ceil(Math.log10(limit)) * 9*9;
         makeChains(otherLimit);
-        return countOf89Enders(limit);
+        return countOfNEnders((int) Math.log10(limit), 0, 89);
     }
 
     private static void makeChains(int limit) {
@@ -21,10 +21,14 @@ public class PE_092 {
         }
     }
 
-    private static int countOf89Enders(int limit) {
+    private static int countOfNEnders(int size, int currentSum, int n) {
+        if (size == 0) {
+            if (chainEnds[currentSum] == n) return 1;
+            else return 0;
+        }
         int count = 0;
-        for (int i = 1; i < limit; i++) {
-            if (chainEnds[digitSquareSum(i)] == 89) count++;
+        for (int i = 0; i < 10; i++) {
+            count += countOfNEnders(size-1, currentSum + i*i, n);
         }
         return count;
     }
