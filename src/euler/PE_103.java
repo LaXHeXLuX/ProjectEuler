@@ -41,8 +41,7 @@ public class PE_103 {
                 lossStreak = 0;
                 lastWorking = ssss;
             }
-            else lossStreak++;
-            if (lossStreak >= size) return lastWorking;
+            else if (++lossStreak >= size) return lastWorking;
         }
         throw new RuntimeException("Failure at " + size + ", upperSum bound didn't work");
     }
