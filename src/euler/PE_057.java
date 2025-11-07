@@ -3,6 +3,7 @@ package euler;
 import utils.Converter;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 
 public class PE_057 {
     public static void main(String[] args) {
@@ -27,9 +28,14 @@ public class PE_057 {
     }
 
     private static boolean numeratorExceedsDenominator(BigInteger[] fraction) {
-        int[] digitsNumerator = Converter.digitArray(fraction[0]);
-        int[] digitsDenominator = Converter.digitArray(fraction[1]);
-        return digitsNumerator.length > digitsDenominator.length;
+        BigInteger n = fraction[0];
+        BigInteger d = fraction[1];
+        while (n.compareTo(BigInteger.TEN) >= 0) {
+            if (d.compareTo(BigInteger.TEN) < 0) return true;
+            n = n.divide(BigInteger.TEN);
+            d = d.divide(BigInteger.TEN);
+        }
+        return false;
     }
 
     private static BigInteger[] nextIterationOfSquareRootOfTwo(BigInteger[] previousIteration) {
