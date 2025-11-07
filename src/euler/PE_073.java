@@ -1,8 +1,5 @@
 package euler;
 
-import utils.Divisors;
-import utils.Primes;
-
 import java.util.ArrayList;
 import java.util.List;
 

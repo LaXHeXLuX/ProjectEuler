@@ -1,9 +1,6 @@
 package euler;
 
-import utils.Converter;
-
 import java.math.BigInteger;
-import java.util.Arrays;
 
 public class PE_057 {
     public static void main(String[] args) {
