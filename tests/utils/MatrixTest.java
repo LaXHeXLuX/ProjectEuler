@@ -2,6 +2,8 @@ package utils;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MatrixTest {
@@ -145,6 +147,14 @@ class MatrixTest {
         equation = new Integer[][] {{1, 1, 1}, {2, -3, 0}, {-1, 4, -1}};
         answers = new Integer[] {7, 6, 2};
         result = Matrix.solve(new Matrix<>(equation), answers);
+        assertFractionArrayEquals(new int[][] {{57, 10}, {9, 5}, {-1, 2}}, result);
+
+        List<Integer> a1List = List.of(1);
+        assertThrows(IllegalArgumentException.class, () -> Matrix.solve(new Matrix<>(e1), a1List));
+        List<Integer> a2List = List.of(1, 1);
+        assertThrows(IllegalArgumentException.class, () -> Matrix.solve(new Matrix<>(e2), a2List));
+        List<Integer> answersList = List.of(7, 6, 2);
+        result = Matrix.solve(new Matrix<>(equation), answersList);
         assertFractionArrayEquals(new int[][] {{57, 10}, {9, 5}, {-1, 2}}, result);
     }
     @Test
