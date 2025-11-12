@@ -31,27 +31,28 @@ public class PE_095 {
     }
 
     private static Set<Integer> longestChain() {
-        Set<Integer> longestChain = Set.of();
-        for (int i = divisorSums.length-1; i > 0; i--) {
-            if (skip[i]) continue;
+        Set<Integer> longestChain = new HashSet<>();
+        for (int i = 0; i < divisorSums.length; i++) {
+            if (skip[i]) {
+                continue;
+            }
             Set<Integer> currentChain = chain(i);
+            skip[i] = true;
             if (currentChain.size() > longestChain.size()) longestChain = currentChain;
         }
         return longestChain;
     }
 
     private static Set<Integer> chain(int n) {
-        Set<Integer> chain = new LinkedHashSet<>();
+        Set<Integer> chain = new HashSet<>();
         chain.add(n);
         int temp = divisorSums[n];
-        while (!chain.contains(temp) && temp < divisorSums.length) {
+        while (temp < skip.length && !skip[temp]) {
+            skip[temp] = true;
+            if (temp == n) return chain;
+            if (chain.contains(temp)) break;
             chain.add(temp);
             temp = divisorSums[temp];
-        }
-        if (temp == n) return chain;
-        for (Integer i : chain) {
-            if (i == temp) break;
-            skip[i] = true;
         }
         return new HashSet<>();
     }
