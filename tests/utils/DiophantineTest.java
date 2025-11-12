@@ -59,4 +59,22 @@ class DiophantineTest {
         assertArrayEquals(new int[] {-4, -1}, Diophantine.quadratic(1, 5, 4));
         assertArrayEquals(empty, Diophantine.quadratic(4, 4, 1));
     }
+    @Test
+    void digitSum() {
+        assertEquals(0, Diophantine.digitSum(0));
+        assertEquals(0, Diophantine.digitSum(0L));
+        assertEquals(0, Diophantine.digitSum(BigInteger.ZERO));
+
+        assertEquals(1, Diophantine.digitSum(10));
+        assertEquals(1, Diophantine.digitSum(10L));
+        assertEquals(1, Diophantine.digitSum(BigInteger.TEN));
+
+        assertEquals(6, Diophantine.digitSum(123));
+        assertEquals(6, Diophantine.digitSum(123L));
+        assertEquals(6, Diophantine.digitSum(BigInteger.valueOf(123)));
+
+        assertEquals(81, Diophantine.digitSum(999_999_999));
+        assertEquals(162, Diophantine.digitSum(999_999_999_999_999_999L));
+        assertEquals(270, Diophantine.digitSum(new BigInteger("999999999999999999999999999999")));
+    }
 }

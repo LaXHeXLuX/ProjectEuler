@@ -1,7 +1,5 @@
 package euler;
 
-import utils.Converter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,15 +13,15 @@ public class PE_002 {
         return sumOfEvenElements(fibonacciNumbersUntil(n));
     }
 
-    private static long sumOfEvenElements(long[] arr) {
+    private static long sumOfEvenElements(List<Long> list) {
         long sum = 0;
-        for (long element : arr) {
+        for (long element : list) {
             if (element % 2 == 0) sum += element;
         }
         return sum;
     }
 
-    private static long[] fibonacciNumbersUntil(long limit) {
+    private static List<Long> fibonacciNumbersUntil(long limit) {
         List<Long> fibonacciNumbers = new ArrayList<>();
         fibonacciNumbers.add(1L);
         long fibo1 = 1L;
@@ -38,6 +36,6 @@ public class PE_002 {
             fibonacciNumbers.add(fibo2);
         }
 
-        return Converter.listToArr(fibonacciNumbers);
+        return fibonacciNumbers;
     }
 }

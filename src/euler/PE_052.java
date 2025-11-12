@@ -1,6 +1,7 @@
 package euler;
 
 import utils.ArrayFunctions;
+import utils.Combinations;
 
 public class PE_052 {
     public static void main(String[] args) {
@@ -37,23 +38,7 @@ public class PE_052 {
     private static boolean hasPermutedMultiples(int n, int[] multiples) {
         for (int j : multiples) {
             int multiple = n * j;
-            if (!isPermutation(n, multiple)) return false;
-        }
-        return true;
-    }
-
-    private static boolean isPermutation(int n1, int n2) {
-        int[] digits = new int[10];
-        while (n1 > 0) {
-            digits[n1 % 10]++;
-            n1 /= 10;
-        }
-        while (n2 > 0) {
-            digits[n2 % 10]--;
-            n2 /= 10;
-        }
-        for (int digit : digits) {
-            if (digit != 0) return false;
+            if (!Combinations.isPermutation(n, multiple)) return false;
         }
         return true;
     }

@@ -53,13 +53,10 @@ class CombinationsTest {
         assertEquals(new BigInteger("100891344545564193334812497256"), Combinations.nChooseMBigInteger(100, 50));
     }
     @Test
-    void nChooseMOrderMattersLong() {
-        for (int i = 1; i < 5; i++) {
-            assertEquals(1, Combinations.nChooseMOrderMattersLong(i, 0));
-            assertEquals(i, Combinations.nChooseMOrderMattersLong(i, 1));
-        }
-        assertEquals(30240, Combinations.nChooseMOrderMattersLong(10, 5));
-        assertEquals(3628800, Combinations.nChooseMOrderMattersLong(10, 10));
+    void catalan() {
+        assertEquals(BigInteger.ONE, Combinations.catalan(1));
+        assertEquals(BigInteger.TWO, Combinations.catalan(2));
+        assertEquals(BigInteger.valueOf(16796), Combinations.catalan(10));
     }
     @Test
     void chooseNElements() {
@@ -89,6 +86,8 @@ class CombinationsTest {
         assertTrue(Combinations.isPermutation(9876, 6978));
         assertFalse(Combinations.isPermutation(1, 111));
         assertFalse(Combinations.isPermutation(123, 143));
+        assertTrue(Combinations.isPermutation(12345678901L, 10987654321L));
+        assertFalse(Combinations.isPermutation(12345678901L, 109876543210L));
     }
     @Test
     void nthPermutation() {

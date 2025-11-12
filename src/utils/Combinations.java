@@ -31,10 +31,8 @@ public class Combinations {
         BigInteger factorial3 = factorialBigInteger(n-m);
         return factorial1.divide(factorial2.multiply(factorial3));
     }
-    public static long nChooseMOrderMattersLong(int n, int m) {
-        long factorial1 = factorial(n);
-        long factorial2 = factorial(n-m);
-        return factorial1 / factorial2;
+    public static BigInteger catalan(int n) {
+        return Combinations.nChooseMBigInteger(2*n, n).divide(BigInteger.valueOf(n+1));
     }
     public static int[][] chooseNElements(int[] arr, int n, boolean orderMatters) {
         if (n == 0) return new int[][] {};
@@ -93,7 +91,34 @@ public class Combinations {
         return outputList.toArray(output);
     }
     public static boolean isPermutation(long n1, long n2) {
-        return isPermutation(Converter.digitArray(n1), Converter.digitArray(n2));
+        int[] digits = new int[10];
+        while (n1 > 0) {
+            digits[Math.toIntExact(n1 % 10)]++;
+            n1 /= 10;
+        }
+        while (n2 > 0) {
+            digits[Math.toIntExact(n2 % 10)]--;
+            n2 /= 10;
+        }
+        for (int digit : digits) {
+            if (digit != 0) return false;
+        }
+        return true;
+    }
+    public static boolean isPermutation(int n1, int n2) {
+        int[] digits = new int[10];
+        while (n1 > 0) {
+            digits[n1 % 10]++;
+            n1 /= 10;
+        }
+        while (n2 > 0) {
+            digits[n2 % 10]--;
+            n2 /= 10;
+        }
+        for (int digit : digits) {
+            if (digit != 0) return false;
+        }
+        return true;
     }
     public static <T> boolean isPermutation(T arr1, T arr2) {
         return isPermutation(Converter.toWrapperArray(arr1), Converter.toWrapperArray(arr2));

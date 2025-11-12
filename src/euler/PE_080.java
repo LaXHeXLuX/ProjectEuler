@@ -1,5 +1,7 @@
 package euler;
 
+import utils.Diophantine;
+
 import java.math.BigInteger;
 
 public class PE_080 {
@@ -35,19 +37,7 @@ public class PE_080 {
         while (squareRoot.compareTo(power10) >= 0) {
             squareRoot = squareRoot.divide(BigInteger.TEN);
         }
-        return digitSum(squareRoot);
-    }
-
-    private static int digitSum(BigInteger bi) {
-        int sum = 0;
-
-        while (!bi.equals(BigInteger.ZERO)) {
-            BigInteger[] divRem = bi.divideAndRemainder(BigInteger.TEN);
-            sum += divRem[1].intValue();
-            bi = divRem[0];
-        }
-
-        return sum;
+        return Diophantine.digitSum(squareRoot);
     }
 
     private static BigInteger squareRoot(int n, int precision) {

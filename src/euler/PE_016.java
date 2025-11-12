@@ -1,6 +1,6 @@
 package euler;
 
-import utils.Converter;
+import utils.Diophantine;
 
 import java.math.BigInteger;
 
@@ -12,7 +12,7 @@ public class PE_016 {
     public static long PE() {
         int n = 2;
         int p = 1000;
-        return sumOfDigits(power(n, p));
+        return Diophantine.digitSum(power(n, p));
     }
 
     private static BigInteger power(int n, int power) {
@@ -22,14 +22,5 @@ public class PE_016 {
             answer = answer.multiply(startingNumber);
         }
         return answer;
-    }
-
-    private static long sumOfDigits(BigInteger n) {
-        long sum = 0;
-        int[] digitArray = Converter.digitArray(n);
-        for (int digit : digitArray) {
-            sum += digit;
-        }
-        return sum;
     }
 }
