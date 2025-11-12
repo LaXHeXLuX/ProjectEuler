@@ -15,11 +15,11 @@ public class PE_056 {
 
     private static int[] biggestDigitsSumOfPower(int limitA, int limitB) {
         int[] biggests = new int[3];
-        biggests[2] = -1;
 
         for (int a = limitA; a > 0; a--) {
-            for (int b = limitB; b > 0; b--) {
-                BigInteger power = power(a, b);
+            int lowerLimitB = (int) ((biggests[2] / 9.0) / Math.log10(a));
+            for (int b = limitB; b > lowerLimitB; b--) {
+                BigInteger power = BigInteger.valueOf(a).pow(b);
                 int digitSum = digitSum(power);
                 if (digitSum > biggests[2]) {
                     biggests[0] = a;
@@ -30,17 +30,6 @@ public class PE_056 {
         }
 
         return biggests;
-    }
-
-    private static BigInteger power(int a, int b) {
-        BigInteger answer = BigInteger.valueOf(a);
-        b--;
-
-        for (int i = 0; i < b; i++) {
-            answer = answer.multiply(BigInteger.valueOf(a));
-        }
-
-        return answer;
     }
 
     private static int digitSum(BigInteger n) {

@@ -113,8 +113,9 @@ public class test {
         put(PE_105.class, 73702L);
         put(PE_106.class, 21384L);
         //put(PE_107.class, ???L);
-        //put(PE_108.class, ???L);
+        put(PE_108.class, 180180L);
         put(PE_109.class, 38182L);
+        put(PE_110.class, 9350130049860600L);
     }};
 
     public static void main(String[] args) {
