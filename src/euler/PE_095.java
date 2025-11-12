@@ -31,11 +31,9 @@ public class PE_095 {
     }
 
     private static Set<Integer> longestChain() {
-        Set<Integer> longestChain = new HashSet<>();
+        Set<Integer> longestChain = Set.of();
         for (int i = 0; i < divisorSums.length; i++) {
-            if (skip[i]) {
-                continue;
-            }
+            if (skip[i]) continue;
             Set<Integer> currentChain = chain(i);
             skip[i] = true;
             if (currentChain.size() > longestChain.size()) longestChain = currentChain;
@@ -44,15 +42,17 @@ public class PE_095 {
     }
 
     private static Set<Integer> chain(int n) {
-        Set<Integer> chain = new HashSet<>();
+        Set<Integer> chain = new LinkedHashSet<>();
         chain.add(n);
         int temp = divisorSums[n];
-        while (temp < skip.length && !skip[temp]) {
-            skip[temp] = true;
-            if (temp == n) return chain;
-            if (chain.contains(temp)) break;
+        while (temp < divisorSums.length && !skip[temp] && !chain.contains(temp)) {
             chain.add(temp);
             temp = divisorSums[temp];
+        }
+        if (temp == n) return chain;
+        for (Integer i : chain) {
+            if (i == temp) break;
+            skip[i] = true;
         }
         return new HashSet<>();
     }
