@@ -4,7 +4,6 @@ import java.util.*;
 
 public class PE_095 {
     private static int[] divisorSums;
-    private static boolean[] skip;
 
     public static void main(String[] args) {
         System.out.println(PE());
@@ -13,8 +12,7 @@ public class PE_095 {
     public static long PE() {
         int limit = 1_000_000;
         makeDivisorSums(limit);
-        skip = new boolean[limit+1];
-        Set<Integer> longestChain = longestChain();
+        List<Integer> longestChain = longestChain();
         return Collections.min(longestChain);
     }
 
@@ -30,30 +28,33 @@ public class PE_095 {
         }
     }
 
-    private static Set<Integer> longestChain() {
-        Set<Integer> longestChain = Set.of();
-        for (int i = 0; i < divisorSums.length; i++) {
-            if (skip[i]) continue;
-            Set<Integer> currentChain = chain(i);
-            skip[i] = true;
-            if (currentChain.size() > longestChain.size()) longestChain = currentChain;
+    private static List<Integer> longestChain() {
+        List<Integer> longestChain = List.of();
+        int limit = divisorSums.length;
+        int[] visited = new int[limit];
+        int[] chain = new int[limit];
+        for (int i = 2; i < limit; i++) {
+            int chainLen = 0;
+            int temp = i;
+
+            while (temp < limit && visited[temp] == 0) {
+                chain[chainLen] = temp;
+                chainLen++;
+                visited[temp] = i;
+                temp = divisorSums[temp];
+            }
+
+            if (temp >= limit || visited[temp] != i) continue;
+
+            int start = 0;
+            while (chain[start] != temp) start++;
+            if (chainLen - start > longestChain.size()) {
+                longestChain = new ArrayList<>();
+                for (int j = start; j < chainLen; j++) {
+                    longestChain.add(chain[j]);
+                }
+            }
         }
         return longestChain;
-    }
-
-    private static Set<Integer> chain(int n) {
-        Set<Integer> chain = new LinkedHashSet<>();
-        chain.add(n);
-        int temp = divisorSums[n];
-        while (temp < divisorSums.length && !skip[temp] && !chain.contains(temp)) {
-            chain.add(temp);
-            temp = divisorSums[temp];
-        }
-        if (temp == n) return chain;
-        for (Integer i : chain) {
-            if (i == temp) break;
-            skip[i] = true;
-        }
-        return new HashSet<>();
     }
 }
