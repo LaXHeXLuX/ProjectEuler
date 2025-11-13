@@ -162,7 +162,7 @@ public class Converter {
 
         return (T) primitiveArray;
     }
-    public static Class<?> getPrimitiveType(Class<?> wrapperType) {
+    private static Class<?> getPrimitiveType(Class<?> wrapperType) {
         int dimensions = 0;
         Class<?> type = wrapperType;
         while (type.isArray()) {
@@ -208,14 +208,5 @@ public class Converter {
         }
 
         return (T) primitiveArray;
-    }
-    @SuppressWarnings("unchecked")
-    public static <T> T convertNumberTo(Class<T> targetType, Number value) {
-        return switch (targetType.getName()) {
-            case "int", "java.lang.Integer" -> (T) Integer.valueOf(value.intValue());
-            case "long", "java.lang.Long" -> (T) Long.valueOf(value.longValue());
-            case "double", "java.lang.Double" -> (T) Double.valueOf(value.doubleValue());
-            default -> throw new IllegalArgumentException("Unsupported type");
-        };
     }
 }

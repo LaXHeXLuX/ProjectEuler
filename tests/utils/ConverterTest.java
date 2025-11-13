@@ -14,13 +14,21 @@ class ConverterTest {
     void toWrapperArray() {
         int[] intArr = {1, 2, 3, 4};
         long[] longArr = {1_000_000_000_000_000L, 2_000_000_000_000_000L};
+        double[] doubleArr = {1.6, -1.5};
+        float[] floatArr = {2.5f, -1.1f};
+        short[] shortArr = {10, -12};
         char[] charArr = {'a', 'b', 'c'};
         boolean[] booleanArr = {true, false};
+        byte[] byteArr = {0, 1};
         String[] stringArr = {"this", "Should", "Still", "Work"};
         assertArrayEquals(new Integer[] {1, 2, 3, 4}, Converter.toWrapperArray(intArr));
         assertArrayEquals(new Long[] {1_000_000_000_000_000L, 2_000_000_000_000_000L}, Converter.toWrapperArray(longArr));
+        assertArrayEquals(new Double[] {1.6, -1.5}, Converter.toWrapperArray(doubleArr));
+        assertArrayEquals(new Float[] {2.5f, -1.1f}, Converter.toWrapperArray(floatArr));
+        assertArrayEquals(new Short[] {10, -12}, Converter.toWrapperArray(shortArr));
         assertArrayEquals(new Character[] {'a', 'b', 'c'}, Converter.toWrapperArray(charArr));
         assertArrayEquals(new Boolean[] {true, false}, Converter.toWrapperArray(booleanArr));
+        assertArrayEquals(new Byte[] {0, 1}, Converter.toWrapperArray(byteArr));
         assertArrayEquals(stringArr, Converter.toWrapperArray(stringArr));
     }
     @Test
@@ -43,13 +51,21 @@ class ConverterTest {
     void toPrimitiveArray() {
         Integer[] intArr = {1, 2, 3, 4};
         Long[] longArr = {1_000_000_000_000_000L, 2_000_000_000_000_000L};
+        Double[] doubleArr = {1.6, -1.5};
+        Float[] floatArr = {2.5f, -1.1f};
+        Short[] shortArr = {10, -12};
         Character[] charArr = {'a', 'b', 'c'};
         Boolean[] booleanArr = {true, false};
+        Byte[] byteArr = {0, 1};
         int[] intArr2 = {10, 11, 12, 13};
         assertArrayEquals(new int[] {1, 2, 3, 4}, Converter.toPrimitiveArray(intArr));
         assertArrayEquals(new long[] {1_000_000_000_000_000L, 2_000_000_000_000_000L}, Converter.toPrimitiveArray(longArr));
+        assertArrayEquals(new double[] {1.6, -1.5}, Converter.toPrimitiveArray(doubleArr));
+        assertArrayEquals(new float[] {2.5f, -1.1f}, Converter.toPrimitiveArray(floatArr));
+        assertArrayEquals(new short[] {10, -12}, Converter.toPrimitiveArray(shortArr));
         assertArrayEquals(new char[] {'a', 'b', 'c'}, Converter.toPrimitiveArray(charArr));
         assertArrayEquals(new boolean[] {true, false}, Converter.toPrimitiveArray(booleanArr));
+        assertArrayEquals(new byte[] {0, 1}, Converter.toPrimitiveArray(byteArr));
         assertArrayEquals(intArr2, Converter.toPrimitiveArray(intArr2));
         assertArrayEquals(new String[] {"Hello"}, Converter.toPrimitiveArray(new String[] {"Hello"}));
     }
@@ -151,18 +167,5 @@ class ConverterTest {
         int[] digits = {1, 2, 3, 4};
         assertEquals(1234, Converter.fromDigitArray(digits));
         assertEquals(0, Converter.fromDigitArray(new int[0]));
-    }
-    @Test
-    void convertTo() {
-        Integer intValue = 42;
-
-        assertEquals(42, Converter.convertNumberTo(Integer.class, intValue));
-        assertEquals(42, Converter.convertNumberTo(int.class, intValue));
-
-        assertEquals(42L, Converter.convertNumberTo(Long.class, intValue));
-        assertEquals(42L, Converter.convertNumberTo(long.class, intValue));
-
-        assertEquals(42.0, Converter.convertNumberTo(Double.class, intValue), 0.0001);
-        assertEquals(42.0, Converter.convertNumberTo(double.class, intValue), 0.0001);
     }
 }
