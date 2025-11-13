@@ -6,10 +6,7 @@ public class PE_088 {
     private static int[] bestScore;
 
     public static void main(String[] args) {
-        double s = System.currentTimeMillis();
         System.out.println(PE());
-        double e = System.currentTimeMillis();
-        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
