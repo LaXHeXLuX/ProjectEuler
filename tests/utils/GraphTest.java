@@ -28,6 +28,15 @@ class GraphTest {
         graphs[3] = new Graph(edgeMatrix3);
     }
     @Test
+    void equals() {
+        Graph temp = new Graph();
+        temp.addNode("1");
+        temp.addNode("2");
+        assertNotEquals(temp, graphs[2]);
+        assertNotEquals(new Graph(), new Object());
+        assertNotEquals(new Edge(null, null, 0), new Object());
+    }
+    @Test
     void toStringTest() {
         assertEquals("nodes=[], edges=[]", graphs[0].toString());
         assertEquals("nodes=[0], edges=[]", graphs[1].toString());
@@ -76,15 +85,20 @@ class GraphTest {
         assertEquals(2, graphs[3].djikstra("0", "1"));
         assertEquals(Integer.MAX_VALUE, graphs[3].djikstra("1", "0"));
 
-        int[][] edgeMatrix = {{-1, 1, -1, -1, -1}, {-1, -1, 3, -1, -1}, {5, -1, -1, -1, 1}, {-1, -1, -1, -1, -1}, {2, 7, -1, -1, -1}};
+        int[][] edgeMatrix = {
+                {-1, 3, 1, -1, -1},
+                {3, -1, -1, 4, -1},
+                {1, -1, -1, 2, -1},
+                {-1, 4, 2, -1, 5},
+                {-1, -1, -1, 5, -1}
+        };
         Graph bigGraph = new Graph(edgeMatrix);
         assertEquals(0, bigGraph.djikstra("0", "0"));
-        assertEquals(4, bigGraph.djikstra("0", "2"));
-        assertEquals(6, bigGraph.djikstra("1", "0"));
-        assertEquals(Integer.MAX_VALUE, bigGraph.djikstra("3", "0"));
-        assertEquals(3, bigGraph.djikstra("4", "1"));
+        assertEquals(1, bigGraph.djikstra("0", "2"));
+        assertEquals(3, bigGraph.djikstra("0", "3"));
+        assertEquals(4, bigGraph.djikstra("1", "2"));
+        assertEquals(8, bigGraph.djikstra("0", "4"));
     }
-    @SuppressWarnings("RedundantAssert")
     @Test
     void edgeCompare() {
         Edge edge1 = new Edge("a", "b", 1);
