@@ -1,7 +1,5 @@
 package euler;
 
-import utils.Primes;
-
 public class PE_047 {
     public static void main(String[] args) {
         System.out.println(PE());
@@ -20,8 +18,7 @@ public class PE_047 {
             if (i < 0) return new long[0];
             solved = true;
             for (int j = 0; j < n; j++) {
-                if (countDistinctPrimeFactors(i+j) != m) {
-
+                if (!hasXDistinctPrimeFactors(i+j, m)) {
                     solved = false;
                     break;
                 }
@@ -38,14 +35,25 @@ public class PE_047 {
         return answer;
     }
 
-    public static int countDistinctPrimeFactors(long n) {
-        long[] primeFactors = Primes.findPrimeFactors(n);
-        int distinctCount = 1;
-
-        for (int i = 1; i < primeFactors.length; i++) {
-            if (primeFactors[i] != primeFactors[i-1]) distinctCount++;
+    private static boolean hasXDistinctPrimeFactors(long n, int x) {
+        if (n % 2 == 0) {
+            x--;
+            do n /= 2;
+            while (n % 2 == 0);
+        }
+        long limit = (long) Math.sqrt(n);
+        for (int i = 3; i <= limit; i += 2) {
+            if (n % i == 0) {
+                x--;
+                do n /= i;
+                while (n % i == 0);
+            }
         }
 
-        return distinctCount;
+        if (n > 1) {
+            x--;
+        }
+
+        return x == 0;
     }
 }
