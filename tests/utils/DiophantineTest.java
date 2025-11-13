@@ -77,4 +77,26 @@ class DiophantineTest {
         assertEquals(162, Diophantine.digitSum(999_999_999_999_999_999L));
         assertEquals(270, Diophantine.digitSum(new BigInteger("999999999999999999999999999999")));
     }
+    @Test
+    void isPalindromeInBase() {
+        assertTrue(Diophantine.isPalindrome(0));
+        assertTrue(Diophantine.isPalindromeInBase(0, 2));
+        assertTrue(Diophantine.isPalindrome(0L));
+        assertTrue(Diophantine.isPalindromeInBase(0L, 2));
+
+        assertTrue(Diophantine.isPalindromeInBase(-4, 10));
+        assertFalse(Diophantine.isPalindromeInBase(-4, 2));
+        assertTrue(Diophantine.isPalindromeInBase(-4L, 10));
+        assertFalse(Diophantine.isPalindromeInBase(-4L, 2));
+
+        assertTrue(Diophantine.isPalindromeInBase(1_234_554_321, 10));
+        assertTrue(Diophantine.isPalindromeInBase((1<<28) + 1, 2));
+        assertTrue(Diophantine.isPalindromeInBase(123_456_789_987_654_321L, 10));
+        assertTrue(Diophantine.isPalindromeInBase((1L<<60) + 1, 2));
+
+        assertFalse(Diophantine.isPalindromeInBase(123_454_320, 10));
+        assertFalse(Diophantine.isPalindromeInBase((1<<30) + (1<<15), 2));
+        assertFalse(Diophantine.isPalindromeInBase(123_456_789_987_654_320L, 10));
+        assertFalse(Diophantine.isPalindromeInBase((1L<<60) + (1<<30), 2));
+    }
 }
