@@ -1,9 +1,13 @@
 package euler;
 
-public class PE_086 {
+import utils.Diophantine;
 
+public class PE_086 {
     public static void main(String[] args) {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
@@ -11,53 +15,45 @@ public class PE_086 {
         return smallestLimitFor(solutionCount);
     }
 
-    private static boolean isSquare(long n) {
-        long root = (long) Math.sqrt(n);
-        return root * root == n;
+    private static int numberOfIntegerSolutions2(int limit) {
+        int sum = 0;
+        for (int a = 1; a <= limit; a++) {
+            sum += integerSolutionsFor(a);
+        }
+        return sum;
     }
 
-    private static long cuboidRouteSquare(int aPlusB, int c) {
-        return (long) (aPlusB) * (aPlusB) + (long) c * c;
-    }
-
-    private static int numberOfIntegerSolutions(int limit) {
-        int solutions = 0;
-
-        for (int c = 1; c <= limit; c++) {
-            for (int ab = 1; ab <= limit*2; ab++) {
-                if (isSquare(cuboidRouteSquare(ab, c))) {
-                    int toAdd = c - (ab+1)/2 + 1;
-                    if (toAdd < 0) toAdd = 0;
-                    if (c >= ab) toAdd = ab/2;
-                    solutions += toAdd;
-                }
+    private static int integerSolutionsFor(int a) {
+        int step = 1;
+        if (a % 2 != 0) step = 2;
+        int count = 0;
+        for (int bPlusC = 2; bPlusC < a+1; bPlusC += step) {
+            if (Diophantine.root(a*a + bPlusC*bPlusC) > 0) {
+                count += bPlusC / 2;
             }
         }
-
-        return solutions;
+        for (int bPlusC = a+1; bPlusC <= 2*a; bPlusC += step) {
+            if (Diophantine.root(a*a + bPlusC*bPlusC) > 0) {
+                count += (2*a + 2 - bPlusC) / 2;
+            }
+        }
+        return count;
     }
 
     private static int smallestLimitFor(int solutionCount) {
-        int lowerBound = 0;
-        int limit = 1;
-        int numberOfSolutions = numberOfIntegerSolutions(limit);
-        while (numberOfSolutions < solutionCount) {
-            lowerBound = limit;
-            limit *= 2;
-            numberOfSolutions = numberOfIntegerSolutions(limit);
+        int low = 0;
+        int high = 1;
+        while (numberOfIntegerSolutions2(high) < solutionCount) {
+            low = high;
+            high *= 2;
         }
-        int upperBound = limit;
-        while (lowerBound < upperBound) {
-            limit = (lowerBound + upperBound) / 2 + 1;
-            numberOfSolutions = numberOfIntegerSolutions(limit);
-            if (numberOfSolutions < solutionCount) lowerBound = limit;
-            else if (numberOfSolutions > solutionCount) {
-                upperBound = limit-1;
-                if (lowerBound == upperBound) return limit;
-            }
-            else return limit;
+        while (low < high) {
+            int mid = (low + high) / 2;
+            int solutions = numberOfIntegerSolutions2(mid);
+            if (solutions < solutionCount) low = mid + 1;
+            else high = mid;
         }
 
-        return lowerBound + 1;
+        return low;
     }
 }
