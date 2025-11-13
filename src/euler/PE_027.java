@@ -3,7 +3,6 @@ package euler;
 import utils.Primes;
 
 public class PE_027 {
-    private static boolean[] primes;
 
     public static void main(String[] args) {
         System.out.println(PE());
@@ -11,17 +10,18 @@ public class PE_027 {
 
     public static long PE() {
         int limit = 1_000;
-        int[] bestAB = findBestQuadraticFormulaWithLimits(limit, limit);
+        int[] bestAB = findBestQuadraticFormulaWithLimits(limit-1, limit);
         return (long) bestAB[0] * bestAB[1];
     }
 
     private static int[] findBestQuadraticFormulaWithLimits(int limitA, int limitB) {
-        primes = Primes.sieveOfPrimes(10_000_000);
+        boolean[] primes = Primes.sieveOfPrimes(limitB + 1);
 
-        int bestScore = 0;
-        int[] bestAB = {0, 0};
-        for (int a = -limitA; a <= limitA; a++) {
-            for (int b = -limitB; b <= limitB ; b++) {
+        int bestScore = 40;
+        int[] bestAB = {1, 41};
+        for (int b = bestAB[1]; b <= limitB; b+=2) {
+            if (!primes[b]) continue;
+            for (int a = -limitA; a < limitA; a++) {
                 int score = scoreOfQuadraticFormula(a, b);
                 if (score > bestScore) {
                     bestScore = score;
@@ -37,14 +37,9 @@ public class PE_027 {
         int n = 0;
         while (true) {
             int value = n*n + a*n + b;
-            if (!isPrime(value)) break;
+            if (!Primes.isPrime(value)) break;
             n++;
         }
         return n;
-    }
-
-    private static boolean isPrime(int n) {
-        if (n <= 1) return false;
-        return primes[n];
     }
 }
