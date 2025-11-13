@@ -1,48 +1,45 @@
 package euler;
 
-import utils.Combinations;
-import utils.Converter;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PE_034 {
-    static Map<Integer, Integer> factorials = new HashMap<>();
+    private static final int[] FACTORIALS = {1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880};
 
     public static void main(String[] args) {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
-        int[] digitFactorials = findAllDigitFactorials();
+        List<Integer> digitFactorials = findAllDigitFactorials();
         int sum = 0;
         for (int digitFactorial : digitFactorials) sum += digitFactorial;
         return sum;
     }
 
     private static boolean isDigitFactorial(int n) {
-        long sum = 0;
+        int sum = 0;
 
         int x = n;
         while (x > 0) {
-            sum += factorials.get(x % 10);
+            sum += FACTORIALS[x % 10];
             x /= 10;
         }
 
         return sum == n;
     }
 
-    private static int[] findAllDigitFactorials() {
+    private static List<Integer> findAllDigitFactorials() {
         List<Integer> digitFactorials = new ArrayList<>();
         int limit = 2_000_000;
-
-        for (int i = 0; i < 10; i++) {
-            factorials.put(i, (int) Combinations.factorial(i));
-        }
 
         for (int i = 10; i < limit; i++) {
             if (isDigitFactorial(i)) digitFactorials.add(i);
         }
 
-        return Converter.listToArr(digitFactorials);
+        return digitFactorials;
     }
 }
