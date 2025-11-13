@@ -1,13 +1,19 @@
 package euler;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public class PE_023 {
     private static final Set<Integer> abundantNumberSet = new LinkedHashSet<>();
+    private static final List<Integer> oddAbundantNumbers = new ArrayList<>();
 
     public static void main(String[] args) {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
@@ -33,14 +39,27 @@ public class PE_023 {
         }
         if (sqrt*sqrt < limit) sumOfDivisors[sqrt*sqrt] += sqrt;
         for (int i = 2; i < limit; i++) {
-            if (i < sumOfDivisors[i]+1) abundantNumberSet.add(i);
+            if (i < sumOfDivisors[i]+1) {
+                if (i % 2 == 1) {
+                    oddAbundantNumbers.add(i);
+                }
+                abundantNumberSet.add(i);
+            }
         }
     }
 
     private static boolean isSumOfTwoAbundantNumbers(int n) {
-        for (int abundantNumber : abundantNumberSet) {
-            if (abundantNumber > n) break;
-            int j = n - abundantNumber;
+        if (n % 2 == 1) {
+            if (n < oddAbundantNumbers.getFirst()) return false;
+            for (Integer i : oddAbundantNumbers) {
+                if (i > n) break;
+                int j = n - i;
+                if (abundantNumberSet.contains(j)) return true;
+            }
+        }
+        for (int i : abundantNumberSet) {
+            if (i > n) break;
+            int j = n - i;
             if (abundantNumberSet.contains(j)) return true;
         }
 
