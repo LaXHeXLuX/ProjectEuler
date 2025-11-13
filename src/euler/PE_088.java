@@ -1,72 +1,58 @@
 package euler;
 
-import utils.Divisors;
-
 import java.util.*;
 
 public class PE_088 {
-    private static final Map<Integer, long[]> allDivisors = new HashMap<>();
+    private static int[] bestScore;
 
     public static void main(String[] args) {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
         int limit = 12_000;
-        Set<Integer> numbers = minimalProductSumNumbers(limit);
-        return sum(numbers);
+        bestScore = new int[limit+1];
+        for (int i = 2; i < bestScore.length; i++) {
+            bestScore[i] = 2*i;
+        }
+        fillBestScores();
+        return setSum();
     }
 
-    private static Set<Integer> minimalProductSumNumbers(int limit) {
-        Set<Integer> minimalProductSumNumbers = new HashSet<>();
-
-        for (int i = 2; i <= limit ; i++) {
-            minimalProductSumNumbers.add(minimalProductSumNumber(i));
-        }
-
-        return minimalProductSumNumbers;
-    }
-
-    private static int minimalProductSumNumber(int k) {
-        if (k == 2) return 4;
-        for (int i = k+3; i < 2*k; i++) {
-            if (isProductSum(k, i)) return i;
-        }
-        return 2*k;
-    }
-
-    private static boolean isProductSum(int k, int i) {
-        long[] divisors;
-        if (!allDivisors.containsKey(i)) {
-            divisors = Divisors.divisors(i);
-            divisors = Arrays.copyOfRange(divisors, 1, divisors.length-1);
-            allDivisors.put(i, divisors);
-        } else {
-            divisors = allDivisors.get(i);
-        }
-
-        return isProductSum(k, i, i, divisors, 0);
-    }
-
-    private static boolean isProductSum(int k, int sum, int product, long[] divisors, int start) {
-        if (product < 1 || sum < 0) return false;
-        if (product == 1) {
-            return sum == k;
-        }
-
-        for (int i = start; i < divisors.length; i++) {
-            if (product % divisors[i] != 0) continue;
-            if (isProductSum(k - 1, (int) (sum - divisors[i]), (int) (product / divisors[i]), divisors, i))
-                return true;
-        }
-
-        return false;
-    }
-    private static int sum(Set<Integer> set) {
-        int sum = 0;
-        for (Integer i : set) {
+    private static long setSum() {
+        boolean[] skip = new boolean[bestScore.length*2];
+        long sum = 0;
+        for (int i : bestScore) {
+            if (skip[i]) continue;
             sum += i;
+            skip[i] = true;
         }
         return sum;
+    }
+
+    private static void fillBestScores() {
+        fillBestScores(new ArrayList<>(), 1, 0);
+    }
+
+    private static void fillBestScores(List<Integer> factors, int product, int sum) {
+        int limit = (bestScore.length-1)*2 / product;
+        int start;
+        if (!factors.isEmpty()) start = factors.getLast();
+        else start = 2;
+        for (int i = start; i <= limit; i++) {
+            factors.add(i);
+            int newProduct = product * i;
+            int newSum = sum + i;
+            // 2 3. * => 6, + => 5
+            int size = newProduct - newSum + factors.size();
+            if (size < bestScore.length && bestScore[size] > newProduct) {
+                bestScore[size] = newProduct;
+            }
+            fillBestScores(factors, newProduct, newSum);
+            factors.removeLast();
+        }
     }
 }
