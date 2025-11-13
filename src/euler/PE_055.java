@@ -1,6 +1,7 @@
 package euler;
 
 import utils.Converter;
+import utils.Diophantine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class PE_055 {
         n += reverse(n);
         int counter = 1;
 
-        while (counter <= 50 && !isPalindrome(n)) {
+        while (counter <= 50 && !Diophantine.isPalindrome(n)) {
             n += reverse(n);
             if (n < 0) return -1;
             counter++;
@@ -44,10 +45,5 @@ public class PE_055 {
         String number = String.valueOf(n);
         String reversed = String.valueOf(new StringBuilder(number).reverse());
         return Long.parseLong(reversed);
-    }
-
-    private static boolean isPalindrome(long n) { // note for the future: doing it with string isn't that much faster, maybe like 1.5x faster for bigger numbers
-        String string = String.valueOf(n);
-        return (string.contentEquals(new StringBuilder(string).reverse()));
     }
 }
