@@ -114,4 +114,29 @@ public class Diophantine {
         if (rem1 == 0) return new int[] {result1};
         return new int[] {result2};
     }
+    public static int digitSum(int n) {
+        int sum = 0;
+        while (n > 0) {
+            sum += n % 10;
+            n /= 10;
+        }
+        return sum;
+    }
+    public static int digitSum(long n) {
+        int sum = 0;
+        while (n > 0) {
+            sum += (int) (n % 10);
+            n /= 10;
+        }
+        return sum;
+    }
+    public static int digitSum(BigInteger n) {
+        int sum = 0;
+        while (n.compareTo(BigInteger.ZERO) > 0) {
+            BigInteger[] divRem = n.divideAndRemainder(BigInteger.TEN);
+            sum += divRem[1].intValue();
+            n = divRem[0];
+        }
+        return sum;
+    }
 }

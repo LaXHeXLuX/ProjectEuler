@@ -1,6 +1,7 @@
 package euler;
 
 import utils.Combinations;
+import utils.Diophantine;
 
 import java.math.BigInteger;
 
@@ -11,17 +12,7 @@ public class PE_020 {
 
     public static long PE() {
         int n = 100;
-        return sumOfDigitsOfFactorial(n);
-    }
-
-    public static int sumOfDigitsOfFactorial(int n) {
         BigInteger factorial = Combinations.factorialBigInteger(n);
-        int sumOfDigits = 0;
-        while (factorial.compareTo(BigInteger.ZERO) > 0) {
-            BigInteger[] divRem = factorial.divideAndRemainder(BigInteger.TEN);
-            sumOfDigits += divRem[1].intValue();
-            factorial = divRem[0];
-        }
-        return sumOfDigits;
+        return Diophantine.digitSum(factorial);
     }
 }

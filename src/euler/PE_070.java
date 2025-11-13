@@ -1,22 +1,25 @@
 package euler;
 
+import utils.Combinations;
+
 import java.util.*;
 
 public class PE_070 {
-    private static int[] totients;
 
     public static void main(String[] args) {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
         int limit = 10_000_000;
-        makeTotients(limit);
-        return findNumberWithPropertyWithSmallestScore();
+        return findNumberWithPropertyWithSmallestScore(limit);
     }
 
-    private static void makeTotients(int limit) {
-        totients = new int[limit];
+    private static int[] totients(int limit) {
+        int[] totients = new int[limit];
         Arrays.fill(totients, 1);
         for (int i = 2; i < limit/2; i++) {
             if (totients[i] > 1) continue;
@@ -32,56 +35,32 @@ public class PE_070 {
                 prod += i;
             }
         }
-        for (int i = limit/2; i < limit; i++) {
-            if (totients[i] == 1) totients[i] = i-1;
-        }
+        return totients;
     }
 
-    private static int compare(int[] fraction1, int[] fraction2) {
-        long prod1 = (long) fraction1[0] * fraction2[1];
-        long prod2 = (long) fraction2[0] * fraction1[1];
-        return Long.compare(prod1, prod2);
-    }
-
-    private static int findNumberWithPropertyWithSmallestScore() {
-        int[] smallestScore = {-1, 1};
+    private static int findNumberWithPropertyWithSmallestScore(int limit) {
+        double s = System.currentTimeMillis();
+        int[] totients = totients(limit);
+        double e = System.currentTimeMillis();
+        System.out.println("totients done: " + (e-s) + " ms");
+        int[] smallestScore = {Integer.MAX_VALUE, 1};
         int smallestN = -1;
-        for (int i = totients.length-1; i > 1; i-=2) {
+        int lowerLimit = 2;
+        for (int i = totients.length-1; i >= lowerLimit; i-=2) {
             int[] score;
-            if (totients[i] == i-1) {
-                if (smallestScore[0] >= 0 && compare(smallestScore, new int[] {i, totients[i]}) < 0) {
-                    return smallestN;
-                }
-                continue;
-            }
-            if (!hasProperty(i, totients[i])) continue;
+            if (totients[i] == 1) continue;
             score = new int[] {i, totients[i]};
-            if (smallestScore[0] < 0 || compare(score, smallestScore)< 0) {
-                smallestN = i;
-                smallestScore = score;
-            }
+            if ((long) score[0] * smallestScore[1] >= (long) score[1] * smallestScore[0]) continue;
+            if (!Combinations.isPermutation(i, totients[i])) continue;
+
+            smallestN = i;
+            smallestScore = score;
+            long yy = (long) score[1] * score[1];
+            long xMinusY = score[0] - score[1];
+            lowerLimit = Math.toIntExact(yy / (xMinusY * xMinusY));
+            System.out.println("new limit at " + i + ". score: " + Arrays.toString(score) + ", " + lowerLimit);
         }
 
         return smallestN;
-    }
-
-    private static boolean hasProperty(long n, long totient) {
-        Map<Integer, Integer> digits = new HashMap<>();
-        while (n > 0) {
-            int digit = Math.toIntExact(n % 10);
-            digits.put(digit, digits.getOrDefault(digit, 0) + 1);
-            n /= 10;
-        }
-        while (totient > 0) {
-            int digit = Math.toIntExact(totient % 10);
-            int current = digits.getOrDefault(digit, 0);
-            if (current == 0) return  false;
-            if (current == 1) digits.remove(digit);
-            else digits.put(digit, current-1);
-
-            totient /= 10;
-        }
-
-        return digits.isEmpty();
     }
 }

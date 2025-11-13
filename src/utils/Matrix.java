@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Matrix<T> {
     private final T[][] grid;
@@ -162,15 +163,7 @@ public class Matrix<T> {
         return bareiss[this.n-1][this.n-1];
     }
     @SuppressWarnings("unchecked")
-    public static <T> Fraction<T>[] solve(Matrix<T> A, T[] b) {
-        if (!A.isSquare() || b.length != A.n) {
-            throw new IllegalArgumentException("Matrix A must be square and match vector length");
-        }
-        T[][] grid = blank(A.n, A.n+1);
-        for (int i = 0; i < grid.length; i++) {
-            System.arraycopy(A.grid[i], 0, grid[i], 0, A.m);
-            grid[i][A.n] = b[i];
-        }
+    private static <T> Fraction<T>[] solveHelper(Matrix<T> A, T[][] grid) {
         T[][] bareiss = new Matrix<>(grid).bareiss();
         Fraction<T>[] result = (Fraction<T>[]) new Fraction[A.n];
         for (int i = A.n - 1; i >= 0; i--) {
@@ -182,6 +175,28 @@ public class Matrix<T> {
             result[i] = sum.divide(new Fraction<>(bareiss[i][i])).simplify();
         }
         return result;
+    }
+    public static <T> Fraction<T>[] solve(Matrix<T> A, T[] b) {
+        if (!A.isSquare() || b.length != A.n) {
+            throw new IllegalArgumentException("Matrix A must be square and match vector length");
+        }
+        T[][] grid = blank(A.n, A.n+1);
+        for (int i = 0; i < grid.length; i++) {
+            System.arraycopy(A.grid[i], 0, grid[i], 0, A.m);
+            grid[i][A.n] = b[i];
+        }
+        return solveHelper(A, grid);
+    }
+    public static <T> Fraction<T>[] solve(Matrix<T> A, List<T> b) {
+        if (!A.isSquare() || b.size() != A.n) {
+            throw new IllegalArgumentException("Matrix A must be square and match vector length");
+        }
+        T[][] grid = blank(A.n, A.n+1);
+        for (int i = 0; i < grid.length; i++) {
+            System.arraycopy(A.grid[i], 0, grid[i], 0, A.m);
+            grid[i][A.n] = b.get(i);
+        }
+        return solveHelper(A, grid);
     }
     public Matrix<T> add(Matrix<T> matrix) {
         if (this.n != matrix.n || this.m != matrix.m)
@@ -232,7 +247,7 @@ public class Matrix<T> {
         int[] widths = new int[m];
         for (T[] row : this.grid) {
             for (int i = 0; i < this.m; i++) {
-                int len = String.valueOf((int) row[i]).length();
+                int len = String.valueOf(row[i]).length();
                 if (len > widths[i]) widths[i] = len;
             }
         }

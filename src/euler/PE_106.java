@@ -18,13 +18,9 @@ public class PE_106 {
         long sum = 0;
         for (int i = 2; i <= n/2; i++) {
             BigInteger allPairs = Combinations.nChooseMBigInteger(n, i).multiply(Combinations.nChooseMBigInteger(n-i, i)).divide(BigInteger.TWO);
-            BigInteger sub = Combinations.nChooseMBigInteger(n, 2*i).multiply(catalan(i));
+            BigInteger sub = Combinations.nChooseMBigInteger(n, 2*i).multiply(Combinations.catalan(i));
             sum += allPairs.subtract(sub).longValue();
         }
         return sum;
-    }
-
-    private static BigInteger catalan(int n) {
-        return Combinations.nChooseMBigInteger(2*n, n).divide(BigInteger.valueOf(n+1));
     }
 }

@@ -86,15 +86,17 @@ public class PE_093 {
             return Set.of((double) digits.getFirst());
         }
         Set<Double> results = new HashSet<>();
-        for (int leftSize = 1; leftSize < digits.size(); leftSize++) {
+        for (int leftSize = 1; leftSize <= digits.size()/2; leftSize++) {
             Set<Double> leftResults = resultsRec(digits.subList(0, leftSize));
             Set<Double> rightResults = resultsRec(digits.subList(leftSize, digits.size()));
             for (Double l : leftResults) {
                 for (Double r : rightResults) {
                     results.add(l + r);
                     results.add(l - r);
+                    results.add(r - l);
                     results.add(l * r);
                     results.add(l / r);
+                    results.add(r / l);
                 }
             }
         }
