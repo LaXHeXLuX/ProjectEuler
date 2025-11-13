@@ -8,13 +8,17 @@ public class PE_014 {
     }
 
     public static long PE() {
+        int limit = 1_000_000;
+        return longestCollatzChainLength(limit);
+    }
+
+    private static long longestCollatzChainLength(int limit) {
         long biggestChainLength = 0;
         long biggestI = 0;
-        int limit = 1_000_000;
         skip = new boolean[limit];
         int start = limit/2 - 1;
         for (int i = start; i < limit; i++) {
-            if (skip[i]) continue;
+            if (skip[i] || (i % 3 == 1 && i % 2 == 0)) continue;
             long chainLength = collatzChainLength(i);
             if (chainLength > biggestChainLength) {
                 biggestChainLength = chainLength;
