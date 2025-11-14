@@ -1,53 +1,65 @@
 package euler;
 
-import utils.Converter;
-import utils.Pandigital;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class PE_038 {
     public static void main(String[] args) {
         System.out.println(PE());
     }
 
     public static long PE() {
-        int[] biggest = biggestPandigitalProduct();
+        long[] biggest = biggestPandigitalProduct();
         return biggest[biggest.length-1];
     }
 
-    private static int[] concatenatedProductsOf(long n) {
-        List<Integer> productDigits = new ArrayList<>();
+    private static long concatenatedProductsOf(long n) {
+        long concatenatedProduct = 0;
 
         int i = 1;
-        while (productDigits.size() < 9) {
-            int[] digits = Converter.digitArray(n*i);
-            for (int digit : digits) productDigits.add(digit);
+        while (concatenatedProduct < 123_456_789) {
+            long prod = n * i;
+            int digits = digitAmount(prod);
+            for (int j = 0; j < digits; j++) {
+                concatenatedProduct *= 10;
+            }
+            concatenatedProduct += prod;
             i++;
         }
 
-        return Converter.listToArr(productDigits);
+        return concatenatedProduct;
     }
 
-    private static int[] biggestPandigitalProduct() {
-        int biggestProduct = 0;
-        int biggestFactor = 0;
+    private static int digitAmount(long n) {
+        return (int) (Math.log10(n)) + 1;
+    }
+
+    private static long[] biggestPandigitalProduct() {
+        long biggestProduct = 0;
+        long biggestFactor = 0;
 
         for (int i = 1; i < 10_000; i++) {
-            int[] concatenatedProduct = concatenatedProductsOf(i);
+            long concatenatedProduct = concatenatedProductsOf(i);
+            if (!isPandigital(concatenatedProduct)) continue;
 
-            if (!Pandigital.isPandigital(concatenatedProduct)) continue;
-
-            int product = (int) Converter.fromDigitArray(concatenatedProduct);
-
-            if (product > biggestProduct) {
-                biggestProduct = product;
+            if (concatenatedProduct > biggestProduct) {
+                biggestProduct = concatenatedProduct;
                 biggestFactor = i;
             }
         }
 
-        return new int[] {biggestFactor, biggestProduct};
+        return new long[] {biggestFactor, biggestProduct};
     }
 
+    private static boolean isPandigital(long n) {
+        if (n < 123_456_789 || n > 987_654_321) return false;
+        int[] digits = new int[10];
+        while (n > 0) {
+            digits[Math.toIntExact(n % 10)]++;
+            n /= 10;
+        }
 
+        if (digits[0] > 0) return false;
+        for (int i = 1; i < digits.length; i++) {
+            if (digits[i] != 1) return false;
+        }
+        return true;
+    }
 }
