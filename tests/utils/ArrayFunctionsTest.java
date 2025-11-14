@@ -37,52 +37,6 @@ class ArrayFunctionsTest {
         assertFalse(ArrayFunctions.contains("", arrString));
     }
     @Test
-    void switchElement() {
-        Object[] arrObject = {1, 'a', 3.5f, "good", 'a', 'b', 10, 1};
-        assertArrayEquals(arrObject, ArrayFunctions.switchElement(arrObject, null, "not null"));
-        assertArrayEquals(arrObject, ArrayFunctions.switchFirstElement(arrObject, null, "not null"));
-
-        int[] arrInt = {2, 3, 2, 0, 7, 11, 6, 2, 7};
-        assertArrayEquals(new int[] {5, 3, 5, 0, 7, 11, 6, 5, 7}, ArrayFunctions.switchElement(arrInt, 2, 5));
-        assertArrayEquals(new int[] {5, 3, 2, 0, 7, 11, 6, 2, 7}, ArrayFunctions.switchFirstElement(arrInt, 2, 5));
-
-        byte[] arrByte = {1, 3, 1, 0, 7, 11, 6, 1, 7};
-        assertArrayEquals(new byte[] {5, 3, 5, 0, 7, 11, 6, 5, 7}, ArrayFunctions.switchElement(arrByte, (byte) 1, (byte) 5));
-        assertArrayEquals(new byte[] {5, 3, 1, 0, 7, 11, 6, 1, 7}, ArrayFunctions.switchFirstElement(arrByte, (byte) 1, (byte) 5));
-
-        short[] arrShort = {4, 2, 5, 1, 5, 3};
-        assertArrayEquals(new short[] {4, 2, 7, 1, 7, 3}, ArrayFunctions.switchElement(arrShort, (short) 5, (short) 7));
-        assertArrayEquals(new short[] {4, 2, 7, 1, 5, 3}, ArrayFunctions.switchFirstElement(arrShort, (short) 5, (short) 7));
-
-        long[] arrLong = {1_000_000_000_000_000L, 20_000_000_000_000_000L, 30, 40, 1_000_000_000_000_000L};
-        long[] arrLongExpected1 = {1, 20_000_000_000_000_000L, 30, 40, 1};
-        long[] arrLongExpected2 = {1, 20_000_000_000_000_000L, 30, 40, 1_000_000_000_000_000L};
-        assertArrayEquals(arrLongExpected1, ArrayFunctions.switchElement(arrLong, 1_000_000_000_000_000L, 1));
-        assertArrayEquals(arrLongExpected2, ArrayFunctions.switchFirstElement(arrLong, 1_000_000_000_000_000L, 1));
-
-        float[] arrFloat = {1.5f, 2.0f, 3.5f, 2.0f};
-        assertArrayEquals(new float[] {1.5f, 0.0f, 3.5f, 0.0f}, ArrayFunctions.switchElement(arrFloat, 2.0f, 0.0f));
-        assertArrayEquals(new float[] {1.5f, 0.0f, 3.5f, 2.0f}, ArrayFunctions.switchFirstElement(arrFloat, 2.0f, 0.0f));
-
-        double[] arrDouble = {5.5, 10.0, 15.5, 10.0};
-        assertArrayEquals(new double[] {5.5, 20.0, 15.5, 20.0}, ArrayFunctions.switchElement(arrDouble, 10.0, 20.0));
-        assertArrayEquals(new double[] {5.5, 20.0, 15.5, 10.0}, ArrayFunctions.switchFirstElement(arrDouble, 10.0, 20.0));
-
-        char[] arrChar = {'a', 'b', 'c', 'a'};
-        assertArrayEquals(new char[] {'x', 'b', 'c', 'x'}, ArrayFunctions.switchElement(arrChar, 'a', 'x'));
-        assertArrayEquals(new char[] {'x', 'b', 'c', 'a'}, ArrayFunctions.switchFirstElement(arrChar, 'a', 'x'));
-
-        boolean[] arrBoolean = {true, false, true};
-        assertArrayEquals(new boolean[] {false, false, false}, ArrayFunctions.switchElement(arrBoolean, true, false));
-        assertArrayEquals(new boolean[] {false, false, true}, ArrayFunctions.switchFirstElement(arrBoolean, true, false));
-
-        String[] arrString = {"hello", "world", "good", "world"};
-        String[] arrStringExpected1 = {"hello", "dog", "good", "dog"};
-        String[] arrStringExpected2 = {"hello", "dog", "good", "world"};
-        assertArrayEquals(arrStringExpected1, ArrayFunctions.switchElement(arrString, "world", "dog"));
-        assertArrayEquals(arrStringExpected2, ArrayFunctions.switchFirstElement(arrString, "world", "dog"));
-    }
-    @Test
     void mergeSort() {
         assertArrayEquals(new Object[] {}, ArrayFunctions.mergeSort(new Object[] {}));
         assertArrayEquals(new Object[] {1}, ArrayFunctions.mergeSort(new Object[] {1}));

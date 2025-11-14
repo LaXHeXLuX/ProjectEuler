@@ -139,4 +139,68 @@ public class Diophantine {
         }
         return sum;
     }
+    private static boolean isPalindromeInBase2(int n) {
+        int left = 31 - Integer.numberOfLeadingZeros(n);
+        int right = 0;
+        while (right < left) {
+            if (((n >> left) & 1) != ((n >> right) & 1))
+                return false;
+            left--;
+            right++;
+        }
+        return true;
+    }
+    private static boolean isPalindromeInBase2(long n) {
+        int left = 63 - Long.numberOfLeadingZeros(n);
+        int right = 0;
+        while (right < left) {
+            if (((n >> left) & 1) != ((n >> right) & 1))
+                return false;
+            left--;
+            right++;
+        }
+        return true;
+    }
+    public static boolean isPalindromeInBase(int n, int base) {
+        if (n == 0) return true;
+        if (n < 0) n = -n;
+        if (base == 2) return isPalindromeInBase2(n);
+        int[] convertedDigits = new int[(int)(Math.log(n)/Math.log(base))+1];
+        int limit = convertedDigits.length / 2;
+        for (int i = 0; i < limit; i++) {
+            convertedDigits[convertedDigits.length-i-1] = n%base;
+            n /= base;
+        }
+        if (convertedDigits.length % 2 == 1) n /= base;
+        limit = convertedDigits.length - limit;
+        for (int i = limit; i < convertedDigits.length; i++) {
+            if (n%base != convertedDigits[i]) return false;
+            n /= base;
+        }
+        return true;
+    }
+    public static boolean isPalindrome(int n) {
+        return isPalindromeInBase(n, 10);
+    }
+    public static boolean isPalindromeInBase(long n, int base) {
+        if (n == 0) return true;
+        if (n < 0) n = -n;
+        if (base == 2) return isPalindromeInBase2(n);
+        int[] convertedDigits = new int[(int)(Math.log(n)/Math.log(base))+1];
+        int limit = convertedDigits.length / 2;
+        for (int i = 0; i < limit; i++) {
+            convertedDigits[convertedDigits.length-i-1] = (int) (n%base);
+            n /= base;
+        }
+        if (convertedDigits.length % 2 == 1) n /= base;
+        limit = convertedDigits.length - limit;
+        for (int i = limit; i < convertedDigits.length; i++) {
+            if ((int) (n%base) != convertedDigits[i]) return false;
+            n /= base;
+        }
+        return true;
+    }
+    public static boolean isPalindrome(long n) {
+        return isPalindromeInBase(n, 10);
+    }
 }

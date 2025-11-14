@@ -101,7 +101,6 @@ public class Graph {
 
         while (!pq.isEmpty()) {
             NodeDist current = pq.poll();
-            if (visited.contains(current.node())) continue;
             visited.add(current.node());
 
             if (current.node().equals(destination)) {

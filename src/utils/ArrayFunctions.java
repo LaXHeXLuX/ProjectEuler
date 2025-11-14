@@ -20,36 +20,6 @@ public class ArrayFunctions {
     public static <T> boolean contains(T el, T arr) {
         return contains((Object) el, Converter.toWrapperArray(arr));
     }
-    public static <T> T switchElement(T arr, Object oldElement, Object newElement, boolean onlyFirst) {
-        try {
-            oldElement = Converter.convertNumberTo(arr.getClass().getComponentType(), (Number) oldElement);
-            newElement = Converter.convertNumberTo(arr.getClass().getComponentType(), (Number) newElement);
-        } catch (Exception ignored) {}
-        return Converter.toPrimitiveArray(ArrayFunctions.switchElement(Converter.toWrapperArray(arr), oldElement, newElement, onlyFirst));
-    }
-    public static <T> T switchElement(T arr, Object oldElement, Object newElement) {
-        return switchElement(arr, oldElement, newElement, false);
-    }
-    public static <T> T switchFirstElement(T arr, Object oldElement, Object newElement) {
-        return switchElement(arr, oldElement, newElement, true);
-    }
-    public static <T> T[] switchElement(T[] arr, T oldElement, T newElement) {
-        return switchElement(arr, oldElement, newElement, false);
-    }
-    public static <T> T[] switchFirstElement(T[] arr, T oldElement, T newElement) {
-        return switchElement(arr, oldElement, newElement, true);
-    }
-    public static <T> T[] switchElement(T[] arr, T oldElement, T newElement, boolean onlyFirst) {
-        T[] newArr = Arrays.copyOf (arr, arr.length);
-
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i].equals(oldElement)) {
-                newArr[i] = newElement;
-                if (onlyFirst) return newArr;
-            }
-        }
-        return newArr;
-    }
     public static <T> T mergeSort(T arr) {
         return mergeSort(arr, (Comparator<T>) Comparator.naturalOrder());
     }
