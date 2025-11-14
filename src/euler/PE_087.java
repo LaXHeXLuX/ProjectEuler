@@ -13,8 +13,7 @@ public class PE_087 {
     public static long PE() {
         int limit = 50_000_000;
         primes = makePrimes(limit);
-        int[] powerTriplets = getPowerTriplets(limit);
-        return powerTriplets.length;
+        return powerTripletsCount(limit);
     }
 
     private static int[] makePrimes(int limit) {
@@ -22,10 +21,11 @@ public class PE_087 {
         return Converter.booleanArrToIntArr(primes);
     }
 
-    private static int[] getPowerTriplets(int limit) {
+    private static int powerTripletsCount(int limit) {
         boolean[] powerTriplets = new boolean[limit];
         int i2 = 0;
         int square = primes[i2] * primes[i2];
+        int count = 0;
 
         while (square < limit) {
             int i3 = 0;
@@ -37,6 +37,7 @@ public class PE_087 {
                 int result = square + cube + tetra;
 
                 while (result < limit) {
+                    if (!powerTriplets[result]) count++;
                     powerTriplets[result] = true;
                     i4++;
                     if (i4 >= primes.length) break;
@@ -54,6 +55,6 @@ public class PE_087 {
             square = primes[i2] * primes[i2];
         }
 
-        return Converter.booleanArrToIntArr(powerTriplets);
+        return count;
     }
 }
