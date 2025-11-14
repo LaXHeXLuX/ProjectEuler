@@ -138,6 +138,29 @@ class GraphTest {
         clique = imitateNumbers.clique(2, "13");
         assertEquals(Set.of("13", "19"), clique);
     }
+    @Test
+    void mst() {
+        Graph g0 = new Graph();
+        Graph g1 = new Graph(1);
+        Graph g2 = new Graph(2);
+        g2.addEdge("0", "1", 1);
+        Graph g3 = new Graph(3);
+        g3.addEdge("0", "1", 1);
+        g3.addEdge("1", "2", 2);
+        g3.addEdge("2", "0", 3);
+
+        Graph g0Result = new Graph();
+        Graph g1Result = new Graph(1);
+        Graph g2Result = new Graph(2);
+        g2Result.addEdge("0", "1", 1);
+        Graph g3Result = new Graph(3);
+        g3Result.addEdge("0", "1", 1);
+        g3Result.addEdge("1", "2", 2);
+        assertEquals(g0Result, g0.mst());
+        assertEquals(g1Result, g1.mst());
+        assertEquals(g2Result, g2.mst());
+        assertEquals(g3Result, g3.mst());
+    }
 
     private static Graph getGraph() {
         Graph imitateNumbers = new Graph();

@@ -160,6 +160,27 @@ public class Graph {
         }
         return new ArrayList<>();
     }
+    public Graph mst() {
+        if (nodes.isEmpty()) return new Graph();
+        return mst("0");
+    }
+    public Graph mst(String startNode) {
+        Graph mst = new Graph();
+        Set<String> visited = new HashSet<>();
+        mst.addNode(startNode);
+        visited.add(startNode);
+        PriorityQueue<Edge> pq = new PriorityQueue<>(Comparator.comparingInt(edge -> edge.weight));
+        pq.addAll(this.outgoingEdges(startNode));
+        while (!pq.isEmpty()) {
+            Edge next = pq.poll();
+            if (visited.contains(next.to)) continue;
+            mst.addNode(next.to);
+            mst.addEdge(next.from, next.to, next.weight);
+            visited.add(next.to);
+            pq.addAll(this.outgoingEdges(next.to));
+        }
+        return mst;
+    }
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Graph)) return false;
