@@ -36,6 +36,9 @@ public class Graph {
             this.addEdge(edge.from, edge.to, edge.weight);
         }
     }
+    public Set<Edge> getEdges() {
+        return this.edges;
+    }
     public Graph subgraph(Set<String> nodes) {
         Graph newGraph = new Graph();
         for (String node : nodes) {
@@ -176,6 +179,7 @@ public class Graph {
             if (visited.contains(next.to)) continue;
             mst.addNode(next.to);
             mst.addEdge(next.from, next.to, next.weight);
+            mst.addEdge(next.to, next.from, next.weight);
             visited.add(next.to);
             pq.addAll(this.outgoingEdges(next.to));
         }
@@ -193,31 +197,40 @@ public class Graph {
     public String toString() {
         return "nodes=" + nodes + ", edges=" + edges;
     }
-}
 
-class Edge {
-    String from;
-    String to;
-    int weight;
-    public Edge(String  from, String  to, int weight) {
-        this.from = from;
-        this.to = to;
-        this.weight = weight;
-    }
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof Edge)) return false;
-        return this.equals((Edge) o);
-    }
-    public boolean equals(Edge edge) {
-        return from.equals(edge.from) && to.equals(edge.to) && weight == edge.weight;
-    }
-    @Override
-    public int hashCode() {
-        return Objects.hash(from, to, weight);
-    }
-    @Override
-    public String toString() {
-        return from + "->" + to + " (" + weight + ")";
+    public static class Edge {
+        String from;
+        String to;
+        int weight;
+        public Edge(String  from, String  to, int weight) {
+            this.from = from;
+            this.to = to;
+            this.weight = weight;
+        }
+        public String getFrom() {
+            return this.from;
+        }
+        public String getTo() {
+            return this.to;
+        }
+        public int getWeight() {
+            return this.weight;
+        }
+        @Override
+        public boolean equals(Object o) {
+            if (!(o instanceof Edge)) return false;
+            return this.equals((Edge) o);
+        }
+        public boolean equals(Edge edge) {
+            return from.equals(edge.from) && to.equals(edge.to) && weight == edge.weight;
+        }
+        @Override
+        public int hashCode() {
+            return Objects.hash(from, to, weight);
+        }
+        @Override
+        public String toString() {
+            return from + "->" + to + " (" + weight + ")";
+        }
     }
 }

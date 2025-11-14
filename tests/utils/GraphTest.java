@@ -34,7 +34,17 @@ class GraphTest {
         temp.addNode("2");
         assertNotEquals(temp, graphs[2]);
         assertNotEquals(new Graph(), new Object());
-        assertNotEquals(new Edge(null, null, 0), new Object());
+        assertNotEquals(new Graph.Edge(null, null, 0), new Object());
+
+        Graph.Edge edge1 = new Graph.Edge("a", "b", 1);
+        Graph.Edge edge2 = new Graph.Edge("a", "b", 1);
+        Graph.Edge edge3 = new Graph.Edge("a", "b", 2);
+        Graph.Edge edge4 = new Graph.Edge("a", "c", 2);
+        Graph.Edge edge5 = new Graph.Edge("b", "c", 2);
+        assertEquals(edge1, edge2);
+        assertNotEquals(edge1, edge3);
+        assertNotEquals(edge1, edge4);
+        assertNotEquals(edge1, edge5);
     }
     @Test
     void toStringTest() {
@@ -57,6 +67,21 @@ class GraphTest {
         for (int i = 0; i < graphs.length; i++) {
             assertEquals(nodeCount[i], graphs[i].nodeCount());
         }
+    }
+    @Test
+    void getEdges() {
+        assertEquals(Set.of(), graphs[0].getEdges());
+        assertEquals(Set.of(), graphs[1].getEdges());
+        Graph.Edge e1 = new Graph.Edge("0", "1", 1);
+        Graph.Edge e2 = new Graph.Edge("1", "0", 1);
+        assertEquals(Set.of(e1, e2), graphs[2].getEdges());
+    }
+    @Test
+    void getEdgeAttribute() {
+        Graph.Edge e = new Graph.Edge("0", "1", 2);
+        assertEquals("0", e.getFrom());
+        assertEquals("1", e.getTo());
+        assertEquals(2, e.getWeight());
     }
     @Test
     void outgoingEdges() {
@@ -100,18 +125,6 @@ class GraphTest {
         assertEquals(8, bigGraph.djikstra("0", "4"));
     }
     @Test
-    void edgeCompare() {
-        Edge edge1 = new Edge("a", "b", 1);
-        Edge edge2 = new Edge("a", "b", 1);
-        Edge edge3 = new Edge("a", "b", 2);
-        Edge edge4 = new Edge("a", "c", 2);
-        Edge edge5 = new Edge("b", "c", 2);
-        assertEquals(edge1, edge2);
-        assertNotEquals(edge1, edge3);
-        assertNotEquals(edge1, edge4);
-        assertNotEquals(edge1, edge5);
-    }
-    @Test
     void clique() {
         assertThrows(IllegalArgumentException.class, () -> graphs[0].clique(0));
         assertThrows(IllegalArgumentException.class, () -> graphs[0].clique(1));
@@ -153,9 +166,12 @@ class GraphTest {
         Graph g1Result = new Graph(1);
         Graph g2Result = new Graph(2);
         g2Result.addEdge("0", "1", 1);
+        g2Result.addEdge("1", "0", 1);
         Graph g3Result = new Graph(3);
         g3Result.addEdge("0", "1", 1);
+        g3Result.addEdge("1", "0", 1);
         g3Result.addEdge("1", "2", 2);
+        g3Result.addEdge("2", "1", 2);
         assertEquals(g0Result, g0.mst());
         assertEquals(g1Result, g1.mst());
         assertEquals(g2Result, g2.mst());
