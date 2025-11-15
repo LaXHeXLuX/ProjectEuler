@@ -33,4 +33,19 @@ public class Pandigital {
         }
         return true;
     }
+    public static boolean groupIsPandigital(int[] group) {
+        boolean[] digits = new boolean[9];
+        for (int i : group) {
+            while (i > 0) {
+                int digit = i % 10;
+                if (digit == 0 || digits[digit-1]) return false;
+                digits[digit-1] = true;
+                i /= 10;
+            }
+        }
+        for (boolean digit : digits) {
+            if (!digit) return false;
+        }
+        return true;
+    }
 }
