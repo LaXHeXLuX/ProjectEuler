@@ -1,5 +1,7 @@
 package euler;
 
+import utils.Combinations;
+
 public class PE_113 {
     public static void main(String[] args) {
         System.out.println(PE());
@@ -24,7 +26,7 @@ public class PE_113 {
             for (int endDigit = startDigit+1; endDigit < 10; endDigit++) {
                 int n = endDigit-startDigit;
                 int m = digits-1;
-                sum += nChooseM(n + m - 1, m - 1);
+                sum += Combinations.nChooseM(n + m - 1, m - 1);
             }
         }
         return sum;
@@ -37,18 +39,9 @@ public class PE_113 {
             for (int endDigit = 0; endDigit < startDigit; endDigit++) {
                 int n = startDigit-endDigit;
                 int m = digits-1;
-                sum += nChooseM(n + m - 1, m - 1);
+                sum += Combinations.nChooseM(n + m - 1, m - 1);
             }
         }
         return sum;
-    }
-
-    public static long nChooseM(int n, int m) {
-        if (m > n-m) m = n-m;
-        long prod = 1;
-        for (int i = 1; i <= m; i++) {
-            prod = prod * (n-m+i) / i;
-        }
-        return prod;
     }
 }

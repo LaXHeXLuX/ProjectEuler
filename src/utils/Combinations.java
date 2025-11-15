@@ -16,20 +16,28 @@ public class Combinations {
         return factorial;
     }
     public static long factorial(int n) {
-        if (n < 0) throw new IllegalArgumentException("Argument can't be negative!");
-        if (n > 20) throw new IllegalArgumentException("Argument too large, will cause overflow");
-        if (n < 2) return 1L;
-        long factorial = 1;
-        for (int i = 2; i <= n; i++) {
-            factorial *= i;
+        long[] factorials = {
+                1L, 1L, 2L, 6L, 24L, 120L, 720L,
+                5040L, 40320L, 362880L, 3628800L, 39916800L, 479001600L, 6227020800L,
+                87178291200L, 1307674368000L, 20922789888000L, 355687428096000L, 6402373705728000L, 121645100408832000L, 2432902008176640000L
+        };
+        return factorials[n];
+    }
+    public static long nChooseM(int n, int m) {
+        if (m > n-m) m = n-m;
+        long prod = 1;
+        for (int i = 1; i <= m; i++) {
+            prod = prod * (n-m+i) / i;
         }
-        return factorial;
+        return prod;
     }
     public static BigInteger nChooseMBigInteger(int n, int m) {
-        BigInteger factorial1 = factorialBigInteger(n);
-        BigInteger factorial2 = factorialBigInteger(m);
-        BigInteger factorial3 = factorialBigInteger(n-m);
-        return factorial1.divide(factorial2.multiply(factorial3));
+        if (m > n-m) m = n-m;
+        BigInteger prod = BigInteger.ONE;
+        for (int i = 1; i <= m; i++) {
+            prod = prod.multiply(BigInteger.valueOf(n-m+i)).divide(BigInteger.valueOf(i));
+        }
+        return prod;
     }
     public static BigInteger catalan(int n) {
         return Combinations.nChooseMBigInteger(2*n, n).divide(BigInteger.valueOf(n+1));

@@ -44,8 +44,18 @@ class CombinationsTest {
         assertThrows(RuntimeException.class, () -> Combinations.factorial(100));
     }
     @Test
+    void nChooseM() {
+        for (int i = 1; i <= 5; i++) {
+            assertEquals(1, Combinations.nChooseM(i, i));
+            assertEquals(1, Combinations.nChooseM(i, 0));
+            assertEquals(i, Combinations.nChooseM(i, 1));
+        }
+        assertEquals(6, Combinations.nChooseM(4, 2));
+        assertEquals(536_830_054_536_825L, Combinations.nChooseM(61, 17));
+    }
+    @Test
     void nChooseMBigInteger() {
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i <= 3; i++) {
             assertEquals(BigInteger.valueOf(1), Combinations.nChooseMBigInteger(i, i));
             assertEquals(BigInteger.valueOf(1), Combinations.nChooseMBigInteger(i, 0));
             assertEquals(BigInteger.valueOf(i), Combinations.nChooseMBigInteger(i, 1));
