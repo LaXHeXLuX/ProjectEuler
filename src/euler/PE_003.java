@@ -8,7 +8,7 @@ public class PE_003 {
     }
 
     public static long PE() {
-        long[] pf = Primes.findPrimeFactors(600851475143L);
-        return pf[pf.length-1];
+        Primes.PF[] pf = Primes.primeFactors(600851475143L);
+        return pf[pf.length-1].primeFactor;
     }
 }

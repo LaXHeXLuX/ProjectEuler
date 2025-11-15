@@ -44,15 +44,30 @@ class PrimesTest {
         assertArrayEquals(primes1500, Primes.primes(Primes.compositeSieve(1500)));
     }
     @Test
-    void findPrimeFactors() {
-        assertArrayEquals(new long[] {}, Primes.findPrimeFactors(1));
-        assertArrayEquals(new long[] {2}, Primes.findPrimeFactors(2));
-        assertArrayEquals(new long[] {7}, Primes.findPrimeFactors(7));
-        assertArrayEquals(new long[] {2, 2, 3}, Primes.findPrimeFactors(12));
-        assertArrayEquals(new long[] {3, 23}, Primes.findPrimeFactors(69));
-        assertArrayEquals(new long[] {7, 11}, Primes.findPrimeFactors(77));
-        assertArrayEquals(new long[] {2, 2, 2, 2, 2, 2, 2, 2}, Primes.findPrimeFactors(256));
-        assertArrayEquals(new long[] {2, 2, 2, 2, 2, 5, 5, 5, 5, 5}, Primes.findPrimeFactors(100000));
+    void primeFactors() {
+        assertNotEquals(new Primes.PF(1), new Object());
+        assertNotEquals(new Primes.PF(2, 1), new Primes.PF(2, 2));
+        assertNotEquals(new Primes.PF(2, 1), new Primes.PF(3, 1));
+
+        Primes.PF[] pf1 = {};
+        assertArrayEquals(pf1, Primes.primeFactors(1));
+        Primes.PF[] pf2 = {new Primes.PF(2)};
+        assertArrayEquals(pf2, Primes.primeFactors(2));
+        Primes.PF[] pf7 = {new Primes.PF(7)};
+        assertArrayEquals(pf7, Primes.primeFactors(7));
+        Primes.PF[] pf12 = {new Primes.PF(2, 2), new Primes.PF(3)};
+        assertArrayEquals(pf12, Primes.primeFactors(12));
+        Primes.PF[] pf69 = {new Primes.PF(3), new Primes.PF(23)};
+        assertArrayEquals(pf69, Primes.primeFactors(69));
+        Primes.PF[] pf77 = {new Primes.PF(7), new Primes.PF(11)};
+        assertArrayEquals(pf77, Primes.primeFactors(77));
+        Primes.PF[] pf256 = {new Primes.PF(2, 8)};
+        assertArrayEquals(pf256, Primes.primeFactors(256));
+        Primes.PF[] pf10000 = {new Primes.PF(2, 5), new Primes.PF(5, 5)};
+        assertArrayEquals(pf10000, Primes.primeFactors(100000));
+        Primes.PF[] pfBig = {new Primes.PF(5, 1), new Primes.PF(349, 2), new Primes.PF(2441, 2)};
+        assertEquals("[349 ^ 2]", pfBig[1].toString());
+        assertArrayEquals(pfBig, Primes.primeFactors(	3_628_744_721_405L));
     }
     @Test
     void isPrime() {
@@ -92,5 +107,13 @@ class PrimesTest {
         assertEquals(10, Primes.eulersTotient(11));
 
         assertEquals(79180, Primes.eulersTotient(87109));
+    }
+    @Test
+    void countOfDivisors() {
+        //assertEquals(1, Primes.divisorCount(1));
+    }
+    @Test
+    void sumOfDivisors() {
+
     }
 }

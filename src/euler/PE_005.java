@@ -24,11 +24,11 @@ public class PE_005 {
     }
 
     private static long firstToDivide(long[] numbers) {
-        long[][] allPrimeFactors = new long[numbers.length][];
+        Primes.PF[][] allPrimeFactors = new Primes.PF[numbers.length][];
         for (int i = 0; i < numbers.length; i++) {
-            allPrimeFactors[i] = Primes.findPrimeFactors(numbers[i]);
+            allPrimeFactors[i] = Primes.primeFactors(numbers[i]);
         }
-        Map<Long, Long> biggestTerms = getBiggestTerms(allPrimeFactors);
+        Map<Long, Integer> biggestTerms = biggestTerms(allPrimeFactors);
         long product = 1;
         for (long key : biggestTerms.keySet()) {
             product *= (long) Math.pow(key, biggestTerms.get(key));
@@ -36,27 +36,17 @@ public class PE_005 {
         return product;
     }
 
-    private static Map<Long, Long> getBiggestTerms(long[][] allTerms) {
-        Map<Long, Long> biggestTerms = new HashMap<>();
-        for (long[] allTerm : allTerms) {
-            Map<Long, Long> currentTerms = arrToMap(allTerm);
-            for (Long key : currentTerms.keySet()) {
-                if (!biggestTerms.containsKey(key)) {
-                    biggestTerms.put(key, currentTerms.get(key));
-                } else if (biggestTerms.get(key) < currentTerms.get(key)) {
-                    biggestTerms.put(key, currentTerms.get(key));
+    private static Map<Long, Integer> biggestTerms(Primes.PF[][] allTerms) {
+        Map<Long, Integer> biggestTerms = new HashMap<>();
+        for (Primes.PF[] pfs : allTerms) {
+            for (Primes.PF pf : pfs) {
+                if (!biggestTerms.containsKey(pf.primeFactor)) {
+                    biggestTerms.put(pf.primeFactor, pf.power);
+                } else if (biggestTerms.get(pf.primeFactor) < pf.power) {
+                    biggestTerms.put(pf.primeFactor, pf.power);
                 }
             }
         }
         return biggestTerms;
-    }
-
-    private static Map<Long, Long> arrToMap(long[] terms) {
-        Map<Long, Long> refactoredTerms = new HashMap<>();
-        for (long term : terms) {
-            if (!refactoredTerms.containsKey(term)) refactoredTerms.put(term, 1L);
-            else refactoredTerms.put(term, refactoredTerms.get(term)+1);
-        }
-        return refactoredTerms;
     }
 }

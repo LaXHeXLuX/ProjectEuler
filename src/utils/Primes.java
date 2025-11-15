@@ -111,36 +111,68 @@ public class Primes {
         }
         return composites;
     }
-    public static long[] findPrimeFactors(long n) {
-        List<Long> primeFactors = new ArrayList<>();
-
-        while (n % 2 == 0) {
-            primeFactors.add(2L);
-            n /= 2;
+    public static class PF {
+        public long primeFactor;
+        public int power;
+        public PF(long primeFactor, int power) {
+            this.primeFactor = primeFactor;
+            this.power = power;
         }
-
-        while (n % 3 == 0) {
-            primeFactors.add(3L);
-            n /= 3;
+        public PF(long primeFactor) {
+            this.primeFactor = primeFactor;
+            this.power = 1;
         }
+        @Override
+        public boolean equals(Object o) {
+            if (!(o instanceof PF oPF)) return false;
+            return primeFactor == oPF.primeFactor && power == oPF.power;
+        }
+        @Override
+        public String toString() {
+            return "[" + primeFactor + " ^ " + power + "]";
+        }
+    }
+    public static PF[] primeFactors(long n) {
+        if (n < 2) return new PF[0];
+        List<PF> primeFactors = new ArrayList<>();
 
         long limit = (long) Math.sqrt(n);
-        for (long i = 5; i <= limit; i += 6) {
-            while (n % i == 0) {
-                primeFactors.add(i);
+        for (int i : primesTo100) {
+            if (i > limit) break;
+            if (n % i == 0) {
+                primeFactors.add(new PF(i, 1));
                 n /= i;
-                limit = (long) Math.sqrt(n);
-            }
-            while (n % (i+2) == 0) {
-                primeFactors.add(i+2);
-                n /= i+2;
+                while (n % i == 0) {
+                    primeFactors.getLast().power++;
+                    n /= i;
+                }
                 limit = (long) Math.sqrt(n);
             }
         }
 
-        if (n > 1) primeFactors.add(n);
+        for (long i = 101; i <= limit; i += 6) {
+            if (n % i == 0) {
+                primeFactors.add(new PF(i, 1));
+                n /= i;
+                while (n % i == 0) {
+                    primeFactors.getLast().power++;
+                    n /= i;
+                }
+                limit = (long) Math.sqrt(n);
+            }
+            if (n % (i+2) == 0) {
+                primeFactors.add(new PF(i+2, 1));
+                n /= i+2;
+                while (n % (i+2) == 0) {
+                    primeFactors.getLast().power++;
+                    n /= i+2;
+                }
+                limit = (long) Math.sqrt(n);
+            }
+        }
 
-        if (primeFactors.isEmpty()) return new long[0];
+        if (n > 1) primeFactors.add(new PF(n, 1));
+
         return Converter.listToArr(primeFactors);
     }
     public static boolean isPrime(long n) {
@@ -171,14 +203,16 @@ public class Primes {
     }
     public static long eulersTotient(long n) {
         if (n == 1) return 0;
-        long[] primesFactors = findPrimeFactors(n);
+        PF[] primesFactors = primeFactors(n);
         return eulersTotient(primesFactors);
     }
-    public static long eulersTotient(long[] primeFactors) {
-        long totient = (primeFactors[0]-1);
-        for (int i = 1; i < primeFactors.length; i++) {
-            if (primeFactors[i] == primeFactors[i-1]) totient *= primeFactors[i];
-            else totient *= primeFactors[i]-1;
+    public static long eulersTotient(PF[] primeFactors) {
+        long totient = 1;
+        for (PF pf : primeFactors) {
+            totient *= pf.primeFactor-1;
+            for (int i = 1; i < pf.power; i++) {
+                totient *= pf.primeFactor;
+            }
         }
         return totient;
     }
