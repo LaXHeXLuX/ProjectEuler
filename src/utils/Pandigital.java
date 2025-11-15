@@ -1,44 +1,35 @@
 package utils;
 
 public class Pandigital {
+
     public static boolean isPandigital(long n) {
-        return isPandigital(n, 1);
-    }
-    public static boolean isPandigital(long n, int startingDigit) {
-        int[] digits = Converter.digitArray(n);
+        int[] digits = new int[10];
+        while (n > 0) {
+            digits[Math.toIntExact(n % 10)]++;
+            n /= 10;
+        }
 
-        return isPandigital(digits, startingDigit);
-    }
-    public static boolean isPandigital(int[] digits) {
-        return isPandigital(digits, 1);
-    }
-    public static boolean isPandigital(int[] digits, int startingDigit) {
-        digits = ArrayFunctions.mergeSort(digits);
-
-        for (int i = 0; i < digits.length; i++) {
-            if (digits[i] != i+startingDigit) return false;
+        if (digits[0] > 0) return false;
+        int i;
+        for (i = 1; i < digits.length; i++) {
+            if (digits[i] != 1) break;
+        }
+        for (; i < digits.length; i++) {
+            if (digits[i] != 0) return false;
         }
         return true;
     }
-    public static boolean groupIsPandigital(int[] numbers) {
-        int[][] groupDigits = new int[numbers.length][];
-        int sum = 0;
-        for (int i = 0; i < numbers.length; i++) {
-            groupDigits[i] = Converter.digitArray(numbers[i]);
-            sum += groupDigits[i].length;
+    public static boolean isPandigital(long n, int startDigit, int endDigit) {
+        if (n == 0) return startDigit == 0 && endDigit == 0;
+        if ((int) Math.log10(n) != endDigit-startDigit) return false;
+        int[] digits = new int[10];
+        while (n > 0) {
+            digits[Math.toIntExact(n % 10)]++;
+            n /= 10;
         }
 
-        return groupIsPandigitalHelper(groupDigits, sum);
-    }
-    private static boolean groupIsPandigitalHelper(int[][] groupDigits, int sum) {
-        if (sum != 9) return false;
-        boolean[] digits = new boolean[sum];
-        for (int[] elementDigits : groupDigits) {
-            for (int digit : elementDigits) {
-                if (digit == 0) return false;
-                if (digits[digit-1]) return false;
-                digits[digit-1] = true;
-            }
+        for (int i = startDigit; i <= endDigit; i++) {
+            if (digits[i] != 1) return false;
         }
         return true;
     }
