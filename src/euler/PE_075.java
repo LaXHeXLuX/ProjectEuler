@@ -1,6 +1,6 @@
 package euler;
 
-import utils.Divisors;
+import utils.Diophantine;
 
 import java.util.*;
 
@@ -36,7 +36,7 @@ public class PE_075 {
         for (int n = 1; n < limitN; n++) {
             int step = n % 2 + 1;
             for (int m = n+1; 2*m*(m+n) < perimeterLimit; m += step) {
-                if (Divisors.greatestCommonDivisor(n, m) != 1) continue;
+                if (Diophantine.gcd(n, m) != 1) continue;
                 int limitK = perimeterLimit/(2*m*(m+n));
                 for (int k = 1; k <= limitK; k++) {
                     int m2 = m * m;

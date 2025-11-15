@@ -99,4 +99,15 @@ class DiophantineTest {
         assertFalse(Diophantine.isPalindromeInBase(123_456_789_987_654_320L, 10));
         assertFalse(Diophantine.isPalindromeInBase((1L<<60) + (1<<30), 2));
     }
+    @Test
+    void gcd() {
+        for (int i = 1; i < 10; i++) {
+            assertEquals(i, Diophantine.gcd(i, i));
+        }
+        assertEquals(11, Diophantine.gcd(11, 0));
+        assertEquals(11, Diophantine.gcd(0, 11));
+        assertEquals(1, Diophantine.gcd(3, 5));
+        assertEquals(10, Diophantine.gcd(100, 10));
+        assertEquals(4, Diophantine.gcd(28, 60));
+    }
 }

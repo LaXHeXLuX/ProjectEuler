@@ -203,4 +203,12 @@ public class Diophantine {
     public static boolean isPalindrome(long n) {
         return isPalindromeInBase(n, 10);
     }
+    public static long gcd(long a, long b) {
+        while (b != 0) {
+            long t = b;
+            b = a % b;
+            a = t;
+        }
+        return a;
+    }
 }

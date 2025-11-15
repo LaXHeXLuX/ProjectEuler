@@ -58,7 +58,6 @@ public class PE_070 {
             long yy = (long) score[1] * score[1];
             long xMinusY = score[0] - score[1];
             lowerLimit = Math.toIntExact(yy / (xMinusY * xMinusY));
-            System.out.println("new limit at " + i + ". score: " + Arrays.toString(score) + ", " + lowerLimit);
         }
 
         return smallestN;

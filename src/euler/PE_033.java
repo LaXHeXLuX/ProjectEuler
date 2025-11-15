@@ -2,7 +2,7 @@ package euler;
 
 import utils.ArrayFunctions;
 import utils.Converter;
-import utils.Divisors;
+import utils.Diophantine;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,7 +67,7 @@ public class PE_033 {
     }
 
     private static int[] simplifyFraction(int a, int b) {
-        int gcd = (int) Divisors.greatestCommonDivisor(a, b);
+        int gcd = (int) Diophantine.gcd(a, b);
         return new int[] {a/gcd, b/gcd};
     }
 }
