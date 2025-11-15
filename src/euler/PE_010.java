@@ -9,13 +9,13 @@ public class PE_010 {
 
     public static long PE() {
         int n = 2_000_000;
-        return sumOfAllTrueElements(Primes.sieveOfPrimes(n));
+        return sumOfAllFalseElements(Primes.compositeSieve(n));
     }
 
-    private static long sumOfAllTrueElements(boolean[] elements) {
-        long sum = 0;
-        for (int i = 0; i < elements.length; i++) {
-            if (elements[i]) sum += i;
+    private static long sumOfAllFalseElements(boolean[] arr) {
+        long sum = 2;
+        for (int i = 0; i < arr.length; i++) {
+            if (!arr[i]) sum += ((long) i << 1) | 1;
         }
         return sum;
     }

@@ -31,19 +31,20 @@ public class PE_049 {
     }
 
     private static List<List<Integer>> unusualTermsUnder(int limit, int inARow) {
-        boolean[] primes = Primes.sieveOfPrimes(limit);
+        boolean[] composites = Primes.compositeSieve(limit);
         List<List<Integer>> unusualTerms = new ArrayList<>();
         Set<Integer> skip = new HashSet<>();
 
-        for (int i1 = limit/10; i1 < limit; i1++) {
-            if (!primes[i1] || skip.contains(i1)) continue;
+        int start = limit/10 + (limit+1) % 2;
+        for (int i1 = start; i1 < limit; i1+=2) {
+            if (composites[i1 >> 1] || skip.contains(i1)) continue;
             int[] digits = Converter.digitArray(i1);
             int[][] perms = Combinations.permutations(digits);
             Set<Integer> primePermsSet = new HashSet<>();
             List<Integer> primePerms = new ArrayList<>();
             for (int[] perm : perms) {
                 int permInt = Math.toIntExact(Converter.fromDigitArray(perm));
-                if (permInt < limit/10 || !primes[permInt]) continue;
+                if (permInt < limit/10 || (permInt & 1) == 0 || composites[permInt >> 1]) continue;
                 primePerms.add(permInt);
                 primePermsSet.add(permInt);
                 skip.add(permInt);

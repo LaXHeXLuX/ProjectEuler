@@ -1,20 +1,19 @@
 package euler;
 
-import utils.Converter;
 import utils.Primes;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PE_037 {
-    private static boolean[] primes;
+    private static boolean[] composites;
 
     public static void main(String[] args) {
         System.out.println(PE());
     }
 
     public static long PE() {
-        int[] all = findAllTruncatablePrimes();
+        List<Integer> all = allTruncatablePrimes();
 
         long sum = 0;
         for (long a : all) sum += a;
@@ -24,19 +23,19 @@ public class PE_037 {
     private static boolean isTruncatablePrime(int n) {
         int x = n;
         while (x > 0) {
-            if (!primes[x]) return false;
+            if (composites[x >> 1]) return false;
             x /= 10;
         }
         x = 10;
         while (x < n) {
             int truncation = n % x;
-            if (!primes[truncation]) return false;
+            if (composites[truncation >> 1]) return false;
             x *= 10;
         }
         return true;
     }
 
-    private static List<Integer> findAllTruncatablePrimesHelper(int digitAmount) {
+    private static List<Integer> allTruncatablePrimesHelper(int digitAmount) {
         if (digitAmount == 0) return new ArrayList<>();
         List<Integer> truncatablePrimes = new ArrayList<>();
         if (digitAmount == 1) {
@@ -49,10 +48,10 @@ public class PE_037 {
 
         int[] options = new int[] {1, 3, 7, 9};
         for (int option : options) {
-            List<Integer> nextTruncatablePrimes = findAllTruncatablePrimesHelper(digitAmount-1);
+            List<Integer> nextTruncatablePrimes = allTruncatablePrimesHelper(digitAmount-1);
             for (Integer ntp : nextTruncatablePrimes) {
                 int truncatablePrimeContender = ntp * 10 + option;
-                if (primes[truncatablePrimeContender]) {
+                if (!composites[truncatablePrimeContender >> 1]) {
                     truncatablePrimes.add(truncatablePrimeContender);
                 }
             }
@@ -61,20 +60,20 @@ public class PE_037 {
         return truncatablePrimes;
     }
 
-    private static int[] findAllTruncatablePrimes() {
-        primes = Primes.sieveOfPrimes(1_000_000);
+    private static List<Integer> allTruncatablePrimes() {
+        composites = Primes.compositeSieve(1_000_000);
 
         List<Integer> truncatables = new ArrayList<>();
 
         int digitAmount = 2;
         while (truncatables.size() < 11) {
-            List<Integer> truncatablePrimeContenders = findAllTruncatablePrimesHelper(digitAmount);
+            List<Integer> truncatablePrimeContenders = allTruncatablePrimesHelper(digitAmount);
             for (Integer tpc : truncatablePrimeContenders) {
                 if (isTruncatablePrime(tpc)) truncatables.add(tpc);
             }
             digitAmount++;
         }
 
-        return Converter.listToArr(truncatables);
+        return truncatables;
     }
 }

@@ -84,22 +84,6 @@ public class Converter {
 
         return convertedNumber;
     }
-    public static int[] booleanArrToIntArr(boolean[] arr) {
-        int counter = 0;
-        for (boolean value : arr) if (value) counter++;
-
-        int[] newArr = new int[counter];
-
-        int index = 0;
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i]) {
-                newArr[index] = i;
-                index++;
-            }
-        }
-
-        return newArr;
-    }
     public static boolean[] booleanConversion(int[] arr) {
         boolean[] output = new boolean[arr.length];
 

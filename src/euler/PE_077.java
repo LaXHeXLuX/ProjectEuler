@@ -1,6 +1,5 @@
 package euler;
 
-import utils.Converter;
 import utils.Primes;
 
 import java.util.Arrays;
@@ -18,7 +17,7 @@ public class PE_077 {
     public static long PE() {
         waysToSumWithPrimes = new HashMap<>();
         int primeLimit = 10_000_000;
-        primes = getPrimesBelow(primeLimit);
+        primes = Primes.primes(primeLimit);
         int n = 5_000;
         return firstToSumInOverNWays(n);
     }
@@ -54,9 +53,5 @@ public class PE_077 {
         waysToSumWithPrimes.put(input, sum);
 
         return sum;
-    }
-
-    private static int[] getPrimesBelow(int limit) {
-        return Converter.booleanArrToIntArr(Primes.sieveOfPrimes(limit));
     }
 }

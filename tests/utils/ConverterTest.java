@@ -142,13 +142,6 @@ class ConverterTest {
         assertEquals(100, Converter.convertFromBase(new int[] {2, 0, 2}, 7));
     }
     @Test
-    void booleanArrToIntArr() {
-        boolean[] arrBoolean = {false, false, false, false, false, false, false, false};
-        assertArrayEquals(new int[] {}, Converter.booleanArrToIntArr(arrBoolean));
-        assertArrayEquals(new int[] {0, 2}, Converter.booleanArrToIntArr(new boolean[] {true, false, true}));
-        assertArrayEquals(new int[] {1}, Converter.booleanArrToIntArr(new boolean[] {false, true, false, false}));
-    }
-    @Test
     void booleanConversion() {
         boolean[] arrBoolean = {true, false, true, false};
         int[] arrInt = {1, 0, 1, 0};

@@ -1,12 +1,11 @@
 package euler;
 
-import utils.Converter;
 import utils.Primes;
 
 import java.util.Arrays;
 
 public class PE_050 {
-    private static boolean[] primesBool;
+    private static boolean[] composites;
     private static int[] primes;
     public static void main(String[] args) {
         System.out.println(PE());
@@ -14,8 +13,8 @@ public class PE_050 {
 
     public static long PE() {
         int limit = 1_000_000;
-        primesBool = Primes.sieveOfPrimes(limit);
-        primes = Converter.booleanArrToIntArr(primesBool);
+        composites = Primes.compositeSieve(limit);
+        primes = Primes.primes(composites);
 
         int[] combination = largestArrayOfConsecutivePrimesSummingToPrime();
         return (sumOfArray(combination));
@@ -23,7 +22,7 @@ public class PE_050 {
 
     private static int sumOfArray(int[] arr) {
         int sum = 0;
-        for (int a : arr) sum += a;
+        for (int i : arr) sum += i;
         return sum;
     }
 
@@ -31,7 +30,7 @@ public class PE_050 {
         int largestStart = 0;
         int largestEnd = 0;
         for (int startIndex = 0; ; startIndex++) {
-            if (startIndex + (largestEnd-largestStart) > primesBool.length) break;
+            if (startIndex + (largestEnd-largestStart) > composites.length) break;
             int sum = 0;
             boolean flag = true;
             int i;
@@ -41,15 +40,15 @@ public class PE_050 {
                     break;
                 }
                 sum += primes[startIndex + i];
-                if (sum >= primesBool.length) {
+                if (sum >= primes[primes.length-1]) {
                     flag = false;
                     break;
                 }
             }
             if (!flag) continue;
             sum += primes[startIndex + i];
-            while (sum < primesBool.length) {
-                if (primesBool[sum]) {
+            while (sum <= primes[primes.length-1]) {
+                if (!composites[sum >> 1]) {
                     largestStart = startIndex;
                     largestEnd = startIndex + i;
                 }

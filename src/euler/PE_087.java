@@ -1,6 +1,5 @@
 package euler;
 
-import utils.Converter;
 import utils.Primes;
 
 public class PE_087 {
@@ -12,28 +11,26 @@ public class PE_087 {
 
     public static long PE() {
         int limit = 50_000_000;
-        primes = makePrimes(limit);
+        primes = Primes.primes(limit);
         return powerTripletsCount(limit);
-    }
-
-    private static int[] makePrimes(int limit) {
-        boolean[] primes = Primes.sieveOfPrimes((int) Math.sqrt(limit));
-        return Converter.booleanArrToIntArr(primes);
     }
 
     private static int powerTripletsCount(int limit) {
         boolean[] powerTriplets = new boolean[limit];
         int i2 = 0;
-        int square = primes[i2] * primes[i2];
+        int p2 = primes[i2];
+        int square = p2 * p2;
         int count = 0;
 
         while (square < limit) {
             int i3 = 0;
-            int cube = primes[i3] * primes[i3] * primes[i3];
+            int p3 = primes[i3];
+            int cube = p3 * p3 * p3;
 
             while (square + cube < limit) {
                 int i4 = 0;
-                int tetra = primes[i4] * primes[i4] * primes[i4] * primes[i4];
+                int p4 = primes[i4];
+                int tetra = p4 * p4 * p4 * p4;
                 int result = square + cube + tetra;
 
                 while (result < limit) {
@@ -41,18 +38,21 @@ public class PE_087 {
                     powerTriplets[result] = true;
                     i4++;
                     if (i4 >= primes.length) break;
-                    tetra = primes[i4] * primes[i4] * primes[i4] * primes[i4];
+                    p4 = primes[i4];
+                    tetra = p4 * p4 * p4 * p4;
                     result = square + cube + tetra;
                 }
 
                 i3++;
                 if (i3 >= primes.length) break;
-                cube = primes[i3] * primes[i3] * primes[i3];
+                p3 = primes[i3];
+                cube = p3 * p3 * p3;
             }
 
             i2++;
             if (i2 >= primes.length) break;
-            square = primes[i2] * primes[i2];
+            p2 = primes[i2];
+            square = p2 * p2;
         }
 
         return count;

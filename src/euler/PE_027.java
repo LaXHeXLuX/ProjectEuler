@@ -15,12 +15,12 @@ public class PE_027 {
     }
 
     private static int[] findBestQuadraticFormulaWithLimits(int limitA, int limitB) {
-        boolean[] primes = Primes.sieveOfPrimes(limitB + 1);
+        boolean[] composites = Primes.compositeSieve(limitB + 1);
 
         int bestScore = 40;
         int[] bestAB = {1, 41};
         for (int b = bestAB[1]; b <= limitB; b+=2) {
-            if (!primes[b]) continue;
+            if (composites[b >> 1]) continue;
             for (int a = -limitA; a < limitA; a++) {
                 int score = scoreOfQuadraticFormula(a, b);
                 if (score > bestScore) {

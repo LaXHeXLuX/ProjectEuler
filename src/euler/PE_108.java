@@ -1,6 +1,5 @@
 package euler;
 
-import utils.Converter;
 import utils.Primes;
 
 import java.util.ArrayList;
@@ -37,7 +36,8 @@ public class PE_108 {
     }
 
     private static void makePrimesAndLogs(int limit) {
-        primes = Converter.booleanArrToIntArr(Primes.sieveOfPrimes((int) Math.pow(limit, 0.75)));
+        int primeLimit = (int) Math.pow(limit, 0.75);
+        primes = Primes.primes(primeLimit);
         primeLogs = new double[primes.length];
         for (int i = 0; i < primes.length; i++) {
             primeLogs[i] = log2(primes[i]);

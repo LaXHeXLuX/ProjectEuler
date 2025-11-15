@@ -1,6 +1,5 @@
 package euler;
 
-import utils.Converter;
 import utils.Primes;
 
 public class PE_069 {
@@ -14,7 +13,9 @@ public class PE_069 {
     }
 
     private static long highestNumberScore(long limit) {
-        int[] primes = Converter.booleanArrToIntArr(Primes.sieveOfPrimes((int) Math.max(100, Math.sqrt(limit))));
+        int primeLimit = (int) Math.sqrt(limit);
+        if (primeLimit > 100) primeLimit = 100;
+        int[] primes = Primes.primes(primeLimit);
         long n = primes[0];
         long lastN = 0;
         int i = 1;

@@ -1,9 +1,11 @@
 package euler;
 
-import utils.Converter;
 import utils.Primes;
 
 public class PE_046 {
+    private static boolean[] composites;
+    private static int[] primesInt;
+
     public static void main(String[] args) {
         System.out.println(PE());
     }
@@ -14,25 +16,23 @@ public class PE_046 {
     }
 
     private static int smallestConjectureContradiction(int limit) {
-        boolean[] primes = Primes.sieveOfPrimes(limit);
-        int[] primesArr = Converter.booleanArrToIntArr(primes);
+        composites = Primes.compositeSieve(limit);
+        primesInt = Primes.primes(composites);
 
         for (int i = 9; i < limit; i++) {
-            if (!isOddComposite(i, primes)) continue;
-            if (!canBeWrittenAsSumOfPrimeAndTwoSquares(i, primesArr)) return i;
+            if (!isOddComposite(i)) continue;
+            if (!canBeWrittenAsSumOfPrimeAndTwoSquares(i)) return i;
         }
 
         return -1;
     }
 
-    private static boolean isOddComposite(int n, boolean[] primes) {
-        return n % 2 == 1 && !primes[n];
+    private static boolean isOddComposite(int n) {
+        return (n & 1) == 1 && composites[n >> 1];
     }
 
-    private static boolean canBeWrittenAsSumOfPrimeAndTwoSquares(int n, int[] primes) {
-        for (int i = 0; i < primes.length && primes[i] < n; i++) {
-            int prime = primes[i];
-
+    private static boolean canBeWrittenAsSumOfPrimeAndTwoSquares(int n) {
+        for (Integer prime : primesInt) {
             int square = 1;
             while (prime + 2*square*square < n) square++;
 

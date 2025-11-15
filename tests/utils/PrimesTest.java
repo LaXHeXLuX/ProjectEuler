@@ -2,26 +2,46 @@ package utils;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PrimesTest {
 
     @Test
-    void sieveOfPrimes() {
-        assertArrayEquals(new boolean[]{false, false, true, true, false, true, false, true, false, false}, Primes.sieveOfPrimes(10));
-        boolean[] manyPrimes = Primes.sieveOfPrimes(100_000);
-        assertEquals(100_000, manyPrimes.length);
-        assertFalse(manyPrimes[100]);
-        assertTrue(manyPrimes[101]);
-        assertFalse(manyPrimes[1000]);
-        assertFalse(manyPrimes[1001]);
-        assertFalse(manyPrimes[1234]);
-        assertFalse(manyPrimes[10000]);
-        assertFalse(manyPrimes[10001]);
-        assertTrue(manyPrimes[33331]);
-        assertFalse(manyPrimes[34567]);
-        assertFalse(manyPrimes[99999]);
-        assertFalse(manyPrimes[manyPrimes.length-1]);
+    void compositeSieve() {
+        boolean[] primesTo30 = {true, false, false, false, true, false, false, true, false, false, true, false, true, true, false};
+        assertArrayEquals(primesTo30, Primes.compositeSieve(30));
+        boolean[] manyPrimes = Primes.compositeSieve(100_000);
+        assertEquals(100_000/2, manyPrimes.length);
+        assertTrue(manyPrimes[77 >> 1]);
+        assertFalse(manyPrimes[101 >> 1]);
+        assertTrue(manyPrimes[1001 >> 1]);
+        assertTrue(manyPrimes[10001 >> 1]);
+        assertFalse(manyPrimes[33331 >> 1]);
+        assertTrue(manyPrimes[34567 >> 1]);
+        assertTrue(manyPrimes[99999 >> 1]);
+    }
+    @Test
+    void primes() {
+        assertArrayEquals(new int[] {}, Primes.primes(1));
+        assertArrayEquals(new int[] {2}, Primes.primes(2));
+        assertArrayEquals(new int[] {2}, Primes.primes(Primes.compositeSieve(1)));
+        int[] primes10 = {2, 3, 5, 7};
+        assertArrayEquals(primes10, Primes.primes(10));
+        int[] primes30 = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29};
+        assertArrayEquals(primes30, Primes.primes(30));
+        int[] primes100 = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
+        assertArrayEquals(primes100, Primes.primes(100));
+        assertArrayEquals(primes100, Primes.primes(Primes.compositeSieve(100)));
+        int[] primes210 = Primes.primes(210);
+        assertEquals(-(primes210.length+1), Arrays.binarySearch(primes210, 209));
+        assertArrayEquals(primes210, Primes.primes(Primes.compositeSieve(210)));
+        int[] primes1500 = Primes.primes(1500);
+        assertEquals(239, primes1500.length);
+        assertEquals(99, Arrays.binarySearch(primes1500, 541));
+        assertEquals(-100, Arrays.binarySearch(primes1500, 540));
+        assertArrayEquals(primes1500, Primes.primes(Primes.compositeSieve(1500)));
     }
     @Test
     void findPrimeFactors() {
@@ -41,8 +61,12 @@ class PrimesTest {
         assertTrue(Primes.isPrime(3));
         assertFalse(Primes.isPrime(9));
         assertFalse(Primes.isPrime(77));
+        assertTrue(Primes.isPrime(79));
         assertFalse(Primes.isPrime(120));
         assertFalse(Primes.isPrime(121));
+        assertFalse(Primes.isPrime(61*61));
+        assertFalse(Primes.isPrime(101*101));
+        assertFalse(Primes.isPrime(103*103));
 
         assertTrue(Primes.isPrime(289586599663L));
         assertTrue(Primes.isPrime(217203134209L));

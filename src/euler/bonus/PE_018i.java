@@ -19,11 +19,11 @@ public class PE_018i {
     }
 
     public static long PE() {
-        boolean[] primes = Primes.sieveOfPrimes(100_000_000);
-        System.out.println("sieve done");
+        boolean[] composites = Primes.compositeSieve(100_000_000);
+        System.out.println("compositeSieve done");
         long sum = 0;
         for (int p = 100; p < 1000; p++) {
-            if (!primes[p]) continue;
+            if (composites[p >> 1]) continue;
             long prod = productMod(p);
             if (prod != 0) System.out.println(p + ": " + prod);
             else {

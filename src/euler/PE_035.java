@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PE_035 {
-    private static boolean[] primes;
+    private static boolean[] composites;
     public static void main(String[] args) {
         System.out.println(PE());
     }
 
     public static long PE() {
         int limit = 1_000_000;
-        primes = Primes.sieveOfPrimes(limit);
+        composites = Primes.compositeSieve(limit);
         List<Integer> cyclicPrimes = findCyclicPrimesUnder(limit);
         return cyclicPrimes.size();
     }
@@ -31,11 +31,11 @@ public class PE_035 {
         return cyclicNumbers;
     }
 
-    private static boolean isCyclicPrime(int n, boolean[] primes) {
+    private static boolean isCyclicPrime(int n) {
         int[] cyclicNumbers = generateCyclicNumbers(n);
 
         for (int cyclicNumber : cyclicNumbers) {
-            if (!primes[cyclicNumber]) return false;
+            if (cyclicNumber % 2 == 0 || composites[cyclicNumber >> 1]) return false;
         }
 
         return true;
@@ -46,8 +46,8 @@ public class PE_035 {
         cyclicPrimes.add(2);
 
         for (int i = 3; i < limit; i+=2) {
-            if (!primes[i]) continue;
-            if (isCyclicPrime(i, primes)) cyclicPrimes.add(i);
+            if (composites[i >> 1]) continue;
+            if (isCyclicPrime(i)) cyclicPrimes.add(i);
         }
 
         return cyclicPrimes;

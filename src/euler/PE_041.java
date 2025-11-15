@@ -14,10 +14,10 @@ public class PE_041 {
 
     private static int largestPandigitalPrime() {
         int limit = 7_654_321; // 1 through 9 (as well as 1 through 8) would divide 3
-        boolean[] primes = Primes.sieveOfPrimes(limit+1);
+        boolean[] composites = Primes.compositeSieve(limit+1);
 
         for (int i = limit; i > 0; i-=2) {
-            if (!primes[i]) continue;
+            if (composites[i >> 1]) continue;
             if (!Pandigital.isPandigital(i)) continue;
             return i;
         }
