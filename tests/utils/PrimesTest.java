@@ -82,25 +82,6 @@ class PrimesTest {
         assertEquals(-1, Primes.nthPrime(-1));
     }
     @Test
-    void areRelativePrimes() {
-        for (int i = 2; i < 10; i++) {
-            assertTrue(Primes.areRelativePrimes(1, i));
-        }
-
-        assertFalse(Primes.areRelativePrimes(6, 9));
-        assertTrue(Primes.areRelativePrimes(2, 7));
-        assertFalse(Primes.areRelativePrimes(21, 70));
-        assertTrue(Primes.areRelativePrimes(81, 64));
-
-        long[] primes1 = {2};
-        long[] primes2 = {2, 3};
-        long[] primes3 = {7, 11};
-
-        assertFalse(Primes.areRelativePrimes(primes1, primes2));
-        assertTrue(Primes.areRelativePrimes(primes1, primes3));
-        assertTrue(Primes.areRelativePrimes(primes2, primes3));
-    }
-    @Test
     void eulersTotient() {
         assertEquals(0, Primes.eulersTotient(1));
         assertEquals(1, Primes.eulersTotient(2));

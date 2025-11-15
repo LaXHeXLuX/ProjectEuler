@@ -169,12 +169,6 @@ public class Primes {
         double logN = Math.log(n);
         return (int) (n*logN + n*Math.log(logN));
     }
-    public static boolean areRelativePrimes(long n1, long n2) {
-        return Divisors.greatestCommonDivisor(n1, n2) == 1;
-    }
-    public static boolean areRelativePrimes(long[] primes1, long[] primes2) {
-        return ArrayFunctions.commonElements(primes1, primes2).length == 0;
-    }
     public static long eulersTotient(long n) {
         if (n == 1) return 0;
         long[] primesFactors = findPrimeFactors(n);
