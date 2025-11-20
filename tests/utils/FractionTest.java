@@ -25,6 +25,12 @@ class FractionTest {
         assertEquals("{3, 51234567898765432123456789}", new Fraction<>(BigInteger.valueOf(3), new BigInteger("51234567898765432123456789")).toString());
     }
     @Test
+    void doubleValue() {
+        assertEquals(1.0, new Fraction<>(1, 1).doubleValue());
+        assertEquals(0.6, new Fraction<>(3, 5).doubleValue());
+        assertEquals(0.125, new Fraction<>(BigInteger.valueOf(123456789), BigInteger.valueOf(987654321)).doubleValue(), 0.0001);
+    }
+    @Test
     void createFraction() {
         assertThrows(IllegalArgumentException.class, () -> new Fraction<>(0, 0));
         assertFractionEquals(0, 1, new Fraction<>(0, 1));

@@ -1,6 +1,8 @@
 package utils;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +25,8 @@ public class Arithmetics {
         T valueOf(long n);
         T valueOf(String s);
         int intValue(T a);
+        double doubleValue(T a);
+        double doubleDivide(T a, T b);
         int compare(T a, T b);
     }
     static final Arithmetic<Integer> INT = new Arithmetic<>() {
@@ -67,6 +71,12 @@ public class Arithmetics {
         }
         public int intValue(Integer a) {
             return a;
+        }
+        public double doubleValue(Integer a) {
+            return (double) a;
+        }
+        public double doubleDivide(Integer a, Integer b) {
+            return a.doubleValue() / b.doubleValue();
         }
         public int compare(Integer a, Integer b) {
             return Integer.compare(a, b);
@@ -114,6 +124,12 @@ public class Arithmetics {
         public int intValue(Long a) {
             return a.intValue();
         }
+        public double doubleValue(Long a) {
+            return (double) a;
+        }
+        public double doubleDivide(Long a, Long b) {
+            return a.doubleValue() / b.doubleValue();
+        }
         public int compare(Long a, Long b) {
             return Long.compare(a, b);
         }
@@ -151,6 +167,12 @@ public class Arithmetics {
         }
         public int intValue(Double a) {
             return a.intValue();
+        }
+        public double doubleValue(Double a) {
+            return a;
+        }
+        public double doubleDivide(Double a, Double b) {
+            return a / b;
         }
         public int compare(Double a, Double b) {
             return Double.compare(a, b);
@@ -192,6 +214,12 @@ public class Arithmetics {
         }
         public int intValue(BigInteger a) {
             return a.intValue();
+        }
+        public double doubleValue(BigInteger a) {
+            return a.doubleValue();
+        }
+        public double doubleDivide(BigInteger a, BigInteger b) {
+            return new BigDecimal(a).divide(new BigDecimal(b), MathContext.DECIMAL64).doubleValue();
         }
         public int compare(BigInteger a, BigInteger b) {
             return a.compareTo(b);

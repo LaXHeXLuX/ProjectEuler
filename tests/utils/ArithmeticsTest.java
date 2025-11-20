@@ -98,6 +98,20 @@ public class ArithmeticsTest {
         assertEquals(10, Arithmetics.BIG.intValue(BigInteger.TEN));
     }
     @Test
+    void doubleValue() {
+        assertEquals(5.0, Arithmetics.INT.doubleValue(5));
+        assertEquals(6.0, Arithmetics.LONG.doubleValue(6L));
+        assertEquals(7.2, Arithmetics.DOUBLE.doubleValue(7.2));
+        assertEquals(10.0, Arithmetics.BIG.doubleValue(BigInteger.TEN));
+    }
+    @Test
+    void doubleDivide() {
+        assertEquals(5.0, Arithmetics.INT.doubleDivide(5, 1));
+        assertEquals(1.2, Arithmetics.LONG.doubleDivide(6L, 5L));
+        assertEquals(0.6666, Arithmetics.DOUBLE.doubleDivide(2.0, 3.0), 0.0001);
+        assertEquals(1.5714, Arithmetics.BIG.doubleDivide(BigInteger.valueOf(11), BigInteger.valueOf(7)), 0.0001);
+    }
+    @Test
     void compare() {
         assertEquals(-1, Arithmetics.INT.compare(0, 1));
         assertEquals(0, Arithmetics.INT.compare(1, 1));

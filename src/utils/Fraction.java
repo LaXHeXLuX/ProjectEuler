@@ -13,7 +13,6 @@ public class Fraction<T> {
         this.num = num;
         this.den = op.one();
     }
-
     public Fraction(T num, T den) {
         this.op = Arithmetics.of(num.getClass());
         if (den.equals(op.zero())) throw new IllegalArgumentException("util.Fraction: denominator can't be zero!");
@@ -47,6 +46,9 @@ public class Fraction<T> {
     }
     public String toString() {
         return "{" + num + ", " + den + "}";
+    }
+    public double doubleValue() {
+        return op.doubleDivide(num, den);
     }
     public int compareTo(Fraction<T> fraction) {
         BigInteger product1 = new BigInteger(this.num.toString()).multiply(new BigInteger(fraction.den.toString()));
