@@ -196,7 +196,7 @@ public class Primes {
         int[] primes = primes(upperBound+1);
         return primes[n-1];
     }
-    private static int upperBoundForNthPrime(int n) {
+    public static int upperBoundForNthPrime(int n) {
         if (n < 6) return 12;
         double logN = Math.log(n);
         return (int) (n*logN + n*Math.log(logN));
