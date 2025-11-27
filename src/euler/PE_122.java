@@ -9,9 +9,7 @@ import java.util.List;
 
 public class PE_122 {
     private static int[] smallestExpCounts;
-
-    private static int lowerBound;
-    private static int upperBound;
+    private static int target;
 
     public static void main(String[] args) {
         double s = System.currentTimeMillis();
@@ -22,7 +20,7 @@ public class PE_122 {
 
     public static long PE() {
         int sum = 0;
-        int limit = 100;
+        int limit = 150;
         smallestExpCounts(limit);
         for (int i = limit; i > 0; i--) {
             int smallestCount = efficientExpCount(i);
@@ -38,38 +36,10 @@ public class PE_122 {
         return sum;
     }
 
-    private static void makeSmallestExpCounts(int limit) {
-        smallestExpCounts = new int[limit+1];
-        Arrays.fill(smallestExpCounts, Integer.MAX_VALUE);
-        smallestExpCounts[0] = 0;
-        smallestExpCounts[1] = 0;
-        smallestExpCounts[2] = 1;
-        for (int i = 3; i <= limit; i++) {
-            int upperBoundForI = upperBoundForCount(i);
-            if (upperBoundForI > upperBound) upperBound = upperBoundForI;
-        }
-
-        makeSmallestExpCounts(limit, new ArrayList<>(List.of(1, 2)));
-    }
-
-    private static void makeSmallestExpCounts(int limit, List<Integer> powers) {
-        if (powers.getLast() > limit || powers.size()-1 > upperBound) return;
-        if (smallestExpCounts[powers.getLast()] > powers.size()-1) smallestExpCounts[powers.getLast()] = powers.size()-1;
-
-        List<Integer> powersCopy = new ArrayList<>(powers);
-        for (Integer power : powersCopy) {
-            powers.add(powers.getLast() + power);
-            makeSmallestExpCounts(limit, powers);
-            powers.removeLast();
-        }
-    }
-
     private static void smallestExpCounts(int limit) {
         smallestExpCounts = new int[limit+1];
         for (int n = 1; n <= limit; n++) {
-            smallestExpCounts[n] = upperBoundForCount(n) + 1;
-            int binaryCount = binaryExpCount(n) + 1;
-            if (binaryCount < smallestExpCounts[n]) smallestExpCounts[n] = binaryCount;
+            smallestExpCounts[n] = binaryExpCount(n) + 1;
             int pfCount = efficientExpCountPf(n) + 1;
             if (pfCount < smallestExpCounts[n]) smallestExpCounts[n] = pfCount;
         }
@@ -77,10 +47,6 @@ public class PE_122 {
 
     private static int lowerBoundForCount(int n) {
         return (int) Math.ceil(Math.log(n * (countOnes(n)+1)) / Math.log(2) - 2.13);
-    }
-
-    private static int upperBoundForCount(int n) {
-        return (int) Math.floor(Math.log(n) / Math.log(2) + countOnes(n) - 1);
     }
 
     private static int power(int n, int pow) {
@@ -94,22 +60,20 @@ public class PE_122 {
     private static int efficientExpCount(int n) {
         if (n == 1 || n == 2) return n;
         if (n == 3 || n == 4) return 3;
-        upperBound = smallestExpCounts[n];
-        lowerBound = lowerBoundForCount(n) + 1;
-        if (upperBound <= lowerBound) return lowerBound;
+        target = n;
         return efficientExpCount(n-2, new ArrayList<>(List.of(1, 2)));
     }
 
     private static int efficientExpCount(int n, List<Integer> powers) {
         if (n == 0) return powers.size();
-        if (n < 0 || powers.size() >= upperBound) return Integer.MAX_VALUE;
+        if (n < 0 || powers.size() >= smallestExpCounts[target]) return smallestExpCounts[target];
         if (n < powers.getLast()) {
             int index = Collections.binarySearch(powers, n);
             if (index > 0) return powers.size() + 1;
-            return Integer.MAX_VALUE;
+            return smallestExpCounts[target];
         }
 
-        int smallestCount = upperBound;
+        int smallestCount = smallestExpCounts[target];
         for (Integer power : powers) {
             if (power > n) break;
             List<Integer> newPowers = new ArrayList<>(powers);
@@ -118,12 +82,9 @@ public class PE_122 {
             int resultCount = efficientExpCount(n - power, newPowers);
             if (resultCount < smallestCount) {
                 smallestCount = resultCount;
-                if (smallestCount == lowerBound) {
-                    break;
-                }
             }
         }
-        upperBound = smallestCount;
+        smallestExpCounts[target] = smallestCount;
         return smallestCount;
     }
 
