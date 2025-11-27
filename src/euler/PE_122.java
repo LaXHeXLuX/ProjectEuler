@@ -2,11 +2,9 @@ package euler;
 
 import utils.Primes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PE_122 {
     private static int[] smallestExpCounts;
+    private static int[] currentChain;
 
     public static void main(String[] args) {
         double s = System.currentTimeMillis();
@@ -19,10 +17,9 @@ public class PE_122 {
         int sum = 0;
         int limit = 200;
         smallestExpCounts = smallestExpCounts(limit);
-        int[] smallestCounts2 = smallestExpCounts(limit);
         for (int i = limit; i > 0; i--) {
             int smallestCount = efficientExpCount(i);
-            System.out.println(i + ": " + smallestCount + " - " + smallestCounts2[i]);
+            //System.out.println(i + ": " + smallestCount + " - " + smallestCounts2[i]);
             sum += smallestCount-1;
         }
         return sum;
@@ -57,21 +54,25 @@ public class PE_122 {
     private static int efficientExpCount(int n) {
         if (n == 1 || n == 2) return n;
         if (n == 3 || n == 4) return 3;
-        return efficientExpCount(n, new ArrayList<>(List.of(1, 2)));
+        currentChain = new int[smallestExpCounts[n]];
+        currentChain[0] = 1;
+        currentChain[1] = 2;
+        return efficientExpCount(n, 1);
     }
 
-    private static int efficientExpCount(int n, List<Integer> powers) {
-        if (powers.size() == smallestExpCounts[n]) return smallestExpCounts[n];
-        if (powers.getLast() == n) return powers.size();
+    private static int efficientExpCount(int n, int lastIndex) {
+        if (lastIndex+1 == smallestExpCounts[n]) return smallestExpCounts[n];
+        int lastPower = currentChain[lastIndex];
+        if (lastPower == n) return lastIndex+1;
 
         int smallestCount = smallestExpCounts[n];
-        int remaining = n - powers.getLast();
-        for (Integer power : powers) {
+        int remaining = n - lastPower;
+        for (int i = 0; i <= lastIndex; i++) {
+            int power = currentChain[i];
             if (power > remaining) break;
-            List<Integer> newPowers = new ArrayList<>(powers);
-            int newPower = powers.getLast() + power;
-            newPowers.add(newPower);
-            int resultCount = efficientExpCount(n, newPowers);
+            int newPower = lastPower + power;
+            currentChain[lastIndex+1] = newPower;
+            int resultCount = efficientExpCount(n, lastIndex+1);
             if (resultCount < smallestCount) smallestCount = resultCount;
         }
         smallestExpCounts[n] = smallestCount;
