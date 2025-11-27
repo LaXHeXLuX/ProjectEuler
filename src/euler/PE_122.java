@@ -7,30 +7,22 @@ public class PE_122 {
     private static int[] currentChain;
 
     public static void main(String[] args) {
-        double s = System.currentTimeMillis();
         System.out.println(PE());
-        double e = System.currentTimeMillis();
-        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
-        int sum = 0;
         int limit = 200;
-        smallestExpCounts = smallestExpCounts(limit);
-        for (int i = limit; i > 0; i--) {
-            int smallestCount = efficientExpCount(i);
-            //System.out.println(i + ": " + smallestCount + " - " + smallestCounts2[i]);
-            sum += smallestCount-1;
-        }
+        makeInitialSmallestExpCounts(limit);
+        makeSmallestExpCounts(limit);
+        int sum = 0;
+        for (int smallestExpCount : smallestExpCounts) sum += smallestExpCount-1;
         return sum;
     }
 
-    private static int[] smallestExpCounts(int limit) {
-        int[] smallestExpCounts = new int[limit+1];
-        smallestExpCounts[0] = 0;
-        smallestExpCounts[1] = 1;
-        smallestExpCounts[2] = 2;
-        smallestExpCounts[3] = 3;
+    private static void makeInitialSmallestExpCounts(int limit) {
+        smallestExpCounts = new int[limit+1];
+        smallestExpCounts[0] = 1;
+        for (int i = 1; i <= 3; i++) smallestExpCounts[i] = i;
         for (int n = 4; n <= limit; n++) {
             smallestExpCounts[n] = upperBound(n);
             if (smallestExpCounts[n] > smallestExpCounts[n-1] + 1) {
@@ -40,7 +32,33 @@ public class PE_122 {
                 smallestExpCounts[n] = smallestExpCounts[n-2] + 1;
             }
         }
-        return smallestExpCounts;
+    }
+
+    private static void makeSmallestExpCounts(int limit) {
+        int maxArrSize = 0;
+        for (int smallestExpCount : smallestExpCounts) {
+            if (smallestExpCount > maxArrSize) maxArrSize = smallestExpCount;
+        }
+        currentChain = new int[maxArrSize];
+        currentChain[0] = 1;
+        currentChain[1] = 2;
+        makeSmallestExpCounts(limit, 1);
+    }
+
+    private static void makeSmallestExpCounts(int limit, int lastIndex) {
+        int lastElement = currentChain[lastIndex];
+        if (lastIndex+1 == currentChain.length) return;
+        for (int i = lastIndex; i >= 0; i--) {
+            int element = currentChain[i];
+            int newElement = element + lastElement;
+            if (newElement > limit) continue;
+            if (lastIndex+1 > smallestExpCounts[element + lastElement]) continue;
+            currentChain[lastIndex+1] = newElement;
+            if (smallestExpCounts[newElement] > lastIndex+2) {
+                smallestExpCounts[newElement] = lastIndex+2;
+            }
+            makeSmallestExpCounts(limit, lastIndex+1);
+        }
     }
 
     private static int power(int n, int pow) {
@@ -49,34 +67,6 @@ public class PE_122 {
             prod *= n;
         }
         return prod;
-    }
-
-    private static int efficientExpCount(int n) {
-        if (n == 1 || n == 2) return n;
-        if (n == 3 || n == 4) return 3;
-        currentChain = new int[smallestExpCounts[n]];
-        currentChain[0] = 1;
-        currentChain[1] = 2;
-        return efficientExpCount(n, 1);
-    }
-
-    private static int efficientExpCount(int n, int lastIndex) {
-        if (lastIndex+1 == smallestExpCounts[n]) return smallestExpCounts[n];
-        int lastPower = currentChain[lastIndex];
-        if (lastPower == n) return lastIndex+1;
-
-        int smallestCount = smallestExpCounts[n];
-        int remaining = n - lastPower;
-        for (int i = 0; i <= lastIndex; i++) {
-            int power = currentChain[i];
-            if (power > remaining) break;
-            int newPower = lastPower + power;
-            currentChain[lastIndex+1] = newPower;
-            int resultCount = efficientExpCount(n, lastIndex+1);
-            if (resultCount < smallestCount) smallestCount = resultCount;
-        }
-        smallestExpCounts[n] = smallestCount;
-        return smallestCount;
     }
 
     private static int upperBound(int n) {
