@@ -1,32 +1,23 @@
 package euler;
 
-import utils.ArrayFunctions;
 import utils.Diophantine;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 public class PE_127 {
     private static int[] rads;
-    //private static int[][] sortedRads;
+    private static int[][] reverseLookUp;
 
     public static void main(String[] args) {
-        double s = System.currentTimeMillis();
         System.out.println(PE());
-        double e = System.currentTimeMillis();
-        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
         int limit = 120_000;
-        double s = System.currentTimeMillis();
         rads = rads(limit);
-        //sortedRads = sorted(rads);
-        //System.out.println(Arrays.deepToString(sortedRads));
-        double e = System.currentTimeMillis();
-        System.out.println("rads: " + (e-s) + " ms");
+        reverseLookUp = reverseLookUp(rads);
         List<Integer> hits = abcHits(limit);
         return sum(hits);
     }
@@ -37,13 +28,20 @@ public class PE_127 {
         return sum;
     }
 
-    private static int[][] sorted(int[] rads) {
-        int[][] rads2 = new int[rads.length][2];
-        for (int i = 0; i < rads.length; i++) {
-            rads2[i] = new int[] {i, rads[i]};
+    private static int[][] reverseLookUp(int[] rads) {
+        int[] counts = new int[rads.length];
+        for (int rad : rads) {
+            counts[rad]++;
         }
-        Comparator<int[]> c = Comparator.comparingInt(a -> a[1]);
-        return ArrayFunctions.mergeSort(rads2, c);
+        int[][] reverseLookUp = new int[counts.length][];
+        for (int i = 0; i < reverseLookUp.length; i++) {
+            reverseLookUp[i] = new int[counts[i]];
+        }
+        for (int i = 0; i < rads.length; i++) {
+            reverseLookUp[rads[i]][reverseLookUp[rads[i]].length - counts[rads[i]]] = i;
+            counts[rads[i]]--;
+        }
+        return reverseLookUp;
     }
 
     private static int[] rads(int limit) {
@@ -68,16 +66,26 @@ public class PE_127 {
         List<Integer> hits = new ArrayList<>();
 
         for (int c = 3; c < limit; c++) {
+            if (rads[c-1] < c / rads[c]) hits.add(c);
+        }
+
+        for (int c = 3; c < limit; c++) {
             int m = c / rads[c];
-            if (rads[c-1] < m) hits.add(c);
             if (m < 6) continue;
-            for (int b = (c+1)/2; b < c-1; b++) {
-                if (rads[b] >= m) continue;
-                int a = c - b;
-                if (Diophantine.gcd(a, b) != 1) continue;
-                long rad = (long) rads[a] * rads[b];
-                if (rad >= m) continue;
-                hits.add(c);
+            for (int bRad = 2; bRad < m; bRad++) {
+                int[] bValues = reverseLookUp[bRad];
+                if (bValues.length == 0) continue;
+                int maxIndex = Arrays.binarySearch(bValues, c-1);
+                if (maxIndex < 0) maxIndex = -maxIndex - 1;
+                int minIndex = Arrays.binarySearch(bValues, 0, maxIndex, c/2);
+                if (minIndex < 0) minIndex = -minIndex - 1;
+                for (int i = minIndex; i < maxIndex; i++) {
+                    int b = bValues[i];
+                    int a = c - b;
+                    if (Diophantine.gcd(a, b) != 1) continue;
+                    long rad = (long) rads[a] * rads[b];
+                    if (rad < m) hits.add(c);
+                }
             }
         }
         return hits;
