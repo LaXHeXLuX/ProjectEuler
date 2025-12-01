@@ -13,7 +13,6 @@ public class PE_125 {
     public static long PE() {
         int limit = 100_000_000;
         Set<Long> palindromicConsecutiveSquareSums = palindromicConsecutiveSquareSums(limit);
-        System.out.println(palindromicConsecutiveSquareSums);
         return sum(palindromicConsecutiveSquareSums);
     }
 
