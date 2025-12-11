@@ -12,8 +12,8 @@ public class PE_103 {
 
     public static long PE() {
         int n = 7;
-        List<Integer> ssssN = smallestSpecialSumSet(n);
-        return setString(ssssN);
+        List<Integer> ssss = smallestSpecialSumSet(n);
+        return setString(ssss);
     }
 
     private static long setString(List<Integer> set) {
