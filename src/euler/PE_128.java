@@ -14,7 +14,6 @@ public class PE_128 {
     public static long PE() {
         int limit = 2000;
         List<Long> PD3s = PD3UpTo(limit);
-        System.out.println(PD3s);
         return PD3s.get(limit-1);
     }
 
