@@ -2,8 +2,7 @@ package euler;
 
 import utils.Primes;
 
-import java.math.BigInteger;
-import java.util.*;
+import java.util.Arrays;
 
 public class PE_132 {
     public static void main(String[] args) {
@@ -14,14 +13,13 @@ public class PE_132 {
     }
 
     public static long PE() {
-        int factorCount = 40;
+        int factorCount = 35;
+        int n = 9;
 
-        for (int i = 1; i <= 5; i++) {
-            long[] factors = firstFactorsForPower10Repunit(i, factorCount);
-            System.out.println(i + ": " + sum(factors) + " - " + Arrays.toString(factors));
-        }
+        long[] factors = firstFactorsForPower10Repunit(n, factorCount);
+        System.out.println(Arrays.toString(factors));
 
-        return -1;
+        return sum(factors);
     }
 
     private static long sum(long[] arr) {
@@ -30,45 +28,41 @@ public class PE_132 {
         return s;
     }
 
-    private static long pow10(int p) {
-        long pow = 1;
-        for (int i = 0; i < p; i++) {
-            pow *= 10;
+    private static long[] firstFactorsForPower10Repunit(int n, int factorCount) {
+        long[] factors = new long[factorCount];
+        int index = 0;
+        long p = 9;
+        while (index < factorCount) {
+            p += 2;
+            if (Primes.isPrime(p) && ord10Divides(n, p)) {
+                factors[index] = p;
+                index++;
+            }
         }
-        return pow;
+
+        return factors;
     }
 
-    private static long ord10(long p) {
+    private static boolean ord10Divides(int n, long p) {
         long mod = 10 % p;
         long power = 1;
         while (mod != 1) {
             power++;
             mod = 10*mod % p;
+            //if (power > n) return false;
         }
-        return power;
-    }
+        long ord = power;
 
-    private static long[] firstFactorsForPower10Repunit(int n, int factorCount) {
-        BigInteger repunit = new BigInteger("1".repeat((int) pow10(n)));
-        System.out.println("repunit done: " + n);
-
-        long[] factors = new long[factorCount];
-        int index = 0;
-        long k = 0;
-        long p;
-        while (index < factorCount && repunit.compareTo(BigInteger.ONE) > 0 && k < 1_000) {
-            k++;
-            p = 10*k + 1;
-            if (!Primes.isPrime(p)) continue;
-            BigInteger bigP = BigInteger.valueOf(p);
-            BigInteger[] divRem = repunit.divideAndRemainder(bigP);
-            if (divRem[1].equals(BigInteger.ZERO)) {
-                factors[index] = p;
-                index++;
-                repunit = divRem[0];
-            }
+        int count2 = n;
+        int count5 = n;
+        while (ord % 2 == 0) {
+            count2--;
+            ord /= 2;
         }
-
-        return factors;
+        while (ord % 5 == 0) {
+            count5--;
+            ord /= 5;
+        }
+        return count2 >= 0 && count5 >= 0 && ord == 1;
     }
 }
