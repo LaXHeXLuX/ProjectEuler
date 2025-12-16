@@ -6,14 +6,11 @@ import java.util.Arrays;
 
 public class PE_132 {
     public static void main(String[] args) {
-        double s = System.currentTimeMillis();
         System.out.println(PE());
-        double e = System.currentTimeMillis();
-        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
-        int factorCount = 35;
+        int factorCount = 40;
         int n = 9;
 
         long[] factors = firstFactorsForPower10Repunit(n, factorCount);
@@ -31,38 +28,35 @@ public class PE_132 {
     private static long[] firstFactorsForPower10Repunit(int n, int factorCount) {
         long[] factors = new long[factorCount];
         int index = 0;
-        long p = 9;
-        while (index < factorCount) {
-            p += 2;
-            if (Primes.isPrime(p) && ord10Divides(n, p)) {
+        int[] primes = Primes.primes(1_000_000);
+        for (int p : primes) {
+            if (ord10Divides(n, p)) {
                 factors[index] = p;
                 index++;
+                if (index >= factorCount) break;
             }
         }
 
         return factors;
     }
 
-    private static boolean ord10Divides(int n, long p) {
-        long mod = 10 % p;
-        long power = 1;
-        while (mod != 1) {
-            power++;
-            mod = 10*mod % p;
-            //if (power > n) return false;
-        }
-        long ord = power;
+    private static long powMod(long exp, long mod) {
+        long result = 1;
+        long base = 10 % mod;
 
-        int count2 = n;
-        int count5 = n;
-        while (ord % 2 == 0) {
-            count2--;
-            ord /= 2;
+        while (exp > 0) {
+            if ((exp & 1) == 1)
+                result = (result * base) % mod;
+
+            base = (base * base) % mod;
+            exp >>= 1;
         }
-        while (ord % 5 == 0) {
-            count5--;
-            ord /= 5;
-        }
-        return count2 >= 0 && count5 >= 0 && ord == 1;
+        return result;
+    }
+
+    private static boolean ord10Divides(int n, long p) {
+        if (p == 2 || p == 3 || p == 5) return false;
+        long e = powMod(n, p - 1);
+        return powMod(e, p) == 1;
     }
 }
