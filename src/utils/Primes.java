@@ -178,7 +178,7 @@ public class Primes {
     public static boolean isPrime(long n) {
         if (n < 100) {
             if (n < 2) return false;
-            return Arrays.binarySearch(primesTo100, (int) n) > 0;
+            return Arrays.binarySearch(primesTo100, (int) n) >= 0;
         }
 
         for (int p : primesTo100) {
