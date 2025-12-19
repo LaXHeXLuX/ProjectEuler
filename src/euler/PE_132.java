@@ -2,20 +2,18 @@ package euler;
 
 import utils.Primes;
 
-import java.util.Arrays;
-
 public class PE_132 {
     public static void main(String[] args) {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
         int factorCount = 40;
         int n = 9;
-
         long[] factors = firstFactorsForPower10Repunit(n, factorCount);
-        System.out.println(Arrays.toString(factors));
-
         return sum(factors);
     }
 
@@ -28,8 +26,10 @@ public class PE_132 {
     private static long[] firstFactorsForPower10Repunit(int n, int factorCount) {
         long[] factors = new long[factorCount];
         int index = 0;
-        int[] primes = Primes.primes(1_000_000);
-        for (int p : primes) {
+        int p = 1;
+        while (true) {
+            p += 2;
+            if (!Primes.isPrime(p)) continue;
             if (ord10Divides(n, p)) {
                 factors[index] = p;
                 index++;

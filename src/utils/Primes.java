@@ -176,14 +176,15 @@ public class Primes {
         return Converter.listToArr(primeFactors);
     }
     public static boolean isPrime(long n) {
-        if (n < 2) return false;
-        if (n == 2 || n == 3) return true;
-        if (n < 100) return Arrays.binarySearch(primesTo100, (int) n) > 0;
+        if (n < 100) {
+            if (n < 2) return false;
+            return Arrays.binarySearch(primesTo100, (int) n) > 0;
+        }
 
-        long limit = (long) Math.sqrt(n);
         for (int p : primesTo100) {
             if (n % p == 0) return false;
         }
+        long limit = (long) Math.sqrt(n);
         for (long i = 101; i <= limit; i+=6) {
             if (n % i == 0 || n % (i+2) == 0) return false;
         }
