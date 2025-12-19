@@ -1,5 +1,6 @@
 package euler;
 
+import utils.Divisors;
 import utils.Primes;
 
 public class PE_132 {
@@ -54,9 +55,30 @@ public class PE_132 {
         return result;
     }
 
-    private static boolean ord10Divides(int n, long p) {
+    private static int ord10(int p) {
+        int i = p-1;
+
+        int[] divisors = Divisors.divisors(i);
+        for (int j = 1; j < divisors.length-1; j++) {
+            if (powMod(divisors[j], p) == 1) return divisors[j];
+        }
+
+        return i;
+    }
+
+    private static boolean ord10Divides(int n, int p) {
         if (p == 2 || p == 3 || p == 5) return false;
-        long e = powMod(n, p - 1);
-        return powMod(e, p) == 1;
+        int ord = ord10(p);
+        int count2 = 0;
+        int count5 = 0;
+        while (ord % 2 == 0) {
+            count2++;
+            ord /= 2;
+        }
+        while (ord % 5 == 0) {
+            count5++;
+            ord /= 5;
+        }
+        return ord == 1 && count2 <= n && count5 <= n;
     }
 }
