@@ -1,14 +1,12 @@
 package euler;
 
+import utils.Diophantine;
 import utils.Divisors;
 import utils.Primes;
 
 public class PE_132 {
     public static void main(String[] args) {
-        double s = System.currentTimeMillis();
         System.out.println(PE());
-        double e = System.currentTimeMillis();
-        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
@@ -41,26 +39,12 @@ public class PE_132 {
         return factors;
     }
 
-    private static long powMod(long exp, long mod) {
-        long result = 1;
-        long base = 10 % mod;
-
-        while (exp > 0) {
-            if ((exp & 1) == 1)
-                result = (result * base) % mod;
-
-            base = (base * base) % mod;
-            exp >>= 1;
-        }
-        return result;
-    }
-
     private static int ord10(int p) {
         int i = p-1;
 
         int[] divisors = Divisors.divisors(i);
         for (int j = 1; j < divisors.length-1; j++) {
-            if (powMod(divisors[j], p) == 1) return divisors[j];
+            if (Diophantine.powMod(10, divisors[j], p) == 1) return divisors[j];
         }
 
         return i;
