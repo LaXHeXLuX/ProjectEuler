@@ -24,10 +24,6 @@ public class PE_131 {
         return count;
     }
 
-//    private static long nFor2(long p) {
-//
-//    }
-
     private static long nFor2(int p) {
         for (int i = 1; i*i < p; i++) {
             int k = i*i;

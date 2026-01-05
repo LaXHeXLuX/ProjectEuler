@@ -47,7 +47,6 @@ public class PE_111 {
     }
 
     private static List<Long> primesWithMaxRuns(int digitAmount, int runDigitAmount, int runDigit, List<Integer> digits) {
-        //System.out.println("primesWithMaxRuns. digitAmount: " + digitAmount + ", runDigitAmount: " + runDigitAmount + ", runDigit: " + runDigitAmount + ", digits: " + digitAmount);
         if (digitAmount == 0) {
             return primesWithRun(digits, runDigitAmount, runDigit);
         }
@@ -63,7 +62,6 @@ public class PE_111 {
     }
 
     private static List<Long> primesWithRun(List<Integer> digits, int n, int runDigit) {
-        //System.out.println("primesWithRun. digits: " + digits + ", n: " + n + ", runDigit: " + runDigit + ", number: " + 0);
         if (digits.contains(runDigit)) return java.util.List.of();
         digits = digits.reversed();
         return primesWithRun(digits, n, runDigit, 0);

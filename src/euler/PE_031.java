@@ -10,7 +10,7 @@ public class PE_031 {
     public static long PE() {
         long[] coins = {1, 2, 5, 10, 20, 50, 100};
         long goal = 200;
-        return waysToMake(goal, coins) + 1; // + 1 to account for the 200 coin
+        return waysToMake(goal, coins) + 1;
     }
 
     private static long waysToMake(long goal, long[] coins) {

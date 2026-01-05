@@ -43,7 +43,6 @@ public class PE_088 {
             factors.add(i);
             int newProduct = product * i;
             int newSum = sum + i;
-            // 2 3. * => 6, + => 5
             int size = newProduct - newSum + factors.size();
             if (size < bestScore.length && bestScore[size] > newProduct) {
                 bestScore[size] = newProduct;

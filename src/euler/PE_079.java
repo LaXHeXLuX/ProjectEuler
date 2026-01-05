@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PE_079 {
-    public static void main(String[] args) { // assuming only one character each
+    public static void main(String[] args) {
         System.out.println(PE());
     }
 
