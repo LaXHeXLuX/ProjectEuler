@@ -19,7 +19,7 @@ public class PE_068 {
 
     private static int[][] magicNGonRings(int n) {
         int[] nGonRing= new int[n*2];
-        return findNGonRings(nGonRing);
+        return nGonRings(nGonRing);
     }
 
     private static long maxConcatRing(int[][] nGons, int digitRestriction) {
@@ -61,7 +61,7 @@ public class PE_068 {
         return ring;
     }
 
-    private static int[][] findNGonRings(int[] currentRing) {
+    private static int[][] nGonRings(int[] currentRing) {
         List<int[]> finalRings = new ArrayList<>();
         boolean[] taken = new boolean[currentRing.length+1];
         int[] sums = minAndMaxSumOfRowInNGonRing(currentRing.length/2);
@@ -79,7 +79,7 @@ public class PE_068 {
                     taken[k] = true;
                     currentRing[3] = k;
 
-                    int[][] rings = findNGonRings(currentRing, 2, sum, taken);
+                    int[][] rings = nGonRings(currentRing, 2, sum, taken);
                     for (int[] ring : rings) {
                         if (ring == null) continue;
                         finalRings.add(ring);
@@ -98,7 +98,7 @@ public class PE_068 {
         return Converter.listToArr(finalRings);
     }
 
-    private static int[][] findNGonRings(int[] currentRing, int index, int sum, boolean[] taken) {
+    private static int[][] nGonRings(int[] currentRing, int index, int sum, boolean[] taken) {
         if (index == currentRing.length-2) {
             int next = sum - currentRing[currentRing.length-1] - currentRing[1];
             if (next <= currentRing[0] || next >= taken.length || taken[next]) return new int[0][];
@@ -119,7 +119,7 @@ public class PE_068 {
             taken[i] = true;
             taken[next] = true;
 
-            int[][] rings = findNGonRings(currentRing, index+2, sum, taken);
+            int[][] rings = nGonRings(currentRing, index+2, sum, taken);
             for (int[] ring : rings) {
                 if (ring == null) continue;
                 finalRings.add(ring);

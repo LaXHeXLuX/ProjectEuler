@@ -9,7 +9,7 @@ public class PE_021 {
 
     public static long PE() {
         int limit = 10_000;
-        boolean[] amicableNumbers = findAmicablePairs(limit);
+        boolean[] amicableNumbers = amicablePairs(limit);
         int sum = 0;
         for (int i = 1; i < amicableNumbers.length; i++) {
             if (amicableNumbers[i]) sum += i;
@@ -25,7 +25,7 @@ public class PE_021 {
         return sum == n && otherNumber != n ? otherNumber : -1;
     }
 
-    private static boolean[] findAmicablePairs(int limit) {
+    private static boolean[] amicablePairs(int limit) {
         boolean[] amicablePairs = new boolean[limit];
         for (int i = 1; i < amicablePairs.length; i++) {
             if (amicablePairs[i]) continue;

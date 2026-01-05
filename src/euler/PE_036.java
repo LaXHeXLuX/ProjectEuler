@@ -13,7 +13,7 @@ public class PE_036 {
     public static long PE() {
         int[] bases = {2, 10};
         int limit = 1_000_000;
-        List<Long> palindromes = findPalindromesInBases(limit, bases);
+        List<Long> palindromes = palindromesInBases(limit, bases);
 
         long sum = 0;
         for (long palindrome : palindromes) sum += palindrome;
@@ -27,7 +27,7 @@ public class PE_036 {
         return true;
     }
 
-    private static List<Long> findPalindromesInBases(long limit, int[] bases) {
+    private static List<Long> palindromesInBases(long limit, int[] bases) {
         List<Long> palindromes = new ArrayList<>();
 
         for (long i = 1; i < limit; i++) {

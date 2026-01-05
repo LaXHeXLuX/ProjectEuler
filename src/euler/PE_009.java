@@ -7,11 +7,11 @@ public class PE_009 {
 
     public static long PE() {
         int sum = 1000;
-        int[] specialTriplet = findPythagoreanTripletWithSumOf(sum);
+        int[] specialTriplet = pythagoreanTripletWithSumOf(sum);
         return (long) specialTriplet[0] * specialTriplet[1] * specialTriplet[2];
     }
 
-    private static int[] findPythagoreanTripletWithSumOf(int sum) {
+    private static int[] pythagoreanTripletWithSumOf(int sum) {
         for (int a = 1; a < sum/2; a++) {
             for (int b = 1; b < Math.min(a, sum-2*a); b++) {
                 int c = 1000-a-b;

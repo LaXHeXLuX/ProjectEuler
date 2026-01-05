@@ -12,7 +12,7 @@ public class PE_085 {
     }
 
     private static int[] closestForLimit(long limit) {
-        int closestFor1 = findLimitFor(1, limit);
+        int closestFor1 = limitFor(1, limit);
         int[] closest = {1, closestFor1};
         long closestDifference = Math.abs(rectangleCount(1, closestFor1) - limit);
 
@@ -20,7 +20,7 @@ public class PE_085 {
             if (rectangleCount(x, x+1) < limit)
                 continue;
 
-            int closestY = findLimitFor(x, limit);
+            int closestY = limitFor(x, limit);
             long count = rectangleCount(x, closestY);
 
             if (Math.abs(count - limit) < closestDifference) {
@@ -32,7 +32,7 @@ public class PE_085 {
         return closest;
     }
 
-    private static int findLimitFor(int x, long limit) {
+    private static int limitFor(int x, long limit) {
         int y = 0;
         long count = rectangleCount(x, y);
         long lastCount = count;

@@ -14,7 +14,7 @@ public class PE_059 {
         String filename = "src/euler/inputs/PE_059_cipher.txt";
         int[] chars = parse(filename);
 
-        int[] key = findLikelyKey(chars);
+        int[] key = likelyKey(chars);
         int[] answer = XOR(chars, key);
         return sum(answer);
     }
@@ -56,7 +56,7 @@ public class PE_059 {
         return new int[][] {chars1, chars2, chars3};
     }
 
-    private static int[] findLikelyKey(int[] chars) {
+    private static int[] likelyKey(int[] chars) {
         int[][] threeSets = divideIntoThree(chars);
         int[] likelyKey = new int[3];
         for (int i = 0; i < threeSets.length; i++) {

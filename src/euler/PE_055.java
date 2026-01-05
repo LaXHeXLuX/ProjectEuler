@@ -13,11 +13,11 @@ public class PE_055 {
 
     public static long PE() {
         int limit = 10_000;
-        int[] answer = findLychrelNumbersUnder(limit);
+        int[] answer = lychrelNumbersUnder(limit);
         return answer.length;
     }
 
-    public static int[] findLychrelNumbersUnder(int limit) {
+    public static int[] lychrelNumbersUnder(int limit) {
         List<Integer> lychrelNumbers = new ArrayList<>();
 
         for (int i = 5; i < limit; i++) {

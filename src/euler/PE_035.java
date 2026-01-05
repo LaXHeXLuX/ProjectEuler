@@ -14,7 +14,7 @@ public class PE_035 {
     public static long PE() {
         int limit = 1_000_000;
         composites = Primes.compositeSieve(limit);
-        List<Integer> cyclicPrimes = findCyclicPrimesUnder(limit);
+        List<Integer> cyclicPrimes = cyclicPrimesUnder(limit);
         return cyclicPrimes.size();
     }
 
@@ -41,7 +41,7 @@ public class PE_035 {
         return true;
     }
 
-    private static List<Integer> findCyclicPrimesUnder(int limit) {
+    private static List<Integer> cyclicPrimesUnder(int limit) {
         List<Integer> cyclicPrimes = new ArrayList<>();
         cyclicPrimes.add(2);
 

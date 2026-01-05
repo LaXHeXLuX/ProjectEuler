@@ -10,7 +10,7 @@ public class PE_071 {
     public static long PE() {
         int limitD = 1_000_000;
         int[] fraction = {3, 7};
-        return findFractionBefore(limitD, fraction)[0];
+        return fractionBefore(limitD, fraction)[0];
     }
 
     private static int numerator(int[] fraction, int d) {
@@ -18,7 +18,7 @@ public class PE_071 {
         return fraction[0]*d/fraction[1];
     }
 
-    private static int[] findFractionBefore(int limitD, int[] fraction) {
+    private static int[] fractionBefore(int limitD, int[] fraction) {
         int[] winningFraction = {0, 1};
         for (int d = 2; d <= limitD; d++) {
             if (d % fraction[1] == 0) continue;

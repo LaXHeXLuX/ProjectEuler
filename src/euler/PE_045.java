@@ -11,10 +11,10 @@ public class PE_045 {
     public static long PE() {
         int[] sides = {3, 5, 6};
         int lowerLimit = 40755 + 1;
-        return findNextNumberPolygonalIn(sides, lowerLimit);
+        return nextNumberPolygonalIn(sides, lowerLimit);
     }
 
-    private static long findNextNumberPolygonalIn(int[] sides, int lowerLimit) {
+    private static long nextNumberPolygonalIn(int[] sides, int lowerLimit) {
         sides = ArrayFunctions.mergeSort(sides);
 
         for (int i = 0; true; i++) {

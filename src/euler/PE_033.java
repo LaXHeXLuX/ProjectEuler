@@ -15,7 +15,7 @@ public class PE_033 {
 
     public static long PE() {
         int limit = 100;
-        List<int[]> curiousFractions = findCuriousFractions(limit);
+        List<int[]> curiousFractions = curiousFractions(limit);
 
         int a = 1;
         int b = 1;
@@ -27,7 +27,7 @@ public class PE_033 {
         return simplifyFraction(a, b)[1];
     }
 
-    private static List<int[]> findCuriousFractions(int limit) {
+    private static List<int[]> curiousFractions(int limit) {
         List<int[]> curiousFractions = new ArrayList<>();
 
         for (int i = limit/10; i < limit; i++) {

@@ -11,7 +11,7 @@ public class PE_034 {
     }
 
     public static long PE() {
-        List<Integer> digitFactorials = findAllDigitFactorials();
+        List<Integer> digitFactorials = allDigitFactorials();
         int sum = 0;
         for (int digitFactorial : digitFactorials) sum += digitFactorial;
         return sum;
@@ -29,7 +29,7 @@ public class PE_034 {
         return sum == n;
     }
 
-    private static List<Integer> findAllDigitFactorials() {
+    private static List<Integer> allDigitFactorials() {
         List<Integer> digitFactorials = new ArrayList<>();
         int limit = 2_000_000;
 

@@ -10,11 +10,11 @@ public class PE_027 {
 
     public static long PE() {
         int limit = 1_000;
-        int[] bestAB = findBestQuadraticFormulaWithLimits(limit-1, limit);
+        int[] bestAB = bestQuadraticFormulaWithLimits(limit-1, limit);
         return (long) bestAB[0] * bestAB[1];
     }
 
-    private static int[] findBestQuadraticFormulaWithLimits(int limitA, int limitB) {
+    private static int[] bestQuadraticFormulaWithLimits(int limitA, int limitB) {
         boolean[] composites = Primes.compositeSieve(limitB + 1);
 
         int bestScore = 40;

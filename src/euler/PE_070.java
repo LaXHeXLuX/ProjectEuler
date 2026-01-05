@@ -15,7 +15,7 @@ public class PE_070 {
 
     public static long PE() {
         int limit = 10_000_000;
-        return findNumberWithPropertyWithSmallestScore(limit);
+        return numberWithPropertyWithSmallestScore(limit);
     }
 
     private static int[] totients(int limit) {
@@ -38,7 +38,7 @@ public class PE_070 {
         return totients;
     }
 
-    private static int findNumberWithPropertyWithSmallestScore(int limit) {
+    private static int numberWithPropertyWithSmallestScore(int limit) {
         double s = System.currentTimeMillis();
         int[] totients = totients(limit);
         double e = System.currentTimeMillis();

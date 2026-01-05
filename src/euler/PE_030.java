@@ -10,7 +10,7 @@ public class PE_030 {
 
     public static long PE() {
         int power = 5;
-        List<Integer> numbers = findAllNumbersWithSameSum(power);
+        List<Integer> numbers = allNumbersWithSameSum(power);
         long sum = 0;
         for (int number : numbers) sum += number;
         return sum;
@@ -25,7 +25,7 @@ public class PE_030 {
         return sum;
     }
 
-    private static List<Integer> findAllNumbersWithSameSum(int power) {
+    private static List<Integer> allNumbersWithSameSum(int power) {
         if (power > 9) throw new RuntimeException("Power too large for int type");
         List<Integer> numbers = new ArrayList<>();
         int limit = (int) Math.pow(9, power) * (power+1);
