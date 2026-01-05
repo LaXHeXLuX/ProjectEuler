@@ -211,6 +211,22 @@ public class Diophantine {
         }
         return a;
     }
+    public static long[] extendedEuclidean(long a, long b) {
+        long r1 = a; long r2 = b;
+        long s1 = 1; long s2 = 0;
+        long t1 = 0; long t2 = 1;
+
+        while (r2 != 0) {
+            long q = r1 / r2;
+            long r3 = r1 - q*r2;
+            long s3 = s1 - q*s2;
+            long t3 = t1 - q*t2;
+            r1 = r2; s1 = s2; t1 = t2;
+            r2 = r3; s2 = s3; t2 = t3;
+        }
+
+        return new long[] {s1, t1};
+    }
     public static long powMod(long base, long exp, long mod) {
         long result = 1;
         base = base % mod;
