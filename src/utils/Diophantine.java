@@ -27,9 +27,10 @@ public class Diophantine {
 
         return Converter.listToArr(continuedFraction, Integer.class);
     }
-    private static long[] nthTermOfContinuedFraction(int[] continuedFraction, int n) {
+    public static long[] nthTermOfContinuedFraction(int[] continuedFraction, int n) {
         long h1 = continuedFraction[0];
         long k1 = 1;
+        if (n == 0) return new long[] {h1, k1};
         long h2 = (long) continuedFraction[0] * continuedFraction[1] + 1;
         long k2 = continuedFraction[1];
         int i = 1;
