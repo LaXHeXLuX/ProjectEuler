@@ -24,7 +24,6 @@ public class PE_137 {
             if (den < 0) continue;
             n--;
         }
-
         return num/den;
     }
 }
