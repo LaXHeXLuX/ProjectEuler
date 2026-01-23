@@ -55,6 +55,20 @@ public class Diophantine {
                 (l-1) * (1 + (l-1)%2) - 1
         );
     }
+    public static List<long[]> pell(int D, int C) {
+        long[] fundamental = Diophantine.pell(D);
+        long y = 0;
+        long yBound = (long) (fundamental[1] * Math.sqrt((double) C / (2*fundamental[0] + 2)));
+        List<long[]> fundamentals = new ArrayList<>();
+        while (y <= yBound) {
+            long xx = C + D*y*y;
+            long x = Diophantine.root(xx);
+            if (x > 0) fundamentals.add(new long[] {x, y});
+            if (x > 0) fundamentals.add(new long[] {-x, y});
+            y++;
+        }
+        return fundamentals;
+    }
     private static BigInteger[] nthTermOfContinuedFractionBig(int[] continuedFraction, int n) {
         BigInteger[] bigCF = new BigInteger[continuedFraction.length];
         for (int i = 0; i < continuedFraction.length; i++) {

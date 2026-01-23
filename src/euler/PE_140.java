@@ -31,7 +31,7 @@ public class PE_140 {
 
         List<Long> nuggets = new ArrayList<>();
         long[] f = Diophantine.pell(D);
-        List<long[]> fundamentals = pell(D, 4*(step*step - step - 1));
+        List<long[]> fundamentals = Diophantine.pell(D, 4*(step*step - step - 1));
         for (long[] fundamental : fundamentals) {
             long[] current = {fundamental[0], fundamental[1]};
             while (true) {
@@ -60,20 +60,5 @@ public class PE_140 {
                 fundamental[0].multiply(current[0]).add(D.multiply(fundamental[1]).multiply(current[1])),
                 fundamental[1].multiply(current[0]).add(fundamental[0].multiply(current[1]))
         };
-    }
-
-    private static List<long[]> pell(int D, int C) {
-        long[] fundamental = Diophantine.pell(D);
-        long y = 0;
-        long yBound = (long) (fundamental[1] * Math.sqrt((double) C / (2*fundamental[0] + 2)));
-        List<long[]> fundamentals = new ArrayList<>();
-        while (y <= yBound) {
-            long xx = C + D*y*y;
-            long x = Diophantine.root(xx);
-            if (x > 0) fundamentals.add(new long[] {x, y});
-            if (x > 0) fundamentals.add(new long[] {-x, y});
-            y++;
-        }
-        return fundamentals;
     }
 }

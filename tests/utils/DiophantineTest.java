@@ -3,6 +3,8 @@ package utils;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,6 +33,13 @@ class DiophantineTest {
         assertArrayEquals(new BigInteger[] {}, Diophantine.pellBig(100));
         assertEquals( new BigInteger("25052977273092427986049"), Diophantine.pellBig(409)[0]);
         assertEquals(new BigInteger("3879474045914926879468217167061449"), Diophantine.pellBig(421)[0]);
+
+        List<long[]> fundamentals = Diophantine.pell(5, 20);
+        long[][] results = {{5, 1}, {-5, 1}, {10, 4}, {-10, 4}};
+        for (int i = 0; i < fundamentals.size(); i++) {
+            System.out.println(i + ": " + Arrays.toString(fundamentals.get(i)));
+            assertArrayEquals(fundamentals.get(i), results[i]);
+        }
     }
     @Test
     void root() {
