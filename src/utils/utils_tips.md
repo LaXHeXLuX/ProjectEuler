@@ -1,12 +1,11 @@
 <!-- TOC -->
 * [Arithmetics](#arithmetics)
 * [ArrayFunctions](#arrayfunctions)
-* [Combinations](#combinations)
+* [Combinations](#combinations-)
 * [Converter](#converter)
 * [Diophantine](#diophantine)
 * [Divisors](#divisors)
 * [Fraction](#fraction)
-* [Generifier](#generifier)
 * [Graph](#graph)
 * [Matrix](#matrix)
 * [Pandigital](#pandigital)
