@@ -7,10 +7,7 @@ import java.util.*;
 public class PE_070 {
 
     public static void main(String[] args) {
-        double s = System.currentTimeMillis();
         System.out.println(PE());
-        double e = System.currentTimeMillis();
-        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
@@ -39,10 +36,7 @@ public class PE_070 {
     }
 
     private static int numberWithPropertyWithSmallestScore(int limit) {
-        double s = System.currentTimeMillis();
         int[] totients = totients(limit);
-        double e = System.currentTimeMillis();
-        System.out.println("totients done: " + (e-s) + " ms");
         int[] smallestScore = {Integer.MAX_VALUE, 1};
         int smallestN = -1;
         int lowerLimit = 2;
