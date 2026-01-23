@@ -31,7 +31,7 @@ public class PE_134 {
         int p1Size = (int) Math.log10(p1) + 1;
         int p1Mod = Math.toIntExact(Diophantine.powMod(10, p1Size, p2));
         int diff = p2 - p1;
-        long n = Diophantine.modDivide(p1Mod, diff, p2);
+        long n = Diophantine.modDivide(diff, p1Mod, p2);
         if (n == -1) return -1;
         for (int i = 0; i < p1Size; i++) n *= 10;
         return n + p1;
