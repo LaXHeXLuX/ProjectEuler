@@ -23,7 +23,6 @@ class PolygonalNumberTest {
         assertArrayEquals(new int[] {8, 15, 48}, PolygonalNumber.isPolygonalNumber(280));
         assertArrayEquals(new int[] {19, 66, 601}, PolygonalNumber.isPolygonalNumber(1_800));
         assertArrayEquals(new int[] {33_334}, PolygonalNumber.isPolygonalNumber(99_999));
-        //assertArrayEquals(new int[] {}, PolygonalNumber.isPolygonalNumber(23333333333L));
         assertTrue(PolygonalNumber.isPolygonalNumber(3, 3));
     }
 }
