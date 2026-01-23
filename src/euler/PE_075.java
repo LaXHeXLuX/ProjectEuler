@@ -2,54 +2,40 @@ package euler;
 
 import utils.Diophantine;
 
-import java.util.*;
-
 public class PE_075 {
     public static void main(String[] args) {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
         int perimeterLimit = 1_500_000;
-
-        Map<Integer, Integer> perimeters = getPerimeters(perimeterLimit);
-
-        int n = 1;
-        List<Integer> oneSolutionPerimeters = getNSolutionPerimeters(n, perimeters);
-        return oneSolutionPerimeters.size();
+        int solutionCount = 1;
+        return perimetersWithRightTriangleSolutions(solutionCount, perimeterLimit);
     }
+    
+    private static int perimetersWithRightTriangleSolutions(int solutionCount, int perimeterLimit) {
+        int[] perimeterSolutionCounts = new int[perimeterLimit+1];
 
-    private static List<Integer> getNSolutionPerimeters(int n, Map<Integer, Integer> perimeters) {
-        List<Integer> nSolutionPerimeters = new ArrayList<>();
-
-        for (Integer integer : perimeters.keySet()) {
-            if (perimeters.get(integer) == n) nSolutionPerimeters.add(integer);
-        }
-
-        return nSolutionPerimeters;
-    }
-
-    private static Map<Integer, Integer> getPerimeters(int perimeterLimit) {
-        Map<Integer, Integer> perimeters = new HashMap<>();
-
-        int limitN = (int) Math.sqrt(perimeterLimit)/2;
-        for (int n = 1; n < limitN; n++) {
-            int step = n % 2 + 1;
-            for (int m = n+1; 2*m*(m+n) < perimeterLimit; m += step) {
-                if (Diophantine.gcd(n, m) != 1) continue;
-                int limitK = perimeterLimit/(2*m*(m+n));
-                for (int k = 1; k <= limitK; k++) {
-                    int m2 = m * m;
-                    int n2 = n * n;
-                    int a = k*(m2 - n2);
-                    int b = k*(2*m*n);
-                    int c = k*(m2 + n2);
-                    int perimeter = a + b + c;
-                    perimeters.merge(perimeter, 1, Integer::sum);
+        int mLimit = (int) Math.sqrt(perimeterLimit);
+        for (int m = 2; m <= mLimit; m++) {
+            for (int n = m-1; n > 0; n -= 2) {
+                if (Diophantine.gcd(m, n) > 1) continue;
+                int P = 2*m*(m+n);
+                int k = 1;
+                while (k*P <= perimeterLimit) {
+                    perimeterSolutionCounts[k*P]++;
+                    k++;
                 }
             }
         }
 
-        return perimeters;
+        int count = 0;
+        for (int perimeterSolutionCount : perimeterSolutionCounts) {
+            if (perimeterSolutionCount == solutionCount) count++;
+        }
+        return count;
     }
 }
