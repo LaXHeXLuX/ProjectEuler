@@ -39,7 +39,16 @@ public class Combinations {
         }
         return prod;
     }
-    public static BigInteger catalan(int n) {
+    public static long catalan(int n) {
+        long[] catalans = {
+                1L, 1L, 2L, 5L, 14L, 42L, 132L, 429L, 1430L,
+                4862L, 16796L, 58786L, 208012L, 742900L, 2674440L, 9694845L, 35357670L, 129644790L,
+                477638700L, 1767263190L, 6564120420L, 24466267020L, 91482563640L, 343059613650L, 1289904147324L, 4861946401452L, 18367353072152L,
+                69533550916004L, 263747951750360L, 1002242216651368L, 3814986502092304L, 14544636039226909L, 55534064877048198L, 212336130412243110L, 812944042149730764L, 3116285494907301262L
+        };
+        return catalans[n];
+    }
+    public static BigInteger catalanBig(int n) {
         return Combinations.nChooseMBigInteger(2*n, n).divide(BigInteger.valueOf(n+1));
     }
     public static int[][] chooseNElements(int[] arr, int n, boolean orderMatters) {

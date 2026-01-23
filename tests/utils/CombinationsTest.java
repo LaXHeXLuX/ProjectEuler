@@ -64,9 +64,14 @@ class CombinationsTest {
     }
     @Test
     void catalan() {
-        assertEquals(BigInteger.ONE, Combinations.catalan(1));
-        assertEquals(BigInteger.TWO, Combinations.catalan(2));
-        assertEquals(BigInteger.valueOf(16796), Combinations.catalan(10));
+        assertEquals(1, Combinations.catalan(1));
+        assertEquals(2, Combinations.catalan(2));
+        assertEquals(16796, Combinations.catalan(10));
+        assertThrows(RuntimeException.class, () -> Combinations.catalan(100));
+
+        assertEquals(BigInteger.ONE, Combinations.catalanBig(1));
+        assertEquals(BigInteger.TWO, Combinations.catalanBig(2));
+        assertEquals(new BigInteger("1978261657756160653623774456"), Combinations.catalanBig(50));
     }
     @Test
     void chooseNElements() {
