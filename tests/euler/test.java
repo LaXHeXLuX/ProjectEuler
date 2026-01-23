@@ -151,8 +151,8 @@ public class test {
     public static void main(String[] args) {
         tests();
     }
-    private static void assertEquals(long l1, long l2) {
-        if (l1 != l2) throw new AssertionError(l1 + " != " + l2);
+    private static void assertEquals(long l1, Class<?> cls) {
+        if (l1 != tests.get(cls)) throw new AssertionError(cls.getName() + ": " + l1 + " != " + tests.get(cls));
     }
     public static void tests() {
         double allStart = System.currentTimeMillis();
@@ -165,7 +165,7 @@ public class test {
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
-            assertEquals(result, tests.get(cls));
+            assertEquals(result, cls);
             double end = System.currentTimeMillis();
             double time = end - start;
             if (time > 300) System.out.println(cls.getName() + ": " + (end - start) + " ms");
