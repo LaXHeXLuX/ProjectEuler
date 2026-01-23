@@ -20,7 +20,6 @@ public class PE_060 {
     public static long PE() {
         int size = 5;
         Set<Integer> lowestSumPrimeSet = firstNthPrimeSet(size);
-        System.out.println(lowestSumPrimeSet);
         return sum(lowestSumPrimeSet);
     }
 
