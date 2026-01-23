@@ -48,7 +48,7 @@ Contains two kinds of methods: those which convert between Java types (types of 
 For each method I have specified the name and description or use case:
 - **continuedFraction** - continuedFraction(n) gives the array {n0, x0, x1, ..., xn}, where n0 is the integer part of a square root of n, and x0-xn is the repeating cycle of the continued fraction of sqrt(n).
 - **nthTermOfContinuedFraction** (long[], BigInteger[]) - nthTermOfContinuedFraction(continuedFraction, n) gives the two-element array {num, den}, where num/den is the fraction when calculating from the n-th step of the continued fraction.
-- **pell** (long[], BigInteger[]) - pell(D) gives the fundamental (smallest) (x, y) solution to the equation $x^2 - Dy^2 = 1$.
+- **pell** (long[], BigInteger[]) - pell(D) gives the fundamental (smallest) (x, y) solution to the equation $x^2 - Dy^2 = 1$. pell(D, C) gives the fundamental (smallest) (x, y) solutions to the equation $x^2 - Dy^2 = C$.
 - **root** (int, long) - root(n) gives integer part the square root of n - positive if n was a whole square, negative otherwise.
 - **quadratic** - quadratic(a, b, c) gives the two solutions (x1, x2) to the equation $ax^2 + bx + c = 0$.
 - **digitSum** (int, long, BigInteger) - digitSum(n) gives the digit sum of n.
