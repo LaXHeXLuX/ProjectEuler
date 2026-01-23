@@ -128,8 +128,9 @@ class DiophantineTest {
     }
     @Test
     void modDivide() {
-        assertEquals(1, Diophantine.modDivide(1, 1, 1));
-        assertEquals(1, Diophantine.modDivide(1, 10, 2));
-        assertEquals(4, Diophantine.modDivide(2, 10, 10));
+        assertEquals(-1, Diophantine.modDivide(1, 2, 4));
+        assertEquals(0, Diophantine.modDivide(0, 1, 1));
+        assertEquals(1, Diophantine.modDivide(1, 1, 2));
+        assertEquals(2, Diophantine.modDivide(1, 2, 3));
     }
 }
