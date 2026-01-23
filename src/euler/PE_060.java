@@ -20,7 +20,7 @@ public class PE_060 {
 
     public static long PE() {
         int size = 5;
-        Set<Integer> lowestSumPrimeSet = nthPrimeSet(size);
+        Set<Integer> lowestSumPrimeSet = firstNthPrimeSet(size);
         System.out.println(lowestSumPrimeSet);
         return sum(lowestSumPrimeSet);
     }
@@ -29,6 +29,16 @@ public class PE_060 {
         int sum = 0;
         for (int a : set) sum += a;
         return sum;
+    }
+
+    private static Set<Integer> firstNthPrimeSet(int n) {
+        int primeLimit = 1_000;
+        Set<Integer> lowestSumPrimeSet = nthPrimeSet(n, primeLimit);
+        while (lowestSumPrimeSet.isEmpty()) {
+            primeLimit *= 2;
+            lowestSumPrimeSet = nthPrimeSet(n, primeLimit);
+        }
+        return lowestSumPrimeSet;
     }
 
     private static void makePrimes(int limit) {
@@ -46,18 +56,14 @@ public class PE_060 {
         }
     }
 
-    private static Set<Integer> nthPrimeSet(int n) {
+    private static Set<Integer> nthPrimeSet(int n, int primeLimit) {
         if (n < 2) throw new RuntimeException("n (" + n + ") can't be smaller than 2!");
         int lowestSum = Integer.MAX_VALUE;
         Set<Integer> lowestSumPrimeSet = Set.of();
-        int limit = 10_000; // help here
 
-        double s = System.currentTimeMillis();
         primesInt1.add(3);
         primesInt2.add(3);
-        makePrimes(limit);
-        double e = System.currentTimeMillis();
-        System.out.println("composites time " + (e-s) + " ms");
+        makePrimes(primeLimit);
         Graph primePairGraph = new Graph();
         for (int prime : primesInt1) {
             if (prime > lowestSum) break;
