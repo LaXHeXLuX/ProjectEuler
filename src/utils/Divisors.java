@@ -27,16 +27,6 @@ public class Divisors {
         divisors.add(n);
         return Converter.listToArr(divisors);
     }
-    public static long sumOfDivisors(long n) {
-        long[] divisors = divisors(n);
-        long sum = 0;
-
-        for (int i = 0; i < divisors.length-1; i++) {
-            sum += divisors[i];
-        }
-
-        return sum;
-    }
     public static int[] divisors(int n) {
         if (n < 1) throw new RuntimeException("Argument must be positive!");
         if (n == 1) return new int[] {1};
