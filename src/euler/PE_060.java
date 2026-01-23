@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 public class PE_060 {
-    private static final List<Integer> primesInt1 = new ArrayList<>();
-    private static final List<Integer> primesInt2 = new ArrayList<>();
+    private static final List<Integer> primes = new ArrayList<>();
 
     public static void main(String[] args) {
         double s = System.currentTimeMillis();
@@ -32,7 +31,8 @@ public class PE_060 {
     }
 
     private static Set<Integer> firstNthPrimeSet(int n) {
-        int primeLimit = 1_000;
+        int primeLimit = 1;
+        for (int i = 1; i < n; i++) primeLimit *= 10;
         Set<Integer> lowestSumPrimeSet = nthPrimeSet(n, primeLimit);
         while (lowestSumPrimeSet.isEmpty()) {
             primeLimit *= 2;
@@ -51,8 +51,7 @@ public class PE_060 {
                 composites[prod/2] = true;
                 prod += 2*i;
             }
-            if (i % 3 == 1) primesInt1.add(i);
-            else if (i % 3 == 2) primesInt2.add(i);
+            primes.add(i);
         }
     }
 
@@ -61,29 +60,9 @@ public class PE_060 {
         int lowestSum = Integer.MAX_VALUE;
         Set<Integer> lowestSumPrimeSet = Set.of();
 
-        primesInt1.add(3);
-        primesInt2.add(3);
         makePrimes(primeLimit);
         Graph primePairGraph = new Graph();
-        for (int prime : primesInt1) {
-            if (prime > lowestSum) break;
-            List<Integer> primePairSet = primePairSetFor(prime);
-            primePairGraph.addNode(prime);
-            for (Integer i : primePairSet) {
-                primePairGraph.addEdge(prime, i, 1);
-                primePairGraph.addEdge(i, prime, 1);
-            }
-            Set<Integer> clique = primePairGraph.clique(n, prime);
-            if (!clique.isEmpty()) {
-                int sum = sum(clique);
-                if (lowestSum > sum) {
-                    lowestSumPrimeSet = clique;
-                    lowestSum = sum;
-                }
-            }
-        }
-        primePairGraph = new Graph();
-        for (int prime : primesInt2) {
+        for (int prime : primes) {
             if (prime > lowestSum) break;
             List<Integer> primePairSet = primePairSetFor(prime);
             primePairGraph.addNode(prime);
@@ -106,9 +85,6 @@ public class PE_060 {
 
     private static List<Integer> primePairSetFor(int p1) {
         List<Integer> primePairSet = new ArrayList<>();
-        List<Integer> primes;
-        if (p1 % 3 == 1) primes = primesInt1;
-        else primes = primesInt2;
         for (int p2 : primes) {
             if (p2 >= p1) break;
             if (isPrimePair(p1, p2)) primePairSet.add(p2);
