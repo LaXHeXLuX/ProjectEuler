@@ -3,29 +3,29 @@ package utils;
 import java.util.*;
 
 public class Graph {
-    private final Set<String> nodes = new HashSet<>();
+    private final Set<Integer> nodes = new HashSet<>();
     private final Set<Edge> edges = new HashSet<>();
-    private final Map<String, Set<Edge>> outgoing = new HashMap<>();
-    private final Map<String, Set<Edge>> incoming = new HashMap<>();
-    private final Map<String, Set<String>> outgoingNodes = new HashMap<>();
-    private final Map<String, Set<String>> incomingNodes = new HashMap<>();
+    private final Map<Integer, Set<Edge>> outgoing = new HashMap<>();
+    private final Map<Integer, Set<Edge>> incoming = new HashMap<>();
+    private final Map<Integer, Set<Integer>> outgoingNodes = new HashMap<>();
+    private final Map<Integer, Set<Integer>> incomingNodes = new HashMap<>();
     public Graph() {
 
     }
     public Graph(int nodeCount) {
         for (int i = 0; i < nodeCount; i++) {
-            nodes.add(String.valueOf(i));
+            nodes.add(i);
         }
     }
     public Graph(int[][] edgeMatrix) {
         for (int i = 0; i < edgeMatrix.length; i++) {
-            nodes.add(String.valueOf(i));
+            nodes.add(i);
         }
 
         for (int i = 0; i < edgeMatrix.length; i++) {
             for (int j = 0; j < edgeMatrix[i].length; j++) {
                 if (edgeMatrix[i][j] >= 0) {
-                    addEdge(String.valueOf(i), String.valueOf(j), edgeMatrix[i][j]);
+                    addEdge(i, j, edgeMatrix[i][j]);
                 }
             }
         }
@@ -39,12 +39,12 @@ public class Graph {
     public Set<Edge> getEdges() {
         return this.edges;
     }
-    public Graph subgraph(Set<String> nodes) {
+    public Graph subgraph(Set<Integer> nodes) {
         Graph newGraph = new Graph();
-        for (String node : nodes) {
+        for (Integer node : nodes) {
             newGraph.addNode(node);
         }
-        for (String node : nodes) {
+        for (Integer node : nodes) {
             for (Edge outgoingEdge : this.outgoingEdges(node)) {
                 if (!nodes.contains(outgoingEdge.to)) continue;
                 newGraph.addEdge(node, outgoingEdge.to, outgoingEdge.weight);
@@ -52,10 +52,10 @@ public class Graph {
         }
         return newGraph;
     }
-    public boolean addNode(String node) {
+    public boolean addNode(int node) {
         return nodes.add(node);
     }
-    public boolean addEdge(String from, String to, int weight) {
+    public boolean addEdge(int from, int to, int weight) {
         if (weight < 0) throw new IllegalArgumentException("Weight can't be negative");
         if (!nodes.contains(from) || !nodes.contains(to)) return false;
 
@@ -72,41 +72,41 @@ public class Graph {
     public int nodeCount() {
         return nodes.size();
     }
-    Set<Edge> outgoingEdges(String node) {
+    Set<Edge> outgoingEdges(int node) {
         return outgoing.getOrDefault(node, Collections.emptySet());
     }
-    Set<Edge> incomingEdges(String node) {
+    Set<Edge> incomingEdges(int node) {
         return incoming.getOrDefault(node, Collections.emptySet());
     }
-    Set<String> outgoingNodes(String node) {
+    Set<Integer> outgoingNodes(int node) {
         return outgoingNodes.getOrDefault(node, Collections.emptySet());
     }
-    Set<String> incomingNodes(String node) {
+    Set<Integer> incomingNodes(int node) {
         return incomingNodes.getOrDefault(node, Collections.emptySet());
     }
-    Set<String> bothWayNodes(String node) {
-        Set<String> bothWayNodes = this.incomingNodes(node);
+    Set<Integer> bothWayNodes(int node) {
+        Set<Integer> bothWayNodes = this.incomingNodes(node);
         bothWayNodes.retainAll(this.outgoingNodes(node));
         return bothWayNodes;
     }
-    public int djikstra(String origin, String destination) {
-        Map<String, Integer> distances = new HashMap<>();
-        for (String node : nodes) {
+    public int djikstra(int origin, int destination) {
+        Map<Integer, Integer> distances = new HashMap<>();
+        for (int node : nodes) {
             distances.put(node, Integer.MAX_VALUE);
         }
         distances.put(origin, 0);
 
-        record NodeDist(String node, int distance) {}
+        record NodeDist(int node, int distance) {}
         PriorityQueue<NodeDist> pq = new PriorityQueue<>(Comparator.comparingInt(NodeDist::distance));
         pq.add(new NodeDist(origin, 0));
 
-        Set<String> visited = new HashSet<>();
+        Set<Integer> visited = new HashSet<>();
 
         while (!pq.isEmpty()) {
             NodeDist current = pq.poll();
             visited.add(current.node());
 
-            if (current.node().equals(destination)) {
+            if (current.node() == destination) {
                 return current.distance();
             }
 
@@ -122,31 +122,31 @@ public class Graph {
 
         return distances.get(destination);
     }
-    public Set<String> clique(int size, String origin) {
+    public Set<Integer> clique(int size, int origin) {
         if (size < 2) throw new IllegalArgumentException("Size must be at least 2");
-        Set<String> neighbours = this.bothWayNodes(origin);
+        Set<Integer> neighbours = this.bothWayNodes(origin);
         if (neighbours.size() < size-1) return new HashSet<>();
         if (size == 2) return Set.of(origin, neighbours.iterator().next());
-        Set<String> clique = subgraph(neighbours).clique(size-1);
+        Set<Integer> clique = subgraph(neighbours).clique(size-1);
         if (!clique.isEmpty()) clique.add(origin);
         return clique;
     }
-    public Set<String> clique(int size) {
+    public Set<Integer> clique(int size) {
         if (size < 2) throw new IllegalArgumentException("Size must be at least 2");
         return new HashSet<>(clique(new ArrayList<>(nodes), size, new ArrayList<>()));
     }
-    private List<String> clique(List<String> candidates, int size, List<String> current) {
+    private List<Integer> clique(List<Integer> candidates, int size, List<Integer> current) {
         if (current.size() == size) {
             return current;
         }
 
         for (int i = 0; i < candidates.size(); i++) {
-            String node = candidates.get(i);
+            int node = candidates.get(i);
 
             if (current.size() + candidates.size() - i < size) return new ArrayList<>();
 
             boolean connected = true;
-            for (String n : current) {
+            for (int n : current) {
                 if (!this.bothWayNodes(node).contains(n)) {
                     connected = false;
                     break;
@@ -155,7 +155,7 @@ public class Graph {
             if (!connected) continue;
 
             current.add(node);
-            List<String> next = clique(candidates.subList(i + 1, candidates.size()), size, current);
+            List<Integer> next = clique(candidates.subList(i + 1, candidates.size()), size, current);
             if (!next.isEmpty()) {
                 return next;
             }
@@ -165,11 +165,11 @@ public class Graph {
     }
     public Graph mst() {
         if (nodes.isEmpty()) return new Graph();
-        return mst("0");
+        return mst(0);
     }
-    public Graph mst(String startNode) {
+    public Graph mst(int startNode) {
         Graph mst = new Graph();
-        Set<String> visited = new HashSet<>();
+        Set<Integer> visited = new HashSet<>();
         mst.addNode(startNode);
         visited.add(startNode);
         PriorityQueue<Edge> pq = new PriorityQueue<>(Comparator.comparingInt(edge -> edge.weight));
@@ -199,18 +199,18 @@ public class Graph {
     }
 
     public static class Edge {
-        String from;
-        String to;
+        int from;
+        int to;
         int weight;
-        public Edge(String  from, String  to, int weight) {
+        public Edge(int  from, int  to, int weight) {
             this.from = from;
             this.to = to;
             this.weight = weight;
         }
-        public String getFrom() {
+        public int getFrom() {
             return this.from;
         }
-        public String getTo() {
+        public int getTo() {
             return this.to;
         }
         public int getWeight() {
@@ -222,7 +222,7 @@ public class Graph {
             return this.equals((Edge) o);
         }
         public boolean equals(Edge edge) {
-            return from.equals(edge.from) && to.equals(edge.to) && weight == edge.weight;
+            return from == edge.from && to == edge.to && weight == edge.weight;
         }
         @Override
         public int hashCode() {

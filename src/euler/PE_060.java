@@ -6,7 +6,6 @@ import utils.Primes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class PE_060 {
     private static final List<Integer> primesInt1 = new ArrayList<>();
@@ -62,20 +61,17 @@ public class PE_060 {
         Graph primePairGraph = new Graph();
         for (int prime : primesInt1) {
             if (prime > lowestSum) break;
-            String primeString = String.valueOf(prime);
             List<Integer> primePairSet = primePairSetFor(prime);
-            primePairGraph.addNode(primeString);
+            primePairGraph.addNode(prime);
             for (Integer i : primePairSet) {
-                String node = String.valueOf(i);
-                primePairGraph.addEdge(primeString, node, 1);
-                primePairGraph.addEdge(node, primeString, 1);
+                primePairGraph.addEdge(prime, i, 1);
+                primePairGraph.addEdge(i, prime, 1);
             }
-            Set<String> clique = primePairGraph.clique(n, primeString);
+            Set<Integer> clique = primePairGraph.clique(n, prime);
             if (!clique.isEmpty()) {
-                Set<Integer> cliqueInt = clique.stream().map(Integer::parseInt).collect(Collectors.toSet());
-                int sum = sum(cliqueInt);
+                int sum = sum(clique);
                 if (lowestSum > sum) {
-                    lowestSumPrimeSet = cliqueInt;
+                    lowestSumPrimeSet = clique;
                     lowestSum = sum;
                 }
             }
@@ -83,20 +79,17 @@ public class PE_060 {
         primePairGraph = new Graph();
         for (int prime : primesInt2) {
             if (prime > lowestSum) break;
-            String primeString = String.valueOf(prime);
             List<Integer> primePairSet = primePairSetFor(prime);
-            primePairGraph.addNode(primeString);
+            primePairGraph.addNode(prime);
             for (Integer i : primePairSet) {
-                String node = String.valueOf(i);
-                primePairGraph.addEdge(primeString, node, 1);
-                primePairGraph.addEdge(node, primeString, 1);
+                primePairGraph.addEdge(prime, i, 1);
+                primePairGraph.addEdge(i, prime, 1);
             }
-            Set<String> clique = primePairGraph.clique(n, primeString);
+            Set<Integer> clique = primePairGraph.clique(n, prime);
             if (!clique.isEmpty()) {
-                Set<Integer> cliqueInt = clique.stream().map(Integer::parseInt).collect(Collectors.toSet());
-                int sum = sum(cliqueInt);
+                int sum = sum(clique);
                 if (lowestSum > sum) {
-                    lowestSumPrimeSet = cliqueInt;
+                    lowestSumPrimeSet = clique;
                     lowestSum = sum;
                 }
             }
