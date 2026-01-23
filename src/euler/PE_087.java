@@ -11,7 +11,7 @@ public class PE_087 {
 
     public static long PE() {
         int limit = 50_000_000;
-        primes = Primes.primes(limit);
+        primes = Primes.primes((int) Math.sqrt(limit));
         return powerTripletsCount(limit);
     }
 
