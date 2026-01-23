@@ -51,11 +51,15 @@ public class Divisors {
         return Converter.listToArr(divisors);
     }
     public static int sumOfDivisors(int n) {
-        int[] divisors = divisors(n);
-        int sum = 0;
+        int sum = 1;
 
-        for (int i = 0; i < divisors.length-1; i++) {
-            sum += divisors[i];
+        int limit = (int) Math.sqrt(n);
+        for (int i = 2; i <= limit; i++) {
+            if (n % i == 0) {
+                sum += i;
+                int counterPart = n/i;
+                if (counterPart != i) sum += counterPart;
+            }
         }
 
         return sum;

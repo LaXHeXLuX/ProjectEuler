@@ -25,6 +25,7 @@ class DivisorsTest {
     void sumOfDivisors() {
         assertEquals(1, Divisors.sumOfDivisors(2));
         assertEquals(28, Divisors.sumOfDivisors(28));
+        assertEquals(55, Divisors.sumOfDivisors(36));
         assertEquals(1, Divisors.sumOfDivisors(101));
         assertEquals(810, Divisors.sumOfDivisors(360));
     }
