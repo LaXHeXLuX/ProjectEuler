@@ -37,7 +37,6 @@ class DiophantineTest {
         List<long[]> fundamentals = Diophantine.pell(5, 20);
         long[][] results = {{5, 1}, {-5, 1}, {10, 4}, {-10, 4}};
         for (int i = 0; i < fundamentals.size(); i++) {
-            System.out.println(i + ": " + Arrays.toString(fundamentals.get(i)));
             assertArrayEquals(fundamentals.get(i), results[i]);
         }
     }
