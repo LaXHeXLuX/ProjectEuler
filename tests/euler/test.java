@@ -168,7 +168,7 @@ public class test {
             assertEquals(result, cls);
             double end = System.currentTimeMillis();
             double time = end - start;
-            if (time > 300) System.out.println(cls.getName() + ": " + (end - start) + " ms");
+            if (time > 300) System.out.println(cls.getName() + ": " + time + " ms");
         }
         double allEnd = System.currentTimeMillis();
         System.out.println("Total time: " + (allEnd - allStart) + " ms");
