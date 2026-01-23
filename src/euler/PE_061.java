@@ -94,17 +94,17 @@ public class PE_061 {
     private static List<Integer> generate4DigitPolygonalNumbersWithSides(int sides, int digits) {
         List<Integer> polygonalNumbers = new ArrayList<>();
         int index = 1;
-        int polygonalNumber = (int) PolygonalNumber.polygonalNumberLong(sides, index);
+        int polygonalNumber = (int) PolygonalNumber.polygonalNumber(sides, index);
 
         while (polygonalNumber < Math.pow(10, digits-1)) {
             index++;
-            polygonalNumber = (int) PolygonalNumber.polygonalNumberLong(sides, index);
+            polygonalNumber = (int) PolygonalNumber.polygonalNumber(sides, index);
         }
 
         while (polygonalNumber < Math.pow(10, digits)) {
             polygonalNumbers.add(polygonalNumber);
             index++;
-            polygonalNumber = (int) PolygonalNumber.polygonalNumberLong(sides, index);
+            polygonalNumber = (int) PolygonalNumber.polygonalNumber(sides, index);
         }
 
         return polygonalNumbers;

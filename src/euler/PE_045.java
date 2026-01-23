@@ -18,7 +18,7 @@ public class PE_045 {
         sides = ArrayFunctions.mergeSort(sides);
 
         for (int i = 0; true; i++) {
-            long maxPolygonal = PolygonalNumber.polygonalNumberLong(sides[sides.length-1], i);
+            long maxPolygonal = PolygonalNumber.polygonalNumber(sides[sides.length-1], i);
             if (maxPolygonal < lowerLimit) continue;
 
             boolean isPolygonal = true;

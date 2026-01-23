@@ -1,22 +1,11 @@
 package utils;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PolygonalNumber {
-    public static long polygonalNumberLong(long sides, long n) {
+    public static long polygonalNumber(long sides, long n) {
         return ((sides - 2)*n*n - (sides - 4)*n)/2;
-    }
-    public static BigInteger polygonalNumberBigInteger(long sides, long n) {
-        BigInteger s = BigInteger.valueOf(sides);
-        BigInteger bigN = BigInteger.valueOf(n);
-        return bigN.multiply(
-                s.subtract(BigInteger.valueOf(2))
-                        .multiply(bigN.subtract(BigInteger.ONE))
-                        .divide(BigInteger.TWO)
-                        .add(BigInteger.ONE)
-        );
     }
     public static boolean isPolygonalNumber(long sides, long x) {
         if (sides == x) return true;

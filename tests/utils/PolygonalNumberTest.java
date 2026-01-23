@@ -2,30 +2,19 @@ package utils;
 
 import org.junit.jupiter.api.Test;
 
-import java.math.BigInteger;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class PolygonalNumberTest {
 
     @Test
-    void polygonalNumberLong() {
+    void polygonalNumber() {
         for (int i = 1; i < 10; i++) {
-            assertEquals(1, PolygonalNumber.polygonalNumberLong(i, 1));
-            assertEquals(i, PolygonalNumber.polygonalNumberLong(i, 2));
+            assertEquals(1, PolygonalNumber.polygonalNumber(i, 1));
+            assertEquals(i, PolygonalNumber.polygonalNumber(i, 2));
         }
-        assertEquals(10, PolygonalNumber.polygonalNumberLong(3, 4));
-        assertEquals(370, PolygonalNumber.polygonalNumberLong(10, 10));
-        assertEquals(500051, PolygonalNumber.polygonalNumberLong(101, 101));
-    }
-    @Test
-    void polygonalNumberBigInteger() {
-        for (int i = 1; i < 10; i++) {
-            assertEquals(1, PolygonalNumber.polygonalNumberLong(i, 1));
-            assertEquals(i, PolygonalNumber.polygonalNumberLong(i, 2));
-        }
-        assertEquals(new BigInteger("498999502000000"), PolygonalNumber.polygonalNumberBigInteger(1_000, 1_000_000));
-        assertEquals(new BigInteger("11470911303321"), PolygonalNumber.polygonalNumberBigInteger(7_777, 54_321));
+        assertEquals(10, PolygonalNumber.polygonalNumber(3, 4));
+        assertEquals(370, PolygonalNumber.polygonalNumber(10, 10));
+        assertEquals(500051, PolygonalNumber.polygonalNumber(101, 101));
     }
     @Test
     void isPolygonalNumber() {
