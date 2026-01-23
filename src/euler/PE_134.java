@@ -34,7 +34,9 @@ public class PE_134 {
         b /= d;
         c /= d;
         long[] sol = Diophantine.extendedEuclidean(a, c);
-        return Math.floorMod(sol[0] * b, c);
+        int r = Math.toIntExact((sol[0] * b) % c);
+        if (r < 0) r += c;
+        return r;
     }
 
     private static long smallestNForP1AndP2(int p1, int p2) {
