@@ -9,19 +9,20 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PE_060 {
-    private static boolean[] composites;
-    private static final List<Integer> primesInt = new ArrayList<>();
-    private static Set<Integer> lowestSumPrimeSet;
-    private static int lowestSum = Integer.MAX_VALUE;
-    private static final Graph primePairGraph = new Graph();
+    private static final List<Integer> primesInt1 = new ArrayList<>();
+    private static final List<Integer> primesInt2 = new ArrayList<>();
 
     public static void main(String[] args) {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static long PE() {
         int size = 5;
-        nthPrimeSet(size);
+        Set<Integer> lowestSumPrimeSet = nthPrimeSet(size);
+        System.out.println(lowestSumPrimeSet);
         return sum(lowestSumPrimeSet);
     }
 
@@ -31,23 +32,36 @@ public class PE_060 {
         return sum;
     }
 
-    private static void nthPrimeSet(int n) {
-        if (n < 2) throw new RuntimeException("n (" + n + ") can't be smaller than 2!");
-        int limit = 100_000_000;
-        composites = new boolean[limit/2];
+    private static void makePrimes(int limit) {
+        boolean[] composites = new boolean[limit / 2];
         composites[0] = true;
-        int sqrtLimit = (int) Math.sqrt(limit);
-        for (int i = 3; i < sqrtLimit; i+=2) {
+        for (int i = 3; i < limit; i+=2) {
             if (composites[i/2]) continue;
             int prod = i*i;
             while (prod < limit && prod > 0) {
                 composites[prod/2] = true;
                 prod += 2*i;
             }
-            primesInt.add(i);
+            if (i % 3 == 1) primesInt1.add(i);
+            else if (i % 3 == 2) primesInt2.add(i);
         }
-        for (int prime : primesInt) {
-            if (prime > lowestSum) return;
+    }
+
+    private static Set<Integer> nthPrimeSet(int n) {
+        if (n < 2) throw new RuntimeException("n (" + n + ") can't be smaller than 2!");
+        int lowestSum = Integer.MAX_VALUE;
+        Set<Integer> lowestSumPrimeSet = Set.of();
+        int limit = 10_000; // help here
+
+        double s = System.currentTimeMillis();
+        primesInt1.add(3);
+        primesInt2.add(3);
+        makePrimes(limit);
+        double e = System.currentTimeMillis();
+        System.out.println("composites time " + (e-s) + " ms");
+        Graph primePairGraph = new Graph();
+        for (int prime : primesInt1) {
+            if (prime > lowestSum) break;
             String primeString = String.valueOf(prime);
             List<Integer> primePairSet = primePairSetFor(prime);
             primePairGraph.addNode(primeString);
@@ -60,17 +74,43 @@ public class PE_060 {
             if (!clique.isEmpty()) {
                 Set<Integer> cliqueInt = clique.stream().map(Integer::parseInt).collect(Collectors.toSet());
                 int sum = sum(cliqueInt);
-                if (lowestSumPrimeSet == null || lowestSum > sum) {
+                if (lowestSum > sum) {
                     lowestSumPrimeSet = cliqueInt;
                     lowestSum = sum;
                 }
             }
         }
+        primePairGraph = new Graph();
+        for (int prime : primesInt2) {
+            if (prime > lowestSum) break;
+            String primeString = String.valueOf(prime);
+            List<Integer> primePairSet = primePairSetFor(prime);
+            primePairGraph.addNode(primeString);
+            for (Integer i : primePairSet) {
+                String node = String.valueOf(i);
+                primePairGraph.addEdge(primeString, node, 1);
+                primePairGraph.addEdge(node, primeString, 1);
+            }
+            Set<String> clique = primePairGraph.clique(n, primeString);
+            if (!clique.isEmpty()) {
+                Set<Integer> cliqueInt = clique.stream().map(Integer::parseInt).collect(Collectors.toSet());
+                int sum = sum(cliqueInt);
+                if (lowestSum > sum) {
+                    lowestSumPrimeSet = cliqueInt;
+                    lowestSum = sum;
+                }
+            }
+        }
+
+        return lowestSumPrimeSet;
     }
 
     private static List<Integer> primePairSetFor(int p1) {
         List<Integer> primePairSet = new ArrayList<>();
-        for (int p2 : primesInt) {
+        List<Integer> primes;
+        if (p1 % 3 == 1) primes = primesInt1;
+        else primes = primesInt2;
+        for (int p2 : primes) {
             if (p2 >= p1) break;
             if (isPrimePair(p1, p2)) primePairSet.add(p2);
         }
@@ -83,11 +123,6 @@ public class PE_060 {
         int p12 = p1 * (int)Math.pow(10, len2) + p2;
         int p21 = p2 * (int)Math.pow(10, len1) + p1;
 
-        return isPrime(p12) && isPrime(p21);
-    }
-
-    private static boolean isPrime(int p) {
-        if (p/2 < composites.length) return !composites[p/2];
-        return Primes.isPrime(p);
+        return Primes.isPrime(p12) && Primes.isPrime(p21);
     }
 }
