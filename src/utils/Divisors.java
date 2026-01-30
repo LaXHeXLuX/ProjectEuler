@@ -15,7 +15,7 @@ public class Divisors {
         return divisors(n, 1);
     }
     public static long[] divisors(long n, int power) {
-        if (n < 1 || power < 0) throw new RuntimeException("n must be positive and power must be non-negative!");
+        if (n < 1 || power < 0) throw new IllegalArgumentException("n must be positive and power must be non-negative!");
         if (n == 1 || power == 0) return new long[] {1};
 
         int two = 0;
@@ -64,7 +64,9 @@ public class Divisors {
         }
 
         if (!found) {
-            divisors.add(n);
+            for (int p = 1; p <= power; p++) {
+                divisors.add(pow(n, p));
+            }
             return divisors;
         }
 
@@ -96,7 +98,7 @@ public class Divisors {
         return divisors;
     }
     public static int[] divisors(int n) {
-        if (n < 1) throw new RuntimeException("Argument must be positive!");
+        if (n < 1) throw new IllegalArgumentException("Argument must be positive!");
         if (n == 1) return new int[] {1};
         List<Integer> divisors = new ArrayList<>();
         divisors.add(1);
