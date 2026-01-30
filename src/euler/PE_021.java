@@ -18,10 +18,10 @@ public class PE_021 {
     }
 
     private static int amicablePair(int n) {
-        int sum = Divisors.sumOfDivisors(n);
+        int sum = (int) Divisors.sumOfDivisors(n);
         int otherNumber = sum;
         if (otherNumber < 1) return -1;
-        sum = Divisors.sumOfDivisors(otherNumber);
+        sum = (int) Divisors.sumOfDivisors(otherNumber);
         return sum == n && otherNumber != n ? otherNumber : -1;
     }
 
