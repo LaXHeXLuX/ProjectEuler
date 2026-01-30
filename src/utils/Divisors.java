@@ -4,13 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Divisors {
-    private static long pow(long base, int exp) {
-        if (exp == 0) return 1;
-        long result = pow(base, exp/2);
-        result = result*result;
-        if (exp % 2 == 1) result *= base;
-        return result;
-    }
     public static long[] divisors(long n) {
         return divisors(n, 1);
     }
@@ -32,9 +25,9 @@ public class Divisors {
         List<Long> divisorsRec = divisorsRec(n, 5, power);
         List<Long> divisors = new ArrayList<>();
         for (int i2 = 0; i2 <= two*power; i2++) {
-            long pow2 = pow(2, i2);
+            long pow2 = Diophantine.pow(2, i2);
             for (int i3 = 0; i3 <= three*power; i3++) {
-                long pow3 = pow(3, i3);
+                long pow3 = Diophantine.pow(3, i3);
                 long p = pow2*pow3;
                 divisors.add(p);
                 for (Long l : divisorsRec) {
@@ -65,7 +58,7 @@ public class Divisors {
 
         if (!found) {
             for (int p = 1; p <= power; p++) {
-                divisors.add(pow(n, p));
+                divisors.add(Diophantine.pow(n, p));
             }
             return divisors;
         }
@@ -84,9 +77,9 @@ public class Divisors {
         List<Long> divisorsRec = divisorsRec(n, i+6, power);
 
         for (int e1 = 0; e1 <= exp1*power; e1++) {
-            long p1 = pow(i, e1);
+            long p1 = Diophantine.pow(i, e1);
             for (int e2 = 0; e2 <= exp2*power; e2++) {
-                long p2 = pow(i+2, e2);
+                long p2 = Diophantine.pow(i+2, e2);
                 long p = p1*p2;
                 if (p > 1) divisors.add(p);
                 for (Long l : divisorsRec) {
