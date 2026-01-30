@@ -1,6 +1,9 @@
 package euler;
 
 import utils.Diophantine;
+import utils.Primes;
+
+import java.math.BigInteger;
 
 public class PE_141 {
     public static void main(String[] args) {
@@ -12,38 +15,44 @@ public class PE_141 {
 
     public static long PE() {
         // 1) ss*bbb = x(x*aaa + bbb)
-        long limit = 1000_000;
-        return progressiveSquareSum(limit);
+        long limit = 1_000_000_000;
+        return progressiveSquares(limit);
     }
 
-    private static long progressiveSquareSum(long limit) {
+    private static long progressiveSquares(long limit) {
         long sum = 0;
 
-        long sqrtLimit = (long) Math.sqrt(limit-1);
-        for (long s = 1; s <= sqrtLimit; s++) {
-            long s2 = s*s;
-            for (long a = 1; a < s; a++) {
-                long a3 = a*a*a;
-                long bMin = a3 / s2;
-                if (bMin < 1) bMin = 1;
-                for (long b = bMin; b < a; b++) {
-                    if (Diophantine.gcd(a, b) > 1) continue;
-                    long b3 = b*b*b;
-                    // 1) sqrt = bbbb + 4*aaa*ss*b
-                    long sqrt1 = b3*b + 4*a3*s2*b;
-                    long root1 = Diophantine.root(sqrt1);
-                    if (root1 > 0) {
-                        long num1 = -b3 + b*root1;
-                        long den1 = 2*a3;
-                        if (num1 % den1 == 0) {
-                            long x = num1/den1;
-                            sum += s2;
-                            System.out.println("1 x: " + x + ", a b: " + a + " / " + b + ". \tn: " + x*(x*a3 + b3)/(b3) + ", s: " + s);
-                        }
-                    }
+        int aLimit = (int) Math.cbrt(limit);
+        for (int a = 2; a <= aLimit; a++) {
+            int bLimit = Math.toIntExact(limit / ((long) a * a*a));
+            if (bLimit >= a) bLimit = a-1;
+            for (int b = 1; b <= bLimit; b++) {
+                if (Diophantine.gcd(a, b) > 1) continue;
+                int mLimit = (int) Math.sqrt(limit);
+                int modB = b;
+                if (modB % 2 == 0) {
+                    modB /= 2;
+                    if (modB % 2 == 0) modB /= 2;
+                }
+                Primes.PF[] pfs = Primes.primeFactors(modB);
+                modB = 1;
+                for (Primes.PF pf : pfs) modB *= (int) Diophantine.pow(pf.primeFactor, (pf.power + 1) / 2);
+                for (int m = modB; m <= mLimit; m += modB) {
+                    BigInteger bigB = BigInteger.valueOf(b);
+                    BigInteger square = bigB.pow(4).add(BigInteger.valueOf(4).multiply(BigInteger.valueOf(a).pow(3)).multiply(bigB).multiply(BigInteger.valueOf(m).pow(2)));
+                    BigInteger[] sqrtAndRem = square.sqrtAndRemainder();
+                    if (!sqrtAndRem[1].equals(BigInteger.ZERO)) continue;
+                    long sqrt = sqrtAndRem[0].longValueExact();
+                    long x0Times2baaa = (long) -b * b + sqrt;
+                    if (x0Times2baaa % (2L*b*a*a*a) != 0) continue;
+                    int x0 = Math.toIntExact(x0Times2baaa / (2L*b*a*a*a));
+                    int x = x0 * b*b;
+                    sum += (long) m * m;
+                    System.out.println("1 x: " + x + ", a b: " + a + " / " + b + ". \tn: " + m*m + ", m: " + m);
                 }
             }
         }
+
         return sum;
     }
 }
