@@ -2,8 +2,6 @@ package euler;
 
 import utils.Diophantine;
 
-import java.math.BigInteger;
-
 public class PE_141 {
     public static void main(String[] args) {
         double s = System.currentTimeMillis();
@@ -37,25 +35,20 @@ public class PE_141 {
 
         long aLimit = (long) Math.cbrt(limit);
         for (long a = 2; a <= aLimit - 20; a++) {
-            BigInteger bigA = BigInteger.valueOf(a);
             long bLimit = limit / (a*a*a);
             if (bLimit > a-1) bLimit = a-1;
             int bStep = 1;
             if (a % 2 == 0) bStep = 2;
             for (long b = 1; b <= bLimit; b += bStep) {
                 if (Diophantine.gcd(a, b) > 1) continue;
-                BigInteger bigB = BigInteger.valueOf(b);
                 long x0Limit = (long) Math.sqrt((double) limit / (a*a*a*b));
                 for (long x0 = 1; x0 <= x0Limit; x0++) {
-                    BigInteger bigX0 = BigInteger.valueOf(x0);
-                    BigInteger bigMM = bigX0.pow(2).multiply(bigB).multiply(bigA.pow(3)).add(bigX0.multiply(bigB.pow(2)));
-                    BigInteger[] sqrtAndRem = bigMM.sqrtAndRemainder();
-                    if (!sqrtAndRem[1].equals(BigInteger.ZERO)) continue;
-                    long m = sqrtAndRem[0].longValueExact();
-                    if (m*m >= limit) continue;
+                    long mm = x0*x0*b*a*a*a + x0*b*b;
+                    if (mm > limit) continue;
+                    long m = Diophantine.root(mm);
+                    if (m < 0) continue;
 
                     long x = b*b*x0;
-                    System.out.println("x: " + x + ", a b: " + a + " / " + b + ". \tn: " + m*m + ", m: " + m);
                     check(x, a, b);
                     sum += m*m;
                 }
