@@ -1,12 +1,8 @@
 package euler;
 
 import utils.Diophantine;
-import utils.Primes;
 
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 public class PE_141 {
     public static void main(String[] args) {
