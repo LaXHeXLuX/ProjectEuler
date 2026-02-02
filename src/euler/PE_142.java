@@ -7,10 +7,7 @@ public class PE_142 {
     private static long smallestSum = Long.MAX_VALUE;
 
     public static void main(String[] args) {
-        double s = System.currentTimeMillis();
         System.out.println(PE());
-        double e = System.currentTimeMillis();
-        System.out.println((e - s) + " ms");
     }
 
     public static long PE() {
