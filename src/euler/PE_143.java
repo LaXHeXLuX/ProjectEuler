@@ -3,9 +3,6 @@ package euler;
 import utils.Diophantine;
 import utils.Primes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PE_143 {
     public static void main(String[] args) {
         double s = System.currentTimeMillis();
