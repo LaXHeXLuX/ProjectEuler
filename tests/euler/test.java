@@ -150,6 +150,7 @@ public class test {
         put(PE_142.class, 1006193L);
         //put(PE_143.class, ???);
         //put(PE_144.class, ???);
+        put(PE_145.class, 608720L);
     }};
 
     public static void main(String[] args) {
