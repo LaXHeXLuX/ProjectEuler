@@ -148,6 +148,8 @@ public class test {
         put(PE_140.class, 5673835352990L);
         put(PE_141.class, 878454337159L);
         put(PE_142.class, 1006193L);
+        //put(PE_143.class, ???);
+        //put(PE_144.class, ???);
     }};
 
     public static void main(String[] args) {

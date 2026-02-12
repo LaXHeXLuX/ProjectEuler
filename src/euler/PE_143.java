@@ -10,6 +10,7 @@ public class PE_143 {
         double e = System.currentTimeMillis();
         System.out.println((e - s) + " ms");
     }
+
     public static long PE() {
         int limit = 1_000;
         return sumOfTorricelliTriangleSums(limit);
