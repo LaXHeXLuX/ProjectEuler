@@ -119,19 +119,37 @@ class DiophantineTest {
         assertEquals(1, Diophantine.gcd(3, 5));
         assertEquals(10, Diophantine.gcd(100, 10));
         assertEquals(4, Diophantine.gcd(28, 60));
+
+        assertEquals(10L, Diophantine.gcd(1_000_000_000_000L, 10L));
+        assertEquals(32768L, Diophantine.gcd(1_000_000_000_000_000L, 65536));
     }
     @Test
     void extendedEuclidean() {
-        assertArrayEquals(new long[] {1, -1}, Diophantine.extendedEuclidean(18, 12));
-        assertArrayEquals(new long[] {0, 1}, Diophantine.extendedEuclidean(2, 2));
-        assertArrayEquals(new long[] {1, 0}, Diophantine.extendedEuclidean(1, 5));
-        assertArrayEquals(new long[] {3, -2}, Diophantine.extendedEuclidean(5, 7));
+        assertArrayEquals(new int[] {1, -1}, Diophantine.extendedEuclidean(18, 12));
+        assertArrayEquals(new int[] {0, 1}, Diophantine.extendedEuclidean(2, 2));
+        assertArrayEquals(new int[] {1, 0}, Diophantine.extendedEuclidean(1, 5));
+        assertArrayEquals(new int[] {3, -2}, Diophantine.extendedEuclidean(5, 7));
+
+        assertArrayEquals(new long[] {0, 1}, Diophantine.extendedEuclidean(1_000_000_000_000L, 1_000_000_000_000L));
+        assertArrayEquals(new long[] {1, 0}, Diophantine.extendedEuclidean(1L, 5L));
+        assertArrayEquals(new long[] {3, -2}, Diophantine.extendedEuclidean(5L, 7L));
     }
     @Test
     void powMod() {
         assertEquals(0, Diophantine.powMod(1, 10, 1));
         assertEquals(1, Diophantine.powMod(1, 10, 2));
         assertEquals(4, Diophantine.powMod(2, 10, 10));
+
+        assertEquals(1, Diophantine.pow(1, 10));
+        assertEquals(1, Diophantine.pow(1, 10));
+        assertEquals(1024, Diophantine.pow(2, 10));
+    }
+    @Test
+    void tetrateMod() {
+        assertEquals(0, Diophantine.tetrateMod(1, 10, 1));
+        assertEquals(1, Diophantine.tetrateMod(1, 10, 10));
+        assertEquals(536, Diophantine.tetrateMod(2, 4, 1_000));
+        assertEquals(87, Diophantine.tetrateMod(3, 1_000_000, 100));
     }
     @Test
     void modDivide() {
@@ -139,5 +157,16 @@ class DiophantineTest {
         assertEquals(0, Diophantine.modDivide(0, 1, 1));
         assertEquals(1, Diophantine.modDivide(1, 1, 2));
         assertEquals(2, Diophantine.modDivide(1, 2, 3));
+    }
+    @Test
+    void crt() {
+        assertThrows(IllegalArgumentException.class, Diophantine::crt);
+        assertThrows(IllegalArgumentException.class, () -> Diophantine.crt(1));
+        assertEquals(3, Diophantine.crt(3, 0, 4, 3));
+        assertEquals(23, Diophantine.crt(3, 2, 5, 3, 7, 2));
+        assertEquals(39, Diophantine.crt(3, 0, 4, 3, 5, 4));
+
+        assertEquals(-1, Diophantine.crt(2, 0, 4, 1));
+        assertEquals(301, Diophantine.crt(2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 0));
     }
 }

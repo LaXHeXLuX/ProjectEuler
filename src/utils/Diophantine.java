@@ -218,6 +218,14 @@ public class Diophantine {
     public static boolean isPalindrome(long n) {
         return isPalindromeInBase(n, 10);
     }
+    public static int gcd(int a, int b) {
+        while (b != 0) {
+            int t = b;
+            b = a % b;
+            a = t;
+        }
+        return a;
+    }
     public static long gcd(long a, long b) {
         while (b != 0) {
             long t = b;
@@ -225,6 +233,22 @@ public class Diophantine {
             a = t;
         }
         return a;
+    }
+    public static int[] extendedEuclidean(int a, int b) {
+        int r1 = a; int r2 = b;
+        int s1 = 1; int s2 = 0;
+        int t1 = 0; int t2 = 1;
+
+        while (r2 != 0) {
+            int q = r1 / r2;
+            int r3 = r1 - q*r2;
+            int s3 = s1 - q*s2;
+            int t3 = t1 - q*t2;
+            r1 = r2; s1 = s2; t1 = t2;
+            r2 = r3; s2 = s3; t2 = t3;
+        }
+
+        return new int[] {s1, t1};
     }
     public static long[] extendedEuclidean(long a, long b) {
         long r1 = a; long r2 = b;
@@ -269,15 +293,49 @@ public class Diophantine {
 
         return result;
     }
+    public static long tetrateMod(long base, long exp, long mod) {
+        if (mod == 1) return 0;
+        List<Long> chain = new ArrayList<>();
+        chain.add(mod);
+        while (mod > 1) {
+            mod = Primes.eulersTotient(mod);
+            chain.add(mod);
+        }
+        int start = chain.size() - 3;
+        if (exp < chain.size()) start = Math.toIntExact(exp) - 1;
+        long result = 1;
+        for (int i = start; i >= 0; i--) {
+            result = Diophantine.powMod(base, result, chain.get(i));
+        }
+        return result;
+    }
     public static int modDivide(int a, int b, int mod) {
         int d = Math.toIntExact(Diophantine.gcd(b, mod));
         if (a % d != 0) return -1;
         a /= d;
         b /= d;
         mod /= d;
-        long[] sol = Diophantine.extendedEuclidean(b, mod);
-        long result = (sol[0] * a) % mod;
+        int[] sol = Diophantine.extendedEuclidean(b, mod);
+        int result = (sol[0] * a) % mod;
         if (result < 0) result += mod;
-        return Math.toIntExact(result);
+        return result;
+    }
+    public static int crt(int... ints) {
+        if (ints.length == 0 || ints.length % 2 != 0 ) throw new IllegalArgumentException("Wrong number of arguments (zero or odd)");
+
+        int n1 = ints[0];
+        int a1 = ints[1];
+        for (int i = 2; i < ints.length; i+=2) {
+            int n2 = ints[i];
+            int a2 = ints[i+1];
+            int gcd = gcd(n1, n2);
+            if ((a1 - a2) % gcd != 0) return -1;
+            int[] bezout = extendedEuclidean(n1, n2);
+            a1 = (a1*bezout[1]*n2 + a2*bezout[0]*n1) / gcd;
+            n1 = n1*n2 / gcd;
+            a1 = Math.floorMod(a1, n1);
+        }
+
+        return a1;
     }
 }
