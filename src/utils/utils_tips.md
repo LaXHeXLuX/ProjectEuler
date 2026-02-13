@@ -53,13 +53,15 @@ For each method I have specified the name and description or use case:
 - **quadratic** - quadratic(a, b, c) gives the two solutions (x1, x2) to the equation $ax^2 + bx + c = 0$.
 - **digitSum** (int, long, BigInteger) - digitSum(n) gives the digit sum of n.
 - **isPalindromeInBase** (int, long) - isPalindromeInBase(n, b) returns true iff the number n converted to base b is palindromic.
-- **gcd** - gcd(a, b) gives the greatest common divisor of a and b.
-- **extendedEuclidean** - extendedEuclidean(a, b) gives the minimised coefficients (x, y) such that $ax + by = gcd(a, b)$. For coprime (a, b) this means $ax + by = 1$, or $ax \equiv 1 \pmod{b}$.
+- **gcd** (int, long) - gcd(a, b) gives the greatest common divisor of a and b.
+- **extendedEuclidean** (int, long) - extendedEuclidean(a, b) gives the minimised coefficients (x, y) such that $ax + by = gcd(a, b)$. For coprime (a, b) this means $ax + by = 1$, or $ax \equiv 1 \pmod{b}$.
 - **powMod** - powMod(b, e, m) gives the result x such that $b^e \equiv x \pmod{m}$.
-- **modDivide** - modDivide(a, b, c) gives the minimal positive integer x such that $ax \equiv b \pmod{c}$
+- **tetrateMod** - tetrateMod(b, e, m) gives the result x such that $b↑↑e \equiv x \pmod{m}$. Requirement: $gcd(b, m) = 1$
+- **modDivide** - modDivide(a, b, c) gives the minimal positive integer x such that $ax \equiv b \pmod{c}$.
+- **crt** - crt(n1, a1, n2, a2, ...) gives the minimal positive integer x such that $x \equiv a_i \pmod{n_i}$ for any $n_i$.
 
 # Divisors
-Self-explanatory. Should make it better, though. 
+Self-explanatory. 
 
 # Fraction
 A quality-of-life class to make operating with fractions easier. Supports types supported by Arithmetic. Self-explanatory.
