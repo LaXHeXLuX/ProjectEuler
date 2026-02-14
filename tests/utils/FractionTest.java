@@ -66,6 +66,11 @@ class FractionTest {
         fraction2 = new Fraction<>(1, 3);
         sum = fraction1.add(fraction2);
         assertSimplifiedFractionEquals(5, 6, sum);
+
+        fraction1 = new Fraction<>(1_000_000, 1_000_000);
+        fraction2 = new Fraction<>(1_000_000, 2_000_000);
+        sum = fraction1.add(fraction2);
+        assertSimplifiedFractionEquals(3, 2, sum);
     }
     @Test
     void subtractFraction() {

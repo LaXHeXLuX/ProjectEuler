@@ -26,7 +26,7 @@ public class Fraction<T> {
 
     public Fraction<T> add(Fraction<T> fraction) {
         T gcd = op.gcd(den, fraction.den);
-        T newDen = op.div(op.mul(den, fraction.den), gcd);
+        T newDen = op.mul(op.div(den, gcd), fraction.den);
         T newNum1 = op.mul(num, op.div(newDen, den));
         T newNum2 = op.mul(fraction.num, op.div(newDen, fraction.den));
         return new Fraction<>(op.add(newNum1, newNum2), newDen);
