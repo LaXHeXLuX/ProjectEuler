@@ -5,7 +5,7 @@ import utils.Divisors;
 import utils.Primes;
 
 public class PE_132 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

@@ -4,7 +4,7 @@ import utils.Combinations;
 import utils.Converter;
 
 public class PE_024 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

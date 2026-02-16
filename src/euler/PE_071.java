@@ -3,7 +3,7 @@ package euler;
 import utils.Diophantine;
 
 public class PE_071 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 
@@ -30,7 +30,7 @@ public class PE_071 {
     }
 
     private static int compare(int[] fraction1, int[] fraction2) {
-        int gcd = (int) Diophantine.gcd(fraction1[1], fraction2[1]);
+        int gcd = Diophantine.gcd(fraction1[1], fraction2[1]);
         int numerator1 = fraction1[0] * (fraction2[1]/gcd);
         int numerator2 = fraction2[0] * (fraction1[1]/gcd);
         return Integer.compare(numerator1, numerator2);

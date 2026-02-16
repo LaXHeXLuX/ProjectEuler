@@ -3,7 +3,7 @@ package euler;
 import java.math.BigInteger;
 
 public class PE_025 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

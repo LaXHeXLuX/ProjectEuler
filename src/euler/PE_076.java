@@ -7,7 +7,7 @@ import java.util.Map;
 public class PE_076 {
     private static Map<String, Long> waysToSum;
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

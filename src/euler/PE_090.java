@@ -5,7 +5,7 @@ import java.util.*;
 public class PE_090 {
     private static final List<List<Integer>> combinations = new ArrayList<>();
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

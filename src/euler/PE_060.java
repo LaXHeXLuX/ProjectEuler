@@ -10,7 +10,7 @@ import java.util.Set;
 public class PE_060 {
     private static final List<Integer> primes = new ArrayList<>();
 
-    public static void main(String[] args) {
+    static void main() {
         double s = System.currentTimeMillis();
         System.out.println(PE());
         double e = System.currentTimeMillis();

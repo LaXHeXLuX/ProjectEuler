@@ -6,7 +6,7 @@ public class PE_122 {
     private static int[] smallestExpCounts;
     private static int[] currentChain;
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

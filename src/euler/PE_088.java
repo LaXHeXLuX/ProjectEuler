@@ -5,7 +5,7 @@ import java.util.*;
 public class PE_088 {
     private static int[] bestScore;
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

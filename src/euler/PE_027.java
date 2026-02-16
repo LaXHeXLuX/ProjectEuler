@@ -4,7 +4,7 @@ import utils.Primes;
 
 public class PE_027 {
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

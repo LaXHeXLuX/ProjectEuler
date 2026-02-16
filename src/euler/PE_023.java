@@ -9,7 +9,7 @@ public class PE_023 {
     private static final Set<Integer> abundantNumberSet = new LinkedHashSet<>();
     private static final List<Integer> oddAbundantNumbers = new ArrayList<>();
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

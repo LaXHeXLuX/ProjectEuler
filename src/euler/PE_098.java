@@ -10,7 +10,7 @@ public class PE_098 {
     private static Map<Integer, Map<String, List<String>>> anagrams;
     private static final Map<Integer, Map<String, List<Integer>>> squareAnagrams = new HashMap<>();
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

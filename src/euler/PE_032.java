@@ -3,7 +3,7 @@ package euler;
 import utils.Pandigital;
 
 public class PE_032 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

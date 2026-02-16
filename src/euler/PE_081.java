@@ -3,7 +3,7 @@ package euler;
 import utils.Parser;
 
 public class PE_081 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

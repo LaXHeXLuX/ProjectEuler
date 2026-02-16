@@ -1,7 +1,7 @@
 package euler;
 
 public class PE_028 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

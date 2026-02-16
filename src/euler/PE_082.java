@@ -4,7 +4,7 @@ import utils.Graph;
 import utils.Parser;
 
 public class PE_082 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

@@ -3,7 +3,7 @@ package euler;
 import java.util.Arrays;
 
 public class PE_179 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

@@ -4,7 +4,7 @@ import utils.ArrayFunctions;
 import utils.PolygonalNumber;
 
 public class PE_045 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

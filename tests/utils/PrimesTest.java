@@ -108,12 +108,4 @@ class PrimesTest {
 
         assertEquals(79180, Primes.eulersTotient(87109));
     }
-    @Test
-    void countOfDivisors() {
-        //assertEquals(1, Primes.divisorCount(1));
-    }
-    @Test
-    void sumOfDivisors() {
-
-    }
 }

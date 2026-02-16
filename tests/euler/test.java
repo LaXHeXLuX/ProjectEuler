@@ -165,7 +165,7 @@ public class test {
         //put(PE_297.class, ???);
     }};
 
-    public static void main(String[] args) {
+    static void main() {
         tests();
     }
     private static void assertEquals(long l1, Class<?> cls) {

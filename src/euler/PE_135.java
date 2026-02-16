@@ -6,7 +6,7 @@ import java.util.List;
 public class PE_135 {
     private static int[] solutions;
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

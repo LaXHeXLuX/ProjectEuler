@@ -12,7 +12,7 @@ public class PE_118 {
     private static final List<Integer> primePermKey = new ArrayList<>();
     private static final List<Integer> primePermCount = new ArrayList<>();
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

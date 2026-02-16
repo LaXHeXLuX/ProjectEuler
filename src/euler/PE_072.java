@@ -3,7 +3,7 @@ package euler;
 public class PE_072 {
     private static int[] totients;
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

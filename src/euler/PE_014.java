@@ -3,7 +3,7 @@ package euler;
 public class PE_014 {
     private static boolean[] skip;
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

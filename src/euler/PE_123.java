@@ -5,7 +5,7 @@ import utils.Primes;
 public class PE_123 {
     private static int[] primes;
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

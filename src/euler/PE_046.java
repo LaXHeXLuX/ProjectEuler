@@ -6,7 +6,7 @@ public class PE_046 {
     private static boolean[] composites;
     private static int[] primesInt;
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

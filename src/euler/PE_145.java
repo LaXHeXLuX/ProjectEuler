@@ -4,7 +4,7 @@ import utils.Diophantine;
 
 public class PE_145 {
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

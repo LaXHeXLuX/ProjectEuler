@@ -9,7 +9,7 @@ public class PE_108 {
     private static int[] primes;
     private static double[] primeLogs;
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

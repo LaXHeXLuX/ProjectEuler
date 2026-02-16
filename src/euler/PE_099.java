@@ -5,24 +5,14 @@ import utils.Parser;
 import java.util.*;
 
 public class PE_099 {
-    private static class BaseExp {
-        int base;
-        int exp;
-        int index;
-
-        BaseExp(int base, int exp, int index) {
-            this.base = base;
-            this.exp = exp;
-            this.index = index;
-        }
-
+    private record BaseExp(int base, int exp, int index) {
         @Override
-        public String toString() {
-            return this.base + "," + this.exp + "," + this.index;
-        }
+            public String toString() {
+                return this.base + "," + this.exp + "," + this.index;
+            }
     }
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

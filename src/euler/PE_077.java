@@ -10,7 +10,7 @@ public class PE_077 {
     private static int[] primes;
     private static Map<String, Long> waysToSumWithPrimes;
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

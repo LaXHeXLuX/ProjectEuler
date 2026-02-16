@@ -9,7 +9,7 @@ public class PE_084 {
     private static final int CC2 = 17;
     private static final int CC3 = 33;
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

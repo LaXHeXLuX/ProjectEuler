@@ -7,7 +7,7 @@ import java.util.*;
 public class PE_093 {
     private static int[] digits;
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

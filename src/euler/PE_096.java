@@ -6,7 +6,7 @@ import java.util.*;
 
 public class PE_096 {
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

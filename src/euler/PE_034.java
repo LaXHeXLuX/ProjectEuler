@@ -6,7 +6,7 @@ import java.util.List;
 public class PE_034 {
     private static final int[] FACTORIALS = {1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880};
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

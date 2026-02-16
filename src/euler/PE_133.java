@@ -4,7 +4,7 @@ import utils.Diophantine;
 import utils.Primes;
 
 public class PE_133 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

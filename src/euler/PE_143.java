@@ -4,7 +4,7 @@ import utils.Diophantine;
 import utils.Primes;
 
 public class PE_143 {
-    public static void main(String[] args) {
+    static void main() {
         double s = System.currentTimeMillis();
         System.out.println(PE());
         double e = System.currentTimeMillis();

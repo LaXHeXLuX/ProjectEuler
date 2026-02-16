@@ -3,7 +3,7 @@ package euler;
 public class PE_078 {
     private static long[] eulersFunction;
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

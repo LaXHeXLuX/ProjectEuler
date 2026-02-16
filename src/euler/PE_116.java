@@ -3,7 +3,7 @@ package euler;
 public class PE_116 {
     private static long[] waysForLength;
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

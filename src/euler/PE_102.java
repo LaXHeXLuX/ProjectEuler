@@ -2,7 +2,6 @@ package euler;
 
 import utils.Parser;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,21 +11,15 @@ public class PE_102 {
         Point b;
         Point c;
 
-        private static class Point {
-            int x;
-            int y;
-
-            private Point(int x, int y) {
-                this.x = x;
-                this.y = y;
-            }
+        private record Point(int x, int y) {
             private int cross(Point p) {
-                return x*p.y - p.x*y;
+                return x * p.y - p.x * y;
             }
+
             @Override
             public String toString() {
-                return "[" + x + ", " + y + "]";
-            }
+                        return "[" + x + ", " + y + "]";
+                    }
         }
         @Override
         public String toString() {
@@ -34,7 +27,7 @@ public class PE_102 {
         }
     }
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

@@ -1,7 +1,7 @@
 package euler;
 
 public class PE_297 {
-    public static void main() {
+    static void main() {
         double s = System.currentTimeMillis();
         System.out.println(PE());
         double e = System.currentTimeMillis();

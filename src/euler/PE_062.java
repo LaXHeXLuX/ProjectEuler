@@ -8,7 +8,7 @@ import java.util.*;
 public class PE_062 {
     private static final Map<String, Set<Long>> powerPermutations = new HashMap<>();
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

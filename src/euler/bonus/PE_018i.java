@@ -11,7 +11,7 @@ public class PE_018i {
             {1, 0, 3},
             {0, 1, 0}
     };
-    public static void main(String[] args) {
+    static void main() {
         double s = System.currentTimeMillis();
         System.out.println(PE());
         double e = System.currentTimeMillis();

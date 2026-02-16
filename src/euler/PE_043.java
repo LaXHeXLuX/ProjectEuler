@@ -6,7 +6,7 @@ import java.util.Set;
 public class PE_043 {
     private static final int[] primes = {2, 3, 5, 7, 11, 13, 17};
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

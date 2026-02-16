@@ -3,7 +3,7 @@ package euler;
 public class PE_104 {
     private static final double LOG_GOLDEN = Math.log10((1 + Math.sqrt(5))/2);
     private static final double LOG_SQRT5 = Math.log10(5) / 2;
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

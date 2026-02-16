@@ -3,7 +3,7 @@ package euler;
 import utils.Diophantine;
 
 public class PE_094 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

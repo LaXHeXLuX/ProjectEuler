@@ -5,7 +5,7 @@ import utils.Fraction;
 import java.util.List;
 
 public class PE_144 {
-    public static void main(String[] args) {
+    static void main() {
         double s = System.currentTimeMillis();
         System.out.println(PE());
         double e = System.currentTimeMillis();

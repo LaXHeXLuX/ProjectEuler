@@ -5,7 +5,7 @@ import utils.Diophantine;
 import utils.Fraction;
 
 public class PE_205 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

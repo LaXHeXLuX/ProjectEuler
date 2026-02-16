@@ -3,7 +3,7 @@ package euler;
 public class PE_092 {
     private static int[] chainEnds;
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

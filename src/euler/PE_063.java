@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PE_063 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

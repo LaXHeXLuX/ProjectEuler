@@ -6,7 +6,7 @@ import utils.Divisors;
 public class PE_142 {
     private static long smallestSum = Long.MAX_VALUE;
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

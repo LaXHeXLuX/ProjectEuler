@@ -3,7 +3,7 @@ package euler;
 import utils.Fraction;
 
 public class PE_026 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

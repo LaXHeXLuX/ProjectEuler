@@ -3,7 +3,7 @@ package euler;
 import java.util.*;
 
 public class PE_103 {
-    public static void main(String[] args) {
+    static void main() {
         double s = System.currentTimeMillis();
         System.out.println(PE());
         double e = System.currentTimeMillis();

@@ -5,7 +5,7 @@ import utils.ArrayFunctions;
 import java.util.Comparator;
 
 public class PE_124 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

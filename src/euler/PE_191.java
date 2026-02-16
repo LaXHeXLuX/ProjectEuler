@@ -6,7 +6,7 @@ import java.util.Map;
 public class PE_191 {
     private static final Map<Integer, Long> memoization = new HashMap<>();
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

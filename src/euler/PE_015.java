@@ -3,7 +3,7 @@ package euler;
 import utils.Combinations;
 
 public class PE_015 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

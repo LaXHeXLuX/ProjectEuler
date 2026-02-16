@@ -10,7 +10,7 @@ import java.util.Map;
 public class PE_121 {
     private static final Map<Integer, Map<Integer, Fraction<BigInteger>>> results = new HashMap<>();
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

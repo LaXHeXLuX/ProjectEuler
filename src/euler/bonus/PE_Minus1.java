@@ -1,7 +1,7 @@
 package euler.bonus;
 
 public class PE_Minus1 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println("7/12");
     }
 }

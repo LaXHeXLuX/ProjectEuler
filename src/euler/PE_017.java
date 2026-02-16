@@ -3,7 +3,7 @@ package euler;
 import utils.Converter;
 
 public class PE_017 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

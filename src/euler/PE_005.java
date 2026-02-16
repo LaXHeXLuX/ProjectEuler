@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PE_005 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class PE_050 {
     private static boolean[] composites;
     private static int[] primes;
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

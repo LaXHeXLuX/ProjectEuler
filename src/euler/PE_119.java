@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class PE_119 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

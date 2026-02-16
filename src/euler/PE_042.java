@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class PE_042 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

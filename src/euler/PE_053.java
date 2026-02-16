@@ -5,7 +5,7 @@ import utils.Combinations;
 import java.math.BigInteger;
 
 public class PE_053 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

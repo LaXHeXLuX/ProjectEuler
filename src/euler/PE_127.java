@@ -10,7 +10,7 @@ public class PE_127 {
     private static int[] rads;
     private static int[][] reverseLookUp;
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

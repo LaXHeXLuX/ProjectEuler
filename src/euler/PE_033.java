@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PE_033 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 
@@ -67,7 +67,7 @@ public class PE_033 {
     }
 
     private static int[] simplifyFraction(int a, int b) {
-        int gcd = (int) Diophantine.gcd(a, b);
+        int gcd = Diophantine.gcd(a, b);
         return new int[] {a/gcd, b/gcd};
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 public class PE_037 {
     private static boolean[] composites;
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 

@@ -4,7 +4,7 @@ import utils.Pandigital;
 import utils.Primes;
 
 public class PE_041 {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(PE());
     }
 
