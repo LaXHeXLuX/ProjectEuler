@@ -164,6 +164,7 @@ public class test {
         put(PE_293.class, 2209L);
         put(PE_297.class, 2252639041804718029L);
         put(PE_301.class, 2178309L);
+        put(PE_303.class, 1111981904675169L);
     }};
 
     static void main() {
