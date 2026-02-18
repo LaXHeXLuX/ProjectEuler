@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PE_297 {
-    private static long[] sumOfZFib;
     private static long[] fib;
 
     static void main() {
@@ -22,10 +21,14 @@ public class PE_297 {
 
     private static long sumOfZFib(int n) {
         if (n < 3) return n;
-        if (sumOfZFib[n] != 0) return sumOfZFib[n];
-        long result = sumOfZFib(n-1) + sumOfZFib(n-2) + fib[n-2];
-        sumOfZFib[n] = result;
-        return result;
+        long sumOfFib1 = 1;
+        long sumOfFib2 = 2;
+        for (int i = 2; i < n; i++) {
+            long temp = sumOfFib1;
+            sumOfFib1 = sumOfFib2;
+            sumOfFib2 = sumOfFib2 + temp + fib[i-1];
+        }
+        return sumOfFib2;
     }
 
     private static long sumOfZ(long limit) {
@@ -56,6 +59,5 @@ public class PE_297 {
         }
         fibonacci.add(x2);
         fib = Converter.listToArr(fibonacci);
-        sumOfZFib = new long[fib.length];
     }
 }
