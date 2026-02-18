@@ -1,8 +1,11 @@
 package euler;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class PE_303 {
-    private static long smallestSolution;
-    private static long[] moduloProducts;
 
     static void main() {
         double s = System.currentTimeMillis();
@@ -12,43 +15,62 @@ public class PE_303 {
     }
 
     public static long PE() {
-        int limit = 1_000;
+        int limit = 10_000;
         return sum(limit);
     }
 
-    private static long sum(long limit) {
+    private static long sum(int limit) {
         long sum = 0;
         for (int i = 1; i <= limit; i++) {
-            System.out.print(i + "\r");
             sum += f(i);
         }
         return sum;
     }
 
-    private static long f(int n) {
-        if (n < 3) return 1;
-        smallestSolution = Long.MAX_VALUE/10;
-        moduloProducts = new long[n];
-        f(n, 1, 0);
-        f(n, 2, 0);
-        long result = smallestSolution;
-        smallestSolution = -1;
-        return result;
+    private static long allNinesSolution(int n) {
+        int count = 0;
+        while (n > 0) {
+            count++;
+            if (n % 10 != 9) return -1;
+            n /= 10;
+        }
+        long result = 0;
+        for (int i = 1; i <= 5; i+=2) {
+            for (int j = 0; j < count; j++) {
+                result = 10*result + i;
+            }
+        }
+        for (int i = 0; i < count-1; i++) {
+            result = 10*result + 7;
+        }
+        return 10*result + 8;
     }
 
-    private static void f(int n, int x, long p) {
-        if (moduloProducts[x] > 0 && moduloProducts[x] < p) return;
-        moduloProducts[x] = p;
-        if (p >= smallestSolution) return;
-        if (x == 0) {
-            //System.out.println("new smallest: " + p);
-            smallestSolution = p;
-            return;
-        }
-        //System.out.println("f(" + n + ", " + x + ", " + p + ")");
-        for (int i = 2; i >= 0; i--) {
-            int newX = 10*x + i;
-            f(n, newX % n, p*10 + newX/n);
+    private static long f(int n) {
+        if (onlyDigitsBelow2(n)) return 1;
+        long allNines = allNinesSolution(n); // help here verify
+        if (allNines > 0) return allNines;
+        Set<Integer> seenResidues = new HashSet<>();
+        long ten = 1;
+        List<Long> multipliers = List.of(0L);
+
+        while (true) {
+            List<Long> nextMultipliers = new ArrayList<>();
+            int iStart = 0;
+            if (ten == 1) iStart = 1;
+            for (int i = iStart; i <= 9; i++) {
+                for (Long multiplier : multipliers) {
+                    long m = ten*i + multiplier;
+                    int prod = Math.toIntExact((m * n) / ten);
+                    if (prod % 10 <= 2) {
+                        int residue = prod / 10;
+                        if (onlyDigitsBelow2(residue)) return m;
+                        if (seenResidues.add(residue)) nextMultipliers.add(m);
+                    }
+                }
+            }
+            multipliers = nextMultipliers;
+            ten *= 10;
         }
     }
 
