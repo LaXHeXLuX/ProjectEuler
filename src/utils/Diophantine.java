@@ -2,6 +2,7 @@ package utils;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Diophantine {
@@ -57,14 +58,23 @@ public class Diophantine {
     }
     public static List<long[]> pell(int D, int C) {
         long[] fundamental = Diophantine.pell(D);
-        long y = 0;
-        long yBound = (long) (fundamental[1] * Math.sqrt((double) C / (2*fundamental[0] + 2)));
+        int adder = 1;
+        int absC = C;
+        if (C < 0) {
+            absC = -absC;
+            adder = -1;
+        }
+        long yBound = (long) (fundamental[1] * Math.sqrt((double) absC / (2*(fundamental[0] + adder))));
         List<long[]> fundamentals = new ArrayList<>();
+        long y = 0;
+        if (C < 0) y = (long) Math.ceil(Math.sqrt((double) -C / D));
         while (y <= yBound) {
             long xx = C + D*y*y;
             long x = Diophantine.root(xx);
-            if (x > 0) fundamentals.add(new long[] {x, y});
-            if (x > 0) fundamentals.add(new long[] {-x, y});
+            if (x > 0) {
+                fundamentals.add(new long[] {x, y});
+                fundamentals.add(new long[] {-x, y});
+            }
             y++;
         }
         return fundamentals;
