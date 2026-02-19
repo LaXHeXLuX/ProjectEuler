@@ -24,6 +24,9 @@ public class Fraction<T> {
         this.den = den;
     }
 
+    public Fraction<T> neg() {
+        return new Fraction<>(op.neg(num), den);
+    }
     public Fraction<T> add(Fraction<T> fraction) {
         T gcd = op.gcd(den, fraction.den);
         T newDen = op.mul(op.div(den, gcd), fraction.den);
@@ -35,7 +38,7 @@ public class Fraction<T> {
         return new Fraction<>(op.add(num, op.mul(n, den)), den);
     }
     public Fraction<T> subtract(Fraction<T> fraction) {
-        return this.add(new Fraction<>(op.neg(fraction.num), fraction.den));
+        return this.add(fraction.neg());
     }
     public Fraction<T> subtract(T n) {
         return this.add(op.neg(n));
