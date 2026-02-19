@@ -31,14 +31,26 @@ public class Fraction<T> {
         T newNum2 = op.mul(fraction.num, op.div(newDen, fraction.den));
         return new Fraction<>(op.add(newNum1, newNum2), newDen);
     }
+    public Fraction<T> add(T n) {
+        return new Fraction<>(op.add(num, op.mul(n, den)), den);
+    }
     public Fraction<T> subtract(Fraction<T> fraction) {
         return this.add(new Fraction<>(op.neg(fraction.num), fraction.den));
+    }
+    public Fraction<T> subtract(T n) {
+        return this.add(op.neg(n));
     }
     public Fraction<T> multiply(Fraction<T> fraction) {
         return new Fraction<>(op.mul(num, fraction.num), op.mul(den, fraction.den));
     }
+    public Fraction<T> multiply(T n) {
+        return new Fraction<>(op.mul(num, n), den);
+    }
     public Fraction<T> divide(Fraction<T> fraction) {
         return this.multiply(new Fraction<>(fraction.den, fraction.num));
+    }
+    public Fraction<T> divide(T n) {
+        return this.multiply(n);
     }
     public Fraction<T> simplify() {
         T gcd = op.gcd(num, den);
