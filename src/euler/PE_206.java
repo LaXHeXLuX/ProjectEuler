@@ -1,64 +1,61 @@
 package euler;
 
+import utils.Diophantine;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+
 public class PE_206 {
     static void main() {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e - s) + " ms");
     }
 
     public static long PE() {
         int[] form = {1, -1, 2, -1, 3, -1, 4, -1, 5, -1, 6, -1, 7, -1, 8, -1, 9, -1, 0};
-        return smallestWithSquareForm(form);
+        List<Long> squaresWithForm = squaresWithForm(form);
+        return squaresWithForm.getFirst();
     }
 
-    private static long replace(int[] form, int digit) {
-        long n = 0;
-        for (int i : form) {
-            if (i == -1) n = n*10 + digit;
-            else n = n*10 + i;
+    private static List<Long> squaresWithForm(int[] form) {
+        List<Long> validNumbers = new ArrayList<>();
+        validNumbers.add(0L);
+        long max = BigInteger.TEN.pow(form.length).sqrt().longValue();
+        int lastSize = 0;
+        for (int i = form.length-1; i >= 0; i--) {
+            if (form[i] == -1) continue;
+            validNumbers = validNumbers(validNumbers, form.length-i-1, form[i], lastSize, max);
+            lastSize = form.length-i;
+            if (validNumbers.isEmpty()) return validNumbers;
         }
-        return n;
+        return validNumbers;
     }
 
-    private static int[] lastDigitFromForm(int[] form) {
-        int last = form[form.length-1];
-        if (last == -1) return new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-        int[][] lookup = {
-                {0},
-                {1, 9},
-                {},
-                {},
-                {2, 8},
-                {5},
-                {4, 6},
-                {},
-                {},
-                {3, 7}
-        };
-        return lookup[last];
-    }
+    private static List<Long> validNumbers(List<Long> currentNumbers, int place, int target, int lastSize, long max) {
+        long powTen = Diophantine.pow(10, lastSize);
+        int adding = place + 1 - lastSize;
 
-    private static long smallestWithSquareForm(int[] form) {
-        int[] lastDigit = lastDigitFromForm(form);
-        if (lastDigit.length == 0) return -1;
-        long min = (long) Math.sqrt(replace(form, 0)) / 10;
-        long max = (long) Math.sqrt(replace(form, 9)) / 10;
-        for (long i = min; i <= max; i++) {
-            for (int i1 : lastDigit) {
-                long n = i*10 + i1;
-                long square = n*n;
-                if (hasForm(square, form)) return n;
+        List<Long> validNumbers = new ArrayList<>();
+        long limit = Diophantine.pow(10, adding);
+        for (long i = 0; i < limit; i++) {
+            if (i*powTen + currentNumbers.getFirst() >= max) break;
+            for (Long currentNumber : currentNumbers) {
+                long n = i*powTen + currentNumber;
+                if (n >= max) break;
+                if (squareHasNthDigitTarget(n, place, target)) {
+                    validNumbers.add(n);
+                }
             }
         }
-        return -1;
+        return validNumbers;
     }
 
-    private static boolean hasForm(long n, int[] form) {
-        for (int i = form.length-1; i >= 0; i--) {
-            if (n == 0) return false;
-            int lastDigit = (int) (n % 10);
-            n /= 10;
-            if (form[i] != -1 && form[i] != lastDigit) return false;
-        }
-        return n == 0;
+    private static boolean squareHasNthDigitTarget(long sq, int n, int target) {
+        BigInteger square = BigInteger.valueOf(sq).pow(2);
+        int nthDigit = square.divide(BigInteger.TEN.pow(n)).mod(BigInteger.TEN).intValue();
+        return nthDigit == target;
     }
 }

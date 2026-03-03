@@ -87,6 +87,26 @@ public class Primes {
         if (i < composites.length && !composites[i]) primes[primeIndex] = (i << 1) | 1;
         return primes;
     }
+    public static boolean[] sieve(int limit) {
+        if (limit < 2) return new boolean[] {true};
+        boolean[] primes = new boolean[limit];
+        Arrays.fill(primes, true);
+        primes[0] = false;
+        primes[1] = false;
+        for (int i = 4; i < limit; i+=2) {
+            primes[i] = false;
+        }
+        int iLimit = (int) Math.sqrt(limit);
+        for (int i = 3; i <= iLimit; i+=2) {
+            if (!primes[i]) continue;
+            int k = i*i;
+            while (k < limit) {
+                primes[k] = false;
+                k += i;
+            }
+        }
+        return primes;
+    }
     public static boolean[] compositeSieve(int limit) {
         if (limit < 2) return new boolean[] {true};
         boolean[] composites = new boolean[limit >> 1];
