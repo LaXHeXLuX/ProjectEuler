@@ -11,15 +11,15 @@ public class PE_056 {
 
     public static String PE() {
         int limit = 100;
-        int[] digitSum = biggestDigitsSumOfPower(limit, limit);
+        int[] digitSum = biggestDigitSumOfPower(limit, limit);
         return String.valueOf(digitSum[2]);
     }
 
-    private static int[] biggestDigitsSumOfPower(int limitA, int limitB) {
+    private static int[] biggestDigitSumOfPower(int limitA, int limitB) {
         int[] biggests = new int[3];
 
         for (int a = limitA; a > 0; a--) {
-            int lowerLimitB = (int) ((biggests[2] / 9.0) / Math.log10(a));
+            int lowerLimitB = (int) ((biggests[2] / 5.0) / Math.log10(a));
             for (int b = limitB; b > lowerLimitB; b--) {
                 BigInteger power = BigInteger.valueOf(a).pow(b);
                 int digitSum = Diophantine.digitSum(power);
