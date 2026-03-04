@@ -150,26 +150,6 @@ public class test {
         put(PE_142.class, "1006193");
         //put(PE_143.class, ???);
         //put(PE_144.class, ???);
-        put(PE_145.class, 608720L);
-        put(PE_173.class, 1572729L);
-        put(PE_174.class, 209566L);
-        put(PE_179.class, 986262L);
-        put(PE_187.class, 17427258L);
-        put(PE_188.class, 95962097L);
-        put(PE_191.class, 1918080160L);
-        put(PE_203.class, 34029210557338L);
-        put(PE_204.class, 2944730L);
-        put(PE_205.class, 5731441L);
-        put(PE_206.class, 1389019170L);
-        put(PE_293.class, 2209L);
-        put(PE_297.class, 2252639041804718029L);
-        put(PE_301.class, 2178309L);
-        put(PE_303.class, 1111981904675169L);
-        put(PE_313.class, 2057774861813004L);
-        put(PE_315.class, 13625242L);
-        put(PE_321.class, 2470433131948040L);
-        put(PE_323.class, 63551758451L);
-        put(PE_329.class, 199740353L + 29386561536000L);
         put(PE_145.class, "608720");
         put(PE_173.class, "1572729");
         put(PE_174.class, "209566");
@@ -190,6 +170,7 @@ public class test {
         put(PE_321.class, "2470433131948040");
         put(PE_323.class, "63551758451");
         put(PE_329.class, "199740353/29386561536000");
+        put(PE_336.class, "CAGBIHEFJDK");
     }};
 
     static void main() {
