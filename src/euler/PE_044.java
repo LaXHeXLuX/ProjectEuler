@@ -20,17 +20,17 @@ public class PE_044 {
 
     private static long smallestDifferenceWithProperty() {
         long smallestDiff = Long.MAX_VALUE;
-        for (long j = 2; ; j++) {
-            long pj = pentagonal(j);
-            for (long k = j - 1; k > 0; k--) {
-                long pk = pentagonal(k);
-                long diff = pj - pk;
-                if (diff >= smallestDiff) break;
-                if (isPentagonal(diff) && isPentagonal(pj + pk)) {
-                    smallestDiff = diff;
+        for (int n2 = 2; ; n2++) {
+            long p2 = pentagonal(n2);
+            for (int n1 = n2-1; n1 > 0; n1--) {
+                long p1 = pentagonal(n1);
+                if (p1 >= smallestDiff && p2 >= smallestDiff) break;
+                if (isPentagonal(p1 + p2)) {
+                    if (isPentagonal(p1 + 2 * p2) && p1 < smallestDiff) smallestDiff = p1;
+                    if (isPentagonal(2 * p1 + p2) && p2 < smallestDiff) smallestDiff = p2;
                 }
             }
-            if (smallestDiff < 3*j - 2) return smallestDiff;
+            if (3L*n2 - 2 > smallestDiff) return smallestDiff;
         }
     }
 }
