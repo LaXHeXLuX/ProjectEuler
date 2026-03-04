@@ -7,9 +7,9 @@ public class PE_313 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int primeLimit = 1_000_000;
-        return numberOfGridsWhereSIsPrimeSquare(primeLimit);
+        return String.valueOf(numberOfGridsWhereSIsPrimeSquare(primeLimit));
     }
 
     private static long numberOfGridsWhereSIsPrimeSquare(int primeLimit) {

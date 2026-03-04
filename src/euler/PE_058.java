@@ -8,9 +8,9 @@ public class PE_058 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int[] fraction = {1, 10};
-        return firstSpiralLengthWithPrimeDiagonalRatioBelow(fraction);
+        return String.valueOf(firstSpiralLengthWithPrimeDiagonalRatioBelow(fraction));
     }
 
     private static int firstSpiralLengthWithPrimeDiagonalRatioBelow(int[] fraction) {

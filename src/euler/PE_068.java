@@ -10,11 +10,11 @@ public class PE_068 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int size = 5;
         int digitRestriction = 15;
         int[][] nGons = magicNGonRings(size);
-        return maxConcatRing(nGons, digitRestriction);
+        return String.valueOf(maxConcatRing(nGons, digitRestriction));
     }
 
     private static int[][] magicNGonRings(int n) {

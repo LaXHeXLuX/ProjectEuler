@@ -10,13 +10,13 @@ public class PE_107 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         String filename = "src/euler/inputs/PE_107_network.txt";
         Graph graph = parser(filename);
         int sum1 = edgeSum(graph);
         Graph mst = graph.mst();
         int sum2 = edgeSum(mst);
-        return sum1-sum2;
+        return String.valueOf(sum1-sum2);
     }
     
     private static int edgeSum(Graph graph) {

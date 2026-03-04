@@ -5,9 +5,9 @@ public class PE_112 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int[] fraction = {99, 100};
-        return firstWithBouncyRatio(fraction[0], fraction[1]);
+        return String.valueOf(firstWithBouncyRatio(fraction[0], fraction[1]));
     }
 
     private static long firstWithBouncyRatio(int num, int den) {

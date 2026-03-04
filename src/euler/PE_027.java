@@ -8,10 +8,10 @@ public class PE_027 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 1_000;
         int[] bestAB = bestQuadraticFormulaWithLimits(limit-1, limit);
-        return (long) bestAB[0] * bestAB[1];
+        return String.valueOf((long) bestAB[0] * bestAB[1]);
     }
 
     private static int[] bestQuadraticFormulaWithLimits(int limitA, int limitB) {

@@ -8,9 +8,9 @@ public class PE_145 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int digits = 9;
-        return reversibleNumbersWithUpToNDigits(digits);
+        return String.valueOf(reversibleNumbersWithUpToNDigits(digits));
     }
 
     private static long reversibleNumbersWithNDigits(int n) {

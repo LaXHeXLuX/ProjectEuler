@@ -7,7 +7,7 @@ public class PE_065 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int n = 100;
         BigInteger[] fraction = computeNthConvergentOfE(n);
         BigInteger first = fraction[0];
@@ -18,7 +18,7 @@ public class PE_065 {
             sum += divRem[1].intValue();
             first = divRem[0];
         }
-        return sum;
+        return String.valueOf(sum);
     }
 
     private static BigInteger[] computeNthConvergentOfE(int n) {

@@ -10,10 +10,10 @@ public class PE_203 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int rows = 51;
         Set<Long> distinctPascalNumbers = distinctPascalNumbers(rows);
-        return sumOfSquareFreeElements(distinctPascalNumbers);
+        return String.valueOf(sumOfSquareFreeElements(distinctPascalNumbers));
     }
 
     private static long sumOfSquareFreeElements(Set<Long> set) {

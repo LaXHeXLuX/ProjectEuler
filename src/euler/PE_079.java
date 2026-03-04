@@ -14,12 +14,12 @@ public class PE_079 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         String filename = "src/euler/inputs/PE_079_keylog.txt";
         int[] passcodes = parseUnique(filename);
 
         List<int[]> shortestPasswords = shortestPossiblePassword(passcodes);
-        return Converter.fromDigitArray(shortestPasswords.getFirst());
+        return String.valueOf(Converter.fromDigitArray(shortestPasswords.getFirst()));
     }
 
     private static int[] parseUnique(String filename) {

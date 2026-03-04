@@ -7,12 +7,12 @@ public class PE_017 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int sum = 0;
         for (int i = 1; i < 1000; i++) {
             sum += lettersInNumber(i);
         }
-        return sum + 3 + 8;
+        return String.valueOf(sum + 3 + 8);
     }
 
     private static int lettersInNumber(long n) {

@@ -5,9 +5,9 @@ public class PE_006 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int n = 100;
-        return difference(arrOfNFirstElements(n));
+        return String.valueOf(difference(arrOfNFirstElements(n)));
     }
 
     private static long[] arrOfNFirstElements(int n) {

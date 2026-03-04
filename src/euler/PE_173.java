@@ -5,9 +5,9 @@ public class PE_173 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         long tiles = 1_000_000;
-        return countOfSquareLaminaeWithTiles(tiles);
+        return String.valueOf(countOfSquareLaminaeWithTiles(tiles));
     }
 
     private static long countOfSquareLaminaeWithTiles(long tiles) {

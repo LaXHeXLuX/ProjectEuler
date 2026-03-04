@@ -7,8 +7,8 @@ public class PE_104 {
         System.out.println(PE());
     }
 
-    public static long PE() {
-        return firstFibonacciWithProperty();
+    public static String PE() {
+        return String.valueOf(firstFibonacciWithProperty());
     }
 
     private static int firstFibonacciWithProperty() {

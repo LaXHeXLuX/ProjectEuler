@@ -15,7 +15,7 @@ public class PE_054 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         String file = "src/euler/inputs/PE_054_poker.txt";
         String[][][] hands = parse(file);
 
@@ -28,7 +28,7 @@ public class PE_054 {
             }
         }
 
-        return counter;
+        return String.valueOf(counter);
     }
 
     private static String[][][] parse(String filename) {

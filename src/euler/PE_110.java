@@ -5,8 +5,8 @@ public class PE_110 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 4_000_000;
-        return PE_108.smallestNumberWithSolutionCountAbove(limit);
+        return String.valueOf(PE_108.smallestNumberWithSolutionCountAbove(limit));
     }
 }

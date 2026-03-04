@@ -11,10 +11,10 @@ public class PE_055 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 10_000;
         int[] answer = lychrelNumbersUnder(limit);
-        return answer.length;
+        return String.valueOf(answer.length);
     }
 
     public static int[] lychrelNumbersUnder(int limit) {

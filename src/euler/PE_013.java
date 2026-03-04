@@ -109,10 +109,10 @@ public class PE_013 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         BigInteger[] numbers = parser();
         int n = 10;
-        return firstNDigits(sumOfArrElements(numbers), n).longValue();
+        return String.valueOf(firstNDigits(sumOfArrElements(numbers), n).longValue());
     }
 
     private static BigInteger[] parser() {

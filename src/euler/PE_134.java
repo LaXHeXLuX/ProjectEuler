@@ -8,7 +8,7 @@ public class PE_134 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 1_000_000;
         int[] primes = Primes.primes(2*limit);
 
@@ -24,7 +24,7 @@ public class PE_134 {
             p1 = p2;
             p2 = primes[index+1];
         }
-        return sum;
+        return String.valueOf(sum);
     }
 
     private static long smallestNForP1AndP2(int p1, int p2) {

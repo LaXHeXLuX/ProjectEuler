@@ -11,13 +11,13 @@ public class PE_061 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int n = 6;
         List<int[]> combinations = generateNWorkingNumbers(n);
 
         int sum = 0;
         for (int num : combinations.getFirst()) sum += num;
-        return sum;
+        return String.valueOf(sum);
     }
 
     private static List<int[]> generateNWorkingNumbers(int n) {

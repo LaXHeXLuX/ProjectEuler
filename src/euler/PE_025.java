@@ -7,9 +7,9 @@ public class PE_025 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int n = 1000;
-        return firstFibonacciWithNDigits(n);
+        return String.valueOf(firstFibonacciWithNDigits(n));
     }
 
     private static long firstFibonacciWithNDigits(int n) {

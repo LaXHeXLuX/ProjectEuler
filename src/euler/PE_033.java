@@ -13,7 +13,7 @@ public class PE_033 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 100;
         List<int[]> curiousFractions = curiousFractions(limit);
 
@@ -24,7 +24,7 @@ public class PE_033 {
             b *= fraction[1];
         }
 
-        return simplifyFraction(a, b)[1];
+        return String.valueOf(simplifyFraction(a, b)[1]);
     }
 
     private static List<int[]> curiousFractions(int limit) {

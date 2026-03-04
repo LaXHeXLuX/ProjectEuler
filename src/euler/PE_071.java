@@ -7,10 +7,10 @@ public class PE_071 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limitD = 1_000_000;
         int[] fraction = {3, 7};
-        return fractionBefore(limitD, fraction)[0];
+        return String.valueOf(fractionBefore(limitD, fraction)[0]);
     }
 
     private static int numerator(int[] fraction, int d) {

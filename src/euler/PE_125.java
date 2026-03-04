@@ -10,10 +10,10 @@ public class PE_125 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 100_000_000;
         Set<Long> palindromicConsecutiveSquareSums = palindromicConsecutiveSquareSums(limit);
-        return sum(palindromicConsecutiveSquareSums);
+        return String.valueOf(sum(palindromicConsecutiveSquareSums));
     }
 
     private static long sum(Set<Long> set) {

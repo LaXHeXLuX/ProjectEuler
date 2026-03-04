@@ -7,10 +7,10 @@ public class PE_067 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         String filename = "src/euler/inputs/PE_067_triangle.txt";
         int[][] triangle = Parser.parseManyInts(filename);
-        return maximumSum(triangle);
+        return String.valueOf(maximumSum(triangle));
     }
 
     private static int maximumSum(int[][] triangle) {

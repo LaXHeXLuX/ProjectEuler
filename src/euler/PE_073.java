@@ -9,12 +9,12 @@ public class PE_073 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int[] fraction1 = {1, 3};
         int[] fraction2 = {1, 2};
         int limit = 12_000;
         makePrimeFactors(limit+1);
-        return numberOfFractionsBetween(fraction1, fraction2, limit);
+        return String.valueOf(numberOfFractionsBetween(fraction1, fraction2, limit));
     }
 
     private static void makePrimeFactors(int limit) {

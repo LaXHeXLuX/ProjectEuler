@@ -9,7 +9,7 @@ public class PE_090 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         generate(new ArrayList<>(), 6, 0, 9);
         long count = 0;
         for (int i = 0; i < combinations.size(); i++) {
@@ -19,7 +19,7 @@ public class PE_090 {
                 if (diceWork(c1, c2)) count++;
             }
         }
-        return count;
+        return String.valueOf(count);
     }
 
     private static void generate(List<Integer> current, int k, int start, int max) {

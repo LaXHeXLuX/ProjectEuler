@@ -22,9 +22,9 @@ public class PE_018 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int[][] triangle = parse();
-        return maximumSum(triangle);
+        return String.valueOf(maximumSum(triangle));
     }
 
     private static int[][] parse() {

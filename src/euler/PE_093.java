@@ -11,11 +11,11 @@ public class PE_093 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int n = 4;
         digits = new int[n];
         int[][] result = largestConsecutiveScore(n);
-        return answerFromResult(result);
+        return String.valueOf(answerFromResult(result));
     }
 
     public static long answerFromResult(int[][] result) {

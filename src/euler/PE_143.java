@@ -11,9 +11,9 @@ public class PE_143 {
         System.out.println((e - s) + " ms");
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 1_000;
-        return sumOfTorricelliTriangleSums(limit);
+        return String.valueOf(sumOfTorricelliTriangleSums(limit));
     }
 
     private static long sumOfTorricelliTriangleSums(long limit) {

@@ -12,14 +12,14 @@ public class PE_049 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 10_000;
         int inARow = 3;
         List<List<Integer>> unusualTerms = unusualTermsUnder(limit, inARow);
         for (List<Integer> unusualTerm : unusualTerms) {
-            if (unusualTerm.getFirst() != 1487) return concat(unusualTerm, inARow);
+            if (unusualTerm.getFirst() != 1487) return String.valueOf(concat(unusualTerm, inARow));
         }
-        return -1;
+        return null;
     }
 
     private static long concat(List<Integer> arr, int inARow) {

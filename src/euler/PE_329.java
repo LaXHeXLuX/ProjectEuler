@@ -16,14 +16,14 @@ public class PE_329 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         String pathString = "PPPPNNPPPNPPNPN";
         path = path(pathString);
         size = 500;
         for (int i = 1; i <= size; i++) memo.put(i, new HashMap<>());
         primes = Primes.sieve(size+1);
         Fraction<Long> probability = pathProbability();
-        return probability.num + probability.den;
+        return probability.num + "/" + probability.den;
     }
 
 

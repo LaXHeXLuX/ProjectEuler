@@ -13,7 +13,7 @@ public class PE_023 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 28123;
         makeAbundantNumbers(limit);
         int sum = 0;
@@ -22,7 +22,7 @@ public class PE_023 {
                 sum += i;
             }
         }
-        return sum;
+        return String.valueOf(sum);
     }
     private static void makeAbundantNumbers(int limit) {
         int[] sumOfDivisors = new int[limit];

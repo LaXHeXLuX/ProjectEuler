@@ -7,9 +7,9 @@ public class PE_012 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int count = 500;
-        return leastTriangleNumber(count);
+        return String.valueOf(leastTriangleNumber(count));
     }
 
     private static long leastTriangleNumber(int divisorCount) {

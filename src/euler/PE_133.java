@@ -8,7 +8,7 @@ public class PE_133 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 100_000;
         int[] primes = Primes.primes(limit);
 
@@ -19,7 +19,7 @@ public class PE_133 {
             }
         }
 
-        return sum;
+        return String.valueOf(sum);
     }
 
     private static boolean ord10Divides(int p) {

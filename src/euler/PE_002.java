@@ -8,9 +8,9 @@ public class PE_002 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         long n = 4_000_000L;
-        return sumOfEvenElements(fibonacciNumbersUntil(n));
+        return String.valueOf(sumOfEvenElements(fibonacciNumbersUntil(n)));
     }
 
     private static long sumOfEvenElements(List<Long> list) {

@@ -5,9 +5,9 @@ public class PE_120 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 1_000;
-        return rMaxSum(limit);
+        return String.valueOf(rMaxSum(limit));
     }
 
     private static long rMaxSum(int limit) {

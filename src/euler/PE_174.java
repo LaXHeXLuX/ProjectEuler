@@ -5,9 +5,9 @@ public class PE_174 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int tiles = 1_000_000;
-        return sumOfTypes(tiles);
+        return String.valueOf(sumOfTypes(tiles));
     }
 
     private static long sumOfTypes(int tiles) {

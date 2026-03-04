@@ -7,10 +7,10 @@ public class PE_078 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int n = 1_000_000;
         eulersFunction = new long[n+1];
-        return firstToDivideN(n);
+        return String.valueOf(firstToDivideN(n));
     }
 
     private static int firstToDivideN(int n) {

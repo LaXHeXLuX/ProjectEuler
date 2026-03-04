@@ -11,9 +11,9 @@ public class PE_063 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         BigInteger[] solutions = solve();
-        return solutions.length;
+        return String.valueOf(solutions.length);
     }
 
     private static BigInteger[] solve() {

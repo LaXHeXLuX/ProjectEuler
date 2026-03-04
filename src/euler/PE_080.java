@@ -9,10 +9,10 @@ public class PE_080 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 100;
         int precision = 100;
-        return totalOfDigitSums(limit, precision);
+        return String.valueOf(totalOfDigitSums(limit, precision));
     }
 
     private static boolean isSquare(long n) {

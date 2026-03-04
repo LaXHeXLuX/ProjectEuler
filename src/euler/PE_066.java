@@ -10,9 +10,9 @@ public class PE_066 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 1000;
-        return maxMinimalSolution(limit);
+        return String.valueOf(maxMinimalSolution(limit));
     }
 
     private static int maxMinimalSolution(int limit) {

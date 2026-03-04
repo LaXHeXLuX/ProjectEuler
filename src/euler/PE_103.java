@@ -10,10 +10,10 @@ public class PE_103 {
         System.out.println((e-s) + " ms");
     }
 
-    public static long PE() {
+    public static String PE() {
         int n = 7;
         List<Integer> ssss = smallestSpecialSumSet(n);
-        return setString(ssss);
+        return String.valueOf(setString(ssss));
     }
 
     private static long setString(List<Integer> set) {

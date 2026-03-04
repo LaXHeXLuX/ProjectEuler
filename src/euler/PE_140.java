@@ -11,11 +11,11 @@ public class PE_140 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int step = 4;
         int targetCount = 30;
         List<Long> nuggets = goldenNuggets(step);
-        return sumFirst(nuggets, targetCount);
+        return String.valueOf(sumFirst(nuggets, targetCount));
     }
 
     private static long sumFirst(List<Long> list, int n) {

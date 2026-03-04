@@ -14,10 +14,10 @@ public class PE_206 {
         System.out.println((e - s) + " ms");
     }
 
-    public static long PE() {
+    public static String PE() {
         int[] form = {1, -1, 2, -1, 3, -1, 4, -1, 5, -1, 6, -1, 7, -1, 8, -1, 9, -1, 0};
         List<Long> squaresWithForm = squaresWithForm(form);
-        return squaresWithForm.getFirst();
+        return String.valueOf(squaresWithForm.getFirst());
     }
 
     private static List<Long> squaresWithForm(int[] form) {

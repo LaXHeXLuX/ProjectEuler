@@ -27,10 +27,10 @@ public class PE_011 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int[][] intNumbers = parseNumbers();
         int n = 4;
-        return biggestProductOfNNumbersInAnyDirection(n, intNumbers);
+        return String.valueOf(biggestProductOfNNumbersInAnyDirection(n, intNumbers));
     }
 
     private static int[][] parseNumbers() {

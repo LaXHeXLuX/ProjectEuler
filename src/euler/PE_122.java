@@ -10,13 +10,13 @@ public class PE_122 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 200;
         makeInitialSmallestExpCounts(limit);
         makeSmallestExpCounts(limit);
         int sum = 0;
         for (int smallestExpCount : smallestExpCounts) sum += smallestExpCount-1;
-        return sum;
+        return String.valueOf(sum);
     }
 
     private static void makeInitialSmallestExpCounts(int limit) {

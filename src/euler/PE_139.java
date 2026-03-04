@@ -7,9 +7,9 @@ public class PE_139 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         long limit = 100_000_000;
-        return amountOfTilingTriangles(limit);
+        return String.valueOf(amountOfTilingTriangles(limit));
     }
 
     private static long amountOfTilingTriangles(long perimeterLimit) {

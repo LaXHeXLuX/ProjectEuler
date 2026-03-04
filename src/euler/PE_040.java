@@ -8,9 +8,9 @@ public class PE_040 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int[] indexes = {1, 10, 100, 1_000, 10_000, 100_000, 1_000_000};
-        return productOfConstantDigits(indexes);
+        return String.valueOf(productOfConstantDigits(indexes));
     }
 
     private static List<Integer> digitsAtIndexes(int[] indexes) {

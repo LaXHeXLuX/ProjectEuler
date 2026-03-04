@@ -7,14 +7,14 @@ public class PE_089 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         String file = "src/euler/inputs/PE_089_roman.txt";
         String[] numerals = Parser.parseStrings(file);
         int sum = 0;
         for (String numeral : numerals) {
             sum += savedCharacterCount(numeral);
         }
-        return sum;
+        return String.valueOf(sum);
     }
 
     private static int savedCharacterCount(String numeral) {

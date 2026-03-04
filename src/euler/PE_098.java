@@ -14,7 +14,7 @@ public class PE_098 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         String file = "src/euler/inputs/PE_098_words.txt";
         String[] words = parse(file);
         makeAnagrams(words);
@@ -22,7 +22,7 @@ public class PE_098 {
         limit = (int) Math.sqrt(Math.pow(10, limit));
         makeSquareAnagrams(limit);
         int result = largestSquareWithProperty();
-        return (long) result * result;
+        return String.valueOf((long) result * result);
     }
 
     private static int largestSquareWithProperty() {

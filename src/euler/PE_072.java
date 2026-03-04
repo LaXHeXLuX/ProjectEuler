@@ -7,10 +7,10 @@ public class PE_072 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 1_000_000;
         totients = totients(limit+1);
-        return elementCountForAllFractions(limit);
+        return String.valueOf(elementCountForAllFractions(limit));
     }
 
     private static long elementCountForAllFractions(int limitD) {

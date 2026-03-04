@@ -22,10 +22,10 @@ public class PE_074 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int n = 1_000_000;
         List<Integer> longest = longestChainLengths(n);
-        return longest.size();
+        return String.valueOf(longest.size());
     }
 
     private static List<Integer> longestChainLengths(int limit) {

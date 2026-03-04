@@ -10,14 +10,14 @@ public class PE_036 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int[] bases = {2, 10};
         int limit = 1_000_000;
         List<Long> palindromes = palindromesInBases(limit, bases);
 
         long sum = 0;
         for (long palindrome : palindromes) sum += palindrome;
-        return sum;
+        return String.valueOf(sum);
     }
 
     private static boolean isPalindromeInBases(long n, int[] bases) {

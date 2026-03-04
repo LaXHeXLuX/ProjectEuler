@@ -11,10 +11,10 @@ public class PE_128 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 2000;
         List<Long> PD3s = PD3UpTo(limit);
-        return PD3s.get(limit-1);
+        return String.valueOf(PD3s.get(limit-1));
     }
 
     private static List<Long> PD3UpTo(int n) {

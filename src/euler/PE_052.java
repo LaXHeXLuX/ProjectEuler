@@ -8,9 +8,9 @@ public class PE_052 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int[] multiples = {2, 3, 4, 5, 6};
-        return  smallestNumberWithPermutedMultiples(multiples);
+        return String.valueOf(smallestNumberWithPermutedMultiples(multiples));
     }
 
     private static int smallestNumberWithPermutedMultiples(int[] multiples) {
@@ -19,7 +19,7 @@ public class PE_052 {
         int limit = 10/biggestMultiple;
 
         int x = 0;
-        while (x >= 0)  {
+        while (x >= 0) {
             x++;
             if (firstDigit(x) > limit) continue;
             if (hasPermutedMultiples(x, multiples)) return x;

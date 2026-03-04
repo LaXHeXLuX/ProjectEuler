@@ -31,16 +31,16 @@ public class PE_102 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         String file = "src/euler/inputs/PE_102_triangles.txt";
         List<Triangle> triangles = parse(file);
         int count = 0;
         for (Triangle triangle : triangles) {
-            if (containsOrigin(triangle))  {
+            if (containsOrigin(triangle)) {
                 count++;
             }
         }
-        return count;
+        return String.valueOf(count);
     }
 
     private static boolean containsOrigin(Triangle t) {

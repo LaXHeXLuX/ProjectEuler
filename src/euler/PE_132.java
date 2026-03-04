@@ -9,11 +9,11 @@ public class PE_132 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int factorCount = 40;
         int n = 9;
         long[] factors = firstFactorsForPower10Repunit(n, factorCount);
-        return sum(factors);
+        return String.valueOf(sum(factors));
     }
 
     private static long sum(long[] arr) {

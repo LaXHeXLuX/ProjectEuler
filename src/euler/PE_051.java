@@ -11,11 +11,11 @@ public class PE_051 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int size = 8;
         int[] first = firstPrimeDigitReplacementFamily(size);
         List<Integer> score = score(first);
-        return makeNumber(first, score.getFirst());
+        return String.valueOf(makeNumber(first, score.getFirst()));
     }
 
     private static int[] firstPrimeDigitReplacementFamily(int familySize) {

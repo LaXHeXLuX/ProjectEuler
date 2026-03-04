@@ -9,10 +9,10 @@ public class PE_029 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 100;
         Set<BigInteger> powers = distinctPowers(limit, limit);
-        return powers.size();
+        return String.valueOf(powers.size());
     }
 
     private static Set<BigInteger> distinctPowers(int limitA, int limitB) {

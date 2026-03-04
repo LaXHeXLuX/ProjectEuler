@@ -5,9 +5,9 @@ public class PE_028 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 1001;
-        return numberSpiralDiagonalSum(limit);
+        return String.valueOf(numberSpiralDiagonalSum(limit));
     }
 
     private static int numberSpiralDiagonalSum(int spiralSize) {

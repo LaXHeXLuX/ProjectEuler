@@ -5,8 +5,8 @@ public class PE_044 {
         System.out.println(PE());
     }
 
-    public static long PE() {
-        return smallestDifferenceWithProperty();
+    public static String PE() {
+        return String.valueOf(smallestDifferenceWithProperty());
     }
 
     private static long pentagonal(long n) {

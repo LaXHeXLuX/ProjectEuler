@@ -7,7 +7,7 @@ public class PE_007 {
         System.out.println(PE());
     }
 
-    public static long PE() {
-        return Primes.nthPrime(10001);
+    public static String PE() {
+        return String.valueOf(Primes.nthPrime(10001));
     }
 }

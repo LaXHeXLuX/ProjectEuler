@@ -25,12 +25,12 @@ public class PE_315 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         makeSegments();
         int primesStart = 10_000_000;
         int primesEnd = 2*primesStart;
         makeMemoizedSaves((int) Math.log10(primesEnd) + 1);
-        return totalSavesOverPrimesBetween(primesStart, primesEnd);
+        return String.valueOf(totalSavesOverPrimesBetween(primesStart, primesEnd));
     }
 
     private static long totalSavesOverPrimesBetween(int start, int end) {

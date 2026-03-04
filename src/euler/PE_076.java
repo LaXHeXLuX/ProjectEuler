@@ -11,10 +11,10 @@ public class PE_076 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         waysToSum = new HashMap<>();
         int n = 100;
-        return waysToSum(n);
+        return String.valueOf(waysToSum(n));
     }
 
     private static long waysToSum(int n) {

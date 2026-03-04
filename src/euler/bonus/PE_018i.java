@@ -8,7 +8,7 @@ public class PE_018i {
         System.out.println((e-s) + " ms");
     }
 
-    public static long PE() {
-        return -1;
+    public static String PE() {
+        return String.valueOf(-1);
     }
 }

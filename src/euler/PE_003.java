@@ -7,8 +7,8 @@ public class PE_003 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         Primes.PF[] pf = Primes.primeFactors(600851475143L);
-        return pf[pf.length-1].primeFactor;
+        return String.valueOf(pf[pf.length-1].primeFactor);
     }
 }

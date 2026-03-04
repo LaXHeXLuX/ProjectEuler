@@ -7,10 +7,10 @@ public class PE_117 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int[] sizes = {2, 3, 4};
         int length = 50;
-        return waysForLength(length, sizes);
+        return String.valueOf(waysForLength(length, sizes));
     }
 
     private static long waysForLength(int length, int[] sizes) {

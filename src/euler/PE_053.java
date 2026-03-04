@@ -9,10 +9,10 @@ public class PE_053 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int lowBar = 1_000_000;
         int nLimit = 100;
-        return numberOfValuesGreaterThan(lowBar, nLimit);
+        return String.valueOf(numberOfValuesGreaterThan(lowBar, nLimit));
     }
 
     private static int numberOfValuesGreaterThan(int lowBar, int nLimit) {

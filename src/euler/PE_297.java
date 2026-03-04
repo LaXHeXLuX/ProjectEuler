@@ -13,10 +13,10 @@ public class PE_297 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         long limit = 100_000_000_000_000_000L;
         makeFibonacci(limit);
-        return sumOfZ(limit);
+        return String.valueOf(sumOfZ(limit));
     }
 
     private static long sumOfZFib(int n) {

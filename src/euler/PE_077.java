@@ -14,12 +14,12 @@ public class PE_077 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         waysToSumWithPrimes = new HashMap<>();
         int primeLimit = 10_000_000;
         primes = Primes.primes(primeLimit);
         int n = 5_000;
-        return firstToSumInOverNWays(n);
+        return String.valueOf(firstToSumInOverNWays(n));
     }
 
     private static int firstToSumInOverNWays(int n) {

@@ -7,9 +7,9 @@ public class PE_113 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int digits = 100;
-        return nonBouncyCount(digits);
+        return String.valueOf(nonBouncyCount(digits));
     }
 
     private static long nonBouncyCount(int digits) {

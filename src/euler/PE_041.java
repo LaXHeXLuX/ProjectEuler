@@ -8,8 +8,8 @@ public class PE_041 {
         System.out.println(PE());
     }
 
-    public static long PE() {
-        return largestPandigitalPrime();
+    public static String PE() {
+        return String.valueOf(largestPandigitalPrime());
     }
 
     private static int largestPandigitalPrime() {

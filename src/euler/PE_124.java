@@ -9,11 +9,11 @@ public class PE_124 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int n = 100_000;
         int[][] rads = rads(n);
         int[][] sorted = sort(rads);
-        return sorted[10_000][0];
+        return String.valueOf(sorted[10_000][0]);
     }
 
     private static int[][] sort(int[][] rads) {

@@ -9,10 +9,10 @@ public class PE_056 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 100;
         int[] digitSum = biggestDigitsSumOfPower(limit, limit);
-        return digitSum[2];
+        return String.valueOf(digitSum[2]);
     }
 
     private static int[] biggestDigitsSumOfPower(int limitA, int limitB) {

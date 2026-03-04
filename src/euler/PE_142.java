@@ -10,9 +10,9 @@ public class PE_142 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         findSquares();
-        return smallestSum;
+        return String.valueOf(smallestSum);
     }
 
     private static void findSquaresHelper(long c) {

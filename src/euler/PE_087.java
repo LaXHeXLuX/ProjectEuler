@@ -9,10 +9,10 @@ public class PE_087 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 50_000_000;
         primes = Primes.primes((int) Math.sqrt(limit));
-        return powerTripletsCount(limit);
+        return String.valueOf(powerTripletsCount(limit));
     }
 
     private static int powerTripletsCount(int limit) {

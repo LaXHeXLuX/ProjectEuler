@@ -9,11 +9,11 @@ public class PE_095 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 1_000_000;
         makeDivisorSums(limit);
         List<Integer> longestChain = longestChain();
-        return Collections.min(longestChain);
+        return String.valueOf(Collections.min(longestChain));
     }
 
     private static void makeDivisorSums(int limit) {

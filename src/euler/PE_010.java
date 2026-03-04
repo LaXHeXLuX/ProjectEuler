@@ -7,9 +7,9 @@ public class PE_010 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int n = 2_000_000;
-        return sumOfAllFalseElements(Primes.compositeSieve(n));
+        return String.valueOf(sumOfAllFalseElements(Primes.compositeSieve(n)));
     }
 
     private static long sumOfAllFalseElements(boolean[] arr) {

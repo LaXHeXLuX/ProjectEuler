@@ -13,9 +13,9 @@ public class PE_108 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 1_000;
-        return smallestNumberWithSolutionCountAbove(limit);
+        return String.valueOf(smallestNumberWithSolutionCountAbove(limit));
     }
 
     private static List<Integer> logPrediction(long n) {

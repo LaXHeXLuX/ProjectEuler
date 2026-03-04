@@ -9,7 +9,7 @@ public class PE_205 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         // giving answer as abcdefg, not 0.abcdefg
         int pDice = 9;
         int pSides = 4;
@@ -17,7 +17,7 @@ public class PE_205 {
         int cSides = 6;
         int digits = 7;
         Fraction<Long> peterWinChance = p2WinChance(cDice, cSides, pDice, pSides);
-        return Math.round(peterWinChance.doubleValue() * Diophantine.pow(10, digits));
+        return String.valueOf(Math.round(peterWinChance.doubleValue() * Diophantine.pow(10, digits)));
     }
 
     private static Fraction<Long> p2WinChance(int dice1, int sides1, int dice2, int sides2) {

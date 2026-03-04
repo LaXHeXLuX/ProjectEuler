@@ -5,12 +5,12 @@ public class PE_109 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         long sum = 0;
         for (int i = 2; i < 100; i++) {
             sum += waysToCheckout(i);
         }
-        return sum;
+        return String.valueOf(sum);
     }
 
     private static int waysToCheckout(int n) {

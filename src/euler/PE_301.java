@@ -5,9 +5,9 @@ public class PE_301 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 30;
-        return nimLose(limit);
+        return String.valueOf(nimLose(limit));
     }
 
     private static long nimLose(int powerOfTwo) {

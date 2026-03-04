@@ -8,10 +8,10 @@ public class PE_082 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int[][] matrix = Parser.parseManyInts("src/euler/inputs/PE_082_matrix.txt", ",");
         Graph graph = makeGraph(matrix);
-        return graph.djikstra("start".hashCode(), "end".hashCode());
+        return String.valueOf(graph.djikstra("start".hashCode(), "end".hashCode()));
     }
 
     private static Graph makeGraph(int[][] matrix) {

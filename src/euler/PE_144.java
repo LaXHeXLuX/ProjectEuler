@@ -12,14 +12,14 @@ public class PE_144 {
         System.out.println((e - s) + " ms");
     }
 
-    public static long PE() {
+    public static String PE() {
         int[] ellipseXYR = {4, 1, 10};
         List<Fraction<Long>> startPoint = List.of(new Fraction<>(0L), new Fraction<>(101L, 10L));
         List<Fraction<Long>> firstTouchPoint = List.of(new Fraction<>(14L, 10L), new Fraction<>(-96L, 10L));
         Fraction<Long> direction = direction(startPoint, firstTouchPoint);
         Fraction<Long> holeRadius = new Fraction<>(1L, 100L);
 
-        return reflectionCount(ellipseXYR, firstTouchPoint, direction, holeRadius);
+        return String.valueOf(reflectionCount(ellipseXYR, firstTouchPoint, direction, holeRadius));
     }
 
     private static long reflectionCount(int[] ellipseXYR, List<Fraction<Long>> firstTouchPoint, Fraction<Long> direction, Fraction<Long> holeRadius) {

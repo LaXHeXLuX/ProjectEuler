@@ -7,9 +7,9 @@ public class PE_057 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 1000;
-        return countExceedsUnder(limit);
+        return String.valueOf(countExceedsUnder(limit));
     }
 
     private static int countExceedsUnder(int limit) {

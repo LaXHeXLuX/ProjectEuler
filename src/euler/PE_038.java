@@ -7,9 +7,9 @@ public class PE_038 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         long[] biggest = biggestPandigitalProduct();
-        return biggest[biggest.length-1];
+        return String.valueOf(biggest[biggest.length-1]);
     }
 
     private static long concatenatedProductsOf(long n) {

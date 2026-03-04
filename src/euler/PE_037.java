@@ -12,12 +12,12 @@ public class PE_037 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         List<Integer> all = allTruncatablePrimes();
 
         long sum = 0;
         for (long a : all) sum += a;
-        return sum;
+        return String.valueOf(sum);
     }
 
     private static boolean isTruncatablePrime(int n) {

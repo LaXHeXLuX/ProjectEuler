@@ -7,9 +7,9 @@ public class PE_004 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int n = 3;
-        return largestPalindromeNumberMadeFromTwoNDigitNumbers(n);
+        return String.valueOf(largestPalindromeNumberMadeFromTwoNDigitNumbers(n));
     }
 
     private static long largestPalindromeNumberMadeFromTwoNDigitNumbers(long n) {

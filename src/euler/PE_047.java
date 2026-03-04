@@ -5,9 +5,9 @@ public class PE_047 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         long[] result = firstNConsecutiveNumbersToHaveMDistinctPrimeFactors(4, 4);
-        return result[0];
+        return String.valueOf(result[0]);
     }
 
     public static long[] firstNConsecutiveNumbersToHaveMDistinctPrimeFactors(int n, int m) {

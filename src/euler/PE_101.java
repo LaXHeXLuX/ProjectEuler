@@ -12,10 +12,10 @@ public class PE_101 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int[] polynome = {1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1};
         BigInteger[] bigPolynome = bigArr(polynome);
-        return sumOfFits(bigPolynome).longValue();
+        return sumOfFits(bigPolynome).toString();
     }
 
     private static BigInteger[] bigArr(int[] arr) {

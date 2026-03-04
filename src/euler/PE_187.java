@@ -7,9 +7,9 @@ public class PE_187 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 100_000_000;
-        return twoPrimeFactors(limit);
+        return String.valueOf(twoPrimeFactors(limit));
     }
 
     private static int twoPrimeFactors(int limit) {

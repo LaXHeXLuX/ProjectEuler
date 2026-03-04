@@ -7,9 +7,9 @@ public class PE_014 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 1_000_000;
-        return longestCollatzChainLength(limit);
+        return String.valueOf(longestCollatzChainLength(limit));
     }
 
     private static long longestCollatzChainLength(int limit) {

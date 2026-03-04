@@ -5,9 +5,9 @@ public class PE_039 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 1_001;
-        return sumWithMostTriangles(limit);
+        return String.valueOf(sumWithMostTriangles(limit));
     }
 
     private static boolean isTriangle(int a, int b, int c) {

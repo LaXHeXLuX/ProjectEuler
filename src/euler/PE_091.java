@@ -5,9 +5,9 @@ public class PE_091 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int n = 50;
-        return rightTrianglesBelow(n);
+        return String.valueOf(rightTrianglesBelow(n));
     }
 
     private static long rightTrianglesBelow(int n) {

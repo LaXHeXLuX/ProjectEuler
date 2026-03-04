@@ -5,9 +5,9 @@ public class PE_136 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 50_000_000;
-        return countSingleSolutions(limit);
+        return String.valueOf(countSingleSolutions(limit));
     }
 
     private static int countSingleSolutions(int limit) {

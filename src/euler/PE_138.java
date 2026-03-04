@@ -10,10 +10,10 @@ public class PE_138 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int count = 12;
         List<Long> triangles = smallestTrianglesWithProperty(count);
-        return sum(triangles);
+        return String.valueOf(sum(triangles));
     }
 
     private static long sum(List<Long> list) {

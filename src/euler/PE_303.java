@@ -11,9 +11,9 @@ public class PE_303 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 10_000;
-        return sum(limit);
+        return String.valueOf(sum(limit));
     }
 
     private static long sum(int limit) {

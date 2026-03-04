@@ -10,9 +10,9 @@ public class PE_070 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 10_000_000;
-        return numberWithPropertyWithSmallestScore(limit);
+        return String.valueOf(numberWithPropertyWithSmallestScore(limit));
     }
 
     private static int[] totients(int limit) {

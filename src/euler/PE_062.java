@@ -12,7 +12,7 @@ public class PE_062 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int power = 3;
         int count = 5;
         Set<Long> result = powerPermutations(power, count);
@@ -20,7 +20,7 @@ public class PE_062 {
         for (Long el : result) {
             if (el < min) min = el;
         }
-        return min;
+        return String.valueOf(min);
     }
 
     private static String digitArrayToString(int[] arr) {

@@ -9,14 +9,14 @@ public class PE_088 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 12_000;
         bestScore = new int[limit+1];
         for (int i = 2; i < bestScore.length; i++) {
             bestScore[i] = 2*i;
         }
         fillBestScores();
-        return setSum();
+        return String.valueOf(setSum());
     }
 
     private static long setSum() {

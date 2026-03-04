@@ -7,9 +7,9 @@ public class PE_141 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         long limit = 1_000_000_000_000L;
-        return progressiveSquares(limit);
+        return String.valueOf(progressiveSquares(limit));
     }
 
     private static void check(long x, long a, long b) {

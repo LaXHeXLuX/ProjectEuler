@@ -9,11 +9,11 @@ public class PE_123 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         long limit = 10_000_000_000L;
         int sieveLimit = upperBoundForSieve(limit);
         primes = Primes.primes(sieveLimit);
-        return leastNWithRemainderExceeding(limit);
+        return String.valueOf(leastNWithRemainderExceeding(limit));
     }
 
     private static int upperBoundForSieve(long limit) {

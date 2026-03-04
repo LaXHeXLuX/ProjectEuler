@@ -10,11 +10,11 @@ public class PE_135 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 1_000_000;
         int target = 10;
         List<Integer> solutions = sameDifferenceSolutions(target, limit);
-        return solutions.size();
+        return String.valueOf(solutions.size());
     }
 
     private static List<Integer> sameDifferenceSolutions(int target, int limit) {

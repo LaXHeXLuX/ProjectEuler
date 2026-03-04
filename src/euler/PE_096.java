@@ -10,13 +10,13 @@ public class PE_096 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         List<int[][]> sudokus = parser();
         int sum = 0;
         for (int[][] sudoku : sudokus) {
             sum += first3DigitsOfSolution(sudoku);
         }
-        return sum;
+        return String.valueOf(sum);
     }
 
     private static int first3DigitsOfSolution(int[][] sudoku) {

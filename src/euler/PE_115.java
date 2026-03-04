@@ -7,10 +7,10 @@ public class PE_115 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         long lengthToExceed = 1_000_000;
         int minSize = 50;
-        return firstLengthToExceed(lengthToExceed, minSize);
+        return String.valueOf(firstLengthToExceed(lengthToExceed, minSize));
     }
 
     private static int firstLengthToExceed(long n, int minSize) {

@@ -11,7 +11,7 @@ public class PE_105 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         String filename = "src/euler/inputs/PE_105_sets.txt";
         List<List<Integer>> sets = parse(filename);
         long sum = 0;
@@ -20,7 +20,7 @@ public class PE_105 {
                 sum += sum(set);
             }
         }
-        return sum;
+        return String.valueOf(sum);
     }
 
     private static long sum(List<Integer> set) {

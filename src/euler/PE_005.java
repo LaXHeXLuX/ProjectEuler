@@ -10,9 +10,9 @@ public class PE_005 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int n = 20;
-        return firstToDivide(arrOfNFirstElements(n));
+        return String.valueOf(firstToDivide(arrOfNFirstElements(n)));
     }
 
     private static long[] arrOfNFirstElements(int n) {

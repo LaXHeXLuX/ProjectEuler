@@ -16,8 +16,8 @@ public class PE_118 {
         System.out.println(PE());
     }
 
-    public static long PE() {
-        return countOfPandigitalPrimeSets(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9));
+    public static String PE() {
+        return String.valueOf(countOfPandigitalPrimeSets(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9)));
     }
 
     private static int sum(List<Integer> list) {

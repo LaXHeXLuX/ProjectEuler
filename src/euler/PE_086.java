@@ -7,9 +7,9 @@ public class PE_086 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int solutionCount = 1_000_000;
-        return smallestLimitFor(solutionCount);
+        return String.valueOf(smallestLimitFor(solutionCount));
     }
 
     private static int numberOfIntegerSolutions2(int limit) {

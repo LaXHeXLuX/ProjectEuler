@@ -7,8 +7,8 @@ public class PE_032 {
         System.out.println(PE());
     }
 
-    public static long PE() {
-        return sumOfPandigitalProductGroups();
+    public static String PE() {
+        return String.valueOf(sumOfPandigitalProductGroups());
     }
 
     private static long sumOfPandigitalProductGroups() {

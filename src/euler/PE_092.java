@@ -7,11 +7,11 @@ public class PE_092 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 10_000_000;
         int otherLimit = (int) Math.ceil(Math.log10(limit)) * 9*9;
         makeChains(otherLimit);
-        return countOfNEnders((int) Math.log10(limit), 0, 89);
+        return String.valueOf(countOfNEnders((int) Math.log10(limit), 0, 89));
     }
 
     private static void makeChains(int limit) {

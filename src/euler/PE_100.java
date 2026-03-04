@@ -7,10 +7,10 @@ public class PE_100 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         long lowerLimit = 1_000_000_000_000L;
         long[] result = firstArrangementAfter(lowerLimit);
-        return result[1];
+        return String.valueOf(result[1]);
     }
 
     private static long[] firstArrangementAfter(long lowerLimit) {

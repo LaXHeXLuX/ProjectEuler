@@ -11,13 +11,13 @@ public class PE_050 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 1_000_000;
         composites = Primes.compositeSieve(limit);
         primes = Primes.primes(composites);
 
         int[] combination = largestArrayOfConsecutivePrimesSummingToPrime();
-        return (sumOfArray(combination));
+        return String.valueOf((sumOfArray(combination)));
     }
 
     private static int sumOfArray(int[] arr) {

@@ -5,9 +5,9 @@ public class PE_126 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int n = 1000;
-        return firstWithSolutionCount(n);
+        return String.valueOf(firstWithSolutionCount(n));
     }
 
     private static int firstWithSolutionCount(int n) {

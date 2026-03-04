@@ -7,9 +7,9 @@ public class PE_069 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         long limit = 1_000_000L;
-        return highestNumberScore(limit);
+        return String.valueOf(highestNumberScore(limit));
     }
 
     private static long highestNumberScore(long limit) {

@@ -5,9 +5,9 @@ public class PE_137 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int n = 15;
-        return nthGoldenNugget(n);
+        return String.valueOf(nthGoldenNugget(n));
     }
 
     private static long nthGoldenNugget(int n) {

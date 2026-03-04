@@ -7,9 +7,9 @@ public class PE_179 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 10_000_000;
-        return consecutiveEqualDivisors(limit);
+        return String.valueOf(consecutiveEqualDivisors(limit));
     }
 
     private static int consecutiveEqualDivisors(int limit) {

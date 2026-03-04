@@ -8,12 +8,12 @@ public class PE_030 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int power = 5;
         List<Integer> numbers = allNumbersWithSameSum(power);
         long sum = 0;
         for (int number : numbers) sum += number;
-        return sum;
+        return String.valueOf(sum);
     }
 
     private static long sumOfNthPowersOfDigits(int power, int number) {

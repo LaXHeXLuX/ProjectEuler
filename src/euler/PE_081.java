@@ -7,10 +7,10 @@ public class PE_081 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         String filename = "src/euler/inputs/PE_081_matrix.txt";
         int[][] matrix = parser(filename);
-        return minimumSum(matrix);
+        return String.valueOf(minimumSum(matrix));
     }
 
     private static int[][] parser(String filename) {

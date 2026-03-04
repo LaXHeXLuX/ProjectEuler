@@ -11,11 +11,11 @@ public class PE_035 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 1_000_000;
         composites = Primes.compositeSieve(limit);
         List<Integer> cyclicPrimes = cyclicPrimesUnder(limit);
-        return cyclicPrimes.size();
+        return String.valueOf(cyclicPrimes.size());
     }
 
     private static int[] generateCyclicNumbers(int n) {

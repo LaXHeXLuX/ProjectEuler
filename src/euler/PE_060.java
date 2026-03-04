@@ -17,10 +17,10 @@ public class PE_060 {
         System.out.println((e-s) + " ms");
     }
 
-    public static long PE() {
+    public static String PE() {
         int size = 5;
         Set<Integer> lowestSumPrimeSet = firstNthPrimeSet(size);
-        return sum(lowestSumPrimeSet);
+        return String.valueOf(sum(lowestSumPrimeSet));
     }
 
     private static int sum(Set<Integer> set) {

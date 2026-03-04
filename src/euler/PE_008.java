@@ -27,10 +27,10 @@ public class PE_008 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         String number = INPUT.replace("\n", "");
         int n = 13;
-        return biggestProductOfNConsecutiveDigits(n, number);
+        return String.valueOf(biggestProductOfNConsecutiveDigits(n, number));
     }
 
     private static long biggestProductOfNConsecutiveDigits(int n, String number) {

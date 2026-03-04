@@ -9,9 +9,9 @@ public class PE_106 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int n = 12;
-        return countOfSubsetPairs(n);
+        return String.valueOf(countOfSubsetPairs(n));
     }
 
     private static long countOfSubsetPairs(int n) {

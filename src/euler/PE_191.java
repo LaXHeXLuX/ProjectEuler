@@ -10,9 +10,9 @@ public class PE_191 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int days = 30;
-        return countPrizes(days);
+        return String.valueOf(countPrizes(days));
     }
 
     private static long countPrizes(int days) {

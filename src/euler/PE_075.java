@@ -7,10 +7,10 @@ public class PE_075 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int perimeterLimit = 1_500_000;
         int solutionCount = 1;
-        return perimetersWithRightTriangleSolutions(solutionCount, perimeterLimit);
+        return String.valueOf(perimetersWithRightTriangleSolutions(solutionCount, perimeterLimit));
     }
     
     private static int perimetersWithRightTriangleSolutions(int solutionCount, int perimeterLimit) {

@@ -7,10 +7,10 @@ public class PE_114 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int length = 50;
         int minSize = 3;
-        return waysForLength(length, minSize);
+        return String.valueOf(waysForLength(length, minSize));
     }
 
     private static long waysForLength(int n, int minSize) {

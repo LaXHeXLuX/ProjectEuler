@@ -14,10 +14,10 @@ public class PE_121 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int turns = 15;
         Fraction<BigInteger> winChance = winChance(turns);
-        return winChance.den.divide(winChance.num).longValue();
+        return String.valueOf(winChance.den.divide(winChance.num).longValue());
     }
 
     private static Fraction<BigInteger> winChance(int turns) {
@@ -35,7 +35,7 @@ public class PE_121 {
     private static Fraction<BigInteger> chanceToGetWinAmount(int winAmount, int turns) {
         if (winAmount > turns) return new Fraction<>(BigInteger.ZERO);
         if (winAmount == turns) return new Fraction<>(BigInteger.ONE, Combinations.factorialBigInteger(turns+1));
-        if (winAmount == 0) return new Fraction<>(BigInteger.ONE,  BigInteger.valueOf(turns+1));
+        if (winAmount == 0) return new Fraction<>(BigInteger.ONE, BigInteger.valueOf(turns+1));
         if (results.get(turns).containsKey(winAmount)) return results.get(turns).get(winAmount);
 
         BigInteger bigTurns = BigInteger.valueOf(turns);

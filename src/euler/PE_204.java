@@ -7,10 +7,10 @@ public class PE_204 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int type = 100;
         long limit = 1_000_000_000;
-        return hammingNumbers(type, limit);
+        return String.valueOf(hammingNumbers(type, limit));
     }
 
     private static long hammingNumbers(int type, long limit) {

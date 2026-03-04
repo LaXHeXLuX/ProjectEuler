@@ -11,10 +11,10 @@ public class PE_321 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int n = 40;
         List<BigInteger> solutions = atLeastNFirstTerms(n);
-        return sumOfFirst(solutions, n);
+        return String.valueOf(sumOfFirst(solutions, n));
     }
 
     private static long sumOfFirst(List<BigInteger> list, int n) {

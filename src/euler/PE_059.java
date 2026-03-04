@@ -10,13 +10,13 @@ public class PE_059 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         String filename = "src/euler/inputs/PE_059_cipher.txt";
         int[] chars = parse(filename);
 
         int[] key = likelyKey(chars);
         int[] answer = XOR(chars, key);
-        return sum(answer);
+        return String.valueOf(sum(answer));
     }
 
     private static int sum(int[] arr) {

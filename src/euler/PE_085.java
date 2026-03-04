@@ -5,10 +5,10 @@ public class PE_085 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         long limit = 2_000_000L;
         int[] result = closestForLimit(limit);
-        return (long) result[0] * result[1];
+        return String.valueOf((long) result[0] * result[1]);
     }
 
     private static int[] closestForLimit(long limit) {

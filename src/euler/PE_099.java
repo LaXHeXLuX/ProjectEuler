@@ -16,11 +16,11 @@ public class PE_099 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         String file = "src/euler/inputs/PE_099_exp.txt";
         List<BaseExp> baseExponents = parse(file);
         BaseExp biggestBaseExp = biggestBaseExp(baseExponents);
-        return biggestBaseExp.index + 1;
+        return String.valueOf(biggestBaseExp.index + 1);
     }
 
     private static BaseExp biggestBaseExp(List<BaseExp> baseExponents) {

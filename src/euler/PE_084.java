@@ -13,7 +13,7 @@ public class PE_084 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int diceSides = 4;
         int moves = 1_000_000;
         int[] boardMoves = simulateMoves(moves, diceSides);
@@ -23,7 +23,7 @@ public class PE_084 {
             int el = sorted[1][sorted[1].length-i];
             modalString.append(el);
         }
-        return Long.parseLong(modalString.toString());
+        return modalString.toString();
     }
 
     private static int[][] mergeSort(int[] scores) {

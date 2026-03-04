@@ -10,9 +10,9 @@ public class PE_111 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int digitAmount = 10;
-        return primeRunSum(digitAmount);
+        return String.valueOf(primeRunSum(digitAmount));
     }
 
     private static long primeRunSum(int digitAmount) {

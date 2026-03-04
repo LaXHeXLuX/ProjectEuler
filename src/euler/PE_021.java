@@ -7,14 +7,14 @@ public class PE_021 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 10_000;
         boolean[] amicableNumbers = amicablePairs(limit);
         int sum = 0;
         for (int i = 1; i < amicableNumbers.length; i++) {
             if (amicableNumbers[i]) sum += i;
         }
-        return sum;
+        return String.valueOf(sum);
     }
 
     private static int amicablePair(int n) {

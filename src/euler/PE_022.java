@@ -10,10 +10,10 @@ public class PE_022 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         String[] names = parse();
         names = mergeSort(names);
-        return sumOfAllScores(names);
+        return String.valueOf(sumOfAllScores(names));
     }
 
     private static String[] parse() {

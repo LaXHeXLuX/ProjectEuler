@@ -5,10 +5,10 @@ public class PE_009 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int sum = 1000;
         int[] specialTriplet = pythagoreanTripletWithSumOf(sum);
-        return (long) specialTriplet[0] * specialTriplet[1] * specialTriplet[2];
+        return String.valueOf((long) specialTriplet[0] * specialTriplet[1] * specialTriplet[2]);
     }
 
     private static int[] pythagoreanTripletWithSumOf(int sum) {

@@ -5,13 +5,13 @@ public class PE_097 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         long factor = 28433;
         long exp = 2;
         long power = 7830457;
         long add = 1;
         long mod = 10_000_000_000L;
-        return compute(factor, exp, power, add, mod);
+        return String.valueOf(compute(factor, exp, power, add, mod));
     }
 
     private static long compute(long factor, long exp, long power, long add, long mod) {

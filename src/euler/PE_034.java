@@ -10,11 +10,11 @@ public class PE_034 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         List<Integer> digitFactorials = allDigitFactorials();
         int sum = 0;
         for (int digitFactorial : digitFactorials) sum += digitFactorial;
-        return sum;
+        return String.valueOf(sum);
     }
 
     private static boolean isDigitFactorial(int n) {

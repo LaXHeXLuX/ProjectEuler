@@ -8,10 +8,10 @@ public class PE_045 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int[] sides = {3, 5, 6};
         int lowerLimit = 40755 + 1;
-        return nextNumberPolygonalIn(sides, lowerLimit);
+        return String.valueOf(nextNumberPolygonalIn(sides, lowerLimit));
     }
 
     private static long nextNumberPolygonalIn(int[] sides, int lowerLimit) {

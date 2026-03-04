@@ -8,9 +8,9 @@ public class PE_131 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 1_000_000;
-        return countPrimes(limit);
+        return String.valueOf(countPrimes(limit));
     }
 
     private static int countPrimes(int limit) {

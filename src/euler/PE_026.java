@@ -7,9 +7,9 @@ public class PE_026 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 1001;
-        return longestReciprocalCycleUnder(limit);
+        return String.valueOf(longestReciprocalCycleUnder(limit));
     }
 
     private static int longestReciprocalCycleUnder(int limit) {

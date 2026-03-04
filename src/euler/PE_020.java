@@ -10,9 +10,9 @@ public class PE_020 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int n = 100;
         BigInteger factorial = Combinations.factorialBigInteger(n);
-        return Diophantine.digitSum(factorial);
+        return String.valueOf(Diophantine.digitSum(factorial));
     }
 }

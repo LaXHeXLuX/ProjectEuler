@@ -5,8 +5,8 @@ public class PE_019 {
         System.out.println(PE());
     }
 
-    public static long PE() {
-        return countingSundays();
+    public static String PE() {
+        return String.valueOf(countingSundays());
     }
 
     private static int countingSundays() {

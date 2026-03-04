@@ -11,10 +11,10 @@ public class PE_119 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int count = 30;
         List<Long> digitSumPowerNumbers = digitSumPowerNumbers(count);
-        return digitSumPowerNumbers.getLast();
+        return String.valueOf(digitSumPowerNumbers.getLast());
     }
 
     private static List<Long> digitSumPowerNumbers(int count) {

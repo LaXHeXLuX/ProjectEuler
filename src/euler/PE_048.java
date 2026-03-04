@@ -7,11 +7,11 @@ public class PE_048 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 1000;
         BigInteger rem = BigInteger.valueOf ((long) Math.pow(10, 10));
         BigInteger answer = selfPowersSum(limit, rem);
-        return answer.remainder(BigInteger.valueOf(10_000_000_000L)).longValue();
+        return String.valueOf(answer.remainder(BigInteger.valueOf(10_000_000_000L)).longValue());
     }
 
     private static BigInteger selfPowersSum(int limit, BigInteger rem) {

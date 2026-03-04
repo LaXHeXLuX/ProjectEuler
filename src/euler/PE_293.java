@@ -13,10 +13,10 @@ public class PE_293 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         long limit = 1_000_000_000;
         makeAdmissibleNumbers(limit);
-        return sum();
+        return String.valueOf(sum());
     }
 
     private static long sum() {

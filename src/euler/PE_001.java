@@ -5,10 +5,10 @@ public class PE_001 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int[] dividers = {3, 5};
         int n = 1000;
-        return sumOfMultiplesOf(dividers, n);
+        return String.valueOf(sumOfMultiplesOf(dividers, n));
     }
 
     private static long sumOfMultiplesOf(int[] dividers, long limit) {

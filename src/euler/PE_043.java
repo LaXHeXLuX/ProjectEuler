@@ -10,9 +10,9 @@ public class PE_043 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         Set<String> numbers = pandigitalNumbersWithSubstringDivisibility();
-        return sum(numbers);
+        return String.valueOf(sum(numbers));
     }
     
     private static long sum(Set<String> set) {

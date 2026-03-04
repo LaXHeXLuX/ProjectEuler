@@ -7,10 +7,10 @@ public class PE_130 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int n = 25;
         int[] compositeValues = firstNCompositeValuesWithRepunitProperty(n);
-        return sum(compositeValues);
+        return String.valueOf(sum(compositeValues));
     }
 
     private static int sum(int[] arr) {

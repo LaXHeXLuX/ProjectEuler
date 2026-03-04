@@ -10,9 +10,9 @@ public class PE_042 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         String file = "src/euler/inputs/PE_042_words.txt";
-        return countTriangleWords(parse(file));
+        return String.valueOf(countTriangleWords(parse(file)));
     }
 
     private static int getWordValue(String word) {

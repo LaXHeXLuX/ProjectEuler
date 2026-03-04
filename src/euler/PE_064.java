@@ -7,9 +7,9 @@ public class PE_064 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 10_000;
-        return countOdds(limit);
+        return String.valueOf(countOdds(limit));
     }
 
     private static int countOdds(int limit) {

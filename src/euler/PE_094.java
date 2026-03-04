@@ -7,9 +7,9 @@ public class PE_094 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         long limit = 1_000_000_000L;
-        return perimeterSum(limit);
+        return String.valueOf(perimeterSum(limit));
     }
 
     private static long perimeterSum(long perimeterLimit) {

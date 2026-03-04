@@ -7,10 +7,10 @@ public class PE_031 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         long[] coins = {1, 2, 5, 10, 20, 50, 100};
         long goal = 200;
-        return waysToMake(goal, coins) + 1;
+        return String.valueOf(waysToMake(goal, coins) + 1);
     }
 
     private static long waysToMake(long goal, long[] coins) {

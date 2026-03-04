@@ -12,11 +12,11 @@ public class PE_323 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int bits = 32;
         Fraction<BigInteger> P = P(bits);
         int digits = 10;
-        return Math.round(P.doubleValue() * Diophantine.pow(10, digits));
+        return String.valueOf(Math.round(P.doubleValue() * Diophantine.pow(10, digits)));
     }
 
     private static Fraction<BigInteger> P(int n) {

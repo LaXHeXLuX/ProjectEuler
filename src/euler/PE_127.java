@@ -14,12 +14,12 @@ public class PE_127 {
         System.out.println(PE());
     }
 
-    public static long PE() {
+    public static String PE() {
         int limit = 120_000;
         rads = rads(limit);
         reverseLookUp = reverseLookUp(rads);
         List<Integer> hits = abcHits(limit);
-        return sum(hits);
+        return String.valueOf(sum(hits));
     }
 
     private static long sum(List<Integer> list) {
