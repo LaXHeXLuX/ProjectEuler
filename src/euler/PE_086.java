@@ -12,15 +12,17 @@ public class PE_086 {
         return String.valueOf(smallestLimitFor(solutionCount));
     }
 
-    private static int numberOfIntegerSolutions2(int limit) {
-        int sum = 0;
-        for (int a = 1; a <= limit; a++) {
-            sum += integerSolutionsFor(a);
+    private static int smallestLimitFor(int limit) {
+        int M = 1;
+        int solutionCount = 0;
+        while (solutionCount < limit) {
+            M++;
+            solutionCount += solutionCount(M);
         }
-        return sum;
+        return M;
     }
 
-    private static int integerSolutionsFor(int a) {
+    private static int solutionCount(int a) {
         int step = 1;
         if (a % 2 != 0) step = 2;
         int count = 0;
@@ -35,22 +37,5 @@ public class PE_086 {
             }
         }
         return count;
-    }
-
-    private static int smallestLimitFor(int solutionCount) {
-        int low = 0;
-        int high = 1;
-        while (numberOfIntegerSolutions2(high) < solutionCount) {
-            low = high;
-            high *= 2;
-        }
-        while (low < high) {
-            int mid = (low + high) / 2;
-            int solutions = numberOfIntegerSolutions2(mid);
-            if (solutions < solutionCount) low = mid + 1;
-            else high = mid;
-        }
-
-        return low;
     }
 }
