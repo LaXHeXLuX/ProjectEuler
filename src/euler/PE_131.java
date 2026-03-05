@@ -18,13 +18,13 @@ public class PE_131 {
         int count = 0;
         for (int i = 2; i < primes.length; i++) {
             int p = primes[i];
-            long n = nFor2(p);
+            long n = nFor(p);
             if (n > 0) count++;
         }
         return count;
     }
 
-    private static long nFor2(int p) {
+    private static long nFor(int p) {
         for (int i = 1; i*i < p; i++) {
             int k = i*i;
             long sqrt = 4L*k*p - 3L*k*k;
