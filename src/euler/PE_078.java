@@ -34,9 +34,9 @@ public class PE_078 {
         int step = 1;
         long sum = 0;
         while (step <= n) {
-            int nthStep = step * (3*step-1)/2;
+            int nthStep = (step * (3*step-1)) >> 1;
             if (nthStep > n) break;
-            int coefficient = (step % 2) * 2 - 1;
+            int coefficient = ((step & 1) << 1) - 1;
             sum += coefficient * eulersFunction(n-nthStep, mod);
             sum += coefficient * eulersFunction(n-nthStep-step, mod);
             sum = ((sum % mod) + mod) % mod;
