@@ -4,46 +4,50 @@ import utils.Graph;
 import utils.Parser;
 
 public class PE_083 {
+    private static int r;
+    private static int c;
+
     static void main() {
         System.out.println(PE());
     }
 
     public static String PE() {
         int[][] matrix = Parser.parseManyInts("src/euler/inputs/PE_083_matrix.txt", ",");
+        r = matrix.length;
+        c = matrix[0].length;
         Graph graph = makeGraph(matrix);
-        String endName = (matrix.length-1) + "_" + (matrix[matrix.length-1].length-1);
-        return String.valueOf(graph.djikstra("start".hashCode(), endName.hashCode()));
+        return String.valueOf(graph.djikstra(-1, (r-1)*c + c-1));
     }
 
     private static Graph makeGraph(int[][] matrix) {
         Graph graph = new Graph();
 
         addBody(graph, matrix);
-        graph.addNode("start".hashCode());
-        graph.addEdge("start".hashCode(), "0_0".hashCode(), matrix[0][0]);
+        graph.addNode(-1);
+        graph.addEdge(-1, 0, matrix[0][0]);
 
         return graph;
     }
     private static void addBody(Graph graph, int[][] matrix) {
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                String name = i + "_" + j;
-                graph.addNode(name.hashCode());
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                int n = i*c + j;
+                graph.addNode(n);
 
                 int weight = matrix[i][j];
 
                 // Edges pointing down and up
                 if (i != 0) {
-                    String upName = (i-1) + "_" + j;
-                    graph.addEdge(upName.hashCode(), name.hashCode(), weight);
-                    graph.addEdge(name.hashCode(), upName.hashCode(), matrix[i-1][j]);
+                    int upN = (i-1)*c + j;
+                    graph.addEdge(upN, n, weight);
+                    graph.addEdge(n, upN, matrix[i-1][j]);
                 }
 
                 // Edge pointing right and left
                 if (j != 0) {
-                    String leftName = i + "_" + (j-1);
-                    graph.addEdge(leftName.hashCode(), name.hashCode(), weight);
-                    graph.addEdge(name.hashCode(), leftName.hashCode(), matrix[i][j-1]);
+                    int leftN = i*c + j-1;
+                    graph.addEdge(leftN, n, weight);
+                    graph.addEdge(n, leftN, matrix[i][j-1]);
                 }
             }
         }
