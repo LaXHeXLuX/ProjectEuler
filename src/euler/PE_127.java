@@ -11,7 +11,10 @@ public class PE_127 {
     private static int[][] reverseLookUp;
 
     static void main() {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e - s) + " ms");
     }
 
     public static String PE() {
@@ -71,7 +74,10 @@ public class PE_127 {
 
         for (int c = 3; c < limit; c++) {
             int m = c / rads[c];
-            if (m < 6) continue;
+            int mLimit = 6;
+            if (c % 2 == 0) mLimit = 15;
+            else if (c % 3 == 0) mLimit = 10;
+            if (m < mLimit) continue;
             for (int bRad = 2; bRad < m; bRad++) {
                 int[] bValues = reverseLookUp[bRad];
                 if (bValues.length == 0) continue;
