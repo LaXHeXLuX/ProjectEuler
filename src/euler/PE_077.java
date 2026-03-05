@@ -15,20 +15,30 @@ public class PE_077 {
     }
 
     public static String PE() {
-        waysToSumWithPrimes = new HashMap<>();
-        int primeLimit = 10_000_000;
-        primes = Primes.primes(primeLimit);
         int n = 5_000;
         return String.valueOf(firstToSumInOverNWays(n));
     }
 
     private static int firstToSumInOverNWays(int n) {
+        waysToSumWithPrimes = new HashMap<>();
+        int primeLimit = 1;
+        int result = firstToSumInOverNWays(n, primeLimit);
+        while (result == -1) {
+            primeLimit *= 10;
+            result = firstToSumInOverNWays(n, primeLimit);
+        }
+        return result;
+    }
+
+    private static int firstToSumInOverNWays(int n, int limit) {
+        primes = Primes.primes(limit);
         int number = 1;
         long answer = waysToSumWithPrimes(1);
-        while (answer <= n) {
+        while (answer <= n && number < limit) {
             number++;
             answer = waysToSumWithPrimes(number);
         }
+        if (number >= limit) return -1;
         return number;
     }
 
