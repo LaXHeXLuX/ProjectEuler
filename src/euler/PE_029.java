@@ -1,8 +1,6 @@
 package euler;
 
-import java.math.BigInteger;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
 
 public class PE_029 {
     static void main() {
@@ -11,25 +9,42 @@ public class PE_029 {
 
     public static String PE() {
         int limit = 100;
-        Set<BigInteger> powers = distinctPowers(limit, limit);
-        return String.valueOf(powers.size());
+        return String.valueOf(distinctPowerCount(limit, limit));
     }
 
-    private static Set<BigInteger> distinctPowers(int limitA, int limitB) {
-        Set<BigInteger> powers = new HashSet<>();
+    private static long distinctPowerCount(int limitA, int limitB) {
+        long counter = 0;
+
+        int[][] roots = new int[limitA+1][2];
+        int[] starts = new int[limitA+1];
+        Arrays.fill(starts, 2);
         for (int a = 2; a <= limitA; a++) {
-            for (int b = 2; b <= limitB; b++) {
-                powers.add(power(a, b));
+            int aPow = a * a;
+            int power = 2;
+            while (aPow <= limitA) {
+                if (roots[a][0] == 0) roots[aPow] = new int[] {a, power};
+                starts[aPow] = limitB / power + 1;
+                power++;
+                aPow *= a;
+            }
+            for (int b = starts[a]; b <= limitB; b++) {
+                if (roots[a][0] == 0) {
+                    counter++;
+                    continue;
+                }
+                int rootPow = b * roots[a][1];
+                boolean pass = true;
+                int iStart = rootPow / limitB;
+                if (rootPow % limitB != 0) iStart++;
+                for (int i = iStart; i < roots[a][1]; i++) {
+                    if (rootPow % i == 0) {
+                        pass = false;
+                        break;
+                    }
+                }
+                if (pass) counter++;
             }
         }
-        return powers;
-    }
-
-    private static BigInteger power(int a, int b) {
-        BigInteger power = BigInteger.valueOf(a);
-        for (int i = 0; i < b-1; i++) {
-            power = power.multiply(BigInteger.valueOf(a));
-        }
-        return power;
+        return counter;
     }
 }
