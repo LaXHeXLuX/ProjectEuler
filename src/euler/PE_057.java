@@ -4,7 +4,10 @@ import java.math.BigInteger;
 
 public class PE_057 {
     static void main() {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e - s) + " ms");
     }
 
     public static String PE() {
@@ -16,23 +19,16 @@ public class PE_057 {
         int counter = 0;
 
         BigInteger[] fraction = {BigInteger.valueOf(3), BigInteger.TWO};
+        BigInteger powTen = BigInteger.TEN;
         for (int i = 1; i < limit; i++) {
-            if (numeratorExceedsDenominator(fraction)) counter++;
+            if (fraction[0].compareTo(powTen) >= 0) {
+                if (fraction[1].compareTo(powTen) < 0) counter++;
+                powTen = powTen.multiply(BigInteger.TEN);
+            }
             fraction = nextIterationOfSquareRootOfTwo(fraction);
         }
 
         return counter;
-    }
-
-    private static boolean numeratorExceedsDenominator(BigInteger[] fraction) {
-        BigInteger n = fraction[0];
-        BigInteger d = fraction[1];
-        while (n.compareTo(BigInteger.TEN) >= 0) {
-            if (d.compareTo(BigInteger.TEN) < 0) return true;
-            n = n.divide(BigInteger.TEN);
-            d = d.divide(BigInteger.TEN);
-        }
-        return false;
     }
 
     private static BigInteger[] nextIterationOfSquareRootOfTwo(BigInteger[] previousIteration) {
