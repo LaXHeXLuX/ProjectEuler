@@ -2,6 +2,8 @@ package euler;
 
 import utils.Primes;
 
+import java.util.Arrays;
+
 public class PE_187 {
     static void main() {
         System.out.println(PE());
@@ -16,12 +18,13 @@ public class PE_187 {
         int count = 0;
 
         int[] primes = Primes.primes(limit/2);
-        for (int i = 0; i < primes.length; i++) {
-            for (int j = i; j < primes.length; j++) {
-                long p = (long) primes[i] * primes[j];
-                if (p > limit) break;
-                count++;
-            }
+        int end = Arrays.binarySearch(primes, (int) Math.sqrt(limit));
+        if (end < 0) end = -end-1;
+        for (int i = 0; i < end; i++) {
+            int index = Arrays.binarySearch(primes, limit/primes[i])+1;
+            if (index < 0) index = -index;
+            index -= i;
+            count += index;
         }
 
         return count;
