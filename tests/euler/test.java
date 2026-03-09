@@ -175,6 +175,7 @@ public class test {
         put(PE_345.class, "13938");
         put(PE_346.class, "336108797689259276");
         put(PE_347.class, "11109800204052");
+        put(PE_348.class, "1004195061");
     }};
 
     static void main() {
