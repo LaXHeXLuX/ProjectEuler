@@ -19,8 +19,8 @@ public class PE_345 {
              34 124   4 878 450 476 712 914 838 669 875 299 823 329 699
             815 559 813 459 522 788 168 586 966 232 308 833 251 631 107
             813 883 451 509 615  77 281 613 459 205 380 274 302  35 805"""; // 3 0 1 2
-private static Map<List<Integer>, Integer> bestSum;
-private static Map<Integer, Set<List<Integer>>> reverseLookUp;
+private static int[] bestSum;
+private static Map<Integer, Set<Integer>> reverseLookUp;
 
     static void main() {
         double s = System.currentTimeMillis();
@@ -35,47 +35,43 @@ private static Map<Integer, Set<List<Integer>>> reverseLookUp;
     }
 
     private static int maxMatrixSum(int[][] matrix) {
-        bestSum = new HashMap<>();
+        bestSum = new int[1 << matrix[0].length];
         reverseLookUp = new TreeMap<>(Comparator.reverseOrder());
         for (int i = 0; i < matrix[0].length; i++) {
-            bestSum.put(List.of(i), matrix[0][i]);
+            bestSum[1 << i] = matrix[0][i];
             if (!reverseLookUp.containsKey(matrix[0][i])) {
                 reverseLookUp.put(matrix[0][i], new HashSet<>());
             }
-            reverseLookUp.get(matrix[0][i]).add(List.of(i));
+            reverseLookUp.get(matrix[0][i]).add(1 << i);
         }
-        for (int i = 1; i < matrix.length; i++) bestSumForRow(matrix[i]);
+        for (int i = 1; i < matrix.length; i++) {
+            bestSumForRow(matrix[i]);
+        }
 
-        List<Integer> finalList = new ArrayList<>();
-        for (int i = 0; i < matrix.length; i++) finalList.add(i);
-        return bestSum.get(finalList);
+        return bestSum[(1 << matrix.length) - 1];
     }
 
     private static void bestSumForRow(int[] row) {
-        Map<List<Integer>, Integer> newBestSum = new HashMap<>();
-        Map<Integer, Set<List<Integer>>> newReverseLookUp = new TreeMap<>(Comparator.reverseOrder());
+        int[] newBestSum = new int[1 << row.length];
+        Map<Integer, Set<Integer>> newReverseLookUp = new TreeMap<>(Comparator.reverseOrder());
         for (Integer sum : reverseLookUp.keySet()) {
-            for (List<Integer> list : reverseLookUp.get(sum)) {
-                boolean[] used = new boolean[row.length];
-                for (Integer integer : list) used[integer] = true;
+            for (Integer mask : reverseLookUp.get(sum)) {
                 for (int i = 0; i < row.length; i++) {
-                    if (used[i]) continue;
-                    List<Integer> newList = new ArrayList<>(list);
-                    newList.add(i);
-                    Collections.sort(newList);
+                    if ((mask & (1 << i)) != 0) continue;
+                    int newMask = mask | (1 << i);
                     int newSum = sum + row[i];
-                    if (newBestSum.containsKey(newList)) {
-                        if (newSum <= newBestSum.get(newList)) continue;
-                        newReverseLookUp.get(newBestSum.get(newList)).remove(newList);
-                        if (newReverseLookUp.get(newBestSum.get(newList)).isEmpty()) {
-                            newReverseLookUp.remove(newBestSum.get(newList));
+                    if (newBestSum[newMask] > 0) {
+                        if (newSum <= newBestSum[newMask]) continue;
+                        newReverseLookUp.get(newBestSum[newMask]).remove(newMask);
+                        if (newReverseLookUp.get(newBestSum[newMask]).isEmpty()) {
+                            newReverseLookUp.remove(newBestSum[newMask]);
                         }
                     }
-                    newBestSum.put(newList, newSum);
+                    newBestSum[newMask] = newSum;
                     if (!newReverseLookUp.containsKey(newSum)) {
                         newReverseLookUp.put(newSum, new HashSet<>());
                     }
-                    newReverseLookUp.get(newSum).add(newList);
+                    newReverseLookUp.get(newSum).add(newMask);
                 }
             }
         }
