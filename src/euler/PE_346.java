@@ -3,7 +3,6 @@ package euler;
 import java.util.*;
 
 public class PE_346 {
-
     static void main() {
         System.out.println(PE());
     }
