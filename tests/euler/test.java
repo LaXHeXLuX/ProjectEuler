@@ -172,6 +172,7 @@ public class test {
         put(PE_329.class, "199740353/29386561536000");
         put(PE_336.class, "CAGBIHEFJDK");
         put(PE_340.class, "291504964");
+        put(PE_345.class, "13938");
     }};
 
     static void main() {
