@@ -220,12 +220,18 @@ public class Primes {
     public static int upperBoundForNthPrime(int n) {
         if (n < 6) return 12;
         double logN = Math.log(n);
-        return (int) (n*logN + n*Math.log(logN));
+        double logLogN = Math.log(logN);
+        if (n < 688_383) return (int) (n * (logN + Math.log(logN)));
+        return (int) (n * (logN + logLogN - 1 + (logLogN-2)/logN));
+    }
+    public static int upperBoundForPrimeCountBelow(int n) {
+        double logN = Math.log(n);
+        if (n < 355_991) return (int) (1.25506*n/logN);
+        return (int) (n/logN * (1 + 1/logN + 2.51/logN/logN));
     }
     public static long eulersTotient(long n) {
-        if (n == 1) return 0;
-        PF[] primesFactors = primeFactors(n);
-        return eulersTotient(primesFactors);
+        if (n <= 1) return 0;
+        return eulersTotient(primeFactors(n));
     }
     public static long eulersTotient(PF[] primeFactors) {
         long totient = 1;
