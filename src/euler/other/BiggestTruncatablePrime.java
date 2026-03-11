@@ -24,7 +24,7 @@ public class BiggestTruncatablePrime {
         BigInteger biggestPrime = current;
         for (int i = 1; i < 10; i++) {
             BigInteger n = BigInteger.valueOf(i).multiply(powTen).add(current);
-            if (!n.isProbablePrime(1)) continue;
+            if (!n.isProbablePrime(100)) continue;
             BigInteger biggestTruncated = biggestLeftTruncatablePrime(n, powTen.multiply(BigInteger.TEN));
             if (biggestTruncated.compareTo(biggestPrime) > 0) biggestPrime = biggestTruncated;
         }
