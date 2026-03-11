@@ -1,10 +1,12 @@
 package euler;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Arrays;
 import java.util.List;
 
 public class PE_336 {
+    private static final List<char[]> maximixes = new ArrayList<>();
+
     static void main() {
         System.out.println(PE());
     }
@@ -12,37 +14,40 @@ public class PE_336 {
     public static String PE() {
         int size = 11;
         int n = 2011;
-        Maximix maximix = nthSorted(n-1, size);
-        return maximix.s;
+        return nthSorted(n-1, size);
     }
 
-    private static Maximix nthSorted(int n, int size) {
-        List<Maximix> m = maximixes(size);
-        m.sort(Comparator.comparing(Maximix::s));
-        return m.get(n);
+    private static String nthSorted(int n, int size) {
+        maximixes(size);
+        maximixes.sort(Arrays::compare);
+        return String.valueOf(maximixes.get(n));
     }
 
-    private record Maximix(String s, List<Integer> path) {}
-
-    private static List<Maximix> maximixes(int n) {
-        String alph = "ABCDEFGHIJKLMNOPQRSTU";
-        String s = alph.substring(0, n);
-        s = s.substring(0, n - 3) + s.charAt(n-2) + s.charAt(n-3) + s.charAt(n-1);
-        return maximixes(s, n-4);
-    }
-
-    private static List<Maximix> maximixes(String s, int place) {
-        if (place < 0) return List.of(new Maximix(s, new ArrayList<>()));
-        List<Maximix> m = new ArrayList<>();
-        for (int i = 1; i <= s.length() - place - 2; i++) {
-            String s2 = s.substring(0, place) + new StringBuilder(s.substring(place)).reverse();
-            s2 = s2.substring(0, place+i) + new StringBuilder(s2.substring(place+i)).reverse();
-            List<Maximix> previous = maximixes(s2, place-1);
-            for (Maximix maximix : previous) {
-                maximix.path.add(i);
-                m.add(maximix);
-            }
+    private static void maximixes(int n) {
+        char A = 'A';
+        char[] s = new char[n];
+        for (int i = 0; i < n; i++) {
+            s[i] = (char) (A + i);
         }
-        return m;
+        char last2 = s[n-2];
+        s[n-2] = s[n-3];
+        s[n-3] = last2;
+        maximixes(s, n-4);
+    }
+
+    private static void maximixes(char[] s, int place) {
+        if (place < 0) {
+            maximixes.add(s);
+            return;
+        }
+        for (int i = 1; i <= s.length - place - 2; i++) {
+            char[] s2 = s.clone();
+            for (int j = place; j < place+i; j++) {
+                s2[j] = s[s.length-j+place-1];
+            }
+            s2[place+i] = s[place];
+            System.arraycopy(s, place + i + 1 - i, s2, place + i + 1, s.length - (place + i + 1));
+            maximixes(s2, place-1);
+        }
     }
 }

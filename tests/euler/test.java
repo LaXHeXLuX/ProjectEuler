@@ -171,6 +171,11 @@ public class test {
         put(PE_323.class, "63551758451");
         put(PE_329.class, "199740353/29386561536000");
         put(PE_336.class, "CAGBIHEFJDK");
+        put(PE_340.class, "291504964");
+        put(PE_345.class, "13938");
+        put(PE_346.class, "336108797689259276");
+        put(PE_347.class, "11109800204052");
+        put(PE_348.class, "1004195061");
         put(PE_351.class, "11762187201804552");
     }};
 
