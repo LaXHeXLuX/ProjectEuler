@@ -180,6 +180,7 @@ public class test {
         put(PE_357.class, "1739023853137");
         put(PE_359.class, "40632119");
         put(PE_381.class, "139602943319822");
+        put(PE_387.class, "696067597313468");
     }};
 
     static void main() {
