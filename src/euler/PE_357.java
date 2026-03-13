@@ -11,15 +11,15 @@ public class PE_357 {
 
     public static String PE() {
         int limit = 100_000_000;
-        composites = Primes.compositeSieve(limit+1);
+        composites = Primes.compositeSieve(limit+2);
         return String.valueOf(sumOfAll(limit));
     }
 
     private static long sumOfAll(int limit) {
         long sum = 1+2+6;
 
-        for (int i = 10; i < limit; i+=4) {
-            if (composites[i/2] || composites[i/4 + 1]) continue;
+        for (int i = 10; i <= limit; i+=4) {
+            if (composites[i >> 1] || composites[(i >> 2) + 1]) continue;
             if (primeGenerating(i)) sum += i;
         }
 
@@ -28,7 +28,7 @@ public class PE_357 {
 
     private static boolean primeGenerating(int n) {
         for (int d = 3; d*d <= n; d++) {
-            if (n % d == 0 && composites[(d + n/d)/2]) return false;
+            if (n % d == 0 && composites[(d + n/d) >> 1]) return false;
         }
         return true;
     }
