@@ -4,14 +4,12 @@ import utils.Diophantine;
 import utils.Primes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PE_387 {
     static void main() {
-        double s = System.currentTimeMillis();
         System.out.println(PE());
-        double e = System.currentTimeMillis();
-        System.out.println((e-s) + " ms");
     }
 
     public static String PE() {
@@ -22,49 +20,46 @@ public class PE_387 {
 
     private static long sumOfStrongRightTruncatableHarshadPrimes(int powTenLimit) {
         long sum = 0;
-        List<Long> working1 = List.of(1L, 3L, 5L, 7L, 9L);
-        List<Long> working2 = List.of(2L, 4L, 6L, 8L);
+
+        List<Long> working1 = Arrays.asList(1L, 3L, 5L, 7L, 9L);
+        List<Long> working2 = Arrays.asList(2L, 4L, 6L, 8L);
         for (int pow = 2; pow < powTenLimit; pow++) {
-            List<Long> newWorking1 = new ArrayList<>();
-            for (Long l : working1) {
-                int digitSum = Diophantine.digitSum(l);
-                for (int i = 0; i < 10; i+=2) {
-                    long n = 10*l + i;
-                    if (n % (digitSum+i) != 0) continue;
-                    newWorking1.add(n);
-                    if (Primes.isPrime(n / (digitSum+i))) {
-                        for (int j = 1; j < 10; j+=2) {
-                            long N = 10*n + j;
-                            if (Primes.isPrime(N)) {
-                                sum += N;
-                            }
-                        }
-                    }
+            working1 = newWorking(working1, null);
+            sum += working1.removeLast();
+            working2 = newWorking(working2, working1);
+            sum += working2.removeLast();
+        }
+
+        return sum;
+    }
+
+    private static List<Long> newWorking(List<Long> working, List<Long> workingOdd) {
+        List<Long> newWorking = new ArrayList<>();
+        long sum = 0;
+        for (Long l : working) {
+            int digitSum = Diophantine.digitSum(l);
+            newWorking.add(10*l);
+            int step = 1;
+            if (workingOdd == null) step = 2;
+            for (int i = step; i < 10; i+=step) {
+                long n = 10*l + i;
+                if (n % (digitSum+i) != 0) continue;
+                if (workingOdd == null || i % 2 == 0) newWorking.add(n);
+                else workingOdd.add(n);
+                if (Primes.isPrime(n / (digitSum+i))) {
+                    sum += sumFor(n);
                 }
             }
-            working1 = newWorking1;
-            List<Long> newWorking2 = new ArrayList<>();
-            for (Long l : working2) {
-                int digitSum = Diophantine.digitSum(l);
-                for (int i = 0; i < 10; i++) {
-                    long n = 10*l + i;
-                    if (n % (digitSum+i) != 0) continue;
-                    if (i % 2 == 1) {
-                        newWorking1.add(n);
-                    } else {
-                        newWorking2.add(n);
-                    }
-                    if (Primes.isPrime(n / (digitSum+i))) {
-                        for (int j = 1; j < 10; j+=2) {
-                            long N = 10*n + j;
-                            if (Primes.isPrime(N)) {
-                                sum += N;
-                            }
-                        }
-                    }
-                }
-            }
-            working2 = newWorking2;
+        }
+        newWorking.add(sum);
+        return newWorking;
+    }
+
+    private static long sumFor(long n) {
+        long sum = 0;
+        for (int i = 1; i < 10; i+=2) {
+            long N = 10*n + i;
+            if (Primes.isPrime(N)) sum += N;
         }
         return sum;
     }
