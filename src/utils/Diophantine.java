@@ -121,23 +121,6 @@ public class Diophantine {
         if (root * root == n) return root;
         return -root;
     }
-    public static int[] quadratic(int a, int b, int c) {
-        long sqrt = (long) b * b - 4L*a*c;
-        if (sqrt < 0) return new int[0];
-        long root = root(sqrt);
-        if (root < 0) return new int[0];
-        long x1 = -b - root;
-        long x2 = -b + root;
-        long div = 2L * a;
-        long rem1 = x1 % div;
-        long rem2 = x2 % div;
-        int result1 = Math.toIntExact(x1/div);
-        int result2 = Math.toIntExact(x2/div);
-        if (rem1 != 0 && rem2 != 0) return new int[0];
-        if (rem1 == 0 && rem2 == 0 && x1 != x2) return new int[] {result1, result2};
-        if (rem1 == 0) return new int[] {result1};
-        return new int[] {result2};
-    }
     public static int digitSum(int n) {
         int sum = 0;
         while (n > 0) {
@@ -275,6 +258,19 @@ public class Diophantine {
 
         return new long[] {s1, t1};
     }
+    public static long pow(long base, int exp) {
+        long result = 1;
+
+        while (exp > 0) {
+            if ((exp & 1) == 1)
+                result = result * base;
+
+            base = base * base;
+            exp >>= 1;
+        }
+
+        return result;
+    }
     public static long powMod(long base, long exp, long mod) {
         long result = 1;
         base = base % mod;
@@ -284,19 +280,6 @@ public class Diophantine {
                 result = (result * base) % mod;
 
             base = (base * base) % mod;
-            exp >>= 1;
-        }
-
-        return result;
-    }
-    public static long pow(long base, int exp) {
-        long result = 1;
-
-        while (exp > 0) {
-            if ((exp & 1) == 1)
-                result = result * base;
-
-            base = base * base;
             exp >>= 1;
         }
 

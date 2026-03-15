@@ -63,18 +63,6 @@ class DiophantineTest {
         assertEquals(big, Diophantine.root(big*big));
     }
     @Test
-    void quadratic() {
-        int[] empty = {};
-        assertArrayEquals(empty, Diophantine.quadratic(1, 1, 1));
-        assertArrayEquals(new int[] {-1}, Diophantine.quadratic(1, 2, 1));
-        assertArrayEquals(empty, Diophantine.quadratic(1, 3, 1));
-        assertArrayEquals(new int[] {-2}, Diophantine.quadratic(2, 5, 2));
-        assertArrayEquals(new int[] {2}, Diophantine.quadratic(2, -5, 2));
-        assertArrayEquals(new int[] {-1}, Diophantine.quadratic(4, 5, 1));
-        assertArrayEquals(new int[] {-4, -1}, Diophantine.quadratic(1, 5, 4));
-        assertArrayEquals(empty, Diophantine.quadratic(4, 4, 1));
-    }
-    @Test
     void digitSum() {
         assertEquals(0, Diophantine.digitSum(0));
         assertEquals(0, Diophantine.digitSum(0L));
