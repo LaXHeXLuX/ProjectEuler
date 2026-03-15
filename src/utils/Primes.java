@@ -91,7 +91,7 @@ public class Primes {
         return primes;
     }
     public static boolean[] sieve(int limit) {
-        if (limit < 2) return new boolean[] {true};
+        if (limit < 2) return new boolean[limit];
         boolean[] primes = new boolean[limit];
         Arrays.fill(primes, true);
         primes[0] = false;
@@ -197,6 +197,57 @@ public class Primes {
         if (n > 1) primeFactors.add(new PF(n, 1));
 
         return Converter.listToArr(primeFactors);
+    }
+    public static PF[][] primeFactorSieve(int limit) {
+        int[] spf = new int[limit];
+        for (int i = 2; i < limit; i++) {
+            if (spf[i] > 0) continue;
+            for (int j = i; j < limit; j += i) {
+                if (spf[j] == 0) spf[j] = i;
+            }
+        }
+
+        PF[][] result = new PF[limit][];
+        result[0] = new PF[0];
+        result[1] = new PF[0];
+
+        for (int i = 2; i < limit; i++) {
+            int temp = i;
+
+            int uniqueCount = 0;
+            while (temp > 1) {
+                int p = spf[temp];
+                uniqueCount++;
+                while (temp % p == 0) temp /= p;
+            }
+
+            result[i] = new PF[uniqueCount];
+
+            temp = i;
+            int index = 0;
+            while (temp > 1) {
+                int p = spf[temp];
+                int count = 0;
+                while (temp % p == 0) {
+                    temp /= p;
+                    count++;
+                }
+                result[i][index] = new PF(p, count);
+                index++;
+            }
+        }
+
+        return result;
+    }
+    public static int maxPrimorial(long n) {
+        if (n <= 2) return 1;
+        long prod = 2;
+        int i = 1;
+        while (prod < n) {
+            prod *= primesTo100[i];
+            i++;
+        }
+        return i;
     }
     public static boolean isPrime(long n) {
         if (n < 100) {

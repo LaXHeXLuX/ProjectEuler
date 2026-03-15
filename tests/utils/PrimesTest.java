@@ -44,6 +44,27 @@ class PrimesTest {
         assertArrayEquals(primes1500, Primes.primes(Primes.compositeSieve(1500)));
     }
     @Test
+    void sieve() {
+        assertArrayEquals(new boolean[1], Primes.sieve(1));
+        int[] expectedInt = {
+                0, 0, 1, 1, 0, 1, 0, 1, 0, 0,
+                0, 1, 0, 1, 0, 0, 0, 1, 0, 1,
+                0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+                0, 1, 0, 0, 0, 0, 0, 1, 0, 0,
+                0, 1, 0, 1, 0, 0, 0, 1, 0, 0,
+                0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+                0, 1, 0, 0, 0, 0, 0, 1, 0, 0,
+                0, 1, 0, 1, 0, 0, 0, 0, 0, 1,
+                0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+                0, 0, 0, 0, 0, 0, 0, 1, 0, 0
+        };
+        boolean[] expected = new boolean[expectedInt.length];
+        for (int i = 0; i < expected.length; i++) {
+            expected[i] = expectedInt[i] == 1;
+        }
+        assertArrayEquals(expected, Primes.sieve(expected.length));
+    }
+    @Test
     void primeFactors() {
         assertNotEquals(new Primes.PF(1), new Object());
         assertNotEquals(new Primes.PF(2, 1), new Primes.PF(2, 2));
@@ -68,6 +89,21 @@ class PrimesTest {
         Primes.PF[] pfBig = {new Primes.PF(5, 1), new Primes.PF(349, 2), new Primes.PF(2441, 2)};
         assertEquals("[349 ^ 2]", pfBig[1].toString());
         assertArrayEquals(pfBig, Primes.primeFactors(	3_628_744_721_405L));
+    }
+    @Test
+    void primeFactorSieve() {
+        int limit = 1_000;
+        Primes.PF[][] sieve = Primes.primeFactorSieve(limit);
+        for (int i = 0; i < sieve.length; i++) {
+            assertArrayEquals(sieve[i], Primes.primeFactors(i));
+        }
+    }
+    @Test
+    void maxPrimorial() {
+        assertEquals(1, Primes.maxPrimorial(1));
+        assertEquals(1, Primes.maxPrimorial(2));
+        assertEquals(2, Primes.maxPrimorial(3));
+        assertEquals(4, Primes.maxPrimorial(100));
     }
     @Test
     void isPrime() {
@@ -95,6 +131,19 @@ class PrimesTest {
         assertEquals(4127, Primes.nthPrime(567));
         assertEquals(104729, Primes.nthPrime(10_000));
         assertEquals(-1, Primes.nthPrime(-1));
+    }
+    @Test
+    void primeUpperBounds() {
+        int[] primes = Primes.primes(100_000);
+        for (int i = 6; i > 0; i--) {
+            int index = primes.length/i;
+            int p = primes[index-1];
+            assertTrue(Primes.upperBoundForNthPrime(index) >= p);
+            assertTrue(Primes.upperBoundForPrimeCountBelow(p+1) >= index);
+        }
+        int dummy = 1_000_000;
+        assertTrue(Primes.upperBoundForNthPrime(dummy) >= dummy);
+        assertTrue(Primes.upperBoundForPrimeCountBelow(dummy) >= dummy/100);
     }
     @Test
     void eulersTotient() {
