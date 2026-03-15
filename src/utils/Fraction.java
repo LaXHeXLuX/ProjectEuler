@@ -53,7 +53,7 @@ public class Fraction<T> {
         return this.multiply(new Fraction<>(fraction.den, fraction.num));
     }
     public Fraction<T> divide(T n) {
-        return this.multiply(n);
+        return new Fraction<>(num, op.mul(n, den));
     }
     public Fraction<T> simplify() {
         T gcd = op.gcd(num, den);

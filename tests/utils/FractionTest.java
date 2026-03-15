@@ -71,6 +71,10 @@ class FractionTest {
         fraction2 = new Fraction<>(1_000_000, 2_000_000);
         sum = fraction1.add(fraction2);
         assertSimplifiedFractionEquals(3, 2, sum);
+
+        fraction1 = new Fraction<>(7, 12);
+        sum = fraction1.add(2);
+        assertSimplifiedFractionEquals(31, 12, sum);
     }
     @Test
     void subtractFraction() {
@@ -88,6 +92,10 @@ class FractionTest {
         fraction2 = new Fraction<>(1, 3);
         difference = fraction1.subtract(fraction2);
         assertSimplifiedFractionEquals(1, 6, difference);
+
+        fraction1 = new Fraction<>(7, 12);
+        difference = fraction1.subtract(2);
+        assertSimplifiedFractionEquals(-17, 12, difference);
     }
     @Test
     void multiplyFraction() {
@@ -110,6 +118,10 @@ class FractionTest {
         fraction2 = new Fraction<>(1, 3);
         product = fraction1.multiply(fraction2);
         assertSimplifiedFractionEquals(1, 6, product);
+
+        fraction1 = new Fraction<>(7, 12);
+        product = fraction1.multiply(2);
+        assertSimplifiedFractionEquals(7, 6, product);
     }
     @Test
     void divideFraction() {
@@ -126,6 +138,10 @@ class FractionTest {
         fraction2 = new Fraction<>(1, 3);
         quotient = fraction1.divide(fraction2);
         assertSimplifiedFractionEquals(3, 2, quotient);
+
+        fraction1 = new Fraction<>(7, 12);
+        quotient = fraction1.divide(2);
+        assertSimplifiedFractionEquals(7, 24, quotient);
     }
     @Test
     void getCycle() {

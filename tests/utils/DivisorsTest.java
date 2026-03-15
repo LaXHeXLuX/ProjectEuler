@@ -31,9 +31,14 @@ class DivisorsTest {
     }
     @Test
     void sumOfDivisors() {
+        assertThrows(IllegalArgumentException.class, () -> Divisors.sumOfDivisors(0));
+        assertEquals(0, Divisors.sumOfDivisors(1));
         assertEquals(1, Divisors.sumOfDivisors(2));
+        assertEquals(6, Divisors.sumOfDivisors(25));
         assertEquals(28, Divisors.sumOfDivisors(28));
         assertEquals(55, Divisors.sumOfDivisors(36));
+        assertEquals(8, Divisors.sumOfDivisors(49));
+        assertEquals(17, Divisors.sumOfDivisors(55));
         assertEquals(1, Divisors.sumOfDivisors(101));
         assertEquals(810, Divisors.sumOfDivisors(360));
     }

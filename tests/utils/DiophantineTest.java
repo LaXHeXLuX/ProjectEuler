@@ -38,6 +38,11 @@ class DiophantineTest {
         for (int i = 0; i < fundamentals.size(); i++) {
             assertArrayEquals(fundamentals.get(i), results[i]);
         }
+        fundamentals = Diophantine.pell(2, -1);
+        results = new long[][] {{1, 1}, {-1, 1}};
+        for (int i = 0; i < fundamentals.size(); i++) {
+            assertArrayEquals(fundamentals.get(i), results[i]);
+        }
     }
     @Test
     void root() {
