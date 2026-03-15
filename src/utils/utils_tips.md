@@ -49,16 +49,17 @@ For each method I have specified the name and description or use case:
 - **continuedFraction** - continuedFraction(n) gives the array {n0, x0, x1, ..., xn}, where n0 is the integer part of a square root of n, and x0-xn is the repeating cycle of the continued fraction of sqrt(n).
 - **nthTermOfContinuedFraction** (long[], BigInteger[]) - nthTermOfContinuedFraction(continuedFraction, n) gives the two-element array {num, den}, where num/den is the fraction when calculating from the n-th step of the continued fraction.
 - **pell** (long[], BigInteger[]) - pell(D) gives the fundamental (smallest) (x, y) solution to the equation $x^2 - Dy^2 = 1$. pell(D, C) gives the fundamental (smallest) (x, y) solutions to the equation $x^2 - Dy^2 = C$.
-- **root** (int, long) - root(n) gives integer part the square root of n - positive if n was a whole square, negative otherwise.
-- **quadratic** - quadratic(a, b, c) gives the two solutions (x1, x2) to the equation $ax^2 + bx + c = 0$.
+- **root** (int, long) - root(n) gives integer part the square root of n - negative iff n was not a whole square.
 - **digitSum** (int, long, BigInteger) - digitSum(n) gives the digit sum of n.
 - **isPalindromeInBase** (int, long) - isPalindromeInBase(n, b) returns true iff the number n converted to base b is palindromic.
+- **isPalindrome** (int, long) - returns isPalindromeInBase(n, 10).
 - **gcd** (int, long) - gcd(a, b) gives the greatest common divisor of a and b.
 - **extendedEuclidean** (int, long) - extendedEuclidean(a, b) gives the minimised coefficients (x, y) such that $ax + by = gcd(a, b)$. For coprime (a, b) this means $ax + by = 1$, or $ax \equiv 1 \pmod{b}$.
-- **powMod** - powMod(b, e, m) gives the result x such that $b^e \equiv x \pmod{m}$.
-- **tetrateMod** - tetrateMod(b, e, m) gives the result x such that $b↑↑e \equiv x \pmod{m}$. Requirement: $gcd(b, m) = 1$
-- **modDivide** - modDivide(a, b, c) gives the minimal positive integer x such that $ax \equiv b \pmod{c}$.
-- **crt** - crt(n1, a1, n2, a2, ...) gives the minimal positive integer x such that $x \equiv a_i \pmod{n_i}$ for any $n_i$.
+- **pow** - powMod(b, e) gives the result $b^e$.
+- **powMod** - powMod(b, e, m) gives the result $x$ such that $b^e \equiv x \pmod{m}$.
+- **tetrateMod** - tetrateMod(b, e, m) gives the result $x$ such that $b↑↑e \equiv x \pmod{m}$. Requirement: $gcd(b, m) = 1$
+- **modDivide** - modDivide(a, b, c) gives the minimal positive integer $x$ such that $ax \equiv b \pmod{c}$.
+- **crt** - crt(n1, a1, n2, a2, ...) gives the minimal positive integer $x$ such that $x \equiv a_i \pmod{n_i}$ for any $n_i$.
 
 # Divisors
 Self-explanatory. 
@@ -89,8 +90,11 @@ For each method I have specified the name and use case:
 # Primes
 For each method I have specified the name and use case:
 - **primes** - primes(limit) gives prime numbers up to the limit.
-- **compositeSieve** - compositeSieve(limit) gives a limit-sized boolean array where each index is true iff that index number is composite.
+- **sieve** - sieve(limit) gives a limit-sized boolean array where each index is true iff that index number is prime.
+- **compositeSieve** - like sieve(limit), but only odd elements (mapping: $n = 2i+1$), index is true iff that index number is not prime.
 - **primeFactors** - primeFactors(n) gives the prime factors of a number, in the form of a (primeFactor, power) array.
+- **primeFactorSieve** - primeFactorSieve(limit) gives a limit-sized array of prime factors - the prime factors of each index.
+- **maxPrimorial** - maxPrimorial(n) gives the first $i$ for which the $i$-th primorial is bigger or equal to $n$.
 - **isPrime** - isPrime(n) returns true iff n is prime.
 - **nthPrime** - nthPrime(n) gives the n-th prime.
 - **upperBoundForNthPrime** - upperBoundForNthPrime(n) gives the upper bound for the n-th prime.
