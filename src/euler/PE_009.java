@@ -1,5 +1,8 @@
 package euler;
 
+import utils.Diophantine;
+import utils.Divisors;
+
 public class PE_009 {
     static void main() {
         System.out.println(PE());
@@ -12,17 +15,22 @@ public class PE_009 {
     }
 
     private static int[] pythagoreanTripletWithSumOf(int sum) {
-        for (int a = 1; a < sum/2; a++) {
-            for (int b = 1; b < Math.min(a, sum-2*a); b++) {
-                int c = 1000-a-b;
-                if (c < 1) continue;
-                if (isPythagoreanTriplet(a, b, c)) return new int[] {a, b, c};
+        if (sum % 2 != 0) return new int[0];
+        sum /= 2;
+        int[] divs = Divisors.divisors(sum);
+        for (int k : divs) {
+            int mmPlusMn = sum / k;
+            int mStart = (int) Math.sqrt(mmPlusMn / 2.0);
+            if (mStart % 2 != mmPlusMn % 2) mStart++;
+            int mLimit = Diophantine.root(mmPlusMn);
+            if (mLimit < 0) mLimit = -mLimit + 1;
+            for (int m = mStart; m < mLimit; m+=2) {
+                if (mmPlusMn % m != 0) continue;
+                int n = mmPlusMn / m - m;
+                if (Diophantine.gcd(m, n) > 1) continue;
+                return new int[] {k*(m*m - n*n), k*2*m*n, k*(m*m + n*n)};
             }
         }
-        return new int[] {-1};
-    }
-
-    private static boolean isPythagoreanTriplet(int a, int b, int c) {
-        return a*a + b*b == c*c;
+        return new int[0];
     }
 }
