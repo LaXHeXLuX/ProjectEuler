@@ -1,41 +1,28 @@
 package euler;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PE_002 {
     static void main() {
         System.out.println(PE());
     }
 
     public static String PE() {
-        long n = 4_000_000L;
-        return String.valueOf(sumOfEvenElements(fibonacciNumbersUntil(n)));
+        long n = 4_000_000;
+        return String.valueOf(sumOfFibonacciNumbers(n));
     }
 
-    private static long sumOfEvenElements(List<Long> list) {
+    private static long sumOfFibonacciNumbers(long limit) {
+        long f1 = 1L;
+        long f2 = 2L;
         long sum = 0;
-        for (long element : list) {
-            if (element % 2 == 0) sum += element;
+
+        while (f2 < limit) {
+            sum += f2;
+            long oldF1 = f1;
+            long oldF2 = f2;
+            f1 = oldF1 + 2*oldF2;
+            f2 = 2*oldF1 + 3*oldF2;
         }
+
         return sum;
-    }
-
-    private static List<Long> fibonacciNumbersUntil(long limit) {
-        List<Long> fibonacciNumbers = new ArrayList<>();
-        fibonacciNumbers.add(1L);
-        long fibo1 = 1L;
-        fibonacciNumbers.add(2L);
-        long fibo2 = 2L;
-        long temp;
-
-        while (fibo2 < limit) {
-            temp = fibo2;
-            fibo2 += fibo1;
-            fibo1 = temp;
-            fibonacciNumbers.add(fibo2);
-        }
-
-        return fibonacciNumbers;
     }
 }

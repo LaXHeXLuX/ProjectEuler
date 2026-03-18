@@ -112,7 +112,7 @@ public class PE_013 {
     public static String PE() {
         BigInteger[] numbers = parser();
         int n = 10;
-        return String.valueOf(firstNDigits(sumOfArrElements(numbers), n).longValue());
+        return String.valueOf(firstNDigits(sum(numbers), n).longValue());
     }
 
     private static BigInteger[] parser() {
@@ -124,7 +124,7 @@ public class PE_013 {
         return numbers;
     }
 
-    private static BigInteger sumOfArrElements(BigInteger[] arr) {
+    private static BigInteger sum(BigInteger[] arr) {
         BigInteger sum = BigInteger.ZERO;
         for (BigInteger number : arr) {
             sum = sum.add(number);

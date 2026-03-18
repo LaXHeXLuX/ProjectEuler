@@ -1,5 +1,6 @@
 package euler;
 
+import utils.Diophantine;
 import utils.Primes;
 
 import java.util.HashMap;
@@ -31,7 +32,7 @@ public class PE_005 {
         Map<Long, Integer> biggestTerms = biggestTerms(allPrimeFactors);
         long product = 1;
         for (long key : biggestTerms.keySet()) {
-            product *= (long) Math.pow(key, biggestTerms.get(key));
+            product *= Diophantine.pow(key, biggestTerms.get(key));
         }
         return product;
     }

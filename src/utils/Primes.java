@@ -1,8 +1,6 @@
 package utils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Primes {
     private static final int[] primesTo100 = {
@@ -157,46 +155,52 @@ public class Primes {
     }
     public static PF[] primeFactors(long n) {
         if (n < 2) return new PF[0];
-        List<PF> primeFactors = new ArrayList<>();
+        int index = 0;
+        PF[] primeFactors = new PF[maxPrimorial(n)];
 
         long limit = (long) Math.sqrt(n);
         for (int i : primesTo100) {
             if (i > limit) break;
             if (n % i == 0) {
-                primeFactors.add(new PF(i, 1));
+                primeFactors[index] = new PF(i);
                 n /= i;
                 while (n % i == 0) {
-                    primeFactors.getLast().power++;
+                    primeFactors[index].power++;
                     n /= i;
                 }
+                index++;
                 limit = (long) Math.sqrt(n);
             }
         }
 
         for (long i = 101; i <= limit; i += 6) {
             if (n % i == 0) {
-                primeFactors.add(new PF(i, 1));
+                primeFactors[index] = new PF(i);
                 n /= i;
                 while (n % i == 0) {
-                    primeFactors.getLast().power++;
+                    primeFactors[index].power++;
                     n /= i;
                 }
+                index++;
                 limit = (long) Math.sqrt(n);
             }
             if (n % (i+2) == 0) {
-                primeFactors.add(new PF(i+2, 1));
+                primeFactors[index] = new PF(i+2);
                 n /= i+2;
                 while (n % (i+2) == 0) {
-                    primeFactors.getLast().power++;
+                    primeFactors[index].power++;
                     n /= i+2;
                 }
+                index++;
                 limit = (long) Math.sqrt(n);
             }
         }
 
-        if (n > 1) primeFactors.add(new PF(n, 1));
-
-        return Converter.listToArr(primeFactors);
+        if (n > 1) {
+            primeFactors[index] = new PF(n);
+            index++;
+        }
+        return Arrays.copyOf(primeFactors, index);
     }
     public static PF[][] primeFactorSieve(int limit) {
         int[] spf = new int[limit];
