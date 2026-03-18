@@ -106,10 +106,7 @@ public class PE_013 {
                 53503534226472524250874054075591789781264330331690""";
 
     static void main() {
-        double s = System.currentTimeMillis();
         System.out.println(PE());
-        double e = System.currentTimeMillis();
-        System.out.println((e - s) + " ms");
     }
 
     public static String PE() {
