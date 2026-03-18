@@ -194,4 +194,12 @@ public class Divisors {
         divisors.add(n);
         return Converter.listToArr(divisors);
     }
+    public static int divisorCount(long n) {
+        Primes.PF[] pfs = Primes.primeFactors(n);
+        int count = 1;
+        for (Primes.PF pf : pfs) {
+            count *= pf.power+1;
+        }
+        return count;
+    }
 }
