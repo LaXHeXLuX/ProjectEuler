@@ -44,12 +44,13 @@ public class PE_018 {
     }
 
     private static int maximumSum(int[][] triangle) {
-        if (triangle.length == 1) return triangle[0][0];
-        int[][] newTriangle = new int[triangle.length-1][];
-        System.arraycopy(triangle, 0, newTriangle, 0, newTriangle.length);
-        for (int i = 0; i < newTriangle[newTriangle.length-1].length; i++) {
-            newTriangle[newTriangle.length-1][i] += Math.max(triangle[newTriangle.length][i], triangle[newTriangle.length][i+1]);
+        for (int i = triangle.length-2; i >= 0; i--) {
+            for (int j = 0; j < triangle[i].length; j++) {
+                int v1 = triangle[i+1][j];
+                int v2 = triangle[i+1][j+1];
+                triangle[i][j] += Math.max(v1, v2);
+            }
         }
-        return maximumSum(newTriangle);
+        return triangle[0][0];
     }
 }
