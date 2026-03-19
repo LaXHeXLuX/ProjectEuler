@@ -70,8 +70,11 @@ public class Divisors {
         return sum;
     }
     public static int[] divisorSums(int limit) {
+        return divisorSums(limit, true);
+    }
+    public static int[] divisorSums(int limit, boolean includeOne) {
         int[] sums = new int[limit];
-        Arrays.fill(sums, 1);
+        if (includeOne) Arrays.fill(sums, 1);
         sums[0] = 0;
         for (int i = 2; i < limit; i++) {
             for (int j = 2; i*j < limit; j++) {
