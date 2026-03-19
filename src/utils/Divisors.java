@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Divisors {
@@ -41,8 +42,8 @@ public class Divisors {
     public static long sumOfDivisors(long n) {
         if (n < 1) throw new IllegalArgumentException("n must be positive and power must be non-negative!");
         if (n == 1) return 0;
-        long initial = n;
 
+        long sum = -n;
         int two = 0;
         while (n % 2 == 0) {
             two++;
@@ -54,7 +55,6 @@ public class Divisors {
             n /= 3;
         }
 
-        long sum = 0;
         List<Long> divisorsRec = divisorsRec(n, 5);
         for (int i2 = 0; i2 <= two; i2++) {
             long pow2 = Diophantine.pow(2, i2);
@@ -67,7 +67,18 @@ public class Divisors {
                 }
             }
         }
-        return sum - initial;
+        return sum;
+    }
+    public static int[] divisorSums(int limit) {
+        int[] sums = new int[limit];
+        Arrays.fill(sums, 1);
+        sums[0] = 0;
+        for (int i = 2; i < limit; i++) {
+            for (int j = 2; i*j < limit; j++) {
+                sums[i*j] += i;
+            }
+        }
+        return sums;
     }
     private static List<Long> divisorsRec(long n, long start, int power) {
         if (n < 2) return List.of();

@@ -3,26 +3,34 @@ package euler;
 import utils.Divisors;
 
 public class PE_021 {
+    private static int[] divisorSums;
+
     static void main() {
         System.out.println(PE());
     }
 
     public static String PE() {
         int limit = 10_000;
+        return String.valueOf(amicableNumbersSum(limit));
+    }
+
+    private static int amicableNumbersSum(int limit) {
+        divisorSums = Divisors.divisorSums((int) (limit*(1 + Math.log(limit))));
         boolean[] amicableNumbers = amicablePairs(limit);
+
         int sum = 0;
         for (int i = 1; i < amicableNumbers.length; i++) {
             if (amicableNumbers[i]) sum += i;
         }
-        return String.valueOf(sum);
+        return sum;
     }
 
     private static int amicablePair(int n) {
-        int sum = (int) Divisors.sumOfDivisors(n);
-        int otherNumber = sum;
+        int otherNumber = divisorSums[n];
         if (otherNumber < 1) return -1;
-        sum = (int) Divisors.sumOfDivisors(otherNumber);
-        return sum == n && otherNumber != n ? otherNumber : -1;
+        int sum = divisorSums[otherNumber];
+        if (sum == n && otherNumber != n) return otherNumber;
+        return -1;
     }
 
     private static boolean[] amicablePairs(int limit) {
