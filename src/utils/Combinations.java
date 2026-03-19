@@ -89,16 +89,16 @@ public class Combinations {
         }
 
         List<T[]> outputList = new ArrayList<>();
-        T[] sorted = ArrayFunctions.mergeSort(arr);
-        for (int i = 0; i < sorted.length; i++) {
-            T el = sorted[i];
-            if (i > 0 && el.equals(sorted[i-1])) continue;
-            T[] others = (T[]) Array.newInstance(type, sorted.length-1);
-            System.arraycopy(sorted, 0, others, 0, i);
-            System.arraycopy(sorted, i+1, others, i, sorted.length-i-1);
+        Arrays.sort(arr);
+        for (int i = 0; i < arr.length; i++) {
+            T el = arr[i];
+            if (i > 0 && el.equals(arr[i-1])) continue;
+            T[] others = (T[]) Array.newInstance(type, arr.length-1);
+            System.arraycopy(arr, 0, others, 0, i);
+            System.arraycopy(arr, i+1, others, i, arr.length-i-1);
             T[][] othersPermutations = permutations(others);
             for (T[] op : othersPermutations) {
-                T[] perm = (T[]) Array.newInstance(type, sorted.length);
+                T[] perm = (T[]) Array.newInstance(type, arr.length);
                 perm[0] = el;
                 System.arraycopy(op, 0, perm, 1, op.length);
                 outputList.add(perm);

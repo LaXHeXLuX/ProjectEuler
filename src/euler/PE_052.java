@@ -1,7 +1,8 @@
 package euler;
 
-import utils.ArrayFunctions;
 import utils.Combinations;
+
+import java.util.Arrays;
 
 public class PE_052 {
     static void main() {
@@ -14,7 +15,7 @@ public class PE_052 {
     }
 
     private static int smallestNumberWithPermutedMultiples(int[] multiples) {
-        multiples = ArrayFunctions.mergeSort(multiples);
+        Arrays.sort(multiples);
         int biggestMultiple = multiples[multiples.length-1];
         int limit = 10/biggestMultiple;
 

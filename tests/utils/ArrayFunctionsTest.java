@@ -37,21 +37,6 @@ class ArrayFunctionsTest {
         assertFalse(ArrayFunctions.contains("", arrString));
     }
     @Test
-    void mergeSort() {
-        assertArrayEquals(new Object[] {}, ArrayFunctions.mergeSort(new Object[] {}));
-        assertArrayEquals(new Object[] {1}, ArrayFunctions.mergeSort(new Object[] {1}));
-
-        int[] arrInt = {3, 5, 2, 100, 77, 1, 1, 7, 8, 3};
-        assertArrayEquals(new int[] {1, 1, 2, 3, 3, 5, 7, 8, 77, 100}, ArrayFunctions.mergeSort(arrInt));
-
-        long[] arrLong = {3, 5, 2, 1_000_000_000_000_000L, 77, 1, 1, 7, 8, 3};
-        assertArrayEquals(new long[] {1, 1, 2, 3, 3, 5, 7, 8, 77, 1_000_000_000_000_000L}, ArrayFunctions.mergeSort(arrLong));
-
-        String[] arrString = {"this", "is", "absolutely", "my", "best", "array", "ever"};
-        String[] arrStringExpected = {"absolutely", "array", "best", "ever", "is", "my", "this"};
-        assertArrayEquals(arrStringExpected, ArrayFunctions.mergeSort(arrString));
-    }
-    @Test
     void reverseArray() {
         int[] arrInt = {1, 2, 3, 4};
         assertArrayEquals(new int[] {4, 3, 2, 1}, ArrayFunctions.reverseArray(arrInt));

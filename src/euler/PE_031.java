@@ -1,6 +1,6 @@
 package euler;
 
-import utils.ArrayFunctions;
+import java.util.Arrays;
 
 public class PE_031 {
     static void main() {
@@ -14,7 +14,7 @@ public class PE_031 {
     }
 
     private static long waysToMake(long goal, long[] coins) {
-        coins = ArrayFunctions.mergeSort(coins);
+        Arrays.sort(coins);
         return waysToMake(goal, coins, 0);
     }
 

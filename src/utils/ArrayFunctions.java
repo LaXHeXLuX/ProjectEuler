@@ -3,7 +3,6 @@ package utils;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
@@ -20,37 +19,14 @@ public class ArrayFunctions {
     public static <T> boolean contains(T el, T arr) {
         return contains((Object) el, Converter.toWrapperArray(arr));
     }
-    public static <T> T mergeSort(T arr) {
-        return mergeSort(arr, (Comparator<T>) Comparator.naturalOrder());
-    }
-    public static <T> T mergeSort(T arr, Comparator<T> comparator) {
-        return Converter.toPrimitiveArray(mergeSort(Converter.toWrapperArray(arr), comparator));
-    }
-    public static <T> T[] mergeSort(T[] arr, Comparator<T> comparator) {
-        if (arr.length <= 1) return arr;
-        T[] arr1 = Arrays.copyOfRange(arr, 0, arr.length/2);
-        T[] arr2 = Arrays.copyOfRange (arr, arr.length/2, arr.length);
-        arr1 = mergeSort(arr1, comparator);
-        arr2 = mergeSort(arr2, comparator);
-        T[] sorted = (T[]) Array.newInstance(arr.getClass().getComponentType(), arr.length);
-        int index1 = 0;
-        int index2 = 0;
-        for (int i = 0; i < sorted.length; i++) {
-            if (index2 == arr2.length || index1 < arr1.length && comparator.compare(arr1[index1], arr2[index2]) <= 0) {
-                sorted[i] = arr1[index1];
-                index1++;
-            } else {
-                sorted[i] = arr2[index2];
-                index2++;
-            }
+    public static int[] reverseArray(int[] arr) {
+        int iLimit = arr.length/2;
+        for (int i = 0; i < iLimit; i++) {
+            int temp = arr[i];
+            arr[i] = arr[arr.length-1-i];
+            arr[arr.length-1-i] = temp;
         }
-        return sorted;
-    }
-    public static <T> T[] mergeSort(T[] arr) {
-        return mergeSort(arr, (Comparator<T>) Comparator.naturalOrder());
-    }
-    public static <T> T reverseArray(T arr) {
-        return Converter.toPrimitiveArray(reverseArray(Converter.toWrapperArray(arr)));
+        return arr;
     }
     public static <T> T[] reverseArray(T[] arr) {
         T[] reversed = (T[]) Array.newInstance(arr.getClass().getComponentType(), arr.length);

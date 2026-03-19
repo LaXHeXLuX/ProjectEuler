@@ -1,7 +1,6 @@
 package euler;
 
-import utils.ArrayFunctions;
-
+import java.util.Arrays;
 import java.util.Comparator;
 
 public class PE_124 {
@@ -12,13 +11,8 @@ public class PE_124 {
     public static String PE() {
         int n = 100_000;
         int[][] rads = rads(n);
-        int[][] sorted = sort(rads);
-        return String.valueOf(sorted[10_000][0]);
-    }
-
-    private static int[][] sort(int[][] rads) {
-        Comparator<int[]> c = Comparator.comparingInt(a -> a[1]);
-        return ArrayFunctions.mergeSort(rads, c);
+        Arrays.sort(rads, Comparator.comparingInt(a -> a[1]));
+        return String.valueOf(rads[10_000][0]);
     }
 
     private static int[][] rads(int n) {

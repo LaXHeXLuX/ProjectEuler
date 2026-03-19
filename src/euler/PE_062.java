@@ -1,6 +1,5 @@
 package euler;
 
-import utils.ArrayFunctions;
 import utils.Converter;
 
 import java.util.*;
@@ -58,7 +57,9 @@ public class PE_062 {
                 }
                 nextThreshold *= 10;
             }
-            String firstPermutation = digitArrayToString(ArrayFunctions.mergeSort(Converter.digitArray(p)));
+            int[] digits = Converter.digitArray(p);
+            Arrays.sort(digits);
+            String firstPermutation = digitArrayToString(digits);
             if (!powerPermutations.containsKey(firstPermutation))
                 powerPermutations.put(firstPermutation, new HashSet<>());
             Set<Long> permutation = powerPermutations.get(firstPermutation);

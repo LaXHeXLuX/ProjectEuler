@@ -1,7 +1,8 @@
 package euler;
 
-import utils.ArrayFunctions;
 import utils.PolygonalNumber;
+
+import java.util.Arrays;
 
 public class PE_045 {
     static void main() {
@@ -15,7 +16,7 @@ public class PE_045 {
     }
 
     private static long nextNumberPolygonalIn(int[] sides, int lowerLimit) {
-        sides = ArrayFunctions.mergeSort(sides);
+        Arrays.sort(sides);
 
         for (int i = 0; true; i++) {
             long maxPolygonal = PolygonalNumber.polygonalNumber(sides[sides.length-1], i);

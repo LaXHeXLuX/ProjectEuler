@@ -6,9 +6,7 @@ import utils.Converter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class PE_054 {
     static void main() {
@@ -164,7 +162,8 @@ public class PE_054 {
         }
 
         int[] highCards = Converter.listToArr(highCardsList);
-        return ArrayFunctions.reverseArray(ArrayFunctions.mergeSort(highCards));
+        Arrays.sort(highCards);
+        return ArrayFunctions.reverseArray(highCards);
     }
     private static int highestPair(int[][] multiples) {
         int[] pairs = pairs(multiples);
@@ -183,7 +182,8 @@ public class PE_054 {
             }
         }
 
-        return ArrayFunctions.reverseArray(ArrayFunctions.mergeSort(pairs));
+        Arrays.sort(pairs);
+        return ArrayFunctions.reverseArray(pairs);
     }
     private static int threeOfAKind(int[][] multiples) {
         for (int[] multiple : multiples) {
@@ -200,7 +200,7 @@ public class PE_054 {
             numbers[i] = multiples[i][0];
         }
 
-        numbers = ArrayFunctions.mergeSort(numbers);
+        Arrays.sort(numbers);
         if (numbers[4] - numbers[0] == 4) return numbers[4];
         return -1;
     }
