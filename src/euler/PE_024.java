@@ -10,7 +10,8 @@ public class PE_024 {
 
     public static String PE() {
         int[] arr = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-        int[] permutation = Combinations.nthPermutation(arr, 999_999);
+        int n = 1_000_000;
+        int[] permutation = Combinations.nthPermutation(arr, n-1);
         return String.valueOf(Converter.fromDigitArray(permutation));
     }
 }
