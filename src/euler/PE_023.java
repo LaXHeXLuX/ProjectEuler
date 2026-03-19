@@ -1,65 +1,76 @@
 package euler;
 
+import utils.Converter;
+import utils.Divisors;
+
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 public class PE_023 {
-    private static final Set<Integer> abundantNumberSet = new LinkedHashSet<>();
-    private static final List<Integer> oddAbundantNumbers = new ArrayList<>();
+    private static final int limit = 28123;
+    private static final boolean[] abundantNumber = new boolean[limit];
+    private static int[] abundantNumbers;
+    private static int[] oddAbundantNumbers;
 
     static void main() {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static String PE() {
-        int limit = 28123;
-        makeAbundantNumbers(limit);
+        makeAbundantNumbers();
+        int sum = sumOfAllNotSums();
+        return String.valueOf(sum);
+    }
+
+    private static int sumOfAllNotSums() {
         int sum = 0;
-        for (int i = 1; i < limit; i++) {
+        for (int i = 0; i < 50; i++) {
             if (!isSumOfTwoAbundantNumbers(i)) {
                 sum += i;
             }
         }
-        return String.valueOf(sum);
-    }
-    private static void makeAbundantNumbers(int limit) {
-        int[] sumOfDivisors = new int[limit];
-        int sqrt = (int) Math.sqrt(limit);
-        for (int i = 2; i < sqrt; i++) {
-            for (int j = 2*i; j < limit; j+=i) {
-                sumOfDivisors[j] += i;
-                int other = j / i;
-                if (other >= sqrt) sumOfDivisors[j] += other;
+        for (int i = 51; i < limit; i+=2) {
+            if (!isSumOfTwoAbundantNumbersOdd(i)) {
+                sum += i;
             }
         }
-        if (sqrt*sqrt < limit) sumOfDivisors[sqrt*sqrt] += sqrt;
+        return sum;
+    }
+
+    private static void makeAbundantNumbers() {
+        int[] sumOfDivisors = Divisors.divisorSums(limit, false);
+        List<Integer> abundantNumbersList = new ArrayList<>();
+        List<Integer> oddAbundantNumbersList = new ArrayList<>();
         for (int i = 2; i < limit; i++) {
             if (i < sumOfDivisors[i]+1) {
                 if (i % 2 == 1) {
-                    oddAbundantNumbers.add(i);
+                    oddAbundantNumbersList.add(i);
                 }
-                abundantNumberSet.add(i);
+                abundantNumbersList.add(i);
+                abundantNumber[i] = true;
             }
         }
+        oddAbundantNumbers = Converter.listToArr(oddAbundantNumbersList);
+        abundantNumbers = Converter.listToArr(abundantNumbersList);
     }
 
     private static boolean isSumOfTwoAbundantNumbers(int n) {
-        if (n % 2 == 1) {
-            if (n < oddAbundantNumbers.getFirst()) return false;
-            for (Integer i : oddAbundantNumbers) {
-                if (i > n) break;
-                int j = n - i;
-                if (abundantNumberSet.contains(j)) return true;
-            }
-        }
-        for (int i : abundantNumberSet) {
+        for (Integer i : abundantNumbers) {
             if (i > n) break;
             int j = n - i;
-            if (abundantNumberSet.contains(j)) return true;
+            if (abundantNumber[j]) return true;
         }
-
+        return false;
+    }
+    private static boolean isSumOfTwoAbundantNumbersOdd(int n) {
+        for (Integer i : oddAbundantNumbers) {
+            if (i > n) break;
+            int j = n - i;
+            if (abundantNumber[j]) return true;
+        }
         return false;
     }
 }
