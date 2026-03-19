@@ -3,6 +3,7 @@ package euler;
 import utils.Primes;
 
 public class PE_027 {
+    private static boolean[] composites;
 
     static void main() {
         System.out.println(PE());
@@ -10,18 +11,20 @@ public class PE_027 {
 
     public static String PE() {
         int limit = 1_000;
-        int[] bestAB = bestQuadraticFormulaWithLimits(limit-1, limit);
+        int[] bestAB = bestQuadraticFormulaWithLimits(limit);
         return String.valueOf((long) bestAB[0] * bestAB[1]);
     }
 
-    private static int[] bestQuadraticFormulaWithLimits(int limitA, int limitB) {
-        boolean[] composites = Primes.compositeSieve(limitB + 1);
+    private static int[] bestQuadraticFormulaWithLimits(int limit) {
+        int[] primes = Primes.primes(limit + 1);
+        composites = Primes.compositeSieve(limit*100);
 
         int bestScore = 40;
         int[] bestAB = {1, 41};
-        for (int b = bestAB[1]; b <= limitB; b+=2) {
-            if (composites[b >> 1]) continue;
-            for (int a = -limitA; a < limitA; a++) {
+        for (int b : primes) {
+            int startA = -limit+1;
+            if (startA % 2 == 0) startA++;
+            for (int a = startA; a < limit; a+=2) {
                 int score = scoreOfQuadraticFormula(a, b);
                 if (score > bestScore) {
                     bestScore = score;
@@ -37,7 +40,7 @@ public class PE_027 {
         int n = 0;
         while (true) {
             int value = n*n + a*n + b;
-            if (!Primes.isPrime(value)) break;
+            if (value < 0 || composites[value >> 1]) break;
             n++;
         }
         return n;
