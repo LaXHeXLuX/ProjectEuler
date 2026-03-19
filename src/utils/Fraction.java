@@ -81,42 +81,35 @@ public class Fraction<T> {
         }
         return new int[][] {nonCycle, cycle};
     }
-    private int[][] convertToFraction(T divisible, Set<T> modCycle, List<T> reciprocalCycle) {
-        Iterator<T> it = modCycle.iterator();
-        int i = 0;
-        while (it.hasNext()) {
-            if (it.next().equals(divisible)) break;
-            i++;
-        }
-
-        return getInts(reciprocalCycle, i);
-    }
     public int[][] getCycle() {
         if (op.compare(num, op.zero()) <= 0) throw new RuntimeException("Numerator has to be more than 0");
         if (op.compare(den, op.one()) == 0) return new int[][]{};
 
         Fraction<T> simple = this.simplify();
         List<T> reciprocalCycle = new ArrayList<>();
-        Set<T> modCycle = new LinkedHashSet<>();
-        T divisible = op.rem(simple.num, simple.den);
+        Map<T, Integer> seenAt = new HashMap<>();
+        T remainder = op.rem(simple.num, simple.den);
 
-        while (op.compare(divisible, op.zero()) != 0) {
-            if (!modCycle.add(divisible)) {
-                return convertToFraction(divisible, modCycle, reciprocalCycle);
+        while (op.compare(remainder, op.zero()) != 0) {
+            if (seenAt.containsKey(remainder)) {
+                int cycleStart = seenAt.get(remainder);
+                return getInts(reciprocalCycle, cycleStart);
             }
-            divisible = op.mul(divisible, op.ten());
-            while (op.compare(divisible, simple.den) < 0) {
+            seenAt.put(remainder, reciprocalCycle.size());
+            remainder = op.mul(remainder, op.ten());
+            while (op.compare(remainder, simple.den) < 0) {
                 reciprocalCycle.add(op.zero());
-                if (!modCycle.add(divisible)) {
-                    return convertToFraction(divisible, modCycle, reciprocalCycle);
+                if (seenAt.containsKey(remainder)) {
+                    return getInts(reciprocalCycle, seenAt.get(remainder));
                 }
-                divisible = op.mul(divisible, op.ten());
+                seenAt.put(remainder, reciprocalCycle.size());
+                remainder = op.mul(remainder, op.ten());
             }
-            reciprocalCycle.add(op.div(divisible, simple.den));
-            divisible = op.rem(divisible, simple.den);
+            reciprocalCycle.add(op.div(remainder, simple.den));
+            remainder = op.rem(remainder, simple.den);
         }
 
-        return convertToFraction(divisible, modCycle, reciprocalCycle);
+        return getInts(reciprocalCycle, reciprocalCycle.size());
     }
 }
 
