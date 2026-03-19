@@ -30,12 +30,8 @@ public class PE_025 {
     }
 
     private static int numberOfDigits(BigInteger n) {
-        if (n.compareTo(BigInteger.ZERO) == 0) return 0;
-        int digitCount = 1;
-        while(n.compareTo(BigInteger.TEN) >= 0) {
-            digitCount++;
-            n = n.divide(BigInteger.TEN);
-        }
-        return digitCount;
+        int estimate = (int) (n.bitLength() * Math.log10(2)) + 1;
+        if (BigInteger.TEN.pow(estimate - 1).compareTo(n) > 0) estimate--;
+        return estimate;
     }
 }
