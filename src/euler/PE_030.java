@@ -1,5 +1,7 @@
 package euler;
 
+import utils.Diophantine;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +23,11 @@ public class PE_030 {
 
     private static void makeDigitPowers(int power) {
         for (int i = 0; i < 10; i++) {
-            digitPowers[i] = (int) Math.pow(i, power);
+            digitPowers[i] = (int) Diophantine.pow(i, power);
         }
     }
 
-    private static long sumOfNthPowersOfDigits(int number) {
+    private static int sumOfNthPowersOfDigits(int number) {
         int sum = 0;
         while (number > 0) {
             sum += digitPowers[number % 10];
