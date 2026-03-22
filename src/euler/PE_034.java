@@ -1,40 +1,62 @@
 package euler;
 
+import utils.Combinations;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class PE_034 {
-    private static final int[] FACTORIALS = {1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880};
-
     static void main() {
         System.out.println(PE());
     }
 
     public static String PE() {
-        List<Integer> digitFactorials = allDigitFactorials();
-        int sum = 0;
-        for (int digitFactorial : digitFactorials) sum += digitFactorial;
-        return String.valueOf(sum);
+        int base = 10;
+        List<Long> digitFactorials = allDigitFactorials(base);
+        return String.valueOf(sum(digitFactorials));
     }
 
-    private static boolean isDigitFactorial(int n) {
-        int sum = 0;
+    private static long sum(List<Long> list) {
+        long sum = 0;
+        for (Long l : list) sum += l;
+        return sum;
+    }
 
-        int x = n;
-        while (x > 0) {
-            sum += FACTORIALS[x % 10];
-            x /= 10;
+    private static long limit(int base) {
+        long powTen = base;
+        int x = 1;
+        while (Combinations.FACTORIAL[base-1]*x > powTen) {
+            x++;
+            powTen *= base;
+        }
+        long first = Combinations.FACTORIAL[base-1]*x;
+        while (first >= base) {
+            first /= base;
+        }
+        return Combinations.FACTORIAL[(int) first] + Combinations.FACTORIAL[base-1]*(x-1);
+    }
+
+    private static long digitFactorialSum(long n, int base) {
+        long sum = 0;
+
+        while (n > 0) {
+            sum += Combinations.FACTORIAL[(int) (n % base)];
+            n /= base;
         }
 
-        return sum == n;
+        return sum;
     }
 
-    private static List<Integer> allDigitFactorials() {
-        List<Integer> digitFactorials = new ArrayList<>();
-        int limit = 2_000_000;
+    private static List<Long> allDigitFactorials(int base) {
+        List<Long> digitFactorials = new ArrayList<>();
+        long limit = limit(base);
 
-        for (int i = 10; i < limit; i++) {
-            if (isDigitFactorial(i)) digitFactorials.add(i);
+        for (long i = 1; i < limit/base; i++) {
+            long f = digitFactorialSum(i, base);
+            for (int j = 0; j < base; j++) {
+                long n = base*i + j;
+                if (f + Combinations.FACTORIAL[j] == n) digitFactorials.add(n);
+            }
         }
 
         return digitFactorials;
