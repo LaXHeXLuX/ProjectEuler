@@ -13,7 +13,7 @@ public class PE_359 {
     public static String PE() {
         long fr = 71328803586048L;
         int digits = 8;
-        long mod = Diophantine.pow(10, digits);
+        long mod = Diophantine.pow10[digits];
         return String.valueOf(sumOfAll(fr, mod));
     }
 

@@ -32,7 +32,7 @@ public class PE_033 {
     private static List<int[]> curiousFractions(int digits) {
         List<int[]> curiousFractions = new ArrayList<>();
         
-        int limit = (int) Diophantine.pow(10, digits);
+        int limit = (int) Diophantine.pow10[digits];
         for (int i = limit/10; i < limit; i++) {
             for (int j = i+1; j < limit; j++) {
                 if (curiousFraction(i, j)) curiousFractions.add(new int[] {i, j});

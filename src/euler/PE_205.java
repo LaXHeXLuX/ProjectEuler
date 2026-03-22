@@ -17,7 +17,7 @@ public class PE_205 {
         int cSides = 6;
         int digits = 7;
         Fraction<Long> peterWinChance = p2WinChance(cDice, cSides, pDice, pSides);
-        return String.valueOf(Math.round(peterWinChance.doubleValue() * Diophantine.pow(10, digits)));
+        return String.valueOf(Math.round(peterWinChance.doubleValue() * Diophantine.pow10[digits]));
     }
 
     private static Fraction<Long> p2WinChance(int dice1, int sides1, int dice2, int sides2) {
