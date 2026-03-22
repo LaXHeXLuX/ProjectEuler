@@ -1,80 +1,59 @@
 package euler;
 
-import java.util.HashSet;
-import java.util.Set;
+import utils.Diophantine;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PE_043 {
     private static final int[] primes = {2, 3, 5, 7, 11, 13, 17};
+    private static final List<Long> numbers = new ArrayList<>();
 
     static void main() {
         System.out.println(PE());
     }
 
     public static String PE() {
-        Set<String> numbers = pandigitalNumbersWithSubstringDivisibility();
-        return String.valueOf(sum(numbers));
+        numbersWithProperty();
+        return String.valueOf(sum());
     }
-    
-    private static long sum(Set<String> set) {
+
+    private static void numbersWithProperty() {
+        for (int i1 = 0; i1 < 10; i1++) {
+            int used1 = 1 << i1;
+            for (int i2 = 0; i2 < 10; i2++) {
+                if ((used1 & (1 << i2)) != 0) continue;
+                int used2 = used1 | (1 << i2);
+                for (int i3 = 0; i3 < 10; i3+=2) {
+                    if ((used2 & (1 << i3)) != 0) continue;
+                    int used3 = used2 | (1 << i3);
+                    numbersWithProperty(used3, 100*i1 + 10*i2 + i3, 1);
+                }
+            }
+        }
+    }
+
+    private static void numbersWithProperty(int mask, long current, int i) {
+        if (i == primes.length) {
+            int j;
+            for (j = 0; j < 10; j++) {
+                if ((mask & (1 << j)) == 0) break;
+            }
+            numbers.add(Diophantine.pow10[9]*j + current);
+            return;
+        }
+
+        for (int j = 0; j < 10; j++) {
+            if ((mask & (1 << j)) != 0) continue;
+            long next = current*10 + j;
+            if ((next % 1000) % primes[i] != 0) continue;
+            numbersWithProperty(mask | (1 << j), next, i+1);
+        }
+    }
+
+    private static long sum() {
         long sum = 0;
-        for (String s : set) {
-            sum += Long.parseLong(s);
-        }
+        for (long l : numbers) sum += l;
         return sum;
-    }
-
-    private static Set<String> pandigitalNumbersWithSubstringDivisibility() {
-        return pandigitalNumbersWithSubstringDivisibilityOfSize(7, "");
-    }
-    
-    private static Set<String> pandigitalNumbersWithSubstringDivisibilityOfSize(int size, String currentNumber) {
-        Set<String> result = new HashSet<>();
-        if (size == 0) {
-            Set<Character> remaining = extraDigits(currentNumber);
-            for (Character c : remaining) {
-                result.add(c + currentNumber);
-            }
-            return result;
-        }
-        if (size == 7) {
-            for (int i = 0; i < 1000; i+=17) {
-                String number = String.format("%03d", i);
-                if (i % 17 != 0) continue;
-                if (hasDuplicates(number)) continue;
-                result.addAll(pandigitalNumbersWithSubstringDivisibilityOfSize(size-1, number));
-            }
-            return result;
-        }
-        for (int i = 0; i < 10; i++) {
-            String number = i + currentNumber;
-            long n = Long.parseLong(number);
-            for (int j = 0; j < 7-size; j++) {
-                n /= 10;
-            }
-            if (n % primes[size-1] != 0) continue;
-            if (hasDuplicates(number)) continue;
-            result.addAll(pandigitalNumbersWithSubstringDivisibilityOfSize(size-1, number));
-        }
-        return result;
-    }
-
-    private static boolean hasDuplicates(String n) {
-        Set<Character> elements = new HashSet<>();
-        for (int i = 0; i < n.length(); i++) {
-            char c = n.charAt(i);
-            if (elements.contains(c)) return true;
-            elements.add(c);
-        }
-
-        return false;
-    }
-    
-    private static Set<Character> extraDigits(String n) {
-        Set<Character> digits = new HashSet<>(Set.of('1', '2', '3', '4', '5', '6' ,'7', '8', '9', '0'));
-        for (int i = 0; i < n.length(); i++) {
-            char c = n.charAt(i);
-            digits.remove(c);
-        }
-        return digits;
     }
 }
