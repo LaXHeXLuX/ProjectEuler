@@ -18,7 +18,6 @@ public class PE_035 {
         int limit = 1_000_000;
         composites = Primes.compositeSieve(limit);
         cyclicPrimesUnder(limit);
-        System.out.println(cyclicPrimes);
         return String.valueOf(cyclicPrimes.size());
     }
 
