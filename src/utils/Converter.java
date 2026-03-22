@@ -43,13 +43,12 @@ public class Converter {
     }
     public static int[] digitArray(long n) {
         if (n == 0) return new int[] {0};
-        List<Integer> digitArray = new ArrayList<>();
-        while (n > 0) {
-            digitArray.add((int) (n % 10));
+        int[] digits = new int[(int) Math.log10(n) + 1];
+        for (int i = digits.length-1; i >= 0; i--) {
+            digits[i] = (int) (n % 10);
             n /= 10;
         }
-
-        return listToArr(digitArray.reversed());
+        return digits;
     }
     public static int[] digitArray(BigInteger n) {
         if (n.equals(BigInteger.ZERO)) return new int[] {0};
