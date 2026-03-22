@@ -12,7 +12,8 @@ public class PE_042 {
 
     public static String PE() {
         String file = "src/euler/inputs/PE_042_words.txt";
-        return String.valueOf(countTriangleWords(parse(file)));
+        String[] words = parse(file);
+        return String.valueOf(countTriangleWords(words));
     }
 
     private static int getWordValue(String word) {
@@ -57,7 +58,7 @@ public class PE_042 {
         String[] words = line.split(",");
 
         for (int i = 0; i < words.length; i++) {
-            words[i] = words[i].replaceAll("\"", "");
+            words[i] = words[i].substring(1, words[i].length()-1);
         }
 
         return words;
