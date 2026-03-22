@@ -1,26 +1,30 @@
 package euler;
 
+import utils.Combinations;
+import utils.Converter;
 import utils.Pandigital;
 import utils.Primes;
 
 public class PE_041 {
     static void main() {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static String PE() {
-        return String.valueOf(largestPandigitalPrime());
+        return String.valueOf(largestPandigitalPrime2());
     }
 
-    private static int largestPandigitalPrime() {
-        int limit = 7_654_321; // 1 through 9 (as well as 1 through 8) would divide 3
-        boolean[] composites = Primes.compositeSieve(limit+1);
-
-        for (int i = limit; i > 0; i-=2) {
-            if (composites[i >> 1]) continue;
-            if (!Pandigital.isPandigital(i)) continue;
-            return i;
+    private static int largestPandigitalPrime2() {
+        int[] digits = {1, 2, 3, 4, 5, 6, 7};
+        int i = (int) Combinations.FACTORIAL[7];
+        int p = (int) Converter.fromDigitArray(Combinations.nthPermutation(digits, i));
+        while (!Primes.isPrime(p)) {
+            i--;
+            p = (int) Converter.fromDigitArray(Combinations.nthPermutation(digits, i));
         }
-        return -1;
+        return p;
     }
 }
