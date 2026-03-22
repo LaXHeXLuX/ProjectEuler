@@ -152,8 +152,19 @@ public class Combinations {
 
         return countMap.isEmpty();
     }
-    public static <T> T nthPermutation(T arr, long n) {
-        return Converter.toPrimitiveArray(nthPermutation(Converter.toWrapperArray(arr), n));
+    public static int[] nthPermutation(int[] arr, long n) {
+        int[] newArr = Arrays.copyOf(arr, arr.length);
+        if (n == 0 || arr.length < 2) return newArr;
+        int[] plan = permutationPlan(n);
+        for (int i = 0; i < plan.length; i++) {
+            if (plan[i] == 0) continue;
+            int el = newArr[i + plan[i]];
+            int[] result = Arrays.copyOfRange(newArr, i, newArr.length);
+            result = ArrayFunctions.removeIndex(result, plan[i]);
+            newArr[i] = el;
+            System.arraycopy(result, 0, newArr, i+1, result.length);
+        }
+        return newArr;
     }
     public static <T> T[] nthPermutation(T[] arr, long n) {
         T[] newArr = Arrays.copyOf(arr, arr.length);

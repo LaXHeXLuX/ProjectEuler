@@ -101,6 +101,12 @@ class CombinationsTest {
         assertArrayEquals(new int[] {2, 1}, Combinations.nthPermutation(arr, 1));
         arr = new int[] {1, 2, 3, 4};
         assertArrayEquals(new int[] {4, 3, 1, 2}, Combinations.nthPermutation(arr, 22));
+        String[] arr2 = {"A"};
+        assertArrayEquals(new String[] {"A"}, Combinations.nthPermutation(arr2, 100));
+        arr2 = new String[] {"A", "B", "C", "D"};
+        assertArrayEquals(new String[] {"A", "B", "C", "D"}, Combinations.nthPermutation(arr2, 0));
+        assertArrayEquals(new String[] {"B", "A", "C", "D"}, Combinations.nthPermutation(arr2, 1));
+        assertArrayEquals(new String[] {"D", "C", "A", "B"}, Combinations.nthPermutation(arr2, 22));
     }
     @Test
     void combinationsOfGrowingNumbers() {
