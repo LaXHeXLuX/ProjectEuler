@@ -2,8 +2,6 @@ package euler;
 
 import utils.Primes;
 
-import java.util.Arrays;
-
 public class PE_050 {
     private static boolean[] composites;
     private static int[] primes;
@@ -16,25 +14,19 @@ public class PE_050 {
         composites = Primes.compositeSieve(limit);
         primes = Primes.primes(composites);
 
-        int[] combination = largestArrayOfConsecutivePrimesSummingToPrime();
-        return String.valueOf((sumOfArray(combination)));
+        int result = sumOfConsecutivePrimesSummingToPrime();
+        return String.valueOf(result);
     }
 
-    private static int sumOfArray(int[] arr) {
-        int sum = 0;
-        for (int i : arr) sum += i;
-        return sum;
-    }
-
-    private static int[] largestArrayOfConsecutivePrimesSummingToPrime() {
-        int largestStart = 0;
-        int largestEnd = 0;
+    private static int sumOfConsecutivePrimesSummingToPrime() {
+        int largestLength = 0;
+        int largestSum = 0;
         for (int startIndex = 0; ; startIndex++) {
-            if (startIndex + (largestEnd-largestStart) > composites.length) break;
+            if (startIndex + largestLength > composites.length) break;
             int sum = 0;
             boolean flag = true;
             int i;
-            for (i = 0; i < largestEnd-largestStart; i++) {
+            for (i = 0; i < largestLength; i++) {
                 if (startIndex+i >= primes.length) {
                     flag = false;
                     break;
@@ -49,14 +41,14 @@ public class PE_050 {
             sum += primes[startIndex + i];
             while (sum <= primes[primes.length-1]) {
                 if (!composites[sum >> 1]) {
-                    largestStart = startIndex;
-                    largestEnd = startIndex + i;
+                    largestLength = i;
+                    largestSum = sum;
                 }
-                i++;
-                sum += primes[startIndex + i];
+                i+=2;
+                sum += primes[startIndex + i - 1] + primes[startIndex + i];
             }
-            if (i < largestEnd-largestStart) break;
+            if (i < largestLength) break;
         }
-        return Arrays.copyOfRange(primes, largestStart, largestEnd+1);
+        return largestSum;
     }
 }
