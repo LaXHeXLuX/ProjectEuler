@@ -1,12 +1,10 @@
 package euler;
 
-import utils.ArrayFunctions;
-import utils.Converter;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PE_054 {
     static void main() {
@@ -20,8 +18,8 @@ public class PE_054 {
         int counter = 0;
 
         for (String[][] handPair : hands) {
-            boolean winnerIsFirst = winnerIsFirst(handPair[0], handPair[1]);
-            if (winnerIsFirst) {
+            boolean p1Wins = p1Wins(handPair[0], handPair[1]);
+            if (p1Wins) {
                 counter++;
             }
         }
@@ -58,182 +56,171 @@ public class PE_054 {
         return new String[][] {hand1, hand2};
     }
 
-    private static boolean winnerIsFirst(String[] hand1, String[] hand2) {
-        int[][] multiples1 = multiplesOfCards(hand1);
-        int[][] multiples2 = multiplesOfCards(hand2);
-
-        int straightFlush1 = straightFlush(multiples1, hand1);
-        int straightFlush2 = straightFlush(multiples2, hand2);
-        if (straightFlush1 < straightFlush2) return false;
-        else if (straightFlush1 > straightFlush2) return true;
-
-        int fourOfAKind1 = fourOfAKind(multiples1);
-        int fourOfAKind2 = fourOfAKind(multiples2);
-        if (fourOfAKind1 < fourOfAKind2) return false;
-        else if (fourOfAKind1 > fourOfAKind2) return true;
-
-        int[] fullHouse1 = fullHouse(multiples1);
-        int[] fullHouse2 = fullHouse(multiples2);
-        if (fullHouse1[0] < fullHouse2[0]) return false;
-        else if (fullHouse1[0] > fullHouse2[0]) return true;
-        else {
-            if (fullHouse1[1] < fullHouse2[1]) return false;
-            else if (fullHouse1[1] > fullHouse2[1]) return true;
+    private static boolean p1Wins(String[] h1, String[] h2) {
+        boolean flush1 = flush(h1);
+        int[] values1 = new int[13];
+        for (String card : h1) {
+            values1[cardValue(card)]++;
         }
 
-        boolean flush1 = flush(hand1);
-        boolean flush2 = flush(hand2);
+        boolean flush2 = flush(h2);
+        int[] values2 = new int[13];
+        for (String card : h2) {
+            values2[cardValue(card)]++;
+        }
+
+        boolean p1HasHighCard = false;
+        for (int i = values1.length-1; i > 0; i--) {
+            if (values1[i] != values2[i]) {
+                p1HasHighCard = values1[i] > values2[i];
+                break;
+            }
+        }
+
+        int straight1 = straight(values1);
+        int straight2 = straight(values2);
+
+        if (straight1 > 0 && flush1 && straight2 > 0 && flush2) {
+            return straight1 > straight2;
+        }
+        else if (straight1 > 0 && flush1) return true;
+        else if (straight2 > 0 && flush2) return false;
+
+        int[] ofAKind1 = ofAKind(values1);
+        int[] ofAKind2 = ofAKind(values2);
+
+        if (ofAKind1[0] == 4 && ofAKind2[0] == 4) {
+            if (ofAKind1[1] > ofAKind2[1]) return true;
+            if (ofAKind1[1] < ofAKind2[1]) return false;
+            return p1HasHighCard;
+        }
+        else if (ofAKind1[0] == 4) return true;
+        else if (ofAKind2[0] == 4) return false;
+
+        int[] fullHouse1 = fullHouse(values1);
+        int[] fullHouse2 = fullHouse(values2);
+        if (fullHouse1[0] >= 0 || fullHouse2[0] >= 0) {
+            if (fullHouse1[0] > fullHouse2[0]) return true;
+            if (fullHouse1[0] < fullHouse2[0]) return false;
+            return fullHouse1[1] > fullHouse2[1];
+        }
+
+        if (flush1 && !flush2) return true;
         if (!flush1 && flush2) return false;
-        else if (flush1 && !flush2) return true;
-
-        int straight1 = straight(multiples1);
-        int straight2 = straight(multiples2);
-        if (straight1 < straight2) return false;
-        else if (straight1 > straight2) return true;
-
-        int threeOfAKind1 = threeOfAKind(multiples1);
-        int threeOfAKind2 = threeOfAKind(multiples2);
-        if (threeOfAKind1 < threeOfAKind2) return false;
-        else if (threeOfAKind1 > threeOfAKind2) return true;
-
-        int[] twoPairs1 = pairs(multiples1);
-        int[] twoPairs2 = pairs(multiples2);
-        if (!ArrayFunctions.contains(-1, twoPairs1) || !ArrayFunctions.contains(-1, twoPairs2)) {
-            if (twoPairs1[1] == -1) return false;
-            else if (twoPairs2[1] == -1) return true;
-            else if (twoPairs1[0] < twoPairs2[0]) return false;
-            else if (twoPairs1[0] > twoPairs2[0]) return true;
-            else if (twoPairs1[1] < twoPairs2[1]) return false;
-            else if (twoPairs1[1] > twoPairs2[1]) return true;
+        if (straight1 >= 0 || straight2 >= 0) {
+            return straight1 > straight2;
         }
 
-        int pair1 = highestPair(multiples1);
-        int pair2 = highestPair(multiples2);
-        if (pair1 < pair2) return false;
-        else if (pair1 > pair2) return true;
+        if (ofAKind1[0] == 3 && ofAKind2[0] == 3) {
+            if (ofAKind1[1] > ofAKind2[1]) return true;
+            if (ofAKind1[1] < ofAKind2[1]) return false;
+            return p1HasHighCard;
+        }
+        else if (ofAKind1[0] == 3) return true;
+        else if (ofAKind2[0] == 3) return false;
 
-        int[] highCards1 = highestCardScores(multiples1);
-        int[] highCards2 = highestCardScores(multiples2);
-        if (highCards1.length != highCards2.length) throw new RuntimeException("BAD: " + Arrays.toString(hand1) + ", " + Arrays.toString(hand2));
-        for (int i = 0; i < highCards1.length; i++) {
-            if (highCards1[i] < highCards2[i]) return false;
-            else if (highCards1[i] > highCards2[i]) return true;
+        int[] twoPair1 = twoPair(values1);
+        int[] twoPair2 = twoPair(values2);
+        if (twoPair1[0] >= 0 || twoPair2[0] >= 0) {
+            if (twoPair1[0] > twoPair2[0]) return true;
+            if (twoPair1[0] < twoPair2[0]) return false;
+            if (twoPair1[1] > twoPair2[1]) return true;
+            if (twoPair1[1] < twoPair2[1]) return false;
+            return p1HasHighCard;
         }
 
-        throw new RuntimeException("DRAW");
-    }
-
-    private static int cardValue(String card) {
-        char[] order = {' ', ' ', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'};
-        for (int i = 0; i < order.length; i++) {
-            if (order[i] == card.charAt(0)) return i;
+        if (ofAKind1[0] == 2 && ofAKind2[0] == 2) {
+            if (ofAKind1[1] > ofAKind2[1]) return true;
+            if (ofAKind1[1] < ofAKind2[1]) return false;
+            return p1HasHighCard;
         }
-        return -1;
+        else if (ofAKind1[0] == 2) return true;
+        else if (ofAKind2[0] == 2) return false;
+
+        return p1HasHighCard;
     }
-    private static int[][] multiplesOfCards(String[] hand) {
-        List<List<Integer>> multiples = new ArrayList<>();
-        boolean[] checked = new boolean[5];
 
-        for (int starting = 0; starting < hand.length; starting++) {
-            if (checked[starting]) continue;
-            List<Integer> startingMultiples = new ArrayList<>();
-            int startingValue = cardValue(hand[starting]);
-            startingMultiples.add(startingValue);
-
-            for (int i = starting+1; i < hand.length; i++) {
-                if (startingValue == cardValue(hand[i])) {
-                    checked[i] = true;
-                    startingMultiples.add(startingValue);
-                }
-            }
-
-            multiples.add(startingMultiples);
-        }
-
-        if (multiples.isEmpty()) return new int[0][];
-        return Converter.deepListToArr(multiples);
-    }
-    private static int[] highestCardScores(int[][] multiples) {
-        List<Integer> highCardsList = new ArrayList<>();
-
-        for (int[] multiple : multiples) {
-            if (multiple.length != 1) continue;
-            highCardsList.add(multiple[0]);
-        }
-
-        int[] highCards = Converter.listToArr(highCardsList);
-        Arrays.sort(highCards);
-        return ArrayFunctions.reverseArray(highCards);
-    }
-    private static int highestPair(int[][] multiples) {
-        int[] pairs = pairs(multiples);
-        if (pairs.length == 0) return -1;
-        return pairs[0];
-    }
-    private static int[] pairs(int[][] multiples) {
-        int[] pairs = new int[2];
-        Arrays.fill(pairs, -1);
-        int index = 0;
-
-        for (int[] multiple : multiples) {
-            if (multiple.length == 2) {
-                pairs[index] = multiple[0];
-                index++;
+    private static int[] twoPair(int[] values) {
+        int[] twoPair = {-1, -1};
+        int i;
+        for (i = values.length-1; i >= 0; i--) {
+            if (values[i] == 2) {
+                twoPair[0] = i;
+                break;
             }
         }
-
-        Arrays.sort(pairs);
-        return ArrayFunctions.reverseArray(pairs);
-    }
-    private static int threeOfAKind(int[][] multiples) {
-        for (int[] multiple : multiples) {
-            if (multiple.length == 3) return multiple[0];
+        if (twoPair[0] == -1) return twoPair;
+        for (i--; i >= 0; i--) {
+            if (values[i] == 2) {
+                twoPair[1] = i;
+                return twoPair;
+            }
         }
-
-        return -1;
+        return new int[] {-1, -1};
     }
-    private static int straight(int[][] multiples) {
-        if (multiples.length != 5) return -1;
-        int[] numbers = new int[5];
 
-        for (int i = 0; i < multiples.length; i++) {
-            numbers[i] = multiples[i][0];
+    private static int[] fullHouse(int[] values) {
+        int[] fullHouse = {-1, -1};
+        int i;
+        for (i = 0; i < values.length; i++) {
+            if (values[i] == 3) {
+                fullHouse[0] = i;
+                break;
+            }
         }
-
-        Arrays.sort(numbers);
-        if (numbers[4] - numbers[0] == 4) return numbers[4];
-        return -1;
+        if (fullHouse[0] == -1) return fullHouse;
+        for (; i < values.length; i++) {
+            if (values[i] == 2) {
+                fullHouse[1] = i;
+                return fullHouse;
+            }
+        }
+        return new int[] {-1, -1};
     }
+
+    private static int[] ofAKind(int[] values) {
+        int[] ofAKind = {1, -1};
+        for (int i = values.length-1; i >= 0; i--) {
+            if (values[i] > ofAKind[0]) {
+                ofAKind[0] = values[i];
+                ofAKind[1] = i;
+            }
+        }
+        return ofAKind;
+    }
+
     private static boolean flush(String[] hand) {
         char suit = hand[0].charAt(1);
-
         for (int i = 1; i < hand.length; i++) {
             if (hand[i].charAt(1) != suit) return false;
         }
-
         return true;
     }
-    private static int[] fullHouse(int[][] multiples) {
-        int hasTwo = -1;
-        int hasThree = -1;
 
-        for (int[] multiple : multiples) {
-            if (multiple.length == 2) hasTwo = multiple[0];
-            else if (multiple.length == 3) hasThree = multiple[0];
+    private static int straight(int[] values) {
+        int streak = 0;
+        for (int i = 0; i < values.length; i++) {
+            int v = values[i];
+            if (v > 1) return -1;
+            if (v == 0) streak = 0;
+            else {
+                streak++;
+                if (streak == 5) {
+                    return i;
+                }
+            }
         }
-
-        if (hasTwo == -1 || hasThree == -1) return new int[] {-1, -1};
-        return new int[] {hasThree, hasTwo};
-    }
-    private static int fourOfAKind(int[][] multiples) {
-        for (int[] multiple : multiples) {
-            if (multiple.length == 4) return multiple[0];
-        }
-
         return -1;
     }
-    private static int straightFlush(int[][] multiples, String[] hand) {
-        if (!flush(hand)) return -1;
-        return straight(multiples);
+
+    private static int cardValue(String card) {
+        return switch (card.charAt(0)) {
+            case 'A' -> 12;
+            case 'K' -> 11;
+            case 'Q' -> 10;
+            case 'J' -> 9;
+            case 'T' -> 8;
+            default -> card.charAt(0) - '2';
+        };
     }
 }
