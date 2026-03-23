@@ -291,6 +291,20 @@ public class Diophantine {
 
         return result;
     }
+    public static long mulModExact(long a, long b, long m) {
+        long result = 0;
+        a = a % m;
+
+        while (b > 0) {
+            if ((b & 1) == 1) {
+                result = (result + a) % m;
+            }
+            a = (a * 2) % m;
+            b >>= 1;
+        }
+
+        return result;
+    }
     public static long tetrateMod(long base, long exp, long mod) {
         if (mod == 1) return 0;
         List<Long> chain = new ArrayList<>();
