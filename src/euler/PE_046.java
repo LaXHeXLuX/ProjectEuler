@@ -1,9 +1,6 @@
 package euler;
 
 public class PE_046 {
-    private static boolean[] composites;
-    private static int[] primesInt;
-
     static void main() {
         System.out.println(PE());
     }
