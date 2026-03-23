@@ -35,11 +35,11 @@ public class PE_206 {
     }
 
     private static List<Long> validNumbers(List<Long> currentNumbers, int place, int target, int lastSize, long max) {
-        long powTen = Diophantine.pow(10, lastSize);
+        long powTen = Diophantine.pow10[lastSize];
         int adding = place + 1 - lastSize;
 
         List<Long> validNumbers = new ArrayList<>();
-        long limit = Diophantine.pow(10, adding);
+        long limit = Diophantine.pow10[adding];
         for (long i = 0; i < limit; i++) {
             if (i*powTen + currentNumbers.getFirst() >= max) break;
             for (Long currentNumber : currentNumbers) {

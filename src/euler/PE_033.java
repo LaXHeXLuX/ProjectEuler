@@ -5,7 +5,6 @@ import utils.Converter;
 import utils.Diophantine;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PE_033 {
@@ -14,60 +13,57 @@ public class PE_033 {
     }
 
     public static String PE() {
-        int limit = 100;
-        List<int[]> curiousFractions = curiousFractions(limit);
+        int digits = 2;
+        List<int[]> curiousFractions = curiousFractions(digits);
 
-        int a = 1;
-        int b = 1;
+        long a = 1;
+        long b = 1;
         for (int[] fraction : curiousFractions) {
             a *= fraction[0];
             b *= fraction[1];
+            long gcd = Diophantine.gcd(a, b);
+            a /= gcd;
+            b /= gcd;
         }
 
-        return String.valueOf(simplifyFraction(a, b)[1]);
+        return String.valueOf(b);
     }
 
-    private static List<int[]> curiousFractions(int limit) {
+    private static List<int[]> curiousFractions(int digits) {
         List<int[]> curiousFractions = new ArrayList<>();
-
+        
+        int limit = (int) Diophantine.pow10[digits];
         for (int i = limit/10; i < limit; i++) {
-            for (int j = i + 1; j < limit; j++) {
-                if (isCuriousFraction(i, j)) curiousFractions.add(new int[] {i, j});
+            for (int j = i+1; j < limit; j++) {
+                if (curiousFraction(i, j)) curiousFractions.add(new int[] {i, j});
             }
         }
 
         return curiousFractions;
     }
 
-    private static boolean isCuriousFraction(int a, int b) {
-        int[] digitsA = Converter.digitArray(a);
-        int[] digitsB = Converter.digitArray(b);
+    private static boolean curiousFraction(int i, int j) {
+        if (Diophantine.gcd(i, j) == 1) return false;
 
-        return isCuriousFraction(digitsA, digitsB);
+        int[] di = Converter.digitArray(i);
+        int[] dj = Converter.digitArray(j);
+
+        return curiousFraction(di, dj);
     }
 
-    private static boolean isCuriousFraction(int[] digitsA, int[] digitsB) {
-        for (int i = 0; i < digitsA.length; i++) {
-            if (digitsA[i] == 0) continue;
-            for (int j = 0; j < digitsB.length; j++) {
-                if (digitsA[i] == digitsB[j]) {
-                    int a = (int) Converter.fromDigitArray(digitsA);
-                    int b = (int) Converter.fromDigitArray(digitsB);
-                    int newA = (int) Converter.fromDigitArray(ArrayFunctions.removeIndex(digitsA, i));
-                    int newB = (int) Converter.fromDigitArray(ArrayFunctions.removeIndex(digitsB, j));
-
-                    int[] fraction = simplifyFraction(a, b);
-                    int[] newFraction = simplifyFraction(newA, newB);
-
-                    if (Arrays.equals(fraction, newFraction)) return true;
+    private static boolean curiousFraction(int[] d1, int[] d2) {
+        int a = (int) Converter.fromDigitArray(d1);
+        int b = (int) Converter.fromDigitArray(d2);
+        for (int i = 0; i < d1.length; i++) {
+            if (d1[i] == 0) continue;
+            for (int j = 0; j < d2.length; j++) {
+                if (d1[i] == d2[j]) {
+                    int newA = (int) Converter.fromDigitArray(ArrayFunctions.removeIndex(d1, i));
+                    int newB = (int) Converter.fromDigitArray(ArrayFunctions.removeIndex(d2, j));
+                    if (a*newB == b*newA) return true;
                 }
             }
         }
         return false;
-    }
-
-    private static int[] simplifyFraction(int a, int b) {
-        int gcd = Diophantine.gcd(a, b);
-        return new int[] {a/gcd, b/gcd};
     }
 }

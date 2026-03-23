@@ -1,8 +1,5 @@
 package euler;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PE_040 {
     static void main() {
         System.out.println(PE());
@@ -10,43 +7,34 @@ public class PE_040 {
 
     public static String PE() {
         int[] indexes = {1, 10, 100, 1_000, 10_000, 100_000, 1_000_000};
-        return String.valueOf(productOfConstantDigits(indexes));
+        return String.valueOf(productOfConstantDigits2(indexes));
     }
 
-    private static List<Integer> digitsAtIndexes(int[] indexes) {
-        List<Integer> digitsAtIndexes = new ArrayList<>();
-
-        int i = 1;
-        int currentIndex = 0;
-        int indexesIndex = 0;
-        while (true) {
-            int temp = i;
-            List<Integer> digits = new ArrayList<>();
-            while (temp >= 10) {
-                digits.add(temp % 10);
-                temp /= 10;
-            }
-            digits.add(temp);
-            for (int j = digits.size()-1; j >= 0; j--) {
-                currentIndex++;
-                if (currentIndex == indexes[indexesIndex]) {
-                    digitsAtIndexes.add(digits.get(j));
-                    indexesIndex++;
-                    if (indexesIndex >= indexes.length) return digitsAtIndexes;
-                }
-            }
-            i++;
-        }
-    }
-
-    private static long productOfConstantDigits(int[] indexes) {
-        List<Integer> digitsAtIndexes = digitsAtIndexes(indexes);
-
+    private static long productOfConstantDigits2(int[] indexes) {
         long product = 1;
-        for (Integer digitsAtIndex : digitsAtIndexes) {
-            product *= digitsAtIndex;
+        for (int index : indexes) {
+            product *= indexAt(index-1);
+        }
+        return product;
+    }
+
+    private static int indexAt(int index) {
+        int powTen = 1;
+        int factor = 1;
+        int x = 9*powTen*factor;
+        while (x <= index) {
+            index -= x;
+            powTen *= 10;
+            factor++;
+            x = 9*powTen*factor;
         }
 
-        return product;
+        int num = powTen + index/factor;
+        int i = factor - (index % factor) - 1;
+        for (int j = 0; j < i; j++) {
+            num /= 10;
+        }
+
+        return num % 10;
     }
 }

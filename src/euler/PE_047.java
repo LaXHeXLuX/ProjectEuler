@@ -1,59 +1,53 @@
 package euler;
 
 public class PE_047 {
+    private static int[] pfCounts;
+
     static void main() {
         System.out.println(PE());
     }
 
     public static String PE() {
-        long[] result = firstNConsecutiveNumbersToHaveMDistinctPrimeFactors(4, 4);
-        return String.valueOf(result[0]);
+        int n = 4;
+        int m = 4;
+        long result = firstNConsecutiveNumbersToHaveMDistinctPrimeFactors2(n, m);
+        return String.valueOf(result);
     }
 
-    public static long[] firstNConsecutiveNumbersToHaveMDistinctPrimeFactors(int n, int m) {
-        long i = 2;
-        boolean solved = false;
-
-        while (!solved) {
-            if (i < 0) return new long[0];
-            solved = true;
-            for (int j = 0; j < n; j++) {
-                if (!hasXDistinctPrimeFactors(i+j, m)) {
-                    solved = false;
-                    break;
+    private static long firstNConsecutiveNumbersToHaveMDistinctPrimeFactors2(int n, int m) {
+        int limit = 100;
+        while (true) {
+            limit *= 5;
+            primeFactorCounts(limit);
+            int count = 0;
+            for (int i = 0; i < pfCounts.length; i++) {
+                if (pfCounts[i] == m) {
+                    count++;
+                    if (count == m) return i-n+1;
+                } else {
+                    count = 0;
                 }
-
             }
-            i++;
+
         }
-        i--;
-
-        long[] answer = new long[n];
-
-        for (int j = 0; j < n; j++) answer[j] = i+j;
-
-        return answer;
     }
 
-    private static boolean hasXDistinctPrimeFactors(long n, int x) {
-        if (n % 2 == 0) {
-            x--;
-            do n /= 2;
-            while (n % 2 == 0);
+    private static void primeFactorCounts(int limit) {
+        pfCounts = new int[limit];
+        pfCounts[0] = 0;
+        pfCounts[1] = 1;
+
+        for (int i = 2; i < limit; i+=2) {
+            pfCounts[i]++;
         }
-        long limit = (long) Math.sqrt(n);
-        for (int i = 3; i <= limit; i += 2) {
-            if (n % i == 0) {
-                x--;
-                do n /= i;
-                while (n % i == 0);
+
+        for (int i = 3; i < limit; i+=2) {
+            if (pfCounts[i] > 0) continue;
+            int k = i;
+            while (k < limit) {
+                pfCounts[k]++;
+                k += i;
             }
         }
-
-        if (n > 1) {
-            x--;
-        }
-
-        return x == 0;
     }
 }

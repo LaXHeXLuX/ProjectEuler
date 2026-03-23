@@ -11,16 +11,16 @@ public class PE_002 {
     }
 
     private static long sumOfFibonacciNumbers(long limit) {
-        long f1 = 1L;
-        long f2 = 2L;
+        long a = 1;
+        long b = 1;
+        long c = a+b;
         long sum = 0;
 
-        while (f2 < limit) {
-            sum += f2;
-            long oldF1 = f1;
-            long oldF2 = f2;
-            f1 = oldF1 + 2*oldF2;
-            f2 = 2*oldF1 + 3*oldF2;
+        while (c < limit) {
+            sum += c;
+            a = c+b;
+            b = a+c;
+            c = a+b;
         }
 
         return sum;

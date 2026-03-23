@@ -5,7 +5,7 @@ public class Pandigital {
     public static boolean isPandigital(long n) {
         int[] digits = new int[10];
         while (n > 0) {
-            digits[Math.toIntExact(n % 10)]++;
+            digits[(int) (n % 10)]++;
             n /= 10;
         }
 
@@ -24,7 +24,7 @@ public class Pandigital {
         if ((int) Math.log10(n) != endDigit-startDigit) return false;
         int[] digits = new int[10];
         while (n > 0) {
-            digits[Math.toIntExact(n % 10)]++;
+            digits[(int) (n % 10)]++;
             n /= 10;
         }
 

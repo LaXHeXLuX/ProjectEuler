@@ -258,6 +258,12 @@ public class Diophantine {
 
         return new long[] {s1, t1};
     }
+    public static final long[] pow10 = {
+            1, 10, 100, 1_000, 10_000, 100_000, 1_000_000, 10_000_000, 100_000_000, 1_000_000_000,
+            10_000_000_000L, 100_000_000_000L, 1_000_000_000_000L,
+            10_000_000_000_000L, 100_000_000_000_000L, 1_000_000_000_000_000L,
+            10_000_000_000_000_000L, 100_000_000_000_000_000L, 1_000_000_000_000_000_000L
+    };
     public static long pow(long base, int exp) {
         long result = 1;
 
@@ -281,6 +287,20 @@ public class Diophantine {
 
             base = (base * base) % mod;
             exp >>= 1;
+        }
+
+        return result;
+    }
+    public static long mulModExact(long a, long b, long m) {
+        long result = 0;
+        a = a % m;
+
+        while (b > 0) {
+            if ((b & 1) == 1) {
+                result = (result + a) % m;
+            }
+            a = (a * 2) % m;
+            b >>= 1;
         }
 
         return result;

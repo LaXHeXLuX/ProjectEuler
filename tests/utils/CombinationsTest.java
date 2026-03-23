@@ -32,18 +32,6 @@ class CombinationsTest {
         );
     }
     @Test
-    void factorialLong() {
-        assertThrows(RuntimeException.class, () -> Combinations.factorial(-1));
-        assertEquals(1, Combinations.factorial(1));
-        long temp = 1;
-        for (int i = 2; i < 5; i++) {
-            temp *= i;
-            assertEquals(temp, Combinations.factorial(i));
-        }
-        assertEquals(2432902008176640000L, Combinations.factorial(20));
-        assertThrows(RuntimeException.class, () -> Combinations.factorial(100));
-    }
-    @Test
     void nChooseM() {
         for (int i = 1; i <= 5; i++) {
             assertEquals(1, Combinations.nChooseM(i, i));
@@ -113,6 +101,12 @@ class CombinationsTest {
         assertArrayEquals(new int[] {2, 1}, Combinations.nthPermutation(arr, 1));
         arr = new int[] {1, 2, 3, 4};
         assertArrayEquals(new int[] {4, 3, 1, 2}, Combinations.nthPermutation(arr, 22));
+        String[] arr2 = {"A"};
+        assertArrayEquals(new String[] {"A"}, Combinations.nthPermutation(arr2, 100));
+        arr2 = new String[] {"A", "B", "C", "D"};
+        assertArrayEquals(new String[] {"A", "B", "C", "D"}, Combinations.nthPermutation(arr2, 0));
+        assertArrayEquals(new String[] {"B", "A", "C", "D"}, Combinations.nthPermutation(arr2, 1));
+        assertArrayEquals(new String[] {"D", "C", "A", "B"}, Combinations.nthPermutation(arr2, 22));
     }
     @Test
     void combinationsOfGrowingNumbers() {

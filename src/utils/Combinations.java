@@ -5,6 +5,11 @@ import java.math.BigInteger;
 import java.util.*;
 
 public class Combinations {
+    public static final long[] FACTORIAL = {
+        1L, 1L, 2L, 6L, 24L, 120L, 720L,
+        5040L, 40320L, 362880L, 3628800L, 39916800L, 479001600L, 6227020800L,
+        87178291200L, 1307674368000L, 20922789888000L, 355687428096000L, 6402373705728000L, 121645100408832000L, 2432902008176640000L
+    };
 
     public static BigInteger factorialBigInteger(int n) {
         if (n < 0) throw new RuntimeException("Argument can't be negative!");
@@ -14,14 +19,6 @@ public class Combinations {
             factorial = factorial.multiply(BigInteger.valueOf(i));
         }
         return factorial;
-    }
-    public static long factorial(int n) {
-        long[] factorials = {
-                1L, 1L, 2L, 6L, 24L, 120L, 720L,
-                5040L, 40320L, 362880L, 3628800L, 39916800L, 479001600L, 6227020800L,
-                87178291200L, 1307674368000L, 20922789888000L, 355687428096000L, 6402373705728000L, 121645100408832000L, 2432902008176640000L
-        };
-        return factorials[n];
     }
     public static long nChooseM(int n, int m) {
         if (m > n-m) m = n-m;
@@ -155,8 +152,19 @@ public class Combinations {
 
         return countMap.isEmpty();
     }
-    public static <T> T nthPermutation(T arr, long n) {
-        return Converter.toPrimitiveArray(nthPermutation(Converter.toWrapperArray(arr), n));
+    public static int[] nthPermutation(int[] arr, long n) {
+        int[] newArr = Arrays.copyOf(arr, arr.length);
+        if (n == 0 || arr.length < 2) return newArr;
+        int[] plan = permutationPlan(n);
+        for (int i = 0; i < plan.length; i++) {
+            if (plan[i] == 0) continue;
+            int el = newArr[i + plan[i]];
+            int[] result = Arrays.copyOfRange(newArr, i, newArr.length);
+            result = ArrayFunctions.removeIndex(result, plan[i]);
+            newArr[i] = el;
+            System.arraycopy(result, 0, newArr, i+1, result.length);
+        }
+        return newArr;
     }
     public static <T> T[] nthPermutation(T[] arr, long n) {
         T[] newArr = Arrays.copyOf(arr, arr.length);
@@ -181,7 +189,7 @@ public class Combinations {
         }
         int[] plan = new int[i-1];
         for (i = 0; n > 0; i++) {
-            long f = factorial(plan.length - i);
+            long f = FACTORIAL[plan.length - i];
             plan[i] = Math.toIntExact(n / f);
             n = n % f;
         }

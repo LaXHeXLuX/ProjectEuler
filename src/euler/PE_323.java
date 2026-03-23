@@ -16,7 +16,7 @@ public class PE_323 {
         int bits = 32;
         Fraction<BigInteger> P = P(bits);
         int digits = 10;
-        return String.valueOf(Math.round(P.doubleValue() * Diophantine.pow(10, digits)));
+        return String.valueOf(Math.round(P.doubleValue() * Diophantine.pow10[digits]));
     }
 
     private static Fraction<BigInteger> P(int n) {
