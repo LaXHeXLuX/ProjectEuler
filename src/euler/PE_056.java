@@ -11,26 +11,21 @@ public class PE_056 {
 
     public static String PE() {
         int limit = 100;
-        int[] digitSum = biggestDigitSumOfPower(limit, limit);
-        return String.valueOf(digitSum[2]);
+        return String.valueOf(maximumDigitalSum(limit, limit));
     }
 
-    private static int[] biggestDigitSumOfPower(int limitA, int limitB) {
-        int[] biggests = new int[3];
+    private static int maximumDigitalSum(int aLimit, int bLimit) {
+        int maximumDigitalSum = 0;
 
-        for (int a = limitA; a > 0; a--) {
-            int lowerLimitB = (int) ((biggests[2] / 5.0) / Math.log10(a));
-            for (int b = limitB; b > lowerLimitB; b--) {
+        for (int a = aLimit-1; a > 0; a--) {
+            int lowerLimitB = (int) ((maximumDigitalSum / 5.0) / Math.log10(a));
+            for (int b = bLimit-1; b > lowerLimitB; b--) {
                 BigInteger power = BigInteger.valueOf(a).pow(b);
                 int digitSum = Diophantine.digitSum(power);
-                if (digitSum > biggests[2]) {
-                    biggests[0] = a;
-                    biggests[1] = b;
-                    biggests[2] = digitSum;
-                }
+                if (digitSum > maximumDigitalSum) maximumDigitalSum = digitSum;
             }
         }
 
-        return biggests;
+        return maximumDigitalSum;
     }
 }
