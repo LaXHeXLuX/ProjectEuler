@@ -1,10 +1,9 @@
 package euler;
 
 import utils.Combinations;
-import utils.Converter;
 import utils.Primes;
 
-import java.util.*;
+import java.util.Arrays;
 
 public class PE_049 {
 
@@ -13,67 +12,34 @@ public class PE_049 {
     }
 
     public static String PE() {
+        int exclude = 1487;
+        int[] unusualTerm = otherUnusualTerm(exclude);
+        assert unusualTerm != null;
+        int p1 = unusualTerm[0];
+        int d = unusualTerm[1];
+        return String.valueOf(p1) + (p1 + d) + (p1 + 2*d);
+    }
+
+    private static int[] otherUnusualTerm(int exclude) {
         int limit = 10_000;
-        int inARow = 3;
-        List<List<Integer>> unusualTerms = unusualTermsUnder(limit, inARow);
-        for (List<Integer> unusualTerm : unusualTerms) {
-            if (unusualTerm.getFirst() != 1487) return String.valueOf(concat(unusualTerm, inARow));
-        }
-        return null;
-    }
-
-    private static long concat(List<Integer> arr, int inARow) {
-        StringBuilder s = new StringBuilder();
-        for (int i = 0; i < inARow; i++) {
-            s.append(arr.getFirst() + arr.get(1)*i);
-        }
-        return Long.parseLong(s.toString());
-    }
-
-    private static List<List<Integer>> unusualTermsUnder(int limit, int inARow) {
         boolean[] composites = Primes.compositeSieve(limit);
-        List<List<Integer>> unusualTerms = new ArrayList<>();
-        Set<Integer> skip = new HashSet<>();
+        int[] primes = Primes.primes(composites);
 
-        int start = limit/10 + (limit+1) % 2;
-        for (int i1 = start; i1 < limit; i1+=2) {
-            if (composites[i1 >> 1] || skip.contains(i1)) continue;
-            int[] digits = Converter.digitArray(i1);
-            int[][] perms = Combinations.permutations(digits);
-            Set<Integer> primePermsSet = new HashSet<>();
-            List<Integer> primePerms = new ArrayList<>();
-            for (int[] perm : perms) {
-                int permInt = Math.toIntExact(Converter.fromDigitArray(perm));
-                if (permInt < limit/10 || (permInt & 1) == 0 || composites[permInt >> 1]) continue;
-                primePerms.add(permInt);
-                primePermsSet.add(permInt);
-                skip.add(permInt);
-            }
-            addUnusualTerms(primePerms, primePermsSet, inARow, unusualTerms);
-        }
-
-        return unusualTerms;
-    }
-
-    private static void addUnusualTerms(List<Integer> perms, Set<Integer> permsSet, int inARow, List<List<Integer>> unusualTerms) {
-        for (int i = 0; i < perms.size(); i++) {
-            int p1 = perms.get(i);
-            for (int j = i+1; j < perms.size(); j++) {
-                int p2 = perms.get(j);
-                int diff = p2 - p1;
-                int temp = p2;
-                boolean flag = true;
-                for (int k = 0; k < inARow-2; k++) {
-                    temp += diff;
-                    if (!permsSet.contains(temp)) {
-                        flag = false;
-                        break;
-                    }
-                }
-                if (flag) {
-                    unusualTerms.add(List.of(p1, diff));
+        for (int i = 1; i < primes.length; i++) {
+            if (primes[i] == exclude) continue;
+            int jLimit = Arrays.binarySearch(primes, (limit + primes[i]) >> 1);
+            if (jLimit < 0) jLimit = -jLimit - 1;
+            if (jLimit > primes.length) jLimit = primes.length;
+            for (int j = i+1; j < jLimit; j++) {
+                int d = primes[j] - primes[i];
+                if (composites[(primes[j] + d) >> 1]) continue;
+                if (!Combinations.isPermutation(primes[i], primes[j])) continue;
+                if (Combinations.isPermutation(primes[i], primes[j] + d)) {
+                    return new int[] {primes[i], d};
                 }
             }
         }
+
+        return null;
     }
 }
