@@ -1,7 +1,5 @@
 package euler;
 
-import utils.Primes;
-
 public class PE_046 {
     private static boolean[] composites;
     private static int[] primesInt;
@@ -11,33 +9,43 @@ public class PE_046 {
     }
 
     public static String PE() {
-        int limit = 1_000_000;
-        return String.valueOf(smallestConjectureContradiction(limit));
+        return String.valueOf(smallestConjectureContradiction());
     }
 
-    private static int smallestConjectureContradiction(int limit) {
-        composites = Primes.compositeSieve(limit);
-        primesInt = Primes.primes(composites);
+    private static int smallestConjectureContradiction() {
+        int limit = 1_000;
+        int result = smallestConjectureContradiction2(limit);
+        while (result == -1) {
+            limit *= 10;
+            result = smallestConjectureContradiction2(limit);
+        }
+        return result;
+    }
 
-        for (int i = 9; i < limit; i++) {
-            if (!isOddComposite(i)) continue;
-            if (!canBeWrittenAsSumOfPrimeAndTwoSquares(i)) return i;
+    private static int smallestConjectureContradiction2(int limit) {
+        boolean[] composites = new boolean[limit >> 1];
+        boolean[] canBeWritten = new boolean[limit >> 1];
+        composites[0] = true;
+
+        for (int i = 1; i < limit >> 1; i++) {
+            if (composites[i] && !canBeWritten[i]) return (i << 1) | 1;
+            if (composites[i]) continue;
+            long p = (i << 1) | 1;
+            long k = p * p;
+            while (k < limit) {
+                composites[((int) k) >> 1] = true;
+                k += p << 1;
+            }
+
+            long sq = 1;
+            k = p + ((sq*sq) << 1);
+            while (k < limit) {
+                canBeWritten[(int) (k >> 1)] = true;
+                sq++;
+                k = p + ((sq*sq) << 1);
+            }
         }
 
         return -1;
-    }
-
-    private static boolean isOddComposite(int n) {
-        return (n & 1) == 1 && composites[n >> 1];
-    }
-
-    private static boolean canBeWrittenAsSumOfPrimeAndTwoSquares(int n) {
-        for (Integer prime : primesInt) {
-            int square = 1;
-            while (prime + 2*square*square < n) square++;
-
-            if (prime + 2*square*square == n) return true;
-        }
-        return false;
     }
 }
