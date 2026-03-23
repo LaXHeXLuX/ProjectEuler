@@ -253,6 +253,30 @@ public class Primes {
         }
         return i;
     }
+    public static boolean isPrime(int n) {
+        if (n < 2) return false;
+        if (n < 4) return true;
+        if (n % 2 == 0 || n % 3 == 0) return false;
+        return millerRabin(n, 2) && millerRabin(n, 3) &&
+                millerRabin(n, 5) && millerRabin(n, 7);
+    }
+    private static boolean millerRabin(int n, int a) {
+        if (n == a) return true;
+        int d = n - 1;
+        int r = 0;
+        while ((d & 1) == 0) {
+            d >>= 1;
+            r++;
+        }
+
+        long x = Diophantine.powMod(a, d, n);
+        if (x == 1 || x == n - 1) return true;
+        for (int i = 0; i < r - 1; i++) {
+            x = (x*x) % n;
+            if (x == n - 1) return true;
+        }
+        return false;
+    }
     public static boolean isPrime(long n) {
         if (n < 100) {
             if (n < 2) return false;
