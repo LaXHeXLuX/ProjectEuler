@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class test {
-    static Map<Class<?>, String> tests = new LinkedHashMap<>() {{
+    private static final Map<Class<?>, String> tests = new LinkedHashMap<>() {{
         put(PE_001.class, "233168");
         put(PE_002.class, "4613732");
         put(PE_003.class, "6857");
@@ -184,6 +184,7 @@ public class test {
         put(PE_401.class, "281632621");
         put(PE_407.class, "39782849136421");
     }};
+    private static final int DEFAULT_LOG_TIME = 300;
 
     static void main() {
         tests();
@@ -191,9 +192,25 @@ public class test {
     private static void assertEquals(String s, Class<?> cls) {
         if (!s.equals(tests.get(cls))) throw new AssertionError(cls.getName() + ": " + s + " != " + tests.get(cls));
     }
-    public static void tests() {
+    @SuppressWarnings("unused")
+    private static void tests() {
+        tests(0, tests.size()-1, DEFAULT_LOG_TIME);
+    }
+    @SuppressWarnings({"unused", "SameParameterValue"})
+    private static void tests(int logTime) {
+        tests(0, tests.size()-1, logTime);
+    }
+    @SuppressWarnings({"unused", "SameParameterValue"})
+    private static void tests(int startIndex, int endIndex) {
+        tests(startIndex, endIndex, DEFAULT_LOG_TIME);
+    }
+    public static void tests(int startIndex, int endIndex, int logTime) {
         double allStart = System.currentTimeMillis();
+        int index = -1;
         for (Class<?> cls : tests.keySet()) {
+            index++;
+            if (index < startIndex) continue;
+            if (index > endIndex) break;
             System.out.print(cls.getName() + "\r");
             double start = System.currentTimeMillis();
             String result;
@@ -205,7 +222,7 @@ public class test {
             assertEquals(result, cls);
             double end = System.currentTimeMillis();
             double time = end - start;
-            if (time > 300) System.out.println(cls.getName() + ": " + time + " ms");
+            if (time > logTime) System.out.println(cls.getName() + ": " + time + " ms");
         }
         double allEnd = System.currentTimeMillis();
         System.out.println("Total time: " + (allEnd - allStart) + " ms");
