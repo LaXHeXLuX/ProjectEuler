@@ -1,7 +1,6 @@
 package euler;
 
 import utils.Converter;
-import utils.Diophantine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ public class PE_055 {
         return String.valueOf(answer.length);
     }
 
-    public static int[] lychrelNumbersUnder(int limit) {
+    private static int[] lychrelNumbersUnder(int limit) {
         List<Integer> lychrelNumbers = new ArrayList<>();
 
         for (int i = 5; i < limit; i++) {
@@ -27,23 +26,27 @@ public class PE_055 {
         return Converter.listToArr(lychrelNumbers);
     }
 
-    public static int iterationsToProducePalindrome(long n) {
+    private static int iterationsToProducePalindrome(long n) {
         n += reverse(n);
+        long r = reverse(n);
         int counter = 1;
 
-        while (counter <= 50 && !Diophantine.isPalindrome(n)) {
-            n += reverse(n);
+        while (r != n) {
+            n += r;
+            r = reverse(n);
             if (n < 0) return -1;
             counter++;
+            if (counter > 50) return -1;
         }
-
-        if (counter > 50) return -1;
         return counter;
     }
 
     private static long reverse(long n) {
-        String number = String.valueOf(n);
-        String reversed = String.valueOf(new StringBuilder(number).reverse());
-        return Long.parseLong(reversed);
+        long r = 0;
+        while (n > 0) {
+            r = 10*r + n%10;
+            n /= 10;
+        }
+        return r;
     }
 }
