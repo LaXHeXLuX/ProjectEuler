@@ -3,9 +3,6 @@ package euler;
 import utils.Diophantine;
 import utils.Primes;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class PE_005 {
     static void main() {
         System.out.println(PE());
@@ -13,41 +10,20 @@ public class PE_005 {
 
     public static String PE() {
         int n = 20;
-        return String.valueOf(firstToDivide(arrOfNFirstElements(n)));
+        return String.valueOf(firstToDivide(n));
     }
 
-    private static long[] arrOfNFirstElements(int n) {
-        long[] arr = new long[n];
-        for (int i = 1; i < n+1; i++) {
-            arr[i-1] = i;
+    private static long firstToDivide(int limit) {
+        int[] primes = Primes.primes(limit);
+        int[] values = new int[primes.length];
+        for (int i = 0; i < primes.length; i++) {
+            values[i] = (int) (Math.log(limit) / Math.log(primes[i]));
         }
-        return arr;
-    }
 
-    private static long firstToDivide(long[] numbers) {
-        Primes.PF[][] allPrimeFactors = new Primes.PF[numbers.length][];
-        for (int i = 0; i < numbers.length; i++) {
-            allPrimeFactors[i] = Primes.primeFactors(numbers[i]);
-        }
-        Map<Long, Integer> biggestTerms = biggestTerms(allPrimeFactors);
         long product = 1;
-        for (long key : biggestTerms.keySet()) {
-            product *= Diophantine.pow(key, biggestTerms.get(key));
+        for (int i = 0; i < primes.length; i++) {
+            product *= Diophantine.pow(primes[i], values[i]);
         }
         return product;
-    }
-
-    private static Map<Long, Integer> biggestTerms(Primes.PF[][] allTerms) {
-        Map<Long, Integer> biggestTerms = new HashMap<>();
-        for (Primes.PF[] pfs : allTerms) {
-            for (Primes.PF pf : pfs) {
-                if (!biggestTerms.containsKey(pf.primeFactor)) {
-                    biggestTerms.put(pf.primeFactor, pf.power);
-                } else if (biggestTerms.get(pf.primeFactor) < pf.power) {
-                    biggestTerms.put(pf.primeFactor, pf.power);
-                }
-            }
-        }
-        return biggestTerms;
     }
 }

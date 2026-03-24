@@ -138,7 +138,7 @@ public class Diophantine {
         return sum;
     }
     public static int digitSum(BigInteger n) {
-        String s = n.toString();
+        String s = n.abs().toString();
         int sum = 0;
         for (int i = 0; i < s.length(); i++) {
             sum += s.charAt(i) - '0';
