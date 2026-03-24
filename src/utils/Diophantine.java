@@ -138,11 +138,10 @@ public class Diophantine {
         return sum;
     }
     public static int digitSum(BigInteger n) {
+        String s = n.abs().toString();
         int sum = 0;
-        while (n.compareTo(BigInteger.ZERO) > 0) {
-            BigInteger[] divRem = n.divideAndRemainder(BigInteger.TEN);
-            sum += divRem[1].intValue();
-            n = divRem[0];
+        for (int i = 0; i < s.length(); i++) {
+            sum += s.charAt(i) - '0';
         }
         return sum;
     }
