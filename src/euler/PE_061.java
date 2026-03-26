@@ -1,118 +1,87 @@
 package euler;
 
-import utils.ArrayFunctions;
 import utils.PolygonalNumber;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PE_061 {
+    private static int[] numbers;
+
     static void main() {
         System.out.println(PE());
     }
 
     public static String PE() {
         int n = 6;
-        List<int[]> combinations = generateWorkingNumbers(n);
-        return String.valueOf(sum(combinations));
+        cyclicPolygonalNumbers(n);
+        return String.valueOf(sum());
     }
-    
-    private static int sum(List<int[]> list) {
+
+    private static int sum() {
         int sum = 0;
-        for (int i : list.getFirst()) sum += i;
+        for (int i : numbers) sum += i;
         return sum;
     }
 
-    private static List<int[]> generateWorkingNumbers(int n) {
-        List<List<Integer>> allPolygons = generate4DigitPolygonalNumbers(n);
-        int[][] currentCombinations = new int[allPolygons.getFirst().size()][];
+    private static void cyclicPolygonalNumbers(int n) {
+        numbers = new int[n];
+        int mask = (1 << n) - 2;
 
-        for (int i = 0; i < currentCombinations.length; i++) {
-            currentCombinations[i] = new int[] {allPolygons.getFirst().get(i)};
+        int i = 1;
+        numbers[0] = (int) PolygonalNumber.polygonalNumber(3, i);
+
+        while (numbers[0] < 1000) {
+            i++;
+            numbers[0] = (int) PolygonalNumber.polygonalNumber(3, i);
         }
 
-        allPolygons.removeFirst();
-        List<int[]> workingCombinations = new ArrayList<>();
+        while (numbers[0] < 10_000) {
+            if ((numbers[0] % 100) / 10 != 0) {
+                cyclicPolynomialNumbersRec(1, mask);
+                if (numbers[numbers.length-1] > 0) return;
+            }
+            i++;
+            numbers[0] = (int) PolygonalNumber.polygonalNumber(3, i);
+        }
+    }
 
-        for (int[] currentCombination : currentCombinations) {
-            List<int[]> newCombinations = generateWorkingNumbersRec(currentCombination, allPolygons);
-            workingCombinations.addAll(newCombinations);
+    private static void cyclicPolynomialNumbersRec(int count, int mask) {
+        int start = numbers[count-1]%100;
+        if (count == numbers.length-1) {
+            int last = 100*start + numbers[0]/100;
+            int i = 0;
+            while (mask > 0) {
+                if ((mask & 1) == 1) break;
+                mask >>= 1;
+                i++;
+            }
+            if (PolygonalNumber.isPolygonalNumber(i+3, last)) {
+                numbers[numbers.length-1] = last;
+            }
+            return;
         }
 
-        List<int[]> finalCombinations = new ArrayList<>();
-        for (int[] workingCombination : workingCombinations) {
-            if (pairIsCyclic(workingCombination[workingCombination.length-1], workingCombination[0])) {
-                finalCombinations.add(workingCombination);
+        int initialMask = mask;
+        mask <<= 1;
+        int s = 2;
+        while (mask > 0) {
+            mask >>= 1;
+            s++;
+            if ((mask & 1) == 0) continue;
+            int i = 1;
+            int poly = (int) PolygonalNumber.polygonalNumber(s, i);
+            while (poly/100 < start) {
+                i++;
+                poly = (int) PolygonalNumber.polygonalNumber(s, i);
+            }
+            while (poly/100 == start) {
+                if ((poly % 100) / 10 != 0) {
+                    numbers[count] = poly;
+                    cyclicPolynomialNumbersRec(count+1, initialMask ^ 1 << (s-3));
+                    if (numbers[numbers.length-1] > 0) return;
+                }
+                i++;
+                poly = (int) PolygonalNumber.polygonalNumber(s, i);
             }
         }
-
-        return finalCombinations;
-    }
-
-    private static List<int[]> generateWorkingNumbersRec(int[] currentCombination, List<List<Integer>> usablePolygons) {
-        if (usablePolygons.size() == 1) return generateWorkingNumbersLast(currentCombination, usablePolygons.getFirst());
-        List<int[]> newCombinations = new ArrayList<>();
-
-        for (int i = 0; i < usablePolygons.size(); i++) {
-            List<List<Integer>> nextUsable = new ArrayList<>();
-            for (int j = 0; j < usablePolygons.size(); j++) {
-                if (j == i) continue;
-                nextUsable.add(new ArrayList<>(usablePolygons.get(j)));
-            }
-
-            for (int usablePolygon : usablePolygons.get(i)) {
-                if (!pairIsCyclic(currentCombination[currentCombination.length-1], usablePolygon)) continue;
-                List<int[]> nextCombinations = generateWorkingNumbersRec(ArrayFunctions.concatenate(currentCombination, new int[] {usablePolygon}), nextUsable);
-                newCombinations.addAll(nextCombinations);
-            }
-        }
-
-        return newCombinations;
-    }
-
-    private static List<int[]> generateWorkingNumbersLast(int[] currentCombination, List<Integer> usablePolygons) {
-        List<int[]> newCombinations = new ArrayList<>();
-
-        for (int usablePolygon : usablePolygons) {
-            if (pairIsCyclic(currentCombination[currentCombination.length-1], usablePolygon) && pairIsCyclic(usablePolygon, currentCombination[0])) {
-                int[] newCombination = ArrayFunctions.concatenate(currentCombination, new int[] {usablePolygon});
-                newCombinations.add(newCombination);
-            }
-        }
-
-        return newCombinations;
-    }
-
-    private static List<List<Integer>> generate4DigitPolygonalNumbers(int firstPolygonals) {
-        List<List<Integer>> polygonalNumbers = new ArrayList<>();
-
-        for (int i = 0; i < firstPolygonals; i++) {
-            polygonalNumbers.add(generate4DigitPolygonalNumbersWithSides(i+3));
-        }
-
-        return polygonalNumbers;
-    }
-
-    private static List<Integer> generate4DigitPolygonalNumbersWithSides(int sides) {
-        List<Integer> polygonalNumbers = new ArrayList<>();
-        int index = 1;
-        int polygonalNumber = (int) PolygonalNumber.polygonalNumber(sides, index);
-
-        while (polygonalNumber < 1_000) {
-            index++;
-            polygonalNumber = (int) PolygonalNumber.polygonalNumber(sides, index);
-        }
-
-        while (polygonalNumber < 10_000) {
-            polygonalNumbers.add(polygonalNumber);
-            index++;
-            polygonalNumber = (int) PolygonalNumber.polygonalNumber(sides, index);
-        }
-
-        return polygonalNumbers;
-    }
-
-    private static boolean pairIsCyclic(int a, int b) {
-        return a % 100 == b / 100;
+        numbers[count] = 0;
     }
 }
