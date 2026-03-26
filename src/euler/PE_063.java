@@ -18,19 +18,20 @@ public class PE_063 {
 
     private static BigInteger[] solve() {
         List<BigInteger> solutions = new ArrayList<>();
+        for (int i = 1; i < 10; i++) solutions.add(BigInteger.valueOf(i));
         int aLimit = 9;
 
         for (int a = 1; a <= aLimit; a++) {
-            int b = 1;
+            int b = 2;
             BigInteger power = power(a, b);
-            int[] digits = Converter.digitArray(power);
-            while (digits.length >= b) {
-                if (digits.length == b) {
+            int digits = power.toString().length();
+            while (digits >= b) {
+                if (digits == b) {
                     solutions.add(power);
                 }
                 b++;
                 power = power(a, b);
-                digits = Converter.digitArray(power);
+                digits = power.toString().length();
             }
         }
         return Converter.listToArr(solutions);
