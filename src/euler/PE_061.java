@@ -13,16 +13,18 @@ public class PE_061 {
 
     public static String PE() {
         int n = 6;
-        List<int[]> combinations = generateNWorkingNumbers(n);
-
+        List<int[]> combinations = generateWorkingNumbers(n);
+        return String.valueOf(sum(combinations));
+    }
+    
+    private static int sum(List<int[]> list) {
         int sum = 0;
-        for (int num : combinations.getFirst()) sum += num;
-        return String.valueOf(sum);
+        for (int i : list.getFirst()) sum += i;
+        return sum;
     }
 
-    private static List<int[]> generateNWorkingNumbers(int n) {
-        int digits = 4;
-        List<List<Integer>> allPolygons = generate4DigitPolygonalNumbers(n, digits);
+    private static List<int[]> generateWorkingNumbers(int n) {
+        List<List<Integer>> allPolygons = generate4DigitPolygonalNumbers(n);
         int[][] currentCombinations = new int[allPolygons.getFirst().size()][];
 
         for (int i = 0; i < currentCombinations.length; i++) {
@@ -81,27 +83,27 @@ public class PE_061 {
         return newCombinations;
     }
 
-    private static List<List<Integer>> generate4DigitPolygonalNumbers(int firstPolygonals, int digits) {
+    private static List<List<Integer>> generate4DigitPolygonalNumbers(int firstPolygonals) {
         List<List<Integer>> polygonalNumbers = new ArrayList<>();
 
         for (int i = 0; i < firstPolygonals; i++) {
-            polygonalNumbers.add(generate4DigitPolygonalNumbersWithSides(i+3, digits));
+            polygonalNumbers.add(generate4DigitPolygonalNumbersWithSides(i+3));
         }
 
         return polygonalNumbers;
     }
 
-    private static List<Integer> generate4DigitPolygonalNumbersWithSides(int sides, int digits) {
+    private static List<Integer> generate4DigitPolygonalNumbersWithSides(int sides) {
         List<Integer> polygonalNumbers = new ArrayList<>();
         int index = 1;
         int polygonalNumber = (int) PolygonalNumber.polygonalNumber(sides, index);
 
-        while (polygonalNumber < Math.pow(10, digits-1)) {
+        while (polygonalNumber < 1_000) {
             index++;
             polygonalNumber = (int) PolygonalNumber.polygonalNumber(sides, index);
         }
 
-        while (polygonalNumber < Math.pow(10, digits)) {
+        while (polygonalNumber < 10_000) {
             polygonalNumbers.add(polygonalNumber);
             index++;
             polygonalNumber = (int) PolygonalNumber.polygonalNumber(sides, index);
@@ -111,20 +113,6 @@ public class PE_061 {
     }
 
     private static boolean pairIsCyclic(int a, int b) {
-        List<Integer> digitsB = new ArrayList<>();
-        while (b > 0) {
-            digitsB.add(b % 10);
-            b /= 10;
-        }
-        int n = digitsB.size();
-        if (n % 2 != 0) return false;
-        int i = 0;
-        while (a > 0) {
-            int digit = a % 10;
-            if (i < n/2 && digit != digitsB.get(i + n/2)) return false;
-            a /= 10;
-            i++;
-        }
-        return i == n;
+        return a % 100 == b / 100;
     }
 }
