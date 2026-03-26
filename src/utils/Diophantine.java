@@ -290,6 +290,22 @@ public class Diophantine {
 
         return result;
     }
+    public static long powModExact(long base, long exp, long mod) {
+        long result = 1;
+        base = base % mod;
+
+        while (exp > 0) {
+            if ((exp & 1) == 1)
+                if (result < Integer.MAX_VALUE && base < Integer.MAX_VALUE) result = (result*base) % mod;
+                else result = mulModExact(result, base, mod);
+
+            if (base < Integer.MAX_VALUE) base = (base*base) % mod;
+            else base = mulModExact(base, base, mod);
+            exp >>= 1;
+        }
+
+        return result;
+    }
     public static long mulModExact(long a, long b, long m) {
         long result = 0;
         a = a % m;
