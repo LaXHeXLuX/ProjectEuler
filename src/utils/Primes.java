@@ -345,9 +345,7 @@ public class Primes {
         long totient = 1;
         for (PF pf : primeFactors) {
             totient *= pf.primeFactor-1;
-            for (int i = 1; i < pf.power; i++) {
-                totient *= pf.primeFactor;
-            }
+            totient *= Diophantine.pow(pf.primeFactor, pf.power-1);
         }
         return totient;
     }
