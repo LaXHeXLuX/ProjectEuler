@@ -34,10 +34,10 @@ public class PE_068 {
 
     private static long convertToLong(int[] nGon) {
         int[][] ring = convertToRing(nGon);
-        StringBuilder n = new StringBuilder();
+        long n = 0;
         for (int[] ints : ring) {
             for (int i : ints) {
-                n.append(i);
+                n = 10*n + i;
             }
         }
         return Long.parseLong(String.valueOf(n));
