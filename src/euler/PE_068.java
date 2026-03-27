@@ -3,6 +3,7 @@ package euler;
 import utils.Converter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PE_068 {
@@ -34,10 +35,10 @@ public class PE_068 {
 
     private static long convertToLong(int[] nGon) {
         int[][] ring = convertToRing(nGon);
-        long n = 0;
+        StringBuilder n = new StringBuilder();
         for (int[] ints : ring) {
             for (int i : ints) {
-                n = 10*n + i;
+                n.append(i);
             }
         }
         return Long.parseLong(String.valueOf(n));
