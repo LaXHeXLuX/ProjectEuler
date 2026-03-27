@@ -2,8 +2,6 @@ package euler;
 
 import utils.Combinations;
 
-import java.util.*;
-
 public class PE_070 {
 
     static void main() {
@@ -17,19 +15,11 @@ public class PE_070 {
 
     private static int[] totients(int limit) {
         int[] totients = new int[limit];
-        Arrays.fill(totients, 1);
-        for (int i = 2; i < limit/2; i++) {
-            if (totients[i] > 1) continue;
-
-            int prod = i;
-            while (prod < limit) {
-                totients[prod] *= i - 1;
-                int n = prod / i;
-                while (n % i == 0) {
-                    totients[prod] *= i;
-                    n /= i;
-                }
-                prod += i;
+        for (int i = 0; i < limit; i++) totients[i] = i;
+        for (int i = 2; i < limit; i++) {
+            if (totients[i] != i) continue;
+            for (int j = i; j < limit; j += i) {
+                totients[j] -= totients[j] / i;
             }
         }
         return totients;
@@ -37,20 +27,19 @@ public class PE_070 {
 
     private static int numberWithPropertyWithSmallestScore(int limit) {
         int[] totients = totients(limit);
-        int[] smallestScore = {Integer.MAX_VALUE, 1};
-        int smallestN = -1;
+        int smallestScore = 1;
+        int smallestN = Integer.MAX_VALUE;
         int lowerLimit = 2;
         for (int i = totients.length-1; i >= lowerLimit; i-=2) {
-            int[] score;
             if (totients[i] == 1) continue;
-            score = new int[] {i, totients[i]};
-            if ((long) score[0] * smallestScore[1] >= (long) score[1] * smallestScore[0]) continue;
+            int score = totients[i];
+            if ((long) i * smallestScore >= (long) score * smallestN) continue;
             if (!Combinations.isPermutation(i, totients[i])) continue;
 
             smallestN = i;
             smallestScore = score;
-            long yy = (long) score[1] * score[1];
-            long xMinusY = score[0] - score[1];
+            long yy = (long) score * score;
+            long xMinusY = i - score;
             lowerLimit = Math.toIntExact(yy / (xMinusY * xMinusY));
         }
 
