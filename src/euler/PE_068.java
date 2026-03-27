@@ -3,7 +3,6 @@ package euler;
 import utils.Converter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PE_068 {
