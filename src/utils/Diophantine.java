@@ -5,6 +5,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Diophantine {
+    public static int continuedFractionLength(int n) {
+        int a0 = (int) Math.sqrt(n);
+        if (a0*a0 == n) return 0;
+        int d1 = n - a0*a0;int a1 = 2*a0/d1;
+        int m = a1*d1 - a0;
+        int d = (n - m*m)/d1;
+        int a = (a0 + m)/d;
+        int len = 1;
+        while (!(m == a0 && d == d1)) {
+            len++;
+            m = d*a - m;
+            d = (n - m*m)/d;
+            a = (a0 + m)/d;
+        }
+
+        return len;
+    }
     public static int[] continuedFraction(int n) {
         int a0 = (int) Math.sqrt(n);
         if (a0*a0 == n) return new int[] {a0};
@@ -27,7 +44,7 @@ public class Diophantine {
 
         return Converter.listToArr(continuedFraction, Integer.class);
     }
-    public static long[] nthTermOfContinuedFraction(int[] continuedFraction, int n) {
+    public static long[] nthConvergent(int[] continuedFraction, int n) {
         long h1 = continuedFraction[0];
         long k1 = 1;
         if (n == 0) return new long[] {h1, k1};
@@ -50,7 +67,7 @@ public class Diophantine {
         int[] continuedFraction = continuedFraction(D);
         int l = continuedFraction.length;
         if (l < 2) return new long[0];
-        return nthTermOfContinuedFraction(
+        return nthConvergent(
                 continuedFraction,
                 (l-1) * (1 + (l-1)%2) - 1
         );
@@ -78,7 +95,7 @@ public class Diophantine {
         }
         return fundamentals;
     }
-    private static BigInteger[] nthTermOfContinuedFractionBig(int[] continuedFraction, int n) {
+    private static BigInteger[] nthConvergentBig(int[] continuedFraction, int n) {
         BigInteger[] bigCF = new BigInteger[continuedFraction.length];
         for (int i = 0; i < continuedFraction.length; i++) {
             bigCF[i] = BigInteger.valueOf(continuedFraction[i]);
@@ -104,9 +121,9 @@ public class Diophantine {
         int[] continuedFraction = continuedFraction(D);
         int l = continuedFraction.length;
         if (l < 2) return new BigInteger[0];
-        return nthTermOfContinuedFractionBig(
+        return nthConvergentBig(
                 continuedFraction,
-                (l-1) * (1 + (l-1)%2) - 1
+                (l-1) * (2 - l%2) - 1
         );
     }
     public static int root(int n) {
