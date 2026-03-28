@@ -3,20 +3,8 @@ package euler;
 import java.util.*;
 
 public class PE_074 {
-    private static final Map<Integer, Integer> digitFactorialChain = new HashMap<>() {{
-        put(169, 3);
-        put(363601, 3);
-        put(1454, 3);
-        put(871, 2);
-        put(872, 2);
-        put(45361, 2);
-        put(45362, 2);
-        put(1, 1);
-        put(2, 1);
-        put(145, 1);
-        put(40585, 1);
-    }};
     private static final int[] FACTORIALS = {1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880};
+    private static int[] digitFactorialChain;
 
     static void main() {
         System.out.println(PE());
@@ -24,40 +12,41 @@ public class PE_074 {
 
     public static String PE() {
         int n = 1_000_000;
-        List<Integer> longest = longestChainLengths(n);
-        return String.valueOf(longest.size());
-    }
-
-    private static List<Integer> longestChainLengths(int limit) {
-        List<Integer> maxList = new ArrayList<>();
-        maxList.add(1);
-        int maxChainLength = 1;
-
-        for (int i = 2; i < limit; i++) {
-            int chain = chainLength(i);
-            if (chain == maxChainLength) {
-                maxList.add(i);
-            }
-            else if (chain > maxChainLength) {
-                maxChainLength = chain;
-                maxList = new ArrayList<>();
-                maxList.add(i);
-            }
+        initDigitFactorialChain(n);
+        int target = 60;
+        int count = 0;
+        for (int i = 1; i < n; i++) {
+            if (chainLengthIs(i, target)) count++;
         }
-        return maxList;
+        return String.valueOf(count);
     }
 
-    private static int chainLength(int n) {
-        if (digitFactorialChain.containsKey(n)) return digitFactorialChain.get(n);
+    private static void initDigitFactorialChain(int limit) {
+        digitFactorialChain = new int[FACTORIALS[9]*((int) Math.log10(limit-1) + 1) + 1];
+        digitFactorialChain[169] = 3;
+        digitFactorialChain[363601] = 3;
+        digitFactorialChain[1454] = 3;
+        digitFactorialChain[871] = 2;
+        digitFactorialChain[872] = 2;
+        digitFactorialChain[45361] = 2;
+        digitFactorialChain[45362] = 2;
+        digitFactorialChain[1] = 1;
+        digitFactorialChain[2] = 1;
+        digitFactorialChain[145] = 1;
+        digitFactorialChain[40585] = 1;
+    }
+
+    private static boolean chainLengthIs(int n, int target) {
+        if (digitFactorialChain[n] > 0) return digitFactorialChain[n] == target;
         List<Integer> chain = new ArrayList<>();
-        while (!digitFactorialChain.containsKey(n)) {
+        while (digitFactorialChain[n] == 0) {
             chain.add(n);
             n = sumOfDigitFactorials(n);
         }
         for (int i = 0; i < chain.size(); i++) {
-            digitFactorialChain.put(chain.get(i), chain.size()-i + digitFactorialChain.get(n));
+            digitFactorialChain[chain.get(i)] = chain.size()-i + digitFactorialChain[n];
         }
-        return digitFactorialChain.get(chain.getFirst());
+        return digitFactorialChain[chain.getFirst()] == target;
     }
 
     private static int sumOfDigitFactorials(int n) {
