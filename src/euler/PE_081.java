@@ -9,53 +9,23 @@ public class PE_081 {
 
     public static String PE() {
         String filename = "src/euler/inputs/PE_081_matrix.txt";
-        int[][] matrix = parser(filename);
+        int[][] matrix = Parser.parseManyInts(filename, ",");
         return String.valueOf(minimumSum(matrix));
     }
 
-    private static int[][] parser(String filename) {
-        int[][] rows = Parser.parseManyInts(filename, ",");
-
-        int[][] ints = new int[rows.length + rows[0].length - 1][];
-        for (int i = 0; i < rows.length; i++) {
-            int[] rowInts = new int[Math.min(1 + i, rows[0].length)];
-            for (int j = 0; j < rowInts.length; j++) {
-                rowInts[j] = rows[i - j][j];
+    private static int minimumSum(int[][] m) {
+        for (int i = 0; i < m.length; i++) {
+            for (int j = 0; j < m[0].length; j++) {
+                if (i == 0 && j == 0) continue;
+                int add;
+                if (i == 0) add = m[i][j-1];
+                else {
+                    add = m[i-1][j];
+                    if (j > 0 && m[i][j-1] < add) add = m[i][j-1];
+                }
+                m[i][j] += add;
             }
-
-            ints[i] = rowInts;
         }
-        for (int i = rows.length; i < rows.length + rows[0].length - 1; i++) {
-            int startingRow = rows.length - 1;
-            int startingColumn = i - rows.length + 1;
-
-            int[] rowInts = new int[Math.min(rows.length, rows[0].length - startingColumn)];
-            for (int j = 0; j < rowInts.length; j++) {
-                rowInts[j] = rows[startingRow - j][startingColumn + j];
-            }
-
-            ints[i] = rowInts;
-        }
-
-        return ints;
-    }
-
-    private static int minimumSum(int[][] matrix) {
-        if (matrix.length == 1) return matrix[0][0];
-        int[][] newMatrix = new int[matrix.length-1][];
-        System.arraycopy(matrix, 0, newMatrix, 0, newMatrix.length);
-        for (int i = 0; i < newMatrix[newMatrix.length-1].length; i++) {
-            int adder = 1;
-            if (matrix[matrix.length-1].length <= matrix[matrix.length-2].length) adder = -1;
-
-            if (i >= matrix[newMatrix.length].length)
-                newMatrix[newMatrix.length-1][i] += matrix[newMatrix.length][i+adder];
-            else if (i == 0 && adder == -1)
-                newMatrix[newMatrix.length-1][i] += matrix[newMatrix.length][i];
-            else
-                newMatrix[newMatrix.length-1][i] += Math.min(matrix[newMatrix.length][i], matrix[newMatrix.length][i+adder]);
-
-        }
-        return minimumSum(newMatrix);
+        return m[m.length-1][m[0].length-1];
     }
 }
