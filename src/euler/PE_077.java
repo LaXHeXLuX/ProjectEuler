@@ -2,13 +2,9 @@ package euler;
 
 import utils.Primes;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
 public class PE_077 {
     private static int[] primes;
-    private static Map<String, Long> waysToSumWithPrimes;
+    private static long[][] waysToSum;
 
     static void main() {
         System.out.println(PE());
@@ -20,11 +16,10 @@ public class PE_077 {
     }
 
     private static int firstToSumInOverNWays(int n) {
-        waysToSumWithPrimes = new HashMap<>();
         int primeLimit = 1;
         int result = firstToSumInOverNWays(n, primeLimit);
         while (result == -1) {
-            primeLimit *= 10;
+            primeLimit *= 2;
             result = firstToSumInOverNWays(n, primeLimit);
         }
         return result;
@@ -32,6 +27,7 @@ public class PE_077 {
 
     private static int firstToSumInOverNWays(int n, int limit) {
         primes = Primes.primes(limit);
+        waysToSum = new long[limit+1][limit+1];
         int number = 1;
         long answer = waysToSumWithPrimes(1);
         while (answer <= n && number < limit) {
@@ -49,19 +45,14 @@ public class PE_077 {
     private static long waysToSumWithPrimes(int n, int biggestAdderIndex) {
         if (n == 0) return 1;
         if (n == 1) return 0;
-
-        String input = Arrays.toString(new int[]{n, biggestAdderIndex});
-        if (waysToSumWithPrimes.containsKey(input)) {
-            return waysToSumWithPrimes.get(input);
-        }
+        if (waysToSum[n][biggestAdderIndex] > 0) return waysToSum[n][biggestAdderIndex];
 
         long sum = 0;
         for (int i = biggestAdderIndex; i < primes.length && primes[i] <= n; i++) {
             sum += waysToSumWithPrimes(n-primes[i], i);
         }
 
-        waysToSumWithPrimes.put(input, sum);
-
+        waysToSum[n][biggestAdderIndex] = sum;
         return sum;
     }
 }
