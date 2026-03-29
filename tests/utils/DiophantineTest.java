@@ -17,6 +17,10 @@ class DiophantineTest {
 
         int[] cf2 = Diophantine.continuedFraction(2);
         assertArrayEquals(new long[] {1, 1}, Diophantine.nthConvergent(cf2, 0));
+
+        for (int i = 1; i < 10; i++) {
+            assertEquals(Diophantine.continuedFraction(i).length - 1, Diophantine.continuedFractionLength(i));
+        }
     }
     @Test
     void pell() {
