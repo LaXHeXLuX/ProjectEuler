@@ -5,7 +5,6 @@ import utils.Parser;
 import java.util.*;
 
 public class PE_096 {
-
     static void main() {
         System.out.println(PE());
     }
@@ -68,22 +67,10 @@ public class PE_096 {
     }
 
     private static void solve(int[][] sudoku, Map<Integer, Set<Integer>> possibilities) {
-        int lastSize = 0;
-        int currentSize = deepSize(possibilities);
-        while (!possibilities.isEmpty() && lastSize != currentSize) {
-            lastSize = currentSize;
-            prune(sudoku, possibilities);
-            clean(sudoku, possibilities);
-            currentSize = deepSize(possibilities);
+        boolean changed = true;
+        while (!possibilities.isEmpty() && changed) {
+            changed = prune(sudoku, possibilities) || clean(sudoku, possibilities);
         }
-    }
-
-    private static int deepSize(Map<Integer, Set<Integer>> possibilities) {
-        int sum = 0;
-        for (Integer i : possibilities.keySet()) {
-            sum += possibilities.get(i).size();
-        }
-        return sum;
     }
 
     private static int indexOf(int rowColBox, int i, int j) {
@@ -96,7 +83,8 @@ public class PE_096 {
         };
     }
 
-    private static void clean(int[][] sudoku, Map<Integer, Set<Integer>> possibilities) {
+    private static boolean clean(int[][] sudoku, Map<Integer, Set<Integer>> possibilities) {
+        boolean change = false;
         for (int structI = 0; structI < 9; structI++) {
             for (int i = 1; i <= 9 ; i++) {
                 for (int rowColBox = 0; rowColBox < 3; rowColBox++) {
@@ -115,6 +103,7 @@ public class PE_096 {
 
                     if (validCells.isEmpty()) throw new IllegalArgumentException("ValidCells is empty for struct: " + structI + ", i: " + i);
                     if (validCells.size() == 1) {
+                        change = true;
                         int onlyI = validCells.getFirst();
                         int index = indexOf(rowColBox, structI, onlyI);
                         sudoku[index/9][index%9] = i;
@@ -124,12 +113,15 @@ public class PE_096 {
                 }
             }
         }
+        return change;
     }
 
-    private static void prune(int[][] sudoku, Map<Integer, Set<Integer>> possibilities) {
+    private static boolean prune(int[][] sudoku, Map<Integer, Set<Integer>> possibilities) {
         List<Integer> remove = new ArrayList<>();
+        boolean change = false;
         for (Integer i : possibilities.keySet()) {
             if (possibilities.get(i).size() == 1) {
+                change = true;
                 sudoku[i/9][i%9] = possibilities.get(i).iterator().next();
                 remove.add(i);
             }
@@ -138,6 +130,7 @@ public class PE_096 {
             possibilities.remove(i);
             prune(i, sudoku, possibilities);
         }
+        return change;
     }
 
     private static void prune(int index, int[][] sudoku, Map<Integer, Set<Integer>> possibilities) {
