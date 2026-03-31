@@ -1,9 +1,12 @@
 package euler;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class PE_090 {
-    private static final List<List<Integer>> combinations = new ArrayList<>();
+    private static final List<Set<Integer>> combinations = new ArrayList<>();
 
     static void main() {
         System.out.println(PE());
@@ -13,10 +16,10 @@ public class PE_090 {
         generate(new ArrayList<>(), 6, 0, 9);
         long count = 0;
         for (int i = 0; i < combinations.size(); i++) {
-            List<Integer> c1 = combinations.get(i);
+            Set<Integer> set1 = combinations.get(i);
             for (int j = i; j < combinations.size(); j++) {
-                List<Integer> c2 = combinations.get(j);
-                if (diceWork(c1, c2)) count++;
+                Set<Integer> set2 = combinations.get(j);
+                if (diceWork(set1, set2)) count++;
             }
         }
         return String.valueOf(count);
@@ -24,7 +27,7 @@ public class PE_090 {
 
     private static void generate(List<Integer> current, int k, int start, int max) {
         if (current.size() == k) {
-            combinations.add(new ArrayList<>(current));
+            combinations.add(new HashSet<>(current));
             return;
         }
         for (int i = start; i <= max; i++) {
@@ -34,11 +37,9 @@ public class PE_090 {
         }
     }
 
-    private static boolean diceWork(List<Integer> dice1, List<Integer> dice2) {
-        Set<Integer> set1 = new HashSet<>(dice1);
+    private static boolean diceWork(Set<Integer> set1, Set<Integer> set2) {
         if (set1.contains(6)) set1.add(9);
         if (set1.contains(9)) set1.add(6);
-        Set<Integer> set2 = new HashSet<>(dice2);
         if (set2.contains(6)) set2.add(9);
         if (set2.contains(9)) set2.add(6);
         int[][] squarePairs = {{0, 1}, {0, 4}, {0, 9}, {1, 6}, {2, 5}, {3, 6}, {4, 9}, {6, 4}, {8, 1}};
