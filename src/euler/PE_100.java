@@ -1,7 +1,5 @@
 package euler;
 
-import java.math.BigInteger;
-
 public class PE_100 {
     static void main() {
         System.out.println(PE());
@@ -20,14 +18,9 @@ public class PE_100 {
             ab = nextAB(ab);
         }
 
-        long y = (1 + ab[0]) / 2;
-        BigInteger bigY = BigInteger.valueOf(y);
-        BigInteger square = BigInteger.TWO.multiply(bigY).multiply(bigY.subtract(BigInteger.ONE)).add(BigInteger.ONE);
-        BigInteger[] sqrtRem = square.sqrtAndRemainder();
-        if (sqrtRem[1].compareTo(BigInteger.ZERO) != 0) throw new RuntimeException(square + " isn't a perfect square!");
-        long x = (1 + sqrtRem[0].longValue()) / 2;
-
-        return new long[] {y, x};
+        long x = (1 + ab[0]) / 2;
+        long y = (1 + ab[1]) / 2;
+        return new long[] {x, y};
     }
 
     private static long[] nextAB(long[] ab) {
