@@ -27,15 +27,12 @@ public class PE_101 {
     }
 
     private static BigInteger sumOfFits(BigInteger[] polynome) {
-        List<BigInteger> results = new ArrayList<>();
-        for (int i = 1; i < polynome.length; i++) {
-            results.add(polynomeResult(polynome, i));
-        }
         Fraction<BigInteger> sum = new Fraction<>(BigInteger.ZERO);
         for (int i = 1; i < polynome.length; i++) {
-            Fraction<BigInteger>[] poly = predictPolynome(results.subList(0, i));
-            Fraction<BigInteger> next = polynomeResult(poly, i+1);
-            sum = sum.add(next);
+            List<BigInteger> values = new ArrayList<>();
+            for (int j = 1; j <= i; j++) values.add(polynomeResult(polynome, j));
+            Fraction<BigInteger>[] poly = predictPolynome(values);
+            sum = sum.add(polynomeResult(poly, i + 1));
         }
         sum = sum.simplify();
         if (!sum.den.equals(BigInteger.ONE)) throw new RuntimeException("Bad sum: " + sum);
