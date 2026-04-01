@@ -33,7 +33,7 @@ public class PE_104 {
     }
 
     private static boolean isPandigital(int n) {
-        if (n < 123456789) return false;
+        if (n < 123456789 || n > 987654321) return false;
         boolean[] digits = new boolean[9];
         while (n > 0) {
             int digit = n % 10;

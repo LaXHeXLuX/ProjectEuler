@@ -34,37 +34,78 @@ public class Parser {
         return parseManyStrings(filename, " ");
     }
     public static String[][] parseManyStrings(String filename, String splitter) {
-        String[] rows = parseStrings(filename);
-        String[][] stringRows = new String[rows.length][];
+        List<String[]> rows = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String line = br.readLine();
 
-        for (int i = 0; i < stringRows.length; i++) {
-            stringRows[i] = rows[i].split(splitter);
+            if (line == null) {
+                br.close();
+                return new String[0][];
+            }
+
+            while (line != null) {
+                rows.add(line.split(splitter));
+                line = br.readLine();
+            }
+
+            br.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-
-        return stringRows;
+        return Converter.listToArr(rows);
     }
     public static int[] parseInts(String filename) {
-        String[] rows = parseStrings(filename);
-        int[] ints = new int[rows.length];
+        List<Integer> rows = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String line = br.readLine();
 
-        for (int i = 0; i < ints.length; i++) {
-            ints[i] = Integer.parseInt(rows[i]);
+            if (line == null) {
+                br.close();
+                return new int[0];
+            }
+
+            while (line != null) {
+                rows.add(Integer.parseInt(line));
+                line = br.readLine();
+            }
+
+            br.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-
-        return ints;
+        return Converter.listToArr(rows);
     }
 
     public static int[][] parseManyInts(String filename) {
         return parseManyInts(filename, " ");
     }
     public static int[][] parseManyInts(String filename, String splitter) {
-        String[][] stringRows = parseManyStrings(filename, splitter);
-        int[][] intRows = new int[stringRows.length][];
+        List<int[]> rows = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String line = br.readLine();
 
-        for (int i = 0; i < intRows.length; i++) {
-            intRows[i] = Converter.arrStringToArrInt(stringRows[i]);
+            if (line == null) {
+                br.close();
+                return new int[0][];
+            }
+
+            while (line != null) {
+                String[] split = line.split(splitter);
+                int[] arr = new int[split.length];
+                for (int i = 0; i < split.length; i++) {
+                    arr[i] = Integer.parseInt(split[i]);
+                }
+                rows.add(arr);
+                line = br.readLine();
+            }
+
+            br.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-
-        return intRows;
+        return Converter.listToArr(rows);
     }
 }
