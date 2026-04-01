@@ -6,24 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PE_102 {
-    private static class Triangle {
-        Point a;
-        Point b;
-        Point c;
-
+    private record Triangle(Point a, Point b, Point c) {
         private record Point(int x, int y) {
             private int cross(Point p) {
                 return x * p.y - p.x * y;
             }
-
-            @Override
-            public String toString() {
-                        return "[" + x + ", " + y + "]";
-                    }
-        }
-        @Override
-        public String toString() {
-            return "{" + a + ", " + b + ", " + c + "}";
         }
     }
 
@@ -55,10 +42,11 @@ public class PE_102 {
         List<Triangle> triangles = new ArrayList<>();
 
         for (int[] row : ints) {
-            Triangle t = new Triangle();
-            t.a = new Triangle.Point(row[0], row[1]);
-            t.b = new Triangle.Point(row[2], row[3]);
-            t.c = new Triangle.Point(row[4], row[5]);
+            Triangle t = new Triangle(
+                    new Triangle.Point(row[0], row[1]),
+                    new Triangle.Point(row[2], row[3]),
+                    new Triangle.Point(row[4], row[5])
+            );
             triangles.add(t);
         }
 
