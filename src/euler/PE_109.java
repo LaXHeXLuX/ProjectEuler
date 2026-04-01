@@ -1,6 +1,8 @@
 package euler;
 
 public class PE_109 {
+    private static final int[] SCORES = buildScores();
+
     static void main() {
         System.out.println(PE());
     }
@@ -11,6 +13,18 @@ public class PE_109 {
             sum += waysToCheckout(i);
         }
         return String.valueOf(sum);
+    }
+
+    private static int[] buildScores() {
+        int[] scores = new int[61];
+        for (int i = 1; i <= 20; i++) {
+            scores[i]++;
+            scores[2*i]++;
+            scores[3*i]++;
+        }
+        scores[25]++;
+        scores[50]++;
+        return scores;
     }
 
     private static int waysToCheckout(int n) {
@@ -27,21 +41,14 @@ public class PE_109 {
     private static int waysToPreCheckout(int n) {
         if (n == 0) return 1;
         if (n > 120) return 0;
-        int[] scores = new int[61];
-        for (int i = 1; i <= 20; i++) {
-            scores[i]++;
-            scores[2*i]++;
-            scores[3*i]++;
-        }
-        scores[25]++; scores[50]++;
         int count = 0;
-        if (n < scores.length) count = scores[n];
+        if (n < SCORES.length) count = SCORES[n];
         int limit = n/2;
-        if (n % 2 == 0) count += scores[n/2]*(scores[n/2]+1) / 2;
+        if (n % 2 == 0) count += SCORES[n/2]*(SCORES[n/2]+1) / 2;
         else limit += 1;
         for (int i = Math.max(1, n-60); i < limit; i++) {
-            if (scores[i] == 0 || scores[n-i] == 0) continue;
-            count += scores[i] * scores[n-i];
+            if (SCORES[i] == 0 || SCORES[n-i] == 0) continue;
+            count += SCORES[i] * SCORES[n-i];
         }
         return count;
     }
