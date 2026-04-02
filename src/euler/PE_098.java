@@ -8,26 +8,18 @@ import java.io.IOException;
 import java.util.*;
 
 public class PE_098 {
-    private static final Map<Integer, Map<String, List<String>>> anagrams = new HashMap<>();
+    private static Map<Integer, Map<String, List<String>>> anagrams;
     private static int maxSize = 0;
 
     static void main() {
-        double s = System.currentTimeMillis();
         System.out.println(PE());
-        double e = System.currentTimeMillis();
-        System.out.println((e-s) + " ms");
     }
 
     public static String PE() {
         String file = "src/euler/inputs/PE_098_words.txt";
         String[] words = parse(file);
-        System.out.println(words.length);
-        double s = System.currentTimeMillis();
         makeAnagrams(words);
-        double e = System.currentTimeMillis();
-        System.out.println("anagrams: " + (e-s) + " ms");
-        long limit = (long) Math.sqrt(Diophantine.pow10[maxSize]);
-        return String.valueOf(largestSquareWithProperty(limit));
+        return String.valueOf(largestSquareWithProperty());
     }
 
     private static String[] parse(String filename) {
@@ -38,16 +30,12 @@ public class PE_098 {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        String[] words = line.split(",");
-
-        for (int i = 0; i < words.length; i++) {
-            words[i] = words[i].replaceAll("\"", "");
-        }
-
-        return words;
+        line = line.substring(1, line.length()-1);
+        return line.split("\",\"");
     }
     
     private static void makeAnagrams(String[] words) {
+        anagrams = new HashMap<>();
         for (String word : words) {
             char[] chars = word.toCharArray();
             Arrays.sort(chars);
@@ -63,83 +51,50 @@ public class PE_098 {
         for (Integer i : anagrams.keySet()) {
             if (i > maxSize) maxSize = i;
         }
+
+        Map<Integer, Map<String, List<String>>> temp = anagrams;
+        anagrams = new TreeMap<>(Comparator.reverseOrder());
+        anagrams.putAll(temp);
     }
 
-    private static int[] digits(long n) {
-        int[] digits = new int[10];
-        while (n > 0) {
-            digits[(int) (n % 10)]++;
-            n /= 10;
+    private static boolean wordsMapSquare(char[] w1, char[] w2, long square) {
+        int[] map = new int[26];
+        boolean[] used = new boolean[10];
+        Arrays.fill(map, -1);
+        for (int i = w1.length-1; i >= 0; i--) {
+            int index = w1[i] - 'A';
+            int digit = (int) (square % 10);
+            if (map[index] != -1 && map[index] != digit) return false;
+            if (map[index] == -1 && used[digit]) return false;
+            used[digit] = true;
+            map[index] = digit;
+            square /= 10;
         }
-        return digits;
-    }
-
-    private static int[] wordDigits(String word) {
-        char[] chars = word.toCharArray();
-        int[] digits = new int[26];
-        for (char c : chars) {
-            digits[c - 'A']++;
+        long square2 = 0;
+        if (map[w2[0] - 'A'] == 0) return false;
+        for (char c : w2) {
+            square2 = 10*square2 + map[c - 'A'];
         }
-        return digits;
+        return Diophantine.root(square2) >= 0;
     }
 
-    private static int[] distinctCounts(int[] digits) {
-        int[] distinctCounts = new int[10];
-        for (int digit : digits) {
-            if (digit == 0) continue;
-            distinctCounts[digit]++;
-        }
-        return distinctCounts;
-    }
-
-    private static long largestSquareWithProperty(long limit) {
-        for (long n = limit; n > 0; n--) {
-            long square = n*n;
-            int[] digits = digits(square);
-            int[] distinctCounts = distinctCounts(digits);
-            Map<String, List<String>> anagramMap = anagrams.get((int) Math.log10(square) + 1);
-            if (anagramMap == null) {
-                n = Diophantine.pow10[(int) Math.log10(n)];
-                continue;
-            }
-            for (String sorted : anagramMap.keySet()) {
-                List<String> words = anagramMap.get(sorted);
-                int[] wordDistinctCounts = distinctCounts(wordDigits(sorted));
-                boolean works = true;
-                for (int i = 0; i < wordDistinctCounts.length; i++) {
-                    if (wordDistinctCounts[i] != distinctCounts[i]) {
-                        works = false;
-                        break;
-                    }
-                }
-                if (!works) continue;
-                for (int i = 0; i < words.size(); i++) {
-                    String w1 = words.get(i);
-                    int[] map = new int[26];
-                    Arrays.fill(map, -1);
-                    long temp = square;
-                    works = true;
-                    for (int j = w1.length()-1; j >= 0; j--) {
-                        int index = w1.charAt(j) - 'A';
-                        int d = (int) (temp % 10);
-                        if (map[index] != -1 && map[index] != d) {
-                            works = false;
-                            break;
+    private static long largestSquareWithProperty() {
+        for (Integer i : anagrams.keySet()) {
+            Map<String, List<String>> sortedMap = anagrams.get(i);
+            int nLow = (int) Math.sqrt(Diophantine.pow10[i-1] - 1) + 1;
+            int nHigh = (int) Math.sqrt(Diophantine.pow10[i] - 1);
+            for (int n = nHigh; n >= nLow; n--) {
+                long square = (long) n * n;
+                for (String sorted : sortedMap.keySet()) {
+                    List<String> words = sortedMap.get(sorted);
+                    for (int w1i = 0; w1i < words.size()-1; w1i++) {
+                        char[] w1 = words.get(w1i).toCharArray();
+                        for (int w2i = w1i+1; w2i < words.size(); w2i++) {
+                            char[] w2 = words.get(w2i).toCharArray();
+                            if (wordsMapSquare(w1, w2, square)) {
+                                return square;
+                            }
                         }
-                        map[index] = d;
-                        temp /= 10;
-                    }
-                    if (!works) continue;
-                    for (int j = 0; j < words.size(); j++) {
-                        if (i == j) continue;
-                        String w2 = words.get(j);
-                        if (map[w2.charAt(0) - 'A'] == 0) continue;
-                        long newSquare = 0;
-                        for (int k = 0; k < w2.length(); k++) {
-                            newSquare = 10*newSquare + map[w2.charAt(k) - 'A'];
-                        }
-                        long root = Diophantine.root(newSquare);
-                        if (root >= 0) return square;
                     }
                 }
             }
