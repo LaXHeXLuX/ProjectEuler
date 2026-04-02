@@ -91,7 +91,7 @@ public class PE_098 {
                         char[] w1 = words.get(w1i).toCharArray();
                         for (int w2i = w1i+1; w2i < words.size(); w2i++) {
                             char[] w2 = words.get(w2i).toCharArray();
-                            if (wordsMapSquare(w1, w2, square)) {
+                            if (wordsMapSquare(w1, w2, square) || wordsMapSquare(w2, w1, square)) {
                                 return square;
                             }
                         }
