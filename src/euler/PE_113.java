@@ -13,34 +13,19 @@ public class PE_113 {
     }
 
     private static long nonBouncyCount(int digits) {
-        long increasing = increasingCount(digits);
-        long decreasing = decreasingCount(digits);
+        long increasing = count(digits, true);
+        long decreasing = count(digits, false);
         long same = 9L * digits;
         return increasing + decreasing + same;
     }
 
-    private static long increasingCount(int digits) {
+    private static long count(int digits, boolean increasing) {
         if (digits == 1) return 0;
-        long sum = increasingCount(digits-1);
-        for (int startDigit = 1; startDigit < 10; startDigit++) {
-            for (int endDigit = startDigit+1; endDigit < 10; endDigit++) {
-                int n = endDigit-startDigit;
-                int m = digits-1;
-                sum += Combinations.nChooseM(n + m - 1, m - 1);
-            }
-        }
-        return sum;
-    }
-
-    private static long decreasingCount(int digits) {
-        if (digits == 1) return 0;
-        long sum = decreasingCount(digits-1);
-        for (int startDigit = 1; startDigit < 10; startDigit++) {
-            for (int endDigit = 0; endDigit < startDigit; endDigit++) {
-                int n = startDigit-endDigit;
-                int m = digits-1;
-                sum += Combinations.nChooseM(n + m - 1, m - 1);
-            }
+        long sum = count(digits-1, increasing);
+        int m = digits-2;
+        int extra = increasing ? 0 : 1;
+        for (int n = 1; n < 9 + extra; n++) {
+            sum += (9 - n + extra) * Combinations.nChooseM(n+m, m);
         }
         return sum;
     }
