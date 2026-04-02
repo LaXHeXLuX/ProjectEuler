@@ -2,7 +2,10 @@ package euler;
 
 public class PE_112 {
     static void main() {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static String PE() {
@@ -23,20 +26,13 @@ public class PE_112 {
     private static boolean numberIsBouncy(long n) {
         boolean increasing = true;
         boolean decreasing = true;
-        int lastDigit = Math.toIntExact(n % 10);
-        n /= 10;
-        int digit = Math.toIntExact(n % 10);
-        while (n > 0) {
-            if (digit > lastDigit) {
-                decreasing = false;
-            }
-            else if (digit < lastDigit) {
-                increasing = false;
-            }
+        int lastDigit = (int) (n % 10);
+        while ((n /= 10) > 0) {
+            int digit = (int) (n % 10);
+            if (digit > lastDigit) decreasing = false;
+            else if (digit < lastDigit) increasing = false;
             if (!increasing && !decreasing) return true;
-            n /= 10;
             lastDigit = digit;
-            digit = Math.toIntExact(n % 10);
         }
         return false;
     }
