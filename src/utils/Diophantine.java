@@ -242,6 +242,12 @@ public class Diophantine {
         }
         return a;
     }
+    public static int lcm(int a, int b) {
+        return a/gcd(a, b) * b;
+    }
+    public static long lcm(long a, long b) {
+        return a/gcd(a, b) * b;
+    }
     public static int[] extendedEuclidean(int a, int b) {
         int r1 = a; int r2 = b;
         int s1 = 1; int s2 = 0;

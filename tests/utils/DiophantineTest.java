@@ -121,6 +121,18 @@ class DiophantineTest {
         assertEquals(32768L, Diophantine.gcd(1_000_000_000_000_000L, 65536));
     }
     @Test
+    void lcm() {
+        for (int i = 1; i < 10; i++) {
+            assertEquals(i, Diophantine.lcm(i, i));
+        }
+        assertEquals(15, Diophantine.lcm(3, 5));
+        assertEquals(18, Diophantine.lcm(6, 9));
+        assertEquals(100, Diophantine.lcm(100, 10));
+
+        assertEquals(1_000_000_000_000L, Diophantine.lcm(1_000_000_000_000L, 10L));
+        assertEquals(2_000_000_000_000_000L, Diophantine.lcm(1_000_000_000_000_000L, 65536));
+    }
+    @Test
     void extendedEuclidean() {
         assertArrayEquals(new int[] {1, -1}, Diophantine.extendedEuclidean(18, 12));
         assertArrayEquals(new int[] {0, 1}, Diophantine.extendedEuclidean(2, 2));
