@@ -53,6 +53,7 @@ class ParserTest {
 
     @Test
     void parseManyStrings() throws IOException {
+        assertThrows(RuntimeException.class, () -> Parser.parseManyStrings("dummy.txt"));
         assertArrayEquals(new String[][] {}, Parser.parseManyStrings(filename));
 
         FileWriter fw1 = new FileWriter(filename);
@@ -68,6 +69,7 @@ class ParserTest {
 
     @Test
     void parseInts() throws IOException {
+        assertThrows(RuntimeException.class, () -> Parser.parseInts("dummy.txt"));
         assertArrayEquals(new int[] {}, Parser.parseInts(filename));
 
         FileWriter fw1 = new FileWriter(filename);
@@ -83,6 +85,7 @@ class ParserTest {
 
     @Test
     void parseManyInts() throws IOException {
+        assertThrows(RuntimeException.class, () -> Parser.parseManyInts("dummy.txt"));
         assertArrayEquals(new int[][] {}, Parser.parseManyInts(filename));
 
         FileWriter fw1 = new FileWriter(filename);
