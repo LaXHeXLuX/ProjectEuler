@@ -34,11 +34,12 @@ public class PE_008 {
     }
 
     private static long biggestProductOfNConsecutiveDigits(int n, String number) {
+        char[] chars = number.toCharArray();
         long biggestProduct = 0;
-        for (int i = 0; i < number.length()-n; i++) {
+        for (int i = 0; i < chars.length-n; i++) {
             long currentProduct = 1;
             for (int j = 0; j < n; j++) {
-                int digit = Integer.parseInt(String.valueOf(number.charAt(i+j)));
+                int digit = chars[i+j] - '0';
                 if (digit == 0) {
                     i += j;
                     break;
