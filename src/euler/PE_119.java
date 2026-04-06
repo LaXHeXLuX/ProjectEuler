@@ -21,24 +21,23 @@ public class PE_119 {
         List<Long> digitSumPowerNumbers = new ArrayList<>();
         if (count == 0) return digitSumPowerNumbers;
 
-        long limit = 100;
-        long iLimit = 1_000;
+        int digits = 1;
+        int iLimit = 9*digits;
         while (digitSumPowerNumbers.size() < count) {
             for (int i = 2; i <= iLimit; i++) {
-                int powerStart = (int) Math.max(2, Math.ceil(Math.log(limit / 100.0) / Math.log(i)));
-                int powerLimit = (int) (Math.log(limit) / Math.log(i));
+                int powerStart = (int) Math.max(2, Math.ceil((digits - 1) / Math.log10(i)));
+                int powerLimit = (int) (digits / Math.log10(i));
+                long result = 1;
+                for (int j = 0; j < powerStart; j++) result *= i;
                 for (int power = powerStart; power <= powerLimit; power++) {
-                    long result = i;
-                    for (int j = 1; j < power; j++) {
-                        result *= i;
-                    }
                     int digitSum = Diophantine.digitSum(result);
                     if (digitSum == i) digitSumPowerNumbers.add(result);
+                    result *= i;
                 }
             }
 
-            limit *= 100;
-            if (limit < 0) break;
+            digits++;
+            iLimit = 9*digits;
         }
 
         Collections.sort(digitSumPowerNumbers);
