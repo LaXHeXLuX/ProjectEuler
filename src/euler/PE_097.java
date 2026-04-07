@@ -1,5 +1,7 @@
 package euler;
 
+import java.math.BigInteger;
+
 public class PE_097 {
     static void main() {
         System.out.println(PE());
@@ -7,22 +9,10 @@ public class PE_097 {
 
     public static String PE() {
         long factor = 28433;
-        long exp = 2;
-        long power = 7830457;
-        long add = 1;
+        long base = 2;
+        long exp = 7830457;
         long mod = 10_000_000_000L;
-        return String.valueOf(compute(factor, exp, power, add, mod));
-    }
-
-    private static long compute(long factor, long exp, long power, long add, long mod) {
-        long answer = exp;
-        for (int i = 0; i < power-1; i++) {
-            answer = (answer * exp) % mod;
-        }
-
-        answer = (answer * factor) % mod;
-
-        answer = (answer + add) % mod;
-        return answer;
+        long result = BigInteger.valueOf(base).modPow(BigInteger.valueOf(exp), BigInteger.valueOf(mod)).longValueExact();
+        return String.valueOf((factor * result + 1) % mod);
     }
 }

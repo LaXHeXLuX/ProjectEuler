@@ -1,161 +1,105 @@
 package euler;
 
+import java.util.Arrays;
+
 public class PE_084 {
-    private static final int G2J = 30;
-    private static final int CH1 = 7;
-    private static final int CH2 = 22;
-    private static final int CH3 = 36;
-    private static final int CC1 = 2;
-    private static final int CC2 = 17;
-    private static final int CC3 = 33;
+    private static final int squares = 40;
+    private static final int doublesCount = 3;
+    private static int diceSides;
+
+    private static final int JAIL = 10;
 
     static void main() {
         System.out.println(PE());
     }
 
     public static String PE() {
-        int diceSides = 4;
-        int moves = 1_000_000;
-        int[] boardMoves = simulateMoves(moves, diceSides);
-        int[][] sorted = mergeSort(boardMoves);
-        StringBuilder modalString = new StringBuilder();
-        for (int i = 1; i < 4; i++) {
-            int el = sorted[1][sorted[1].length-i];
-            modalString.append(el);
-        }
-        return modalString.toString();
+        diceSides = 4;
+        double[][] matrix = markovMatrix();
+        double[] landings = landings(matrix);
+
+        Integer[] indices = new Integer[squares];
+        for (int i = 0; i < squares; i++) indices[i] = i;
+        Arrays.sort(indices, (a, b) -> Double.compare(landings[b], landings[a]));
+        return "" + indices[0] + indices[1] + indices[2];
     }
 
-    private static int[][] mergeSort(int[] scores) {
-        int[] positions = new int[scores.length];
-        for (int i = 0; i < positions.length; i++) {
-            positions[i] = i;
-        }
+    private static double[] landings(double[][] matrix) {
+        double[] state = new double[squares];
+        Arrays.fill(state, 1.0 / (squares));
 
-        return mergeSort(scores, positions);
-    }
-
-    private static int[][] mergeSort(int[] scores, int[] positions) {
-        if (scores.length <= 1) return new int[][] {scores, positions};
-
-        int[] halfScores1 = new int[scores.length / 2];
-        System.arraycopy(scores, 0, halfScores1, 0, halfScores1.length);
-        int[] halfScores2 = new int[scores.length - scores.length / 2];
-        System.arraycopy(scores, scores.length / 2, halfScores2, 0, halfScores2.length);
-
-        int[] halfPositions1 = new int[positions.length / 2];
-        System.arraycopy(positions, 0, halfPositions1, 0, halfPositions1.length);
-        int[] halfPositions2 = new int[positions.length - positions.length / 2];
-        System.arraycopy(positions, positions.length / 2, halfPositions2, 0, halfPositions2.length);
-
-        int[][] half1 = mergeSort(halfScores1, halfPositions1);
-        int[][] half2 = mergeSort(halfScores2, halfPositions2);
-
-        int[] totalScores = new int[scores.length];
-        int[] totalPositions = new int[positions.length];
-
-        int index1 = 0;
-        int index2 = 0;
-
-        for (int i = 0; i < totalScores.length; i++) {
-            if (index1 == half1[1].length) {
-                totalScores[i] = half2[0][index2];
-                totalPositions[i] = half2[1][index2];
-                index2++;
-                continue;
+        for (int m = 0; m < 100; m++) {
+            double[] next = new double[squares];
+            for (int i = 0; i < squares; i++) {
+                for (int j = 0; j < squares; j++) {
+                    next[j] += state[i] * matrix[i][j];
+                }
             }
+            state = next;
+        }
 
-            if (index2 == half2[1].length) {
-                totalScores[i] = half1[0][index1];
-                totalPositions[i] = half1[1][index1];
-                index1++;
-                continue;
+        return state;
+    }
+
+    private static double[][] markovMatrix() {
+        double[][] matrix = new double[squares][squares];
+        for (int square = 0; square < squares; square++) {
+             matrix[square] = landings(square);
+        }
+        return matrix;
+    }
+
+    private static double[] landings(int square) {
+        return landings(square, 1);
+    }
+
+    private static double[] landings(int square, int rollCount) {
+        double[] landings = new double[squares];
+
+        double coefficient = 1.0/(diceSides*diceSides);
+        for (int d1 = 1; d1 <= diceSides; d1++) {
+            for (int d2 = 1; d2 <= diceSides; d2++) {
+                int nextSquare = (square + d1 + d2) % squares;
+                if (d1 == d2) {
+                    if (rollCount == doublesCount) {
+                        landings[JAIL] += coefficient;
+                        continue;
+                    } else {
+                        double[] nextLandings = landings(nextSquare, rollCount+1);
+                        for (int i = 0; i < nextLandings.length; i++) {
+                            landings[i] += coefficient*nextLandings[i];
+                        }
+                    }
+                    continue;
+                }
+                switch (nextSquare) {
+                    case 30 -> landings[JAIL] += coefficient;
+                    case 2, 17, 33 -> {
+                        landings[0] += coefficient/16;
+                        landings[JAIL] += coefficient/16;
+                        landings[nextSquare] += coefficient*14/16;
+                    }
+                    case 7, 22, 36 -> {
+                        landings[0] += coefficient/16;
+                        landings[JAIL] += coefficient/16;
+                        landings[11] += coefficient/16;
+                        landings[24] += coefficient/16;
+                        landings[39] += coefficient/16;
+                        landings[5] += coefficient/16;
+                        int nextRail = ((nextSquare + 5)/10*10 + 5) % squares;
+                        landings[nextRail] += coefficient*2/16;
+                        int nextUtility = 12;
+                        if (nextSquare > 11 && nextSquare < 28) nextUtility = 28;
+                        landings[nextUtility] += coefficient/16;
+                        int back3 = (nextSquare-3+squares) % squares;
+                        landings[back3] += coefficient/16;
+                        landings[nextSquare] += coefficient*6/16;
+                    }
+                    default -> landings[nextSquare] += coefficient;
+                }
             }
-
-            if (half1[0][index1] <= half2[0][index2]) {
-                totalScores[i] = half1[0][index1];
-                totalPositions[i] = half1[1][index1];
-                index1++;
-            } else {
-                totalScores[i] = half2[0][index2];
-                totalPositions[i] = half2[1][index2];
-                index2++;
-            }
         }
 
-        return new int[][] {totalScores, totalPositions};
-    }
-
-    private static int[] simulateMoves(int moves, int diceSides) {
-        int[] board = new int[40];
-        int position = 0;
-        String[] CC = {"GO", "JAIL", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
-        String[] CH = {"GO", "JAIL", "C1", "E3", "H2", "R1", "next R", "next R", "next U", "back 3", "", "", "", "", "", ""};
-
-        for (int i = 0; i < moves; i++) {
-            position = makeMove(position, diceSides);
-            switch (position) {
-                case G2J -> position = 10;
-                case CH1, CH2, CH3 -> position = managePosition(position, CH);
-                case CC1, CC2, CC3 -> position = managePosition(position, CC);
-            }
-
-            board[position]++;
-        }
-
-        return board;
-    }
-
-    private static int managePosition(int position, String[] deck) {
-        switch (deck[0]) {
-            case "GO" -> position = 0;
-            case "JAIL" -> position = 10;
-            case "C1" -> position = 11;
-            case "E3" -> position = 24;
-            case "H2" -> position = 39;
-            case "R1" -> position = 5;
-            case "next R" -> position = ((15-position%10) + position) % 40;
-            case "next U" -> position = position < 38 && position >= 12 ? 38 : 12;
-            case "back 3" -> position = (position - 3 + 40) % 40;
-        }
-        cycleDeck(deck);
-        return position;
-    }
-
-    private static void cycleDeck(String[] deck) {
-        String first = deck[0];
-
-        for (int i = 0; i < deck.length - 1; i++) {
-            deck[i] = deck[i+1];
-        }
-
-        deck[deck.length-1] = first;
-    }
-
-    private static int makeMove(int position, int diceSides) {
-        int rolls = 0;
-        int[] roll = rollDice(diceSides);
-        rolls++;
-        position = addRollToPosition(position, roll);
-
-        while (roll[0] == roll[1]) {
-            if (rolls == 3 || position == 30) {
-                return 30;
-            }
-
-            roll = rollDice(diceSides);
-            rolls++;
-            position = addRollToPosition(position, roll);
-        }
-
-        return position;
-    }
-
-    private static int addRollToPosition(int position, int[] roll) {
-        return (position + roll[0] + roll[1]) % 40;
-    }
-
-    private static int[] rollDice(int diceSides) {
-        return new int[] {(int) (Math.random() * diceSides + 1), (int) (Math.random() * diceSides + 1)};
+        return landings;
     }
 }

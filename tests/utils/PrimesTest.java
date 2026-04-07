@@ -118,11 +118,19 @@ class PrimesTest {
         assertFalse(Primes.isPrime(61*61));
         assertFalse(Primes.isPrime(101*101));
         assertFalse(Primes.isPrime(103*103));
+        assertTrue(Primes.isPrime(32771));
 
+        assertTrue(Primes.isPrime(1048583));
+        assertFalse(Primes.isPrime(2284453));
+        assertFalse(Primes.isPrime(25326001));
+        assertFalse(Primes.isPrime(32817151));
+        assertFalse(Primes.isPrime(746331041));
+
+        assertFalse(Primes.isPrime(120L));
         assertTrue(Primes.isPrime(289586599663L));
         assertTrue(Primes.isPrime(217203134209L));
-        assertFalse(Primes.isPrime(217203134207L));
-        assertFalse(Primes.isPrime(217203134208L));
+        assertFalse(Primes.isPrime(217203134191L));
+        assertFalse(Primes.isPrime(217203134193L));
     }
     @Test
     void nthPrime() {
@@ -135,7 +143,10 @@ class PrimesTest {
     @Test
     void primeUpperBounds() {
         int[] primes = Primes.primes(100_000);
-        for (int i = 6; i > 0; i--) {
+        for (int i = 0; i < 10; i++) {
+            assertTrue(Primes.upperBoundForNthPrime(i+1) >= primes[i]);
+        }
+        for (int i = 10; i > 0; i--) {
             int index = primes.length/i;
             int p = primes[index-1];
             assertTrue(Primes.upperBoundForNthPrime(index) >= p);

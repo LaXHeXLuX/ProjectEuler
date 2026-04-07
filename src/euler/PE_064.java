@@ -16,9 +16,8 @@ public class PE_064 {
         int counter = 0;
 
         for (int i = 2; i <= limit; i++) {
-            int[] continuedFraction = Diophantine.continuedFraction(i);
-            if (continuedFraction.length < 2) continue;
-            if (continuedFraction.length % 2 == 0) counter++;
+            int len = Diophantine.continuedFractionLength(i);
+            if (len % 2 == 1) counter++;
         }
 
         return counter;

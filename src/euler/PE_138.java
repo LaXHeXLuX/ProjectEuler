@@ -27,7 +27,7 @@ public class PE_138 {
 
         int[] cf = Diophantine.continuedFraction(5);
         for (int i = 1; i <= count; i++) {
-            long[] nthTerm = Diophantine.nthTermOfContinuedFraction(cf, 2*i);
+            long[] nthTerm = Diophantine.nthConvergent(cf, 2*i);
             triangles.add(nthTerm[1]);
         }
 

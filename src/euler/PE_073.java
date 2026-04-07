@@ -5,6 +5,7 @@ import java.util.List;
 
 public class PE_073 {
     private static final List<List<Integer>> primeFactors = new ArrayList<>();
+
     static void main() {
         System.out.println(PE());
     }
@@ -18,20 +19,13 @@ public class PE_073 {
     }
 
     private static void makePrimeFactors(int limit) {
-        for (int i = 0; i < limit; i++) {
-            primeFactors.add(new ArrayList<>());
-        }
-        for (int i = 2; i < limit; i += 2) {
-            primeFactors.get(i).add(2);
-        }
-        for (int i = 3; i <= primeFactors.size() / 2; i+=2) {
-            if (!primeFactors.get(i).isEmpty()) continue;
-            for (int j = i; j < limit; j += i) {
-                primeFactors.get(j).add(i);
+        for (int i = 0; i < limit; i++) primeFactors.add(new ArrayList<>());
+        for (int i = 2; i < limit; i++) {
+            if (primeFactors.get(i).isEmpty()) { // i is prime
+                for (int j = i; j < limit; j += i) {
+                    primeFactors.get(j).add(i);
+                }
             }
-        }
-        for (int i = primeFactors.size() / 2 + 1; i < primeFactors.size(); i++) {
-            if (primeFactors.get(i).isEmpty()) primeFactors.get(i).add(i);
         }
     }
 

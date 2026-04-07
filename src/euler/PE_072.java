@@ -1,41 +1,33 @@
 package euler;
 
 public class PE_072 {
-    private static int[] totients;
-
     static void main() {
         System.out.println(PE());
     }
 
     public static String PE() {
         int limit = 1_000_000;
-        totients = totients(limit+1);
-        return String.valueOf(elementCountForAllFractions(limit));
+        return String.valueOf(reducedProperFractionCount(limit));
     }
 
-    private static long elementCountForAllFractions(int limitD) {
-        long answer = 0;
-        for (int i = 2; i <= limitD; i++) {
-            answer += totients[i];
-        }
-        return answer;
-    }
+    private static long reducedProperFractionCount(int limitD) {
+        int[] phi = new int[limitD+1];
 
-    public static int[] totients(int n) {
-        int[] phi = new int[n];
-
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i <= limitD; i++) {
             phi[i] = i;
         }
 
-        for (int p = 2; p < n; p++) {
+        long result = 0;
+
+        for (int p = 2; p <= limitD; p++) {
             if (phi[p] == p) {
-                for (int k = p; k < n; k += p) {
+                for (int k = p; k <= limitD; k += p) {
                     phi[k] -= phi[k] / p;
                 }
             }
+            result += phi[p];
         }
 
-        return phi;
+        return result;
     }
 }

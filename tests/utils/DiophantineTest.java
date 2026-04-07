@@ -16,7 +16,11 @@ class DiophantineTest {
         assertArrayEquals(new int[] {10, 1, 2, 10, 2, 1, 20}, Diophantine.continuedFraction(114));
 
         int[] cf2 = Diophantine.continuedFraction(2);
-        assertArrayEquals(new long[] {1, 1}, Diophantine.nthTermOfContinuedFraction(cf2, 0));
+        assertArrayEquals(new long[] {1, 1}, Diophantine.nthConvergent(cf2, 0));
+
+        for (int i = 1; i < 10; i++) {
+            assertEquals(Diophantine.continuedFraction(i).length - 1, Diophantine.continuedFractionLength(i));
+        }
     }
     @Test
     void pell() {
@@ -115,6 +119,18 @@ class DiophantineTest {
 
         assertEquals(10L, Diophantine.gcd(1_000_000_000_000L, 10L));
         assertEquals(32768L, Diophantine.gcd(1_000_000_000_000_000L, 65536));
+    }
+    @Test
+    void lcm() {
+        for (int i = 1; i < 10; i++) {
+            assertEquals(i, Diophantine.lcm(i, i));
+        }
+        assertEquals(15, Diophantine.lcm(3, 5));
+        assertEquals(18, Diophantine.lcm(6, 9));
+        assertEquals(100, Diophantine.lcm(100, 10));
+
+        assertEquals(1_000_000_000_000L, Diophantine.lcm(1_000_000_000_000L, 10L));
+        assertEquals(2_000_000_000_000_000L, Diophantine.lcm(1_000_000_000_000_000L, 65536));
     }
     @Test
     void extendedEuclidean() {

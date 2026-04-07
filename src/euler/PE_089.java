@@ -18,7 +18,7 @@ public class PE_089 {
     }
 
     private static int savedCharacterCount(String numeral) {
-        return numeral.length() - toMinimalRoman(romanToInt(numeral)).length();
+        return numeral.length() - minimalRomanLength(romanToInt(numeral));
     }
 
     private static int romanToInt(String numeral) {
@@ -43,24 +43,20 @@ public class PE_089 {
         return sum;
     }
 
-    private static String toMinimalRoman(int n) {
-        String numeral = "";
-        numeral += "M".repeat(n / 1000);
+    private static int minimalRomanLength(int n) {
+        int length = n / 1000;
         n %= 1000;
         int hundreds = n / 100;
-        if (hundreds == 9) numeral += "CM";
-        else if (hundreds == 4) numeral += "CD";
-        else numeral += "D".repeat(hundreds / 5) + "C".repeat(hundreds % 5);
+        if (hundreds % 5 == 4) length += 2;
+        else length += hundreds / 5 + hundreds % 5;
         n %= 100;
         int tens = n / 10;
-        if (tens == 9) numeral += "XC";
-        else if (tens == 4) numeral += "XL";
-        else numeral += "L".repeat(tens / 5) + "X".repeat(tens % 5);
+        if (tens % 5 == 4) length += 2;
+        else length += tens / 5 + tens % 5;
         n %= 10;
-        if (n == 9) numeral += "IX";
-        else if (n == 4) numeral += "IV";
-        else numeral += "V".repeat(n / 5) + "I".repeat(n % 5);
-        return numeral;
+        if (n % 5 == 4) length += 2;
+        else length += n / 5 + n % 5;
+        return length;
     }
 
     private static int value(char c) {

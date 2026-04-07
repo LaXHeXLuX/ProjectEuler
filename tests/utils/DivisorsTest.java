@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DivisorsTest {
-
     @Test
     void divisors() {
         assertThrows(IllegalArgumentException.class, () -> Divisors.divisors(0));
@@ -41,5 +40,26 @@ class DivisorsTest {
         assertEquals(17, Divisors.sumOfDivisors(55));
         assertEquals(1, Divisors.sumOfDivisors(101));
         assertEquals(810, Divisors.sumOfDivisors(360));
+    }
+    @Test
+    void divisorSums() {
+        int[] expected = {0, 1, 1, 1, 3, 1, 6, 1, 7, 4, 8, 1, 16};
+        int[] actual = Divisors.divisorSums(expected.length);
+        int[] actualExcludeOne = Divisors.divisorSums(expected.length, false);
+        assertEquals(expected[0], actual[0]);
+        assertEquals(expected[0], actualExcludeOne[0]);
+        for (int i = 1; i < expected.length; i++) {
+            assertEquals(expected[i], actual[i]);
+            assertEquals(expected[i]-1, actualExcludeOne[i]);
+        }
+    }
+    @Test
+    void divisorCount() {
+        for (int i = 1; i <= 12; i++) {
+            assertEquals(Divisors.divisors(i).length, Divisors.divisorCount(i));
+        }
+        for (int i = 1; i < 50; i++) {
+            assertEquals(i+1, Divisors.divisorCount(1L << i));
+        }
     }
 }

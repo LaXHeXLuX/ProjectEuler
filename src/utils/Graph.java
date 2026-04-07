@@ -9,9 +9,7 @@ public class Graph {
     private final Map<Integer, Set<Edge>> incoming = new HashMap<>();
     private final Map<Integer, Set<Integer>> outgoingNodes = new HashMap<>();
     private final Map<Integer, Set<Integer>> incomingNodes = new HashMap<>();
-    public Graph() {
-
-    }
+    public Graph() {}
     public Graph(int nodeCount) {
         for (int i = 0; i < nodeCount; i++) {
             nodes.add(i);

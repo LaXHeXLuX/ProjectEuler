@@ -253,24 +253,74 @@ public class Primes {
         }
         return i;
     }
-    public static boolean isPrime(long n) {
+    public static boolean isPrime(int n) {
         if (n < 100) {
-            if (n < 2) return false;
-            return Arrays.binarySearch(primesTo100, (int) n) >= 0;
+            return Arrays.binarySearch(primesTo100, n) >= 0;
         }
-
         for (int p : primesTo100) {
             if (n % p == 0) return false;
         }
-        long limit = (long) Math.sqrt(n);
-        for (long i = 101; i <= limit; i+=6) {
-            if (n % i == 0 || n % (i+2) == 0) return false;
+        if (n < 1_000_000) {
+            int limit = (int) Math.sqrt(n);
+            for (int i = 101; i <= limit; i+=6) {
+                if (n % i == 0 || n % (i+2) == 0) return false;
+            }
+            return true;
         }
 
+        return
+                Primes.millerRabin(n, 2) &&
+                Primes.millerRabin(n, 3) &&
+                Primes.millerRabin(n, 5) &&
+                Primes.millerRabin(n, 7);
+    }
+    public static boolean millerRabin(int n, int a) {
+        int d = n - 1;
+        int r = 0;
+        while ((d & 1) == 0) {
+            d >>= 1;
+            r++;
+        }
+
+        long x = Diophantine.powMod(a, d, n);
+        if (x == 1 || x == n - 1) return true;
+        for (int i = 0; i < r - 1; i++) {
+            x = (x*x) % n;
+            if (x == n - 1) return true;
+        }
+        return false;
+    }
+    public static boolean isPrime(long n) {
+        if (n < Integer.MAX_VALUE) return isPrime((int) n);
+        for (int p : primesTo100) {
+            if (n % p == 0) return false;
+        }
+
+        int[] tests = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37};
+        for (int test : tests) {
+            if (!Primes.millerRabin(n, test)) return false;
+        }
         return true;
+    }
+    public static boolean millerRabin(long n, int a) {
+        long d = n - 1;
+        int r = 0;
+        while ((d & 1) == 0) {
+            d >>= 1;
+            r++;
+        }
+
+        long x = Diophantine.powModExact(a, d, n);
+        if (x == 1 || x == n - 1) return true;
+        for (int i = 0; i < r - 1; i++) {
+            x = Diophantine.mulModExact (x, x, n);
+            if (x == n - 1) return true;
+        }
+        return false;
     }
     public static int nthPrime(int n) {
         if (n < 1) return -1;
+        if (n < 25) return primesTo100[n-1];
         int upperBound = upperBoundForNthPrime(n);
         int[] primes = primes(upperBound+1);
         return primes[n-1];
@@ -295,9 +345,7 @@ public class Primes {
         long totient = 1;
         for (PF pf : primeFactors) {
             totient *= pf.primeFactor-1;
-            for (int i = 1; i < pf.power; i++) {
-                totient *= pf.primeFactor;
-            }
+            totient *= Diophantine.pow(pf.primeFactor, pf.power-1);
         }
         return totient;
     }

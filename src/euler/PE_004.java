@@ -14,7 +14,7 @@ public class PE_004 {
 
     private static long largestPalindromeNumberMadeFromTwoNDigitNumbers(int n) {
         long largestProduct = -1;
-        int iLimit = (int) Math.pow(10, n-1)-1;
+        int iLimit = (int) Diophantine.pow10[n-1] - 1;
         for (int i = 10*iLimit + 9; i > iLimit; i--) {
             for (int j = i; j > iLimit; j--) {
                 long product = (long) i * j;

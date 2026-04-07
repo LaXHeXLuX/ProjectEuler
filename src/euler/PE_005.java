@@ -15,14 +15,10 @@ public class PE_005 {
 
     private static long firstToDivide(int limit) {
         int[] primes = Primes.primes(limit);
-        int[] values = new int[primes.length];
-        for (int i = 0; i < primes.length; i++) {
-            values[i] = (int) (Math.log(limit) / Math.log(primes[i]));
-        }
-
+        double logLimit = Math.log(limit);
         long product = 1;
-        for (int i = 0; i < primes.length; i++) {
-            product *= Diophantine.pow(primes[i], values[i]);
+        for (int p : primes) {
+            product *= Diophantine.pow(p, (int) (logLimit / Math.log(p)));
         }
         return product;
     }

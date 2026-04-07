@@ -13,9 +13,7 @@ public class PE_069 {
     }
 
     private static long highestNumberScore(long limit) {
-        int primeLimit = (int) Math.sqrt(limit);
-        if (primeLimit > 100) primeLimit = 100;
-        int[] primes = Primes.primes(primeLimit);
+        int[] primes = Primes.primes(100);
         long n = primes[0];
         long lastN = 0;
         int i = 1;

@@ -22,9 +22,8 @@ public class PE_009 {
             int mmPlusMn = sum / k;
             int mStart = (int) Math.sqrt(mmPlusMn / 2.0);
             if (mStart % 2 != mmPlusMn % 2) mStart++;
-            int mLimit = Diophantine.root(mmPlusMn);
-            if (mLimit < 0) mLimit = -mLimit + 1;
-            for (int m = mStart; m < mLimit; m+=2) {
+            int mLimit = (int) Math.sqrt(mmPlusMn - 1);
+            for (int m = mStart; m <= mLimit; m+=2) {
                 if (mmPlusMn % m != 0) continue;
                 int n = mmPlusMn / m - m;
                 if (Diophantine.gcd(m, n) > 1) continue;

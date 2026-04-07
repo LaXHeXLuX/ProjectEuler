@@ -1,8 +1,7 @@
 package euler;
 
-import java.util.*;
-
 public class PE_088 {
+    private static int[] factors;
     private static int[] bestScore;
 
     static void main() {
@@ -15,6 +14,7 @@ public class PE_088 {
         for (int i = 2; i < bestScore.length; i++) {
             bestScore[i] = 2*i;
         }
+        factors = new int[limit+1];
         fillBestScores();
         return String.valueOf(setSum());
     }
@@ -31,24 +31,23 @@ public class PE_088 {
     }
 
     private static void fillBestScores() {
-        fillBestScores(new ArrayList<>(), 1, 0);
+        fillBestScores(0, 1, 0);
     }
 
-    private static void fillBestScores(List<Integer> factors, int product, int sum) {
+    private static void fillBestScores(int length, int product, int sum) {
         int limit = (bestScore.length-1)*2 / product;
-        int start;
-        if (!factors.isEmpty()) start = factors.getLast();
-        else start = 2;
+        int start = 2;
+        if (length > 0) start = factors[length -1];
         for (int i = start; i <= limit; i++) {
-            factors.add(i);
+            factors[length++] = i;
             int newProduct = product * i;
             int newSum = sum + i;
-            int size = newProduct - newSum + factors.size();
+            int size = newProduct - newSum + length;
             if (size < bestScore.length && bestScore[size] > newProduct) {
                 bestScore[size] = newProduct;
             }
-            fillBestScores(factors, newProduct, newSum);
-            factors.removeLast();
+            fillBestScores(length, newProduct, newSum);
+            length--;
         }
     }
 }

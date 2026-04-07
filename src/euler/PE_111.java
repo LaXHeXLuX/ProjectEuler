@@ -32,13 +32,6 @@ public class PE_111 {
     }
 
     private static List<Long> primesWithMaxRuns(int digitAmount, int runDigit) {
-        if (runDigit == 1 && digitAmount % 3 != 0) {
-            long runOfOnes = 0;
-            for (int i = 0; i < digitAmount; i++) {
-                runOfOnes = runOfOnes * 10 + 1;
-            }
-            if (Primes.isPrime(runOfOnes)) return List.of(runOfOnes);
-        }
         for (int runDigitAmount = digitAmount-1; runDigitAmount > 0; runDigitAmount--) {
             List<Long> allPrimeRuns = primesWithMaxRuns(digitAmount - runDigitAmount, runDigitAmount, runDigit, new ArrayList<>());
             if (!allPrimeRuns.isEmpty()) return allPrimeRuns;

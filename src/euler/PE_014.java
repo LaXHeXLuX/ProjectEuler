@@ -10,14 +10,14 @@ public class PE_014 {
 
     public static String PE() {
         int limit = 1_000_000;
-        makeFirstCollatz(limit);
+        makeInitialCollatz();
         return String.valueOf(longestCollatzChainLength(limit));
     }
 
-    private static void makeFirstCollatz(int limit) {
-        int size = limit/100;
-        firstCollatz = new int[size];
-        for (int i = 1; i < size; i++) {
+    private static void makeInitialCollatz() {
+        int limit = 1_000;
+        firstCollatz = new int[limit];
+        for (int i = 1; i < limit; i++) {
             firstCollatz[i] = collatzLength(i);
         }
     }
