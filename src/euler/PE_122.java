@@ -1,8 +1,10 @@
 package euler;
 
+import utils.Diophantine;
 import utils.Primes;
 
 public class PE_122 {
+    private static Primes.PF[][] pfSieve;
     private static int[] smallestExpCounts;
     private static int[] currentChain;
 
@@ -20,11 +22,18 @@ public class PE_122 {
     }
 
     private static void makeInitialSmallestExpCounts(int limit) {
+        pfSieve = Primes.primeFactorSieve(limit+1);
+
         smallestExpCounts = new int[limit+1];
         smallestExpCounts[0] = 1;
-        for (int i = 1; i <= 3; i++) smallestExpCounts[i] = i;
+        for (int n = 1; n <= limit; n++) {
+            smallestExpCounts[n] = binaryExpCount(n)+1;
+        }
         for (int n = 4; n <= limit; n++) {
-            smallestExpCounts[n] = upperBound(n);
+            int pfCount = efficientExpCountPf(n)+1;
+            if (pfCount < smallestExpCounts[n]) {
+                smallestExpCounts[n] = pfCount;
+            }
             if (smallestExpCounts[n] > smallestExpCounts[n-1] + 1) {
                 smallestExpCounts[n] = smallestExpCounts[n-1] + 1;
             }
@@ -47,7 +56,7 @@ public class PE_122 {
 
     private static void makeSmallestExpCounts(int limit, int lastIndex) {
         int lastElement = currentChain[lastIndex];
-        if (lastIndex+1 == currentChain.length) return;
+        if (lastIndex == currentChain.length-1) return;
         for (int i = lastIndex; i >= 0; i--) {
             int element = currentChain[i];
             int newElement = element + lastElement;
@@ -61,40 +70,15 @@ public class PE_122 {
         }
     }
 
-    private static int power(int n, int pow) {
-        int prod = n;
-        for (int i = 1; i < pow; i++) {
-            prod *= n;
-        }
-        return prod;
-    }
-
-    private static int upperBound(int n) {
-        int bound = binaryExpCount(n) + 1;
-        int pfCount = efficientExpCountPf(n) + 1;
-        if (pfCount < bound) bound = pfCount;
-        return bound;
-    }
-
     private static int efficientExpCountPf(int n) {
-        Primes.PF[] pfs = Primes.primeFactors(n);
         int expSum = 0;
-        for (Primes.PF pf : pfs) {
-            expSum += binaryExpCount(power((int) pf.primeFactor, pf.power));
+        for (Primes.PF pf : pfSieve[n]) {
+            expSum += smallestExpCounts[(int) Diophantine.pow(pf.primeFactor, pf.power)] - 1;
         }
         return expSum;
     }
 
     private static int binaryExpCount(int n) {
-        return 32 - Integer.numberOfLeadingZeros(n) + countOnes(n) - 2;
-    }
-
-    private static int countOnes(int x) {
-        int c = 0;
-        while (x != 0) {
-            x &= (x - 1);
-            c++;
-        }
-        return c;
+        return 32 - Integer.numberOfLeadingZeros(n) + Integer.bitCount(n) - 2;
     }
 }
