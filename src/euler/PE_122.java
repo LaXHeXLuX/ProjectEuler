@@ -1,81 +1,65 @@
 package euler;
 
-import utils.Diophantine;
-import utils.Primes;
-
 public class PE_122 {
-    private static Primes.PF[][] pfSieve;
+    // might use this: https://projecteuler.net/thread=122#4237
+
     private static int[] smallestExpCounts;
-    private static int[] currentChain;
 
     static void main() {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e - s) + " ms");
     }
 
     public static String PE() {
         int limit = 200;
-        makeInitialSmallestExpCounts(limit);
-        makeSmallestExpCounts(limit);
+        makeSmallestExpCounts2(limit);
         int sum = 0;
-        for (int smallestExpCount : smallestExpCounts) sum += smallestExpCount-1;
+        for (int smallestExpCount : smallestExpCounts) sum += smallestExpCount;
         return String.valueOf(sum);
     }
 
-    private static void makeInitialSmallestExpCounts(int limit) {
-        pfSieve = Primes.primeFactorSieve(limit+1);
-
+    private static void makeSmallestExpCounts2(int limit) {
         smallestExpCounts = new int[limit+1];
-        smallestExpCounts[0] = 1;
-        for (int n = 1; n <= limit; n++) {
+        smallestExpCounts[0] = 0;
+        smallestExpCounts[1] = 0;
+        smallestExpCounts[2] = 1;
+        int biggest = 0;
+        for (int n = 3; n <= limit; n++) {
             smallestExpCounts[n] = binaryExpCount(n)+1;
+            if (smallestExpCounts[n] > biggest) biggest = smallestExpCounts[n];
         }
-        for (int n = 4; n <= limit; n++) {
-            int pfCount = efficientExpCountPf(n)+1;
-            if (pfCount < smallestExpCounts[n]) {
-                smallestExpCounts[n] = pfCount;
-            }
-            if (smallestExpCounts[n] > smallestExpCounts[n-1] + 1) {
-                smallestExpCounts[n] = smallestExpCounts[n-1] + 1;
-            }
-            if (smallestExpCounts[n] > smallestExpCounts[n-2] + 1) {
-                smallestExpCounts[n] = smallestExpCounts[n-2] + 1;
-            }
-        }
-    }
 
-    private static void makeSmallestExpCounts(int limit) {
-        int maxArrSize = 0;
-        for (int smallestExpCount : smallestExpCounts) {
-            if (smallestExpCount > maxArrSize) maxArrSize = smallestExpCount;
-        }
-        currentChain = new int[maxArrSize];
-        currentChain[0] = 1;
-        currentChain[1] = 2;
-        makeSmallestExpCounts(limit, 1);
-    }
+        int[] nodePowers = new int[biggest];
+        int[] nextLevel = new int[biggest]; // 0 not used
+        nodePowers[0] = 1;
+        nodePowers[1] = 2;
+        nextLevel[1] = 1;
 
-    private static void makeSmallestExpCounts(int limit, int lastIndex) {
-        int lastElement = currentChain[lastIndex];
-        if (lastIndex == currentChain.length-1) return;
-        for (int i = lastIndex; i >= 0; i--) {
-            int element = currentChain[i];
-            int newElement = element + lastElement;
-            if (newElement > limit) continue;
-            if (lastIndex+1 > smallestExpCounts[element + lastElement]) continue;
-            currentChain[lastIndex+1] = newElement;
-            if (smallestExpCounts[newElement] > lastIndex+2) {
-                smallestExpCounts[newElement] = lastIndex+2;
+        int n = 1;
+        while (true) {
+            int i = nextLevel[n];
+            if (i < 0) {
+                n--;
+                if (n == 0) break;
+                continue;
             }
-            makeSmallestExpCounts(limit, lastIndex+1);
-        }
-    }
 
-    private static int efficientExpCountPf(int n) {
-        int expSum = 0;
-        for (Primes.PF pf : pfSieve[n]) {
-            expSum += smallestExpCounts[(int) Diophantine.pow(pf.primeFactor, pf.power)] - 1;
+            int k = nodePowers[i] + nodePowers[n];
+            nextLevel[n]--;
+
+            if (k > limit) continue;
+            n++;
+            if (smallestExpCounts[k] < n) {
+                n--;
+                continue;
+            }
+
+            smallestExpCounts[k] = n;
+            nodePowers[n] = k;
+            nextLevel[n] = n;
         }
-        return expSum;
     }
 
     private static int binaryExpCount(int n) {
