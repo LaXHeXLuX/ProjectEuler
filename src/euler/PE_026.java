@@ -1,39 +1,36 @@
 package euler;
 
+import utils.Diophantine;
+
 public class PE_026 {
     static void main() {
         System.out.println(PE());
     }
 
     public static String PE() {
-        int limit = 1000;
+        long limit = 1000;
         return String.valueOf(longestReciprocalCycleUnder(limit));
     }
 
-    private static int longestReciprocalCycleUnder(int limit) {
-        int longest = 0;
-        int longestNumber = 0;
-        for (int i = 2; i < limit; i++) {
-            int reciprocalCycleLength = cycleLength(i);
-            if (reciprocalCycleLength > longest) {
-                longest = reciprocalCycleLength;
+    private static long longestReciprocalCycleUnder(long limit) {
+        long longestCycle = 0;
+        long longestNumber = 0;
+        for (long i = limit-1; i > 0; i--) {
+            if (i % 2 == 0 || i % 5 == 0) continue;
+            if (i < longestCycle) return longestNumber;
+            long reciprocalCycleLength = cycleLength(i);
+            if (reciprocalCycleLength > longestCycle) {
+                longestCycle = reciprocalCycleLength;
                 longestNumber = i;
             }
         }
         return longestNumber;
     }
 
-    private static int cycleLength(int n) {
+    private static long cycleLength(long n) {
         while (n % 2 == 0) n /= 2;
         while (n % 5 == 0) n /= 5;
         if (n == 1) return 0;
-
-        int remainder = 1;
-        int length = 0;
-        do {
-            remainder = (remainder * 10) % n;
-            length++;
-        } while (remainder != 1);
-        return length;
+        return Diophantine.ord(10, n);
     }
 }
