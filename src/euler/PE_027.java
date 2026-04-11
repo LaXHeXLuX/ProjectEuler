@@ -16,15 +16,15 @@ public class PE_027 {
     }
 
     private static int[] bestQuadraticFormulaWithLimits(int limit) {
-        int[] primes = Primes.primes(limit + 1);
-        composites = Primes.compositeSieve(limit*100);
+        int[] primes = Primes.primes(2*limit + 1);
+        composites = Primes.compositeSieve(2*limit*limit);
 
         int bestScore = 40;
         int[] bestAB = {1, 41};
         for (int b : primes) {
-            int startA = -limit+1;
-            if (startA % 2 == 0) startA++;
-            for (int a = startA; a < limit; a+=2) {
+            if (b > limit) break;
+            for (int prime : primes) {
+                int a = prime - b - 1;
                 int score = scoreOfQuadraticFormula(a, b);
                 if (score > bestScore) {
                     bestScore = score;
@@ -33,6 +33,7 @@ public class PE_027 {
                 }
             }
         }
+
         return bestAB;
     }
 
