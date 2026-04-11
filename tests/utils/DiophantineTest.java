@@ -168,6 +168,16 @@ class DiophantineTest {
         assertEquals(2, Diophantine.modDivide(1, 2, 3));
     }
     @Test
+    void ord() {
+        assertThrows(IllegalArgumentException.class, () -> Diophantine.ord(2, 4));
+        assertThrows(IllegalArgumentException.class, () -> Diophantine.ord(1, 1));
+
+        assertEquals(1, Diophantine.ord(1, 2));
+        assertEquals(2, Diophantine.ord(2, 3));
+        assertEquals(1, Diophantine.ord(3, 2));
+        assertEquals(6, Diophantine.ord(10, 7));
+    }
+    @Test
     void crt() {
         assertThrows(IllegalArgumentException.class, Diophantine::crt);
         assertThrows(IllegalArgumentException.class, () -> Diophantine.crt(1));

@@ -2,6 +2,7 @@ package utils;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Diophantine {
@@ -369,6 +370,15 @@ public class Diophantine {
         int result = (sol[0] * a) % mod;
         if (result < 0) result += mod;
         return result;
+    }
+    public static long ord(long a, long n) {
+        if (gcd(a, n) != 1) throw new IllegalArgumentException("a and n must be coprime");
+        long phi = Primes.eulersTotient(n);
+        long[] divs = Divisors.divisors(phi);
+        for (long div : divs) {
+            if (Diophantine.powModExact(a, div, n) == 1) return div;
+        }
+        throw new ArithmeticException("Euler's theorem proven wrong for a: " + a + ", n: " + n);
     }
     public static int crt(int... ints) {
         if (ints.length == 0 || ints.length % 2 != 0 ) throw new IllegalArgumentException("Wrong number of arguments (zero or odd)");
