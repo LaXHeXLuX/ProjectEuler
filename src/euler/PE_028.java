@@ -10,15 +10,7 @@ public class PE_028 {
         return String.valueOf(numberSpiralDiagonalSum(limit));
     }
 
-    private static long numberSpiralDiagonalSum(int spiralSize) {
-        long sum = 1;
-        int currentNumber = 1;
-        for (int i = 3; i <= spiralSize; i+=2) {
-            for (int j = 0; j < 4; j++) {
-                currentNumber += i-1;
-                sum += currentNumber;
-            }
-        }
-        return sum;
+    private static long numberSpiralDiagonalSum(long n) {
+        return 1 + 2*(n-1)*n*(n+1)/3 + (n-1)*(n+1)/2 + 2*(n-1);
     }
 }
