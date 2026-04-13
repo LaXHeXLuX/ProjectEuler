@@ -15,10 +15,11 @@ public class PE_001 {
 
     private static long sumOfMultiples(int[] multiples, long limit) {
         long sum = 0;
+        int sign = 1;
         for (int i = 1; i <= multiples.length; i++) {
             long tempSum = sumOfCombinations(multiples, i, limit);
-            if (i % 2 == 1) sum += tempSum;
-            else sum -= tempSum;
+            sum += sign*tempSum;
+            sign *= -1;
         }
         return sum;
     }
