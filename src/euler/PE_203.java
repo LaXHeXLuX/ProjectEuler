@@ -1,7 +1,5 @@
 package euler;
 
-import utils.Primes;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,40 +10,49 @@ public class PE_203 {
 
     public static String PE() {
         int rows = 51;
-        Set<Long> distinctPascalNumbers = distinctPascalNumbers(rows);
-        return String.valueOf(sumOfSquareFreeElements(distinctPascalNumbers));
+        return String.valueOf(sumOfSquareFreeDistinctPascalNumbers(rows));
     }
 
-    private static long sumOfSquareFreeElements(Set<Long> set) {
-        long sum = 0;
-        for (Long i : set) {
-            Primes.PF[] pfs = Primes.primeFactors(i);
-            boolean square = false;
-            for (Primes.PF pf : pfs) {
-                if (pf.power > 1) {
-                    square = true;
-                    break;
-                }
+    private static boolean squareFree(long n) {
+        if (n % 4 == 0) return false;
+        if (n % 2 == 0) n /= 2;
+        long limit = (long) Math.sqrt(n);
+        for (long i = 3; i <= limit; i+=2) {
+            if (n % i == 0) {
+                if (n % (i*i) == 0) return false;
+                n /= i;
+                limit = (long) Math.sqrt(n);
             }
-            if (!square) sum += i;
         }
-        return sum;
+        return true;
     }
 
-    private static Set<Long> distinctPascalNumbers(int rows) {
+    private static long sumOfSquareFreeDistinctPascalNumbers(int rows) {
+        long sum = 1;
+
         long[][] triangle = new long[rows][];
         triangle[0] = new long[] {1};
         Set<Long> distinctPascalNumbers = new HashSet<>();
         distinctPascalNumbers.add(1L);
-        for (int i = 1; i < rows; i++) {
-            triangle[i] = new long[i+1];
+        triangle[1] = new long[] {1, 1};
+        for (int i = 2; i < rows; i++) {
+            triangle[i] = new long[i/2 + 1];
             triangle[i][0] = 1;
-            triangle[i][triangle[i].length-1] = 1;
-            for (int j = 1; j < triangle[i].length-1; j++) {
+            int l0 = triangle[i-1].length-1;
+            int l1 = triangle[i].length-1;
+            for (int j = 1; j < l1; j++) {
                 triangle[i][j] = triangle[i-1][j-1] + triangle[i-1][j];
-                distinctPascalNumbers.add(triangle[i][j]);
+                if (distinctPascalNumbers.add(triangle[i][j]) && squareFree(triangle[i][j])) {
+                    sum += triangle[i][j];
+                }
+            }
+            if (i % 2 == 0) triangle[i][l1] = 2*triangle[i-1][l0];
+            else triangle[i][l1] = triangle[i-1][l0-1] + triangle[i-1][l0];
+            if (!distinctPascalNumbers.contains(triangle[i][l1]) && squareFree(triangle[i][l1])) {
+                distinctPascalNumbers.add(triangle[i][l1]);
+                sum += triangle[i][l1];
             }
         }
-        return distinctPascalNumbers;
+        return sum;
     }
 }
