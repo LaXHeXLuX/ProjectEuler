@@ -2,16 +2,12 @@ package euler;
 
 import utils.Diophantine;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PE_206 {
     static void main() {
-        double s = System.currentTimeMillis();
         System.out.println(PE());
-        double e = System.currentTimeMillis();
-        System.out.println((e - s) + " ms");
     }
 
     public static String PE() {
@@ -23,7 +19,7 @@ public class PE_206 {
     private static List<Long> squaresWithForm(int[] form) {
         List<Long> validNumbers = new ArrayList<>();
         validNumbers.add(0L);
-        long max = BigInteger.TEN.pow(form.length).sqrt().longValue();
+        long max = (long) Math.pow(10, form.length / 2.0);
         int lastSize = 0;
         for (int i = form.length-1; i >= 0; i--) {
             if (form[i] == -1) continue;
@@ -36,26 +32,20 @@ public class PE_206 {
 
     private static List<Long> validNumbers(List<Long> currentNumbers, int place, int target, int lastSize, long max) {
         long powTen = Diophantine.pow10[lastSize];
-        int adding = place + 1 - lastSize;
+        long limit = Diophantine.pow10[place + 1 - lastSize];
 
         List<Long> validNumbers = new ArrayList<>();
-        long limit = Diophantine.pow10[adding];
         for (long i = 0; i < limit; i++) {
-            if (i*powTen + currentNumbers.getFirst() >= max) break;
+            long offset = i*powTen;
+            if (offset + currentNumbers.getFirst() >= max) break;
             for (Long currentNumber : currentNumbers) {
-                long n = i*powTen + currentNumber;
+                long n = offset + currentNumber;
                 if (n >= max) break;
-                if (squareHasNthDigitTarget(n, place, target)) {
+                if ((n*n / Diophantine.pow10[place]) % 10 == target) {
                     validNumbers.add(n);
                 }
             }
         }
         return validNumbers;
-    }
-
-    private static boolean squareHasNthDigitTarget(long sq, int n, int target) {
-        BigInteger square = BigInteger.valueOf(sq).pow(2);
-        int nthDigit = square.divide(BigInteger.TEN.pow(n)).mod(BigInteger.TEN).intValue();
-        return nthDigit == target;
     }
 }
