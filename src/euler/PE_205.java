@@ -2,50 +2,61 @@ package euler;
 
 import utils.Combinations;
 import utils.Diophantine;
-import utils.Fraction;
 
 public class PE_205 {
+    private static long[] scoreChance1;
+    private static long[] scoreChanceOver;
+
     static void main() {
         System.out.println(PE());
     }
 
     public static String PE() {
-        // giving answer as abcdefg, not 0.abcdefg
         int pDice = 9;
         int pSides = 4;
         int cDice = 6;
         int cSides = 6;
         int digits = 7;
-        Fraction<Long> peterWinChance = p2WinChance(cDice, cSides, pDice, pSides);
-        return String.valueOf(Math.round(peterWinChance.doubleValue() * Diophantine.pow10[digits]));
+        long[] peterWinChance = p2WinChance(cDice, cSides, pDice, pSides);
+        return "0." + Math.round((double) peterWinChance[0] / peterWinChance[1] * Diophantine.pow10[digits]);
     }
 
-    private static Fraction<Long> p2WinChance(int dice1, int sides1, int dice2, int sides2) {
-        Fraction<Long> winChance = new Fraction<>(0L);
-        for (int score = dice1; score <= dice1*sides1; score++) {
-            Fraction<Long> winChanceForScore = scoreProbability(score, dice1, sides1).multiply(scoreProbabilityOver(score, dice2, sides2));
-            winChance = winChance.add(winChanceForScore).simplify();
+    private static void makeScoreChance(int dice1, int sides1, int dice2, int sides2) {
+        scoreChance1 = new long[sides1*dice1 + 1];
+        for (int i = dice1; i < scoreChance1.length; i++) {
+            scoreChance1[i]= scoreChance(i, dice1, sides1);
         }
-        return winChance;
+
+        scoreChanceOver = new long[sides2*dice2 + 1];
+        scoreChanceOver[scoreChanceOver.length-1] = 0;
+        for (int i = scoreChanceOver.length-2; i >= 0; i--) {
+            scoreChanceOver[i] = scoreChanceOver[i+1] + scoreChance(i+1, dice2, sides2);
+        }
     }
 
-    private static Fraction<Long> scoreProbabilityOver(int score, int dice, int sides) {
-        Fraction<Long> probability = new Fraction<>(0L);
-        for (int i = score+1; i <= dice*sides; i++) {
-            probability = probability.add(scoreProbability(i, dice, sides));
+    private static long scoreChance(int score, int dice, int sides) {
+        if (score < dice) return 0;
+        long sum = Combinations.nChooseM(score - 1, dice - 1);
+        int sign = -1;
+        int limit = (score - dice) / sides;
+        for (int i = 1; i <= limit; i++) {
+            long correction = Combinations.nChooseM(dice, i) * Combinations.nChooseM(score - sides*i - 1, dice - 1);
+            sum += sign* correction;
+            sign *= -1;
         }
-        return probability;
+        return sum;
     }
 
-    private static Fraction<Long> scoreProbability(int score, int dice, int sides) {
-        long sum = 0;
-        long den = Diophantine.pow(sides, dice);
-        if (score < dice) return new Fraction<>(sum, den);
-        for (int i = 0; i <= (score-dice) / sides; i++) {
-            long product = Combinations.nChooseM(dice, i) * Combinations.nChooseM(score - sides*i - 1, dice - 1);
-            if (i % 2 == 0) sum += product;
-            else sum -= product;
+    private static long[] p2WinChance(int dice1, int sides1, int dice2, int sides2) {
+        makeScoreChance(dice1, sides1, dice2, sides2);
+
+        long winChance = 0;
+        for (int score = dice1; score < scoreChance1.length; score++) {
+            winChance += scoreChance1[score]*scoreChanceOver[score];
         }
-        return new Fraction<>(sum, den);
+
+        long scoreFactor1 = Diophantine.pow(sides1, dice1);
+        long scoreFactor2 = Diophantine.pow(sides2, dice2);
+        return new long[] {winChance, scoreFactor1 * scoreFactor2};
     }
 }

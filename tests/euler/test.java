@@ -159,7 +159,7 @@ public class test {
         put(PE_191.class, "1918080160");
         put(PE_203.class, "34029210557338");
         put(PE_204.class, "2944730");
-        put(PE_205.class, "5731441");
+        put(PE_205.class, "0.5731441");
         put(PE_206.class, "1389019170");
         put(PE_293.class, "2209");
         put(PE_297.class, "2252639041804718029");
@@ -187,7 +187,7 @@ public class test {
     private static final int DEFAULT_LOG_TIME = 300;
 
     static void main() {
-        tests();
+        tests(5);
     }
     private static void assertEquals(String s, Class<?> cls) {
         if (!s.equals(tests.get(cls))) throw new AssertionError(cls.getName() + ": " + s + " != " + tests.get(cls));
