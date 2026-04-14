@@ -31,29 +31,26 @@ public class PE_029 {
 
     private static long includeExclude(int count, int p, int limitB) {
         long sum = 0;
-        int[] ints = new int[count];
         for (int i = 1; i <= p - count + 1; i++) {
-            ints[0] = i;
-            sum += includeExclude(ints, 1, i, p, limitB);
+            sum += includeExclude(i, i, count-1, i, p, limitB);
         }
         return sum;
     }
 
-    private static long includeExclude(int[] ints, int i, int lcm, int p, int limitB) {
-        if (i == ints.length) return intersect(ints, lcm, limitB);
+    private static long includeExclude(int min, int max, int i, int lcm, int p, int limitB) {
+        if (i == 0) return intersect(min, max, lcm, limitB);
         if (lcm > p*limitB) return 0;
 
         long sum = 0;
-        for (int j = ints[i-1] + 1; j <= p - ints.length + i + 1; j++) {
-            ints[i] = j;
-            sum += includeExclude(ints, i+1, Diophantine.lcm(lcm, j), p, limitB);
+        for (int j = max+1; j <= p - i + 1; j++) {
+            sum += includeExclude(min, j, i-1, Diophantine.lcm(lcm, j), p, limitB);
         }
 
         return sum;
     }
 
-    private static int intersect(int[] ints, int lcm, int limitB) {
-        return ints[0]*limitB / lcm - (ints[ints.length-1]*2-1) / lcm;
+    private static int intersect(int min, int max, int lcm, int limitB) {
+        return min*limitB / lcm - (max*2-1) / lcm;
     }
 
     private static long distinctPowerCount0(int limitA, int limitB) {
