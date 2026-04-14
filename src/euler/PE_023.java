@@ -24,12 +24,12 @@ public class PE_023 {
         int sum = 0;
         int evenAbundantSumLimit = 46;
         for (int i = 0; i <= evenAbundantSumLimit; i+=2) {
-            if (!isSumOfTwoAbundantNumbers(i)) {
+            if (!sumOfTwoAbundantNumbers(i)) {
                 sum += i;
             }
         }
         for (int i = 1; i < limit; i+=2) {
-            if (!isSumOfTwoAbundantNumbersOdd(i)) sum += i;
+            if (!sumOfTwoAbundantNumbersOdd(i)) sum += i;
         }
         return sum;
     }
@@ -46,14 +46,14 @@ public class PE_023 {
         }
     }
 
-    private static boolean isSumOfTwoAbundantNumbers(int n) {
+    private static boolean sumOfTwoAbundantNumbers(int n) {
         for (int i = 0; i <= n/2; i++) {
             if (abundantNumber[i] && abundantNumber[n-i]) return true;
         }
         return false;
     }
 
-    private static boolean isSumOfTwoAbundantNumbersOdd(int n) {
+    private static boolean sumOfTwoAbundantNumbersOdd(int n) {
         for (Integer i : oddAbundantNumbers) {
             if (i > n) break;
             int j = n - i;
