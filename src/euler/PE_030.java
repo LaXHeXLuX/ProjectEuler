@@ -16,9 +16,13 @@ public class PE_030 {
         int power = 5;
         makeDigitPowers(power);
         List<Integer> numbers = allNumbersWithSameSum(power);
-        long sum = 0;
-        for (int number : numbers) sum += number;
-        return String.valueOf(sum);
+        return String.valueOf(sum(numbers));
+    }
+
+    private static int sum(List<Integer> list) {
+        int sum = 0;
+        for (Integer i : list) sum += i;
+        return sum;
     }
 
     private static void makeDigitPowers(int power) {
@@ -39,7 +43,10 @@ public class PE_030 {
     private static List<Integer> allNumbersWithSameSum(int power) {
         if (power > 9) throw new RuntimeException("Power too large for int type");
         List<Integer> numbers = new ArrayList<>();
-        int limit = (int) Math.pow(9, power) * (power+1);
+        int dLimit = 1;
+        while ((int) Diophantine.pow10[dLimit] <= digitPowers[9] * dLimit) dLimit++;
+        dLimit--;
+        int limit = digitPowers[9] * dLimit;
         for (int i = 10; i < limit; i++) {
             if (sumOfNthPowersOfDigits(i) == i) numbers.add(i);
         }
