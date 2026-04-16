@@ -8,19 +8,10 @@ import java.util.List;
 
 public class PE_033 {
     static void main() {
-        double s = System.currentTimeMillis();
         System.out.println(PE());
-        double e = System.currentTimeMillis();
-        System.out.println((e-s) + " ms");
     }
 
     public static String PE() {
-        for (int d = 2; d < 10; d++) {
-            double s = System.currentTimeMillis();
-            List<int[]> curiousFractions = curiousFractions(d);
-            double e = System.currentTimeMillis();
-            System.out.println(d + ": " + curiousFractions.size() + " " + ((int) (e-s)) + " ms");
-        }
         int digits = 2;
         List<int[]> curiousFractions = curiousFractions(digits);
 
