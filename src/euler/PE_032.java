@@ -1,6 +1,9 @@
 package euler;
 
-import utils.Pandigital;
+import utils.Diophantine;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class PE_032 {
     static void main() {
@@ -8,27 +11,76 @@ public class PE_032 {
     }
 
     public static String PE() {
-        return String.valueOf(sumOfPandigitalProductGroups());
+        int base = 10;
+        Set<Long> products = pandigitalProductGroupProducts(base);
+        return String.valueOf(sum(products));
     }
 
-    private static long sumOfPandigitalProductGroups() {
+    private static long sum(Set<Long> set) {
         long sum = 0;
-        boolean[] skip = new boolean[100_000];
+        for (long i : set) sum += i;
+        return sum;
+    }
 
-        for (int iLimit = 10; iLimit <= 100; iLimit*=10) {
-            for (int i = iLimit/10; i < iLimit; i++) {
-                int jLimit = 10_000 / i;
-                for (int j = 10_000 / iLimit; j < jLimit; j++) {
-                    int[] productGroup = {i, j, i*j};
-                    if (skip[productGroup[2]]) continue;
-                    if (Pandigital.groupIsPandigital(productGroup)) {
-                        skip[productGroup[2]] = true;
-                        sum += productGroup[2];
+    private static Set<Long> pandigitalProductGroupProducts(int base) {
+        Set<Long> found = new HashSet<>();
+
+        int cases = base % 2;
+        for (int i = 0; i <= cases; i++) {
+            int daLimit = (base / 2 + 1) / 2;
+            int dc = base / 2 - 1;
+            if (i == 1) {
+                daLimit = base / 4;
+                dc = base / 2;
+            }
+
+            long aLimit = Diophantine.pow(base, daLimit);
+            for (long a = 2; a < aLimit; a++) {
+                long bLimit = Diophantine.pow(base, dc) / a;
+                long bStart = Diophantine.pow(base, dc - 1) / a;
+                if (bStart < a) bStart = a;
+                long used = 1;
+                long tempA = a;
+                boolean valid = true;
+                while (tempA > 0) {
+                    int digit = (int) (tempA % base);
+                    if ((used & (1L << digit)) != 0) {
+                        valid = false;
+                        break;
+                    }
+                    used |= 1L << digit;
+                    tempA /= base;
+                }
+                if (!valid) continue;
+                for (long b = bStart; b < bLimit; b++) {
+                    if (pandigitalGroup(base, a, b, used)) {
+                        found.add(a*b);
                     }
                 }
             }
         }
 
-        return sum;
+        return found;
+    }
+
+    private static boolean pandigitalGroup(int base, long a, long b, long used) {
+        long c = a * b;
+        while (b > 0) {
+            int digit = (int) (b % base);
+            if ((used & (1L << digit)) != 0) return false;
+            used |= 1L << digit;
+            b /= base;
+        }
+        while (c > 0) {
+            int digit = (int) (c % base);
+            if ((used & (1L << digit)) != 0) return false;
+            used |= 1L << digit;
+            c /= base;
+        }
+        for (int i = 1; i < base; i++) {
+            if ((used & (1L << i)) == 0) return false;
+        }
+
+        return true;
     }
 }
