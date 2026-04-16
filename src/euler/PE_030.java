@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PE_030 {
-    private static final int[] digitPowers = new int[10];
+    private static final long[] digitPowers = new long[10];
+    private static List<Long> numbers;
 
     static void main() {
         System.out.println(PE());
@@ -15,42 +16,44 @@ public class PE_030 {
     public static String PE() {
         int power = 5;
         makeDigitPowers(power);
-        List<Integer> numbers = allNumbersWithSameSum(power);
-        return String.valueOf(sum(numbers));
+        allNumbersWithSameSum();
+        return String.valueOf(sum());
     }
 
-    private static int sum(List<Integer> list) {
-        int sum = 0;
-        for (Integer i : list) sum += i;
+    private static long sum() {
+        long sum = 0;
+        for (long i : numbers) sum += i;
         return sum;
     }
 
     private static void makeDigitPowers(int power) {
         for (int i = 0; i < 10; i++) {
-            digitPowers[i] = (int) Diophantine.pow(i, power);
+            digitPowers[i] = Diophantine.pow(i, power);
         }
     }
 
-    private static int sumOfNthPowersOfDigits(int number) {
-        int sum = 0;
+    private static long sumOfNthPowersOfDigits(long number) {
+        long sum = 0;
         while (number > 0) {
-            sum += digitPowers[number % 10];
+            sum += digitPowers[(int) (number % 10)];
             number /= 10;
         }
         return sum;
     }
 
-    private static List<Integer> allNumbersWithSameSum(int power) {
-        if (power > 9) throw new RuntimeException("Power too large for int type");
-        List<Integer> numbers = new ArrayList<>();
-        int dLimit = 1;
-        while ((int) Diophantine.pow10[dLimit] <= digitPowers[9] * dLimit) dLimit++;
-        dLimit--;
-        int limit = digitPowers[9] * dLimit;
-        for (int i = 10; i < limit; i++) {
-            if (sumOfNthPowersOfDigits(i) == i) numbers.add(i);
+    private static void allNumbersWithSameSum() {
+        numbers = new ArrayList<>();
+        for (int i = 1; i < 10; i++) {
+            allNumbersWithSameSum(i, digitPowers[i], 1);
         }
+    }
 
-        return numbers;
+    private static void allNumbersWithSameSum(int biggest, long sum, int d) {
+        if (sum > 1 && sumOfNthPowersOfDigits(sum) == sum) numbers.add(sum);
+        if (sum + digitPowers[9] < Diophantine.pow10[d]) return;
+
+        for (int i = biggest; i < 10; i++) {
+            allNumbersWithSameSum(i, sum + digitPowers[i], d+1);
+        }
     }
 }
