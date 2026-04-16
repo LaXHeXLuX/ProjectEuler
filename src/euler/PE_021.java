@@ -38,7 +38,7 @@ public class PE_021 {
         for (int i = 1; i < amicablePairs.length; i++) {
             if (amicablePairs[i]) continue;
             int otherNumber = amicablePair(i);
-            if (otherNumber == -1) continue;
+            if (otherNumber == -1 || otherNumber >= limit) continue;
             amicablePairs[i] = true;
             amicablePairs[otherNumber] = true;
         }
