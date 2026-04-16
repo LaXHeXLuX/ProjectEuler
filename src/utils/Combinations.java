@@ -173,10 +173,8 @@ public class Combinations {
         for (int i = 0; i < plan.length; i++) {
             if (plan[i] == 0) continue;
             T el = newArr[i + plan[i]];
-            T[] result = Arrays.copyOfRange(newArr, i, newArr.length);
-            result = ArrayFunctions.removeIndex(result, plan[i]);
+            System.arraycopy(newArr, i, newArr, i+1, plan[i]);
             newArr[i] = el;
-            System.arraycopy(result, 0, newArr, i+1, result.length);
         }
         return newArr;
     }
