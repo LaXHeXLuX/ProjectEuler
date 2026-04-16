@@ -21,17 +21,4 @@ class PandigitalTest {
         assertFalse(Pandigital.isPandigital(6, 3));
         assertTrue(Pandigital.isPandigital(7, 3));
     }
-    @Test
-    void groupIsPandigital() {
-        assertTrue(Pandigital.groupIsPandigital(new int[] {2, 43, 816, 597}));
-        assertTrue(Pandigital.groupIsPandigital(new int[] {918273645}));
-        assertTrue(Pandigital.groupIsPandigital(new int[] {9, 1, 8, 2, 7, 3, 6, 4, 5}));
-        assertFalse(Pandigital.groupIsPandigital(new int[] {12, 34, 56, 78, 91}));
-        assertFalse(Pandigital.groupIsPandigital(new int[] {12, 34, 56, 78}));
-        assertFalse(Pandigital.groupIsPandigital(new int[] {12, 34, 56, 780}));
-        assertFalse(Pandigital.groupIsPandigital(new int[] {12, 34, 56, 781}));
-
-        assertFalse(Pandigital.groupIsPandigital(new int[] {2, 4}, 5));
-        assertTrue(Pandigital.groupIsPandigital(new int[] {2, 4, 8}, 5));
-    }
 }

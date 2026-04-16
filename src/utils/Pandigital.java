@@ -21,22 +21,4 @@ public class Pandigital {
         }
         return true;
     }
-    public static boolean groupIsPandigital(int[] group) {
-        return groupIsPandigital(group, 10);
-    }
-    public static boolean groupIsPandigital(int[] group, int base) {
-        boolean[] digits = new boolean[base-1];
-        for (int i : group) {
-            while (i > 0) {
-                int digit = i % base;
-                if (digit == 0 || digits[digit-1]) return false;
-                digits[digit-1] = true;
-                i /= base;
-            }
-        }
-        for (boolean digit : digits) {
-            if (!digit) return false;
-        }
-        return true;
-    }
 }
