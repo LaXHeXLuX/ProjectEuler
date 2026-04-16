@@ -329,15 +329,15 @@ public class Diophantine {
 
         return result;
     }
-    public static long mulModExact(long a, long b, long m) {
+    public static long mulModExact(long a, long b, long mod) {
         long result = 0;
-        a = a % m;
+        a = a % mod;
 
         while (b > 0) {
             if ((b & 1) == 1) {
-                result = (result + a) % m;
+                result = (result + a) % mod;
             }
-            a = (a * 2) % m;
+            a = (a * 2) % mod;
             b >>= 1;
         }
 
