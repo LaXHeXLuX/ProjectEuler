@@ -34,9 +34,9 @@ public class PE_029 {
         return sum;
     }
 
-    private static long includeExclude(int min, int max, int i, int lcm, int p, int limitB) {
+    private static long includeExclude(int min, int max, int i, long lcm, int p, int limitB) {
         if (i == 0) return intersect(min, max, lcm, limitB);
-        if (lcm > p*limitB) return 0;
+        if (lcm > (long) p * limitB) return 0;
 
         long sum = 0;
         for (int j = max+1; j <= p - i + 1; j++) {
@@ -46,8 +46,8 @@ public class PE_029 {
         return sum;
     }
 
-    private static int intersect(int min, int max, int lcm, int limitB) {
-        return (int) ((long) min * limitB / lcm) - (max*2-1) / lcm;
+    private static int intersect(int min, int max, long lcm, int limitB) {
+        return (int) ((long) min * limitB / lcm) - (int) ((max*2-1) / lcm);
     }
 
     private static long distinctPowerCount0(int limitA, int limitB) {
