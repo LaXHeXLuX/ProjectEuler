@@ -1,6 +1,5 @@
 package euler;
 
-import utils.ArrayFunctions;
 import utils.Converter;
 import utils.Diophantine;
 
@@ -9,10 +8,19 @@ import java.util.List;
 
 public class PE_033 {
     static void main() {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static String PE() {
+        for (int d = 2; d < 10; d++) {
+            double s = System.currentTimeMillis();
+            List<int[]> curiousFractions = curiousFractions(d);
+            double e = System.currentTimeMillis();
+            System.out.println(d + ": " + curiousFractions.size() + " " + ((int) (e-s)) + " ms");
+        }
         int digits = 2;
         List<int[]> curiousFractions = curiousFractions(digits);
 
@@ -31,39 +39,58 @@ public class PE_033 {
 
     private static List<int[]> curiousFractions(int digits) {
         List<int[]> curiousFractions = new ArrayList<>();
-        
         int limit = (int) Diophantine.pow10[digits];
+
+        int[][] digitArrays = new int[limit][];
         for (int i = limit/10; i < limit; i++) {
-            for (int j = i+1; j < limit; j++) {
-                if (curiousFraction(i, j)) curiousFractions.add(new int[] {i, j});
+            digitArrays[i] = Converter.digitArray(i);
+        }
+
+        for (int n = limit/10; n < limit; n++) {
+            for (int d = n+1; d < limit; d++) {
+                if (curiousFraction(n, d, digitArrays[n], digitArrays[d])) {
+                    curiousFractions.add(new int[] {n, d});
+                }
             }
         }
 
         return curiousFractions;
     }
 
-    private static boolean curiousFraction(int i, int j) {
-        if (Diophantine.gcd(i, j) == 1) return false;
+    private static boolean curiousFraction(int n, int d, int[] nd, int[] dd) {
+        if (Diophantine.gcd(n, d) == 1) return false;
 
-        int[] di = Converter.digitArray(i);
-        int[] dj = Converter.digitArray(j);
+        int iLimit = nd.length - 1;
+        if (nd[iLimit] == 0) iLimit--;
+        int jLimit = dd.length - 1;
+        if (dd[jLimit] == 0) jLimit--;
 
-        return curiousFraction(di, dj);
-    }
-
-    private static boolean curiousFraction(int[] d1, int[] d2) {
-        int a = (int) Converter.fromDigitArray(d1);
-        int b = (int) Converter.fromDigitArray(d2);
-        for (int i = 0; i < d1.length; i++) {
-            if (d1[i] == 0) continue;
-            for (int j = 0; j < d2.length; j++) {
-                if (d1[i] == d2[j]) {
-                    int newA = (int) Converter.fromDigitArray(ArrayFunctions.removeIndex(d1, i));
-                    int newB = (int) Converter.fromDigitArray(ArrayFunctions.removeIndex(d2, j));
-                    if (a*newB == b*newA) return true;
+        for (int i = 0; i <= iLimit; i++) {
+            for (int j = 0; j <= jLimit; j++) {
+                if (nd[i] == dd[j]) {
+                    int newA = removeDigit(n, nd.length - 1 - i);
+                    int newB = removeDigit(d, dd.length - 1 - j);
+                    if (n*newB == d*newA) return true;
                 }
             }
         }
         return false;
+    }
+    
+    private static int removeDigit(int n, int digit) {
+        int newN = 0;
+        int pow10 = 1;
+        for (int i = 0; i < digit; i++) {
+            newN += pow10 * (n % 10);
+            pow10 *= 10;
+            n /= 10;
+        }
+        n /= 10;
+        while (n > 0) {
+            newN += pow10 * (n % 10);
+            pow10 *= 10;
+            n /= 10;
+        }
+        return newN;
     }
 }
