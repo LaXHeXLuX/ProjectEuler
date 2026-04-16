@@ -1,12 +1,14 @@
 package utils;
 
 public class Pandigital {
-
     public static boolean isPandigital(long n) {
-        int[] digits = new int[10];
+        return isPandigital(n, 10);
+    }
+    public static boolean isPandigital(long n, int base) {
+        int[] digits = new int[base];
         while (n > 0) {
-            digits[(int) (n % 10)]++;
-            n /= 10;
+            digits[(int) (n % base)]++;
+            n /= base;
         }
 
         if (digits[0] > 0) return false;
@@ -19,28 +21,17 @@ public class Pandigital {
         }
         return true;
     }
-    public static boolean isPandigital(long n, int startDigit, int endDigit) {
-        if (n == 0) return startDigit == 0 && endDigit == 0;
-        if ((int) Math.log10(n) != endDigit-startDigit) return false;
-        int[] digits = new int[10];
-        while (n > 0) {
-            digits[(int) (n % 10)]++;
-            n /= 10;
-        }
-
-        for (int i = startDigit; i <= endDigit; i++) {
-            if (digits[i] != 1) return false;
-        }
-        return true;
-    }
     public static boolean groupIsPandigital(int[] group) {
-        boolean[] digits = new boolean[9];
+        return groupIsPandigital(group, 10);
+    }
+    public static boolean groupIsPandigital(int[] group, int base) {
+        boolean[] digits = new boolean[base-1];
         for (int i : group) {
             while (i > 0) {
-                int digit = i % 10;
+                int digit = i % base;
                 if (digit == 0 || digits[digit-1]) return false;
                 digits[digit-1] = true;
-                i /= 10;
+                i /= base;
             }
         }
         for (boolean digit : digits) {
