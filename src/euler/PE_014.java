@@ -10,12 +10,13 @@ public class PE_014 {
 
     public static String PE() {
         int limit = 1_000_000;
-        makeInitialCollatz();
+        makeInitialCollatz(limit);
         return String.valueOf(longestCollatzChainLength(limit));
     }
 
-    private static void makeInitialCollatz() {
-        int limit = 1_000;
+    private static void makeInitialCollatz(int limit) {
+        limit = (int) Math.sqrt(limit);
+        if (limit < 100) limit = 100;
         firstCollatz = new int[limit];
         for (int i = 1; i < limit; i++) {
             firstCollatz[i] = collatzLength(i);
@@ -23,12 +24,12 @@ public class PE_014 {
     }
 
     private static long longestCollatzChainLength(int limit) {
-        long biggestChainLength = 0;
-        long biggestI = 0;
+        int biggestChainLength = 0;
+        int biggestI = 0;
         skip = new boolean[limit];
         for (int i = limit/2; i < limit; i++) {
             if (skip[i] || (i % 6 == 4)) continue;
-            long chainLength = collatzChainLength(i);
+            int chainLength = collatzChainLength(i);
             if (chainLength > biggestChainLength) {
                 biggestChainLength = chainLength;
                 biggestI = i;
