@@ -16,7 +16,7 @@ public class PE_030 {
     public static String PE() {
         int power = 5;
         makeDigitPowers(power);
-        allNumbersWithSameSum();
+        digitPowersWithSameSum();
         return String.valueOf(sum());
     }
 
@@ -32,7 +32,7 @@ public class PE_030 {
         }
     }
 
-    private static long sumOfNthPowersOfDigits(long number) {
+    private static long digitPowerSum(long number) {
         long sum = 0;
         while (number > 0) {
             sum += digitPowers[(int) (number % 10)];
@@ -41,19 +41,19 @@ public class PE_030 {
         return sum;
     }
 
-    private static void allNumbersWithSameSum() {
+    private static void digitPowersWithSameSum() {
         numbers = new ArrayList<>();
         for (int i = 1; i < 10; i++) {
-            allNumbersWithSameSum(i, digitPowers[i], 1);
+            digitPowersWithSameSum(i, digitPowers[i], 1);
         }
     }
 
-    private static void allNumbersWithSameSum(int biggest, long sum, int d) {
-        if (sum > 1 && sumOfNthPowersOfDigits(sum) == sum) numbers.add(sum);
+    private static void digitPowersWithSameSum(int start, long sum, int d) {
+        if (sum > 1 && digitPowerSum(sum) == sum) numbers.add(sum);
         if (sum + digitPowers[9] < Diophantine.pow10[d]) return;
 
-        for (int i = biggest; i < 10; i++) {
-            allNumbersWithSameSum(i, sum + digitPowers[i], d+1);
+        for (int i = start; i < 10; i++) {
+            digitPowersWithSameSum(i, sum + digitPowers[i], d+1);
         }
     }
 }
