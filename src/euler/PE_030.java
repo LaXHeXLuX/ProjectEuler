@@ -2,18 +2,25 @@ package euler;
 
 import utils.Diophantine;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PE_030 {
     private static final long[] digitPowers = new long[10];
-    private static List<Long> numbers;
+    private static Set<Long> numbers;
 
     static void main() {
         System.out.println(PE());
     }
 
     public static String PE() {
+        for (int power = 2; power < 20; power++) {
+            double s = System.currentTimeMillis();
+            makeDigitPowers(power);
+            digitPowersWithSameSum();
+            double e = System.currentTimeMillis();
+            System.out.println(power + " " + (int) (e-s) + " ms: " + numbers);
+        }
         int power = 5;
         makeDigitPowers(power);
         digitPowersWithSameSum();
@@ -42,7 +49,7 @@ public class PE_030 {
     }
 
     private static void digitPowersWithSameSum() {
-        numbers = new ArrayList<>();
+        numbers = new HashSet<>();
         for (int i = 1; i < 10; i++) {
             digitPowersWithSameSum(i, digitPowers[i], 1);
         }
