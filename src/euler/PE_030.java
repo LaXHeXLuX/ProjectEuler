@@ -14,13 +14,6 @@ public class PE_030 {
     }
 
     public static String PE() {
-        for (int power = 2; power < 20; power++) {
-            double s = System.currentTimeMillis();
-            makeDigitPowers(power);
-            digitPowersWithSameSum();
-            double e = System.currentTimeMillis();
-            System.out.println(power + " " + (int) (e-s) + " ms: " + numbers);
-        }
         int power = 5;
         makeDigitPowers(power);
         digitPowersWithSameSum();
