@@ -6,34 +6,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PE_034 {
+    private static List<Long> numbers;
+    private static long[] powBase;
+
     static void main() {
         System.out.println(PE());
     }
 
     public static String PE() {
         int base = 10;
-        List<Long> digitFactorials = allDigitFactorials(base);
-        return String.valueOf(sum(digitFactorials));
+        makePowBase(base);
+        digitFactorials(base);
+        return String.valueOf(sum());
     }
 
-    private static long sum(List<Long> list) {
+    private static long sum() {
         long sum = 0;
-        for (Long l : list) sum += l;
+        for (Long l : numbers) sum += l;
         return sum;
     }
 
-    private static long limit(int base) {
-        long powTen = base;
-        int x = 1;
-        while (Combinations.FACTORIAL[base-1]*x > powTen) {
-            x++;
-            powTen *= base;
+    private static void makePowBase(int base) {
+        powBase = new long[(int) (Math.log(Long.MAX_VALUE)/Math.log(base))];
+        powBase[0] = 1;
+        for (int i = 1; i < powBase.length; i++) {
+            powBase[i] = base * powBase[i-1];
         }
-        long first = Combinations.FACTORIAL[base-1]*x;
-        while (first >= base) {
-            first /= base;
-        }
-        return Combinations.FACTORIAL[(int) first] + Combinations.FACTORIAL[base-1]*(x-1);
     }
 
     private static long digitFactorialSum(long n, int base) {
@@ -47,18 +45,19 @@ public class PE_034 {
         return sum;
     }
 
-    private static List<Long> allDigitFactorials(int base) {
-        List<Long> digitFactorials = new ArrayList<>();
-        long limit = limit(base);
+    private static void digitFactorials(int base) {
+        numbers = new ArrayList<>();
+        digitFactorials(base, 1, 0, 0);
+    }
 
-        for (long i = 1; i < limit/base; i++) {
-            long f = digitFactorialSum(i, base);
-            for (int j = 0; j < base; j++) {
-                long n = base*i + j;
-                if (f + Combinations.FACTORIAL[j] == n) digitFactorials.add(n);
-            }
+    private static void digitFactorials(int base, int start, long sum, int d) {
+        if (sum > 2 && digitFactorialSum(sum, base) == sum) {
+            numbers.add(sum);
         }
+        if (sum + Combinations.FACTORIAL[base-1] < powBase[d+1]) return;
 
-        return digitFactorials;
+        for (int i = start; i < base; i++) {
+            digitFactorials(base, i, sum + Combinations.FACTORIAL[i], d+1);
+        }
     }
 }
