@@ -2,11 +2,11 @@ package euler;
 
 import utils.Combinations;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PE_034 {
-    private static List<Long> numbers;
+    private static Set<Long> numbers;
     private static long[] powBase;
 
     static void main() {
@@ -46,7 +46,7 @@ public class PE_034 {
     }
 
     private static void digitFactorials(int base) {
-        numbers = new ArrayList<>();
+        numbers = new HashSet<>();
         digitFactorials(base, 1, 0, 0);
     }
 
