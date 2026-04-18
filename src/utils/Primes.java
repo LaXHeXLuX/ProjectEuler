@@ -356,7 +356,7 @@ public class Primes {
         long x = Diophantine.powModExact(a, d, n);
         if (x == 1 || x == n - 1) return true;
         for (int i = 0; i < r - 1; i++) {
-            x = Diophantine.mulModExact (x, x, n);
+            x = Diophantine.mulModExact(x, x, n);
             if (x == n - 1) return true;
         }
         return false;
