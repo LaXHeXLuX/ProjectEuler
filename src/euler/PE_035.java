@@ -3,49 +3,56 @@ package euler;
 import utils.Diophantine;
 import utils.Primes;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PE_035 {
-    private static boolean[] composites;
-    private static final List<Integer> cyclicPrimes = new ArrayList<>();
+    private static Set<Long> cyclicPrimes;
 
     static void main() {
         System.out.println(PE());
     }
 
     public static String PE() {
-        int limit = 1_000_000;
-        composites = Primes.compositeSieve(limit);
+        long limit = 1_000_000;
         cyclicPrimesUnder(limit);
         return String.valueOf(cyclicPrimes.size());
     }
 
-    private static boolean cyclicPrime(int n) {
-        int digits = (int) (Math.log10(n) + 1);
-        for (int i = 1; i < digits; i++) {
-            int powTen = (int) Diophantine.pow10[i];
-            int rem = n % powTen;
-            int cyclicNumber = n / powTen + (int) Diophantine.pow10[digits-i] * rem;
-            if (cyclicNumber % 2 == 0 || composites[cyclicNumber >> 1]) return false;
+    private static boolean cyclicPrime(long n, int d) {
+        long p10 = Diophantine.pow10[d-1];
+        for (int i = 0; i < d; i++) {
+            n = (n % 10)*p10 + n/10;
+            if (!Primes.isPrime(n)) return false;
         }
         return true;
     }
 
-    private static void cyclicPrimesUnder(int limit) {
-        cyclicPrimes.addAll(List.of(2, 3, 5, 7));
+    private static void cyclicPrimesUnder(long limit) {
+        cyclicPrimes = new HashSet<>(Set.of(2L, 3L, 5L, 7L));
         for (int i = 1; i < 10; i+=2) {
-            cyclicPrimesUnder(limit, i);
+            if (i == 5) continue;
+            cyclicPrimesUnder(limit, i, 1, i);
         }
     }
 
-    private static void cyclicPrimesUnder(int limit, int current) {
+    private static void cyclicPrimesUnder(long limit, long current, int d, int min) {
         if (current*10 > limit) return;
 
-        for (int i = 1; i < 10; i+=2) {
-            int n = 10*current + i;
-            cyclicPrimesUnder(limit, n);
-            if (!composites[n >> 1] && cyclicPrime(n)) cyclicPrimes.add(n);
+        d++;
+        for (int i = min; i < 10; i+=2) {
+            if (i == 5) continue;
+            long n = 10*current + i;
+            cyclicPrimesUnder(limit, n, d, min);
+            if (cyclicPrime(n, d)) addCyclics(n, d);
+        }
+    }
+
+    private static void addCyclics(long n, int d) {
+        long p10 = Diophantine.pow10[d-1];
+        for (int i = 0; i < d; i++) {
+            n = (n % 10)*p10 + n/10;
+            cyclicPrimes.add(n);
         }
     }
 }
