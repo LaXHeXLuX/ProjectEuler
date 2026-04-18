@@ -202,6 +202,49 @@ public class Primes {
         }
         return Arrays.copyOf(primeFactors, index);
     }
+    public static PF[] primeFactors(long n, int power) {
+        PF[] pfs = primeFactors(n);
+        for (PF pf : pfs) {
+            pf.power *= power;
+        }
+        return pfs;
+    }
+    public static PF[] primeFactorsProduct(long n, int power, long m) {
+        PF[] nPfs = primeFactors(n, power);
+        PF[] mPfs = primeFactors(m);
+
+        PF[] pfs = new PF[nPfs.length + mPfs.length];
+        int ni = 0;
+        int mi = 0;
+        int i = 0;
+        while (ni < nPfs.length && mi < mPfs.length) {
+            PF nPf = nPfs[ni];
+            PF mPf = mPfs[mi];
+            if (nPf.primeFactor == mPf.primeFactor) {
+                pfs[i++] = new PF(nPf.primeFactor, nPf.power + mPf.power);
+                ni++;
+                mi++;
+            }
+            else if (nPf.primeFactor < mPf.primeFactor) {
+                pfs[i++] = new PF(nPf.primeFactor, nPf.power);
+                ni++;
+            }
+            else {
+                pfs[i++] = new PF(mPf.primeFactor, mPf.power);
+                mi++;
+            }
+        }
+        while (ni < nPfs.length) {
+            PF nPf = nPfs[ni++];
+            pfs[i++] = new PF(nPf.primeFactor, nPf.power);
+        }
+        while (mi < mPfs.length) {
+            PF mPf = mPfs[mi++];
+            pfs[i++] = new PF(mPf.primeFactor, mPf.power);
+        }
+
+        return Arrays.copyOf(pfs, i);
+    }
     public static PF[][] primeFactorSieve(int limit) {
         int[] spf = new int[limit];
         for (int i = 2; i < limit; i++) {
