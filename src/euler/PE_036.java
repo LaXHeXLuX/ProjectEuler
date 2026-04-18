@@ -2,9 +2,7 @@ package euler;
 
 import utils.Diophantine;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class PE_036 {
     static void main() {
@@ -14,14 +12,8 @@ public class PE_036 {
     public static String PE() {
         int[] bases = {2, 10};
         int limit = 1_000_000;
-        List<Long> palindromes = palindromesInBases(limit, bases);
-        return String.valueOf(sum(palindromes));
-    }
-
-    private static long sum(List<Long> list) {
-        long sum = 0;
-        for (Long l : list) sum += l;
-        return sum;
+        long result = sumOfPalindromesInBases(limit, bases);
+        return String.valueOf(result);
     }
 
     private static boolean isPalindromeInBases(long n, int[] bases) {
@@ -31,24 +23,24 @@ public class PE_036 {
         return true;
     }
 
-    private static List<Long> palindromesInBases(long limit, int[] bases) {
+    private static long sumOfPalindromesInBases(long limit, int[] bases) {
         Arrays.sort(bases);
-        List<Long> palindromes = new ArrayList<>();
+        long sum = 0;
 
         long iLimit = (long) Math.sqrt(limit);
         for (long i = 1; i < iLimit; i++) {
             long n = palindromeFrom((int) i, bases[bases.length-1], false);
             if (n >= limit) break;
             if (isPalindromeInBases(n, bases)) {
-                palindromes.add(n);
+                sum += n;
             }
             n = palindromeFrom((int) i, bases[bases.length-1], true);
             if (n < limit && isPalindromeInBases(n, bases)) {
-                palindromes.add(n);
+                sum += n;
             }
         }
 
-        return palindromes;
+        return sum;
     }
 
     private static long palindromeFrom(int n, int base, boolean extra) {
