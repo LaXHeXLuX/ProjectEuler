@@ -12,7 +12,7 @@ public class PE_038 {
         return String.valueOf(biggest[biggest.length-1]);
     }
 
-    private static long concatenatedProductsOf(long n) {
+    private static long concatenatedProduct(long n) {
         long concatenatedProduct = 0;
 
         int i = 1;
@@ -34,7 +34,7 @@ public class PE_038 {
         long biggestFactor = 0;
 
         for (int i = 1; i < 10_000; i++) {
-            long concatenatedProduct = concatenatedProductsOf(i);
+            long concatenatedProduct = concatenatedProduct(i);
             if (!Pandigital.isPandigital(concatenatedProduct)) continue;
 
             if (concatenatedProduct > biggestProduct) {
