@@ -6,74 +6,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PE_037 {
-    private static boolean[] composites;
+    private static List<Integer> allTruncatablePrimes;
 
     static void main() {
         System.out.println(PE());
     }
 
     public static String PE() {
-        List<Integer> all = allTruncatablePrimes();
-
-        long sum = 0;
-        for (long a : all) sum += a;
-        return String.valueOf(sum);
+        allTruncatablePrimes();
+        return String.valueOf(sum());
     }
 
-    private static boolean isTruncatablePrime(int n) {
-        int x = n;
-        while (x > 0) {
-            if (composites[x >> 1]) return false;
-            x /= 10;
+    private static int sum() {
+        int sum = 0;
+        for (int i : allTruncatablePrimes) sum += i;
+        return sum;
+    }
+
+    private static void allTruncatablePrimes() {
+        allTruncatablePrimes = new ArrayList<>();
+        allTruncatablePrimes(3, 1);
+        allTruncatablePrimes(7, 1);
+    }
+
+    private static void allTruncatablePrimes(int current, int pow10) {
+        pow10 *= 10;
+
+        for (int i = 2; i <= 5; i+=3) {
+            int next = i*pow10 + current;
+            if (!Primes.isPrime(next)) continue;
+            if (leftTruncatable(next)) allTruncatablePrimes.add(next);
         }
-        x = 10;
-        while (x < n) {
-            int truncation = n % x;
-            if (composites[truncation >> 1]) return false;
-            x *= 10;
+
+        for (int i = 1; i < 10; i+=2) {
+            if (i == 5) continue;
+            int next = i*pow10 + current;
+            if (!Primes.isPrime(next)) continue;
+            if ((i == 3 || i == 7) && leftTruncatable(next)) allTruncatablePrimes.add(next);
+            allTruncatablePrimes(next, pow10);
+        }
+    }
+
+    private static boolean leftTruncatable(int current) {
+        while (current >= 10) {
+            current /= 10;
+            if (!Primes.isPrime(current)) return false;
         }
         return true;
-    }
-
-    private static List<Integer> allTruncatablePrimesHelper(int digitAmount) {
-        if (digitAmount == 0) return new ArrayList<>();
-        List<Integer> truncatablePrimes = new ArrayList<>();
-        if (digitAmount == 1) {
-            truncatablePrimes.add(2);
-            truncatablePrimes.add(3);
-            truncatablePrimes.add(5);
-            truncatablePrimes.add(7);
-            return truncatablePrimes;
-        }
-
-        int[] options = new int[] {1, 3, 7, 9};
-        for (int option : options) {
-            List<Integer> nextTruncatablePrimes = allTruncatablePrimesHelper(digitAmount-1);
-            for (Integer ntp : nextTruncatablePrimes) {
-                int truncatablePrimeContender = ntp * 10 + option;
-                if (!composites[truncatablePrimeContender >> 1]) {
-                    truncatablePrimes.add(truncatablePrimeContender);
-                }
-            }
-        }
-
-        return truncatablePrimes;
-    }
-
-    private static List<Integer> allTruncatablePrimes() {
-        composites = Primes.compositeSieve(1_000_000);
-
-        List<Integer> truncatables = new ArrayList<>();
-
-        int digitAmount = 2;
-        while (truncatables.size() < 11) {
-            List<Integer> truncatablePrimeContenders = allTruncatablePrimesHelper(digitAmount);
-            for (Integer tpc : truncatablePrimeContenders) {
-                if (isTruncatablePrime(tpc)) truncatables.add(tpc);
-            }
-            digitAmount++;
-        }
-
-        return truncatables;
     }
 }
