@@ -6,22 +6,18 @@ public class PE_173 {
     }
 
     public static String PE() {
-        long tiles = 1_000_000;
-        return String.valueOf(countOfSquareLaminaeWithTiles(tiles));
+        long L = 1_000_000;
+        return String.valueOf(countOfSquareLaminaeWithTiles(L));
     }
 
-    private static long countOfSquareLaminaeWithTiles(long tiles) {
+    private static long countOfSquareLaminaeWithTiles(long L) {
         long count = 0;
 
-        long kLimit = (long) (Math.sqrt(tiles) / 2);
-        for (long k = 1; k < kLimit; k++) {
-            long nStart = 2*k;
-            long nEnd = tiles / (4*k) + k;
-            long diff = nEnd - nStart;
-            if (diff < 0) continue;
-            count += diff;
+        long nLimit = (long) (Math.sqrt(L - 4) / 2);
+        for (long n = 1; n <= nLimit; n++) {
+            count += L/(4*n);
         }
 
-        return count;
+        return count - nLimit*(nLimit+1)/2;
     }
 }
