@@ -96,7 +96,8 @@ For each method I have specified the name and use case:
 - **primeFactors** - $\text{primeFactors}(n)$ gives the prime factors of a number, in the form of a (primeFactor, power) array.
 - **primeFactorSieve** - $\text{primeFactorSieve}(L)$ gives an $L$-sized array of prime factors - the prime factors of each index.
 - **maxPrimorial** - $\text{maxPrimorial}(n)$ gives the first $i$ for which the $i$-th primorial is bigger or equal to $n$.
-- **isPrime** - $\text{isPrime}(n)$ returns true iff $n$ is prime.
+- **isPrime** - $\text{isPrime}(n)$ returns true iff $n$ is prime. The Miller-Rabin test sets are from [Wikipedia](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test#Testing_against_small_sets_of_bases).
+- **millerRabin** - $\text{millerRabin}(n, a)$ returns true iff $a^d \equiv 1 \pmod{n}$ OR for some $i$, $0 \le i \le r-1$, $a^{2^id} \equiv -1 \pmod{n}$, where $d$ is odd and $n-1 = 2^r \cdot d$.
 - **nthPrime** - $\text{nthPrime}(n)$ gives the $n$-th prime.
 - **upperBoundForNthPrime** - $\text{upperBoundForNthPrime}(n)$ gives the upper bound for the $n$-th prime.
 - **eulersTotient** - $\text{eulersTotient}(n)$ gives the number of numbers below $n$ that are relatively prime to $n$.
