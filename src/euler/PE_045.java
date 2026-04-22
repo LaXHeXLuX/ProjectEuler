@@ -11,11 +11,11 @@ public class PE_045 {
 
     public static String PE() {
         int[] sides = {3, 5, 6};
-        int lowerLimit = 40755 + 1;
+        long lowerLimit = 40755 + 1;
         return String.valueOf(nextNumberPolygonalIn(sides, lowerLimit));
     }
 
-    private static long nextNumberPolygonalIn(int[] sides, int lowerLimit) {
+    private static long nextNumberPolygonalIn(int[] sides, long lowerLimit) {
         Arrays.sort(sides);
 
         for (int i = 0; true; i++) {
