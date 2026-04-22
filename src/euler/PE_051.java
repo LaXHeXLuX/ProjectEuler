@@ -1,6 +1,7 @@
 package euler;
 
 import utils.Converter;
+import utils.Diophantine;
 import utils.Primes;
 
 import java.util.ArrayList;
@@ -21,17 +22,17 @@ public class PE_051 {
     private static int[] firstPrimeDigitReplacementFamily(int familySize) {
         int targetDigitCount = 2;
         int[] firstPrimeDigitReplacementFamily = new int[0];
-        int injectionAmountStep = 1;
-        if (familySize > 7) injectionAmountStep = 3;
+        int injectionStep = 1;
+        if (familySize > 7) injectionStep = 3;
 
         int smallestPrimeWithProperty = -1;
         while (smallestPrimeWithProperty < 0) {
-            for (int amountOfInjections = injectionAmountStep; amountOfInjections < targetDigitCount; amountOfInjections+=injectionAmountStep) {
-                int amountOfStartingDigits = targetDigitCount-amountOfInjections;
-                int limit = (int) Math.pow(10, amountOfStartingDigits);
+            for (int injectionAmount = injectionStep; injectionAmount < targetDigitCount; injectionAmount += injectionStep) {
+                int amountOfStartingDigits = targetDigitCount-injectionAmount;
+                int limit = (int) Diophantine.pow10[amountOfStartingDigits];
                 for (int i = limit / 10; i < limit; i++) {
                     int[] digits = Converter.digitArray(i);
-                    int[] bestInjection = bestInjectionCombination(digits, amountOfInjections);
+                    int[] bestInjection = bestInjectionCombination(digits, injectionAmount);
                     List<Integer> score = score(bestInjection);
                     if (score.size() >= familySize) {
                         int firstNumber = makeNumber(bestInjection, score.getFirst());
