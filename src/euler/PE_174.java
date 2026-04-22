@@ -15,20 +15,16 @@ public class PE_174 {
 
         int kLimit = (int) (Math.sqrt(tiles) / 2);
         for (int k = 1; k < kLimit; k++) {
-            int nStart = 2*k;
-            int nEnd = tiles / (4*k) + k;
-            for (int n = nStart+1; n <= nEnd; n++) {
-                int neededTiles = 4*k*(n-k);
-                laminaeCounts[neededTiles]++;
+            int step = 4*k;
+            for (int needed = step*(k+1); needed <= tiles; needed += step) {
+                laminaeCounts[needed]++;
             }
         }
 
         long count = 0;
-
         for (int i = 1; i < laminaeCounts.length; i++) {
             if (laminaeCounts[i] > 0 && laminaeCounts[i] <= 10) count++;
         }
-
         return count;
     }
 }

@@ -312,10 +312,10 @@ public class Primes {
         }
 
         return
-                Primes.millerRabin(n, 2) &&
-                Primes.millerRabin(n, 3) &&
-                Primes.millerRabin(n, 5) &&
-                Primes.millerRabin(n, 7);
+                millerRabin(n, 2) &&
+                millerRabin(n, 3) &&
+                millerRabin(n, 5) &&
+                millerRabin(n, 7);
     }
     public static boolean millerRabin(int n, int a) {
         int d = n - 1;
@@ -339,11 +339,24 @@ public class Primes {
             if (n % p == 0) return false;
         }
 
-        int[] tests = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37};
-        for (int test : tests) {
-            if (!Primes.millerRabin(n, test)) return false;
-        }
-        return true;
+        boolean probablePrime =
+                millerRabin(n, 2) &&
+                millerRabin(n, 3) &&
+                millerRabin(n, 5) &&
+                millerRabin(n, 7) &&
+                millerRabin(n, 11);
+
+        if (!probablePrime) return false;
+        if (n < 2_152_302_898_747L) return true;
+
+        return
+                millerRabin(n, 13) &&
+                millerRabin(n, 17) &&
+                millerRabin(n, 19) &&
+                millerRabin(n, 23) &&
+                millerRabin(n, 29) &&
+                millerRabin(n, 31) &&
+                millerRabin(n, 37);
     }
     public static boolean millerRabin(long n, int a) {
         long d = n - 1;
