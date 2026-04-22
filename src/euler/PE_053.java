@@ -10,10 +10,10 @@ public class PE_053 {
     public static String PE() {
         int lowBar = 1_000_000;
         int nLimit = 100;
-        return String.valueOf(numberOfValuesGreaterThan2(lowBar, nLimit));
+        return String.valueOf(numberOfValuesGreaterThan(lowBar, nLimit));
     }
 
-    private static int numberOfValuesGreaterThan2(int limit, int nLimit) {
+    private static int numberOfValuesGreaterThan(int limit, int nLimit) {
         int counter = 0;
 
         int n;
