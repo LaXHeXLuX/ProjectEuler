@@ -11,15 +11,15 @@ public class PE_046 {
 
     private static int smallestConjectureContradiction() {
         int limit = 1_000;
-        int result = smallestConjectureContradiction2(limit);
+        int result = smallestConjectureContradiction(limit);
         while (result == -1) {
             limit *= 10;
-            result = smallestConjectureContradiction2(limit);
+            result = smallestConjectureContradiction(limit);
         }
         return result;
     }
 
-    private static int smallestConjectureContradiction2(int limit) {
+    private static int smallestConjectureContradiction(int limit) {
         boolean[] composites = new boolean[limit >> 1];
         boolean[] canBeWritten = new boolean[limit >> 1];
         composites[0] = true;
