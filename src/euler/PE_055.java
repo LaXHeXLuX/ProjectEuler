@@ -1,32 +1,28 @@
 package euler;
 
-import utils.Converter;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class PE_055 {
+    private static final int iterationLimit = 50;
+
     static void main() {
         System.out.println(PE());
     }
 
     public static String PE() {
         int limit = 10_000;
-        int[] answer = lychrelNumbersUnder(limit);
-        return String.valueOf(answer.length);
+        return String.valueOf(lychrelNumbersUnder(limit));
     }
 
-    private static int[] lychrelNumbersUnder(int limit) {
-        List<Integer> lychrelNumbers = new ArrayList<>();
+    private static int lychrelNumbersUnder(int limit) {
+        int count = 0;
 
         for (int i = 5; i < limit; i++) {
-            if (iterationsToProducePalindrome(i) < 0) lychrelNumbers.add(i);
+            if (lychrel(i)) count++;
         }
 
-        return Converter.listToArr(lychrelNumbers);
+        return count;
     }
 
-    private static int iterationsToProducePalindrome(long n) {
+    private static boolean lychrel(long n) {
         n += reverse(n);
         long r = reverse(n);
         int counter = 1;
@@ -34,11 +30,10 @@ public class PE_055 {
         while (r != n) {
             n += r;
             r = reverse(n);
-            if (n < 0) return -1;
-            counter++;
-            if (counter > 50) return -1;
+            if (n < 0) return true;
+            if (++counter > iterationLimit) return true;
         }
-        return counter;
+        return false;
     }
 
     private static long reverse(long n) {
