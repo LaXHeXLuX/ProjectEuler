@@ -31,6 +31,7 @@ public class PE_039 {
     private static void solutions(int limit) {
         perimeterSolutions = new int[limit+1];
         int mLimit = (int) Math.sqrt(limit/2.0);
+        if (mLimit*mLimit*2 == limit) mLimit--;
         for (int m = 2; m <= mLimit; m++) {
             int nLimit = limit/2/m - m;
             if (nLimit > m-1) nLimit = m-1;
