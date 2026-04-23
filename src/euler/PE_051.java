@@ -25,7 +25,7 @@ public class PE_051 {
         int injectionStep = 1;
         if (familySize > 7) injectionStep = 3;
 
-        int smallestPrimeWithProperty = -1;
+        long smallestPrimeWithProperty = -1;
         while (smallestPrimeWithProperty < 0) {
             for (int injectionAmount = injectionStep; injectionAmount < targetDigitCount; injectionAmount += injectionStep) {
                 int amountOfStartingDigits = targetDigitCount-injectionAmount;
@@ -35,7 +35,7 @@ public class PE_051 {
                     int[] bestInjection = bestInjectionCombination(digits, injectionAmount);
                     List<Integer> score = score(bestInjection);
                     if (score.size() >= familySize) {
-                        int firstNumber = makeNumber(bestInjection, score.getFirst());
+                        long firstNumber = makeNumber(bestInjection, score.getFirst());
                         if (smallestPrimeWithProperty == -1 || smallestPrimeWithProperty > firstNumber) {
                             smallestPrimeWithProperty = firstNumber;
                             firstPrimeDigitReplacementFamily = bestInjection;
@@ -77,8 +77,8 @@ public class PE_051 {
         return score;
     }
 
-    private static int makeNumber(int[] number, int digit) {
-        int result = 0;
+    private static long makeNumber(int[] number, int digit) {
+        long result = 0;
         for (int i : number) {
             int d;
             if (i == -1) d = digit;
