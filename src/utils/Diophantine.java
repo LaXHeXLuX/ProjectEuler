@@ -73,7 +73,7 @@ public class Diophantine {
         );
     }
     public static List<long[]> pell(int D, int C) {
-        long[] fundamental = Diophantine.pell(D);
+        long[] fundamental = pell(D);
         int adder = 1;
         int absC = C;
         if (C < 0) {
