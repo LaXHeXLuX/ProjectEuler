@@ -91,6 +91,17 @@ class PrimesTest {
         assertArrayEquals(pfBig, Primes.primeFactors(	3_628_744_721_405L));
     }
     @Test
+    void primeFactorsProduct() {
+        Primes.PF[] pfs1 = {};
+        assertArrayEquals(pfs1, Primes.primeFactorsProduct(1, 10, 1));
+        Primes.PF[] pfs2 = {new Primes.PF(2, 10)};
+        assertArrayEquals(pfs2, Primes.primeFactorsProduct(2, 7, 8));
+        Primes.PF[] pfs3 = {new Primes.PF(2, 2), new Primes.PF(3), new Primes.PF(5, 2)};
+        assertArrayEquals(pfs3, Primes.primeFactorsProduct(10, 2, 3));
+        Primes.PF[] pfs4 = {new Primes.PF(2, 3), new Primes.PF(5, 2), new Primes.PF(7)};
+        assertArrayEquals(pfs4, Primes.primeFactorsProduct(10, 2, 14));
+    }
+    @Test
     void primeFactorSieve() {
         int limit = 1_000;
         Primes.PF[][] sieve = Primes.primeFactorSieve(limit);
@@ -127,10 +138,19 @@ class PrimesTest {
         assertFalse(Primes.isPrime(746331041));
 
         assertFalse(Primes.isPrime(120L));
-        assertTrue(Primes.isPrime(289586599663L));
         assertTrue(Primes.isPrime(217203134209L));
         assertFalse(Primes.isPrime(217203134191L));
         assertFalse(Primes.isPrime(217203134193L));
+
+        assertFalse(Primes.isPrime(2147483671L)); // witness 2
+        assertFalse(Primes.isPrime(2152627801L)); // witness 3
+        assertFalse(Primes.isPrime(2217879901L)); // witness 5
+        assertFalse(Primes.isPrime(3215031751L)); // witness 11
+        assertFalse(Primes.isPrime(3697278427L)); // witness 7
+        assertFalse(Primes.isPrime(2152302898747L)); // witness 13
+        assertFalse(Primes.isPrime(3474749660383L)); // witness 17
+        assertFalse(Primes.isPrime(341550071728321L)); // witness 19, 23
+        assertFalse(Primes.isPrime(3825123056546413051L)); // witness 29, 31, 37
     }
     @Test
     void nthPrime() {
