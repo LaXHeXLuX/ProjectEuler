@@ -25,12 +25,11 @@ public class PE_061 {
         numbers = new int[n];
         int mask = (1 << n) - 2;
 
-        int i = 1;
+        int i = (int) Math.sqrt(2000) - 1;
         numbers[0] = (int) PolygonalNumber.polygonalNumber(3, i);
 
         while (numbers[0] < 1000) {
-            i++;
-            numbers[0] = (int) PolygonalNumber.polygonalNumber(3, i);
+            numbers[0] = (int) PolygonalNumber.polygonalNumber(3, ++i);
         }
 
         while (numbers[0] < 10_000) {
