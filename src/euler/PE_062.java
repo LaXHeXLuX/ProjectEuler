@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PE_062 {
-    private static final Map<Long, List<Long>> powerPermutations = new HashMap<>();
+    private static final Map<Long, List<Integer>> powerPermutations = new HashMap<>();
 
     static void main() {
         System.out.println(PE());
@@ -26,12 +26,12 @@ public class PE_062 {
         long smallest = Long.MAX_VALUE;
         for (int i = 1; i < limit; i++) {
             long p = Diophantine.pow(i, power);
-            long digits = digits(p);
-            if (!powerPermutations.containsKey(digits)) {
-                powerPermutations.put(digits, new ArrayList<>());
+            long fingerprint = fingerprint(p);
+            if (!powerPermutations.containsKey(fingerprint)) {
+                powerPermutations.put(fingerprint, new ArrayList<>());
             }
-            List<Long> list = powerPermutations.get(digits);
-            list.add(p);
+            List<Integer> list = powerPermutations.get(fingerprint);
+            list.add(i);
             if (list.size() >= count) {
                 long s = list.getFirst();
                 if (s < smallest) {
@@ -40,10 +40,10 @@ public class PE_062 {
                 }
             }
         }
-        return smallest;
+        return Diophantine.pow(smallest, power);
     }
 
-    private static long digits(long p) {
+    private static long fingerprint(long p) {
         long fingerprint = 0;
         while (p > 0) {
             fingerprint += Diophantine.pow10[(int) (p % 10)];
