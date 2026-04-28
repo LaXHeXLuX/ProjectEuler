@@ -1,10 +1,6 @@
 package euler;
 
-import utils.Converter;
-
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PE_063 {
     static void main() {
@@ -12,33 +8,41 @@ public class PE_063 {
     }
 
     public static String PE() {
-        BigInteger[] solutions = solve();
-        return String.valueOf(solutions.length);
+        int base = 10;
+        int result = powerfulDigitCounts(base);
+        return String.valueOf(result);
     }
 
-    private static BigInteger[] solve() {
-        List<BigInteger> solutions = new ArrayList<>();
-        for (int i = 1; i < 10; i++) solutions.add(BigInteger.valueOf(i));
-        int aLimit = 9;
+    private static int powerfulDigitCounts(int base) {
+        BigInteger bigBase = BigInteger.valueOf(base);
+        int solutionCount = base - 1;
+        int aLimit = base - 1;
 
-        for (int a = 1; a <= aLimit; a++) {
+        for (int a = 2; a <= aLimit; a++) {
             int b = 2;
             BigInteger power = power(a, b);
-            int digits = power.toString().length();
+            int digits = digits(power, bigBase);
             while (digits >= b) {
-                if (digits == b) {
-                    solutions.add(power);
-                }
+                if (digits == b) solutionCount++;
                 b++;
                 power = power(a, b);
-                digits = power.toString().length();
+                digits = digits(power, bigBase);
             }
         }
-        return Converter.listToArr(solutions);
+        return solutionCount;
     }
 
     private static BigInteger power(int a, int b) {
         BigInteger bigA = BigInteger.valueOf(a);
         return bigA.pow(b);
+    }
+
+    private static int digits(BigInteger power, BigInteger base) {
+        int digits = 0;
+        while (power.compareTo(BigInteger.ZERO) > 0) {
+            power = power.divide(base);
+            digits++;
+        }
+        return digits;
     }
 }
