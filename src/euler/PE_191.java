@@ -1,10 +1,7 @@
 package euler;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class PE_191 {
-    private static final Map<Integer, Long> memoization = new HashMap<>();
+    private static long[][] memo;
 
     static void main() {
         System.out.println(PE());
@@ -12,28 +9,24 @@ public class PE_191 {
 
     public static String PE() {
         int days = 30;
-        return String.valueOf(countPrizes(days));
+        return String.valueOf(prizeStringCount(days));
     }
 
-    private static long countPrizes(int days) {
-        long sum = countPrizesHelper(days);
-        for (int i = 0; i < days/2; i++) {
-            sum += 2*countPrizesHelper(i)*countPrizesHelper(days - i - 1);
-        }
-        if (days % 2 == 1) {
-            long s = countPrizesHelper(days/2);
-            sum += s*s;
-        }
-        return sum;
+    private static long prizeStringCount(int days) {
+        memo = new long[days+1][days+1];
+        return prizeStringCount(days, 0);
     }
 
-    private static long countPrizesHelper(int days) {
-        if (days <= 2) return days + days/2 + 1;
-        if (memoization.containsKey(days)) return memoization.get(days);
-        long sum = countPrizesHelper(days-1);
-        sum += countPrizesHelper(days-2);
-        sum += countPrizesHelper(days-3);
-        memoization.put(days, sum);
+    private static long prizeStringCount(int days, int O) {
+        if (days <= 2) {
+            return (long) days * days + (1L << days) * (O+1);
+        }
+        if (memo[days][O] > 0) return memo[days][O];
+        long sum =
+                prizeStringCount(days-1, O+1) +
+                prizeStringCount(days-2, O+1) +
+                prizeStringCount(days-3, O+1);
+        memo[days][O] = sum;
         return sum;
     }
 }
