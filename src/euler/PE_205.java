@@ -41,7 +41,7 @@ public class PE_205 {
         int limit = (score - dice) / sides;
         for (int i = 1; i <= limit; i++) {
             long correction = Combinations.nChooseM(dice, i) * Combinations.nChooseM(score - sides*i - 1, dice - 1);
-            sum += sign* correction;
+            sum += sign * correction;
             sign *= -1;
         }
         return sum;
@@ -52,7 +52,7 @@ public class PE_205 {
 
         long winChance = 0;
         for (int score = dice1; score < scoreChance1.length; score++) {
-            winChance += scoreChance1[score]*scoreChanceOver[score];
+            winChance += scoreChance1[score] * scoreChanceOver[score];
         }
 
         long scoreFactor1 = Diophantine.pow(sides1, dice1);
