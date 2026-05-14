@@ -11,10 +11,7 @@ public class PE_297 {
     private static long[] sumFib;
 
     static void main() {
-        double s = System.currentTimeMillis();
         System.out.println(PE());
-        double e = System.currentTimeMillis();
-        System.out.println((e-s) + " ms");
     }
 
     public static String PE() {
@@ -25,12 +22,16 @@ public class PE_297 {
     }
 
     private static long sum(long n) {
-        if (n <= 3) return n-1;
-
-        int i = Arrays.binarySearch(fib, n);
-        if (i > 0) return sumFib[i];
-        i = -i-2;
-        return sumFib[i] + sum(n - fib[i]) + n - fib[i];
+        long result = 0;
+        while (n > 3) {
+            int i = Arrays.binarySearch(fib, n);
+            if (i > 0) return sumFib[i];
+            i = -i-2;
+            result += sumFib[i] + n - fib[i];
+            n -= fib[i];
+        }
+        result += n-1;
+        return result;
     }
 
     private static void makeFib(long limit) {
