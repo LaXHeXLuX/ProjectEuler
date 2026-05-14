@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class PE_293 {
-    private static final Set<Integer> pseudoFortunate = new HashSet<>();
+    private static Set<Integer> pseudoFortunate;
     private static final int[] primes = Primes.primes(100);
 
     static void main() {
@@ -26,6 +26,7 @@ public class PE_293 {
     }
 
     private static void makeAdmissibleNumbers(long admissibleNumberLimit) {
+        pseudoFortunate = new HashSet<>();
         makeAdmissibleNumbers(admissibleNumberLimit, 1, 0);
     }
 
