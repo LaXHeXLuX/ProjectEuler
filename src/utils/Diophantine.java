@@ -31,8 +31,8 @@ public class Diophantine {
         long h1 = continuedFraction[0];
         long k1 = 1;
         if (n == 0) return new long[] {h1, k1};
-        long h2 = (long) continuedFraction[0] * continuedFraction[1] + 1;
         long k2 = continuedFraction[1];
+        long h2 = h1 * k2 + 1;
         for (int i = 2; i <= n; i++) {
             long tempH = h2;
             long tempK = k2;
@@ -80,9 +80,8 @@ public class Diophantine {
         int period = continuedFraction.length-1;
         BigInteger h1 = BigInteger.valueOf(continuedFraction[0]);
         BigInteger k1 = BigInteger.ONE;
-        if (n == 0) return new BigInteger[] {h1, k1};
         BigInteger k2 = BigInteger.valueOf(continuedFraction[1]);
-        BigInteger h2 = h1.multiply(k2.add(BigInteger.ONE));
+        BigInteger h2 = h1.multiply(k2).add(BigInteger.ONE);
         for (int i = 2; i <= n; i++) {
             BigInteger tempH = h2;
             BigInteger tempK = k2;
