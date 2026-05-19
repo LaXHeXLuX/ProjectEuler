@@ -28,7 +28,9 @@ public class PE_065 {
 
         for (int i = 1; i < n; i++) {
             currentFraction = addToFraction(currentFraction, getNthConvergentTerm(n-i));
-            fractionUpsideDown(currentFraction);
+            BigInteger temp = currentFraction[0];
+            currentFraction[0] = currentFraction[1];
+            currentFraction[1] = temp;
         }
 
         currentFraction = addToFraction(currentFraction, getNthConvergentTerm(0));
@@ -40,12 +42,6 @@ public class PE_065 {
         newFraction[1] = currentFraction[1];
         newFraction[0] = currentFraction[0].add(BigInteger.valueOf(adder).multiply(newFraction[1]));
         return newFraction;
-    }
-
-    private static void fractionUpsideDown(BigInteger[] fraction) {
-        BigInteger temp = fraction[0];
-        fraction[0] = fraction[1];
-        fraction[1] = temp;
     }
 
     private static int getNthConvergentTerm(int n) {
