@@ -33,9 +33,7 @@ public class Diophantine {
         if (n == 0) return new long[] {h1, k1};
         long h2 = (long) continuedFraction[0] * continuedFraction[1] + 1;
         long k2 = continuedFraction[1];
-        int i = 1;
-        while (i < n) {
-            i++;
+        for (int i = 2; i <= n; i++) {
             long tempH = h2;
             long tempK = k2;
             long ai = continuedFraction[(i-1) % (continuedFraction.length-1) + 1];
@@ -79,20 +77,17 @@ public class Diophantine {
         return fundamentals;
     }
     private static BigInteger[] nthConvergentBig(int[] continuedFraction, int n) {
-        BigInteger[] bigCF = new BigInteger[continuedFraction.length];
-        for (int i = 0; i < continuedFraction.length; i++) {
-            bigCF[i] = BigInteger.valueOf(continuedFraction[i]);
-        }
-        BigInteger h1 = bigCF[0];
+        int period = continuedFraction.length-1;
+        BigInteger h1 = BigInteger.valueOf(continuedFraction[0]);
         BigInteger k1 = BigInteger.ONE;
-        BigInteger h2 = bigCF[0].multiply(bigCF[1]).add(BigInteger.ONE);
-        BigInteger k2 = bigCF[1];
-        int i = 1;
-        while (i < n) {
-            i++;
+        if (n == 0) return new BigInteger[] {h1, k1};
+        BigInteger k2 = BigInteger.valueOf(continuedFraction[1]);
+        BigInteger h2 = h1.multiply(k2.add(BigInteger.ONE));
+        for (int i = 2; i <= n; i++) {
             BigInteger tempH = h2;
             BigInteger tempK = k2;
-            BigInteger ai = bigCF[(i-1) % (continuedFraction.length-1) + 1];
+            int index = (i-1) % period + 1;
+            BigInteger ai = BigInteger.valueOf(continuedFraction[index]);
             h2 = ai.multiply(h2).add(h1);
             k2 = ai.multiply(k2).add(k1);
             h1 = tempH;
