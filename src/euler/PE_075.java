@@ -22,7 +22,7 @@ public class PE_075 {
                 if (Diophantine.gcd(m, n) > 1) continue;
                 int P = 2*m*(m+n);
                 int k = 1;
-                while (k*P <= perimeterLimit) {
+                while (k*P >= 0 && k*P <= perimeterLimit) {
                     perimeterSolutionCounts[k*P]++;
                     k++;
                 }
