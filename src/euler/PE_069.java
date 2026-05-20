@@ -15,14 +15,11 @@ public class PE_069 {
     private static long highestNumberScore(long limit) {
         int[] primes = Primes.primes(100);
         long n = primes[0];
-        long lastN = 0;
         int i = 1;
-        while (n < limit) {
-            lastN = n;
+        while (n <= limit) {
             n *= primes[i];
-            if (n < 0) return lastN;
             i++;
         }
-        return lastN;
+        return n/primes[i-1];
     }
 }
