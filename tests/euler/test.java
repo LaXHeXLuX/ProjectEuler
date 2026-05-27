@@ -184,6 +184,7 @@ public class test {
         put(PE_387.class, "696067597313468");
         put(PE_401.class, "281632621");
         put(PE_407.class, "39782849136421");
+        put(PE_997.class, "5765993594880");
     }};
     private static final int DEFAULT_LOG_TIME = 300;
 
