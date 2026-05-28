@@ -1,5 +1,6 @@
 package euler;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -24,30 +25,9 @@ public class PE_303 {
         return sum;
     }
 
-    private static long allNinesSolution(int n) {
-        int count = 0;
-        while (n > 0) {
-            count++;
-            if (n % 10 != 9) return -1;
-            n /= 10;
-        }
-        long result = 0;
-        for (int i = 1; i <= 5; i+=2) {
-            for (int j = 0; j < count; j++) {
-                result = 10*result + i;
-            }
-        }
-        for (int i = 0; i < count-1; i++) {
-            result = 10*result + 7;
-        }
-        return 10*result + 8;
-    }
-
     private static long f(int n) {
         if (onlyDigitsBelow2(n)) return 1;
-        long allNines = allNinesSolution(n); // help here verify
-        if (allNines > 0) return allNines;
-        Set<Integer> seenResidues = new HashSet<>();
+        Set<Long> seenResidues = new HashSet<>();
         long ten = 1;
         List<Long> multipliers = List.of(0L);
 
@@ -58,9 +38,12 @@ public class PE_303 {
             for (int i = iStart; i <= 9; i++) {
                 for (Long multiplier : multipliers) {
                     long m = ten*i + multiplier;
-                    int prod = Math.toIntExact((m * n) / ten);
+                    long prod = (m * n) / ten;
+                    if (prod < 0) {
+                        prod = BigInteger.valueOf(m).multiply(BigInteger.valueOf(n)).divide(BigInteger.valueOf(ten)).longValueExact();
+                    }
                     if (prod % 10 <= 2) {
-                        int residue = prod / 10;
+                        long residue = prod / 10;
                         if (onlyDigitsBelow2(residue)) return m;
                         if (seenResidues.add(residue)) nextMultipliers.add(m);
                     }
