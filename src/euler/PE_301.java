@@ -11,13 +11,15 @@ public class PE_301 {
     }
 
     private static long nimLose(int powerOfTwo) {
+        long count = 1;
         long f1 = 1;
-        long f2 = 2;
-        for (int i = 1; i < powerOfTwo; i++) {
+        long f2 = 1;
+        for (int i = 0; i < powerOfTwo; i++) {
+            count += f1;
             long temp = f1;
             f1 = f2;
             f2 += temp;
         }
-        return f2;
+        return count;
     }
 }
