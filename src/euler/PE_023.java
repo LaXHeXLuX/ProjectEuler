@@ -55,8 +55,7 @@ public class PE_023 {
     private static boolean sumOfTwoAbundantNumbersOdd(int n) {
         for (Integer i : oddAbundantNumbers) {
             if (i > n) break;
-            int j = n - i;
-            if (abundantNumber[j]) return true;
+            if (abundantNumber[n - i]) return true;
         }
         return false;
     }
