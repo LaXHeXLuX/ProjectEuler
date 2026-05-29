@@ -14,7 +14,7 @@ public class PE_070 {
 
     public static String PE() {
         int limit = 10_000_000;
-        return String.valueOf(numberWithPropertyWithSmallestScore2(limit));
+        return String.valueOf(numberWithPropertyWithSmallestScore(limit));
     }
 
     private static double ratio(int limit, int[] initialBest) {
@@ -47,7 +47,7 @@ public class PE_070 {
         return minScore;
     }
 
-    private static int numberWithPropertyWithSmallestScore2(int limit) {
+    private static int numberWithPropertyWithSmallestScore(int limit) {
         int initialLimit = 100_000;
         int[] initialBest = initialBestScore(initialLimit);
         double ratio = ratio(limit, initialBest);
