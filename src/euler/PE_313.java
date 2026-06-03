@@ -22,10 +22,10 @@ public class PE_313 {
         return count;
     }
 
-    private static long gridAmountWithPrimeSquared(long prime) {
-        long s = prime*prime;
-        long mStart = (s + 15) / 8;
-        long mLimit = (s + 9) / 6;
-        return (mLimit - mStart + 1) * 2;
+    private static long gridAmountWithPrimeSquared(long p) {
+        long pp = p*p;
+        long mStart = (pp + 13) / 8;
+        long mLimit = (pp + 10) / 6;
+        return (mLimit - mStart) * 2;
     }
 }
