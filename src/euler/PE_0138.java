@@ -1,0 +1,36 @@
+package euler;
+
+import utils.Diophantine;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PE_0138 {
+    static void main() {
+        System.out.println(PE());
+    }
+
+    public static String PE() {
+        int count = 12;
+        List<Long> triangles = smallestTrianglesWithProperty(count);
+        return String.valueOf(sum(triangles));
+    }
+
+    private static long sum(List<Long> list) {
+        long sum = 0;
+        for (Long i : list) sum += i;
+        return sum;
+    }
+
+    private static List<Long> smallestTrianglesWithProperty(int count) {
+        List<Long> triangles = new ArrayList<>();
+
+        int[] cf = Diophantine.continuedFraction(5);
+        for (int i = 1; i <= count; i++) {
+            long[] nthTerm = Diophantine.nthConvergent(cf, 2*i);
+            triangles.add(nthTerm[1]);
+        }
+
+        return triangles;
+    }
+}

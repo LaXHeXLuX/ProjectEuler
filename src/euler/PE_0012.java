@@ -1,0 +1,28 @@
+package euler;
+
+import utils.Divisors;
+
+public class PE_0012 {
+    static void main() {
+        System.out.println(PE());
+    }
+
+    public static String PE() {
+        int count = 500;
+        return String.valueOf(leastTriangleNumber(count));
+    }
+
+    private static long leastTriangleNumber(int divisorCount) {
+        int n = 1;
+        int divisors = Divisors.divisorCount(n);
+        int nextDivisors = Divisors.divisorCount((n+1)/2);
+        int totalDivisorCount = divisors * nextDivisors;
+        while (totalDivisorCount <= divisorCount) {
+            n++;
+            divisors = nextDivisors;
+            nextDivisors = Divisors.divisorCount((n+1)/(n % 2 + 1));
+            totalDivisorCount = divisors * nextDivisors;
+        }
+        return (long) n * (n+1) / 2;
+    }
+}

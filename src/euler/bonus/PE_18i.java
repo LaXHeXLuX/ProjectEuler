@@ -1,0 +1,14 @@
+package euler.bonus;
+
+public class PE_18i {
+    static void main() {
+        double s = System.currentTimeMillis();
+        System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
+    }
+
+    public static String PE() {
+        return String.valueOf(-1);
+    }
+}

@@ -1,0 +1,31 @@
+package euler;
+
+import utils.Primes;
+
+public class PE_0313 {
+    static void main() {
+        System.out.println(PE());
+    }
+
+    public static String PE() {
+        int primeLimit = 1_000_000;
+        return String.valueOf(numberOfGridsWhereSIsPrimeSquare(primeLimit));
+    }
+
+    private static long numberOfGridsWhereSIsPrimeSquare(int primeLimit) {
+        long count = 0;
+
+        int[] primes = Primes.primes(primeLimit);
+        for (int i = 1; i < primes.length; i++) {
+            count += gridAmountWithPrimeSquared(primes[i]);
+        }
+        return count;
+    }
+
+    private static long gridAmountWithPrimeSquared(long p) {
+        long pp = p*p;
+        long mStart = (pp + 13) / 8;
+        long mLimit = (pp + 10) / 6;
+        return (mLimit - mStart) * 2;
+    }
+}

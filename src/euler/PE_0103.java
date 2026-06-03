@@ -1,0 +1,122 @@
+package euler;
+
+import java.util.*;
+
+public class PE_0103 {
+    static void main() {
+        double s = System.currentTimeMillis();
+        System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
+    }
+
+    public static String PE() {
+        int n = 7;
+        List<Integer> ssss = smallestSpecialSumSet(n);
+        return String.valueOf(setString(ssss));
+    }
+
+    private static long setString(List<Integer> set) {
+        StringBuilder s = new StringBuilder();
+        for (Integer i : set) {
+            s.append(i.toString());
+        }
+        return Long.parseLong(s.toString());
+    }
+
+    private static List<Integer> smallestSpecialSumSet(int size) {
+        if (size == 1) return List.of(1);
+        if (size == 2) return List.of(1, 2);
+        List<Integer> last = smallestSpecialSumSet(size-1);
+        int middle = last.get(last.size() / 2);
+        int upperSum = middle * size;
+        for (Integer i : last) {
+            upperSum += i;
+        }
+        List<Integer> lastWorking = smallestSpecialSumSet(new ArrayList<>(), size, upperSum);
+        int lossStreak = 0;
+        for (int sum = upperSum-1; sum > 0; sum--) {
+            List<Integer> ssss = smallestSpecialSumSet(new ArrayList<>(), size, sum);
+            if (ssss != null) {
+                lossStreak = 0;
+                lastWorking = ssss;
+            }
+            else if (++lossStreak >= size) return lastWorking;
+        }
+        throw new RuntimeException("Failure at " + size + ", upperSum bound didn't work");
+    }
+
+    private static List<Integer> smallestSpecialSumSet(List<Integer> current, int size, int sum) {
+        if (!current.isEmpty() && !isSpecialSumSet(current)) return null;
+        if (size == 1) {
+            if (current.isEmpty() || sum > current.getLast()) {
+                current.add(sum);
+                if (isSpecialSumSet(current)) {
+                    return current;
+                }
+                current.removeLast();
+            }
+            return null;
+        }
+        int start = 1;
+        if (!current.isEmpty()) start += current.getLast();
+
+        int tri = (size-1)*(size) / 2;
+        int end = (sum-tri)/size + 1;
+        if (current.size() >= 2) {
+            int startSum = current.get(0) + current.get(1);
+            if (startSum < end) end = startSum;
+        }
+
+        for (int i = start; i < end; i++) {
+            current.add(i);
+            List<Integer> ssss = smallestSpecialSumSet(current, size-1, sum-i);
+            if (ssss != null) return ssss;
+            current.removeLast();
+        }
+        return null;
+    }
+
+    private static boolean isSpecialSumSet(List<Integer> set) {
+        if (set.size() < 3) return true;
+        if (set.size() == 3) return set.get(0) + set.get(1) > set.get(2);
+        boolean sumOrdered = isSumOrdered(set);
+        if (!sumOrdered) return false;
+        if (set.size() == 4) return set.get(0) + set.get(3) != set.get(1) + set.get(2);
+        return noDisjointSubSetsWithSameSum(set);
+    }
+
+    public static boolean noDisjointSubSetsWithSameSum(List<Integer> set) {
+        int n = set.size();
+        int x = set.getLast();
+        Set<Integer> setSums = new HashSet<>();
+        setSums.add(0);
+        for (int i = 0; i < n - 1; i++) {
+            int el = set.get(i);
+            List<Integer> newSums = new ArrayList<>();
+            for (int s : setSums) newSums.add(s + el);
+            setSums.addAll(newSums);
+        }
+        Set<Integer> diffs = new HashSet<>();
+        for (Integer setSum : setSums) {
+            if (diffs.contains(setSum)) {
+                return false;
+            }
+            diffs.add(setSum + x);
+            if (setSum > x) diffs.add(setSum - x);
+        }
+        return true;
+    }
+
+    public static boolean isSumOrdered(List<Integer> set) {
+        int n = set.size();
+        int forwardSums = set.getFirst();
+        int backwardSums = 0;
+        for (int i = 1; i < n; i++) {
+            forwardSums += set.get(i);
+            backwardSums += set.get(n-i);
+            if (forwardSums <= backwardSums) return false;
+        }
+        return true;
+    }
+}
