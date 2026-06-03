@@ -21,7 +21,7 @@ public class PE_293 {
 
     private static long sum() {
         long sum = 0;
-        for (Integer i : PE_293.pseudoFortunate) sum += i;
+        for (Integer i : pseudoFortunate) sum += i;
         return sum;
     }
 
