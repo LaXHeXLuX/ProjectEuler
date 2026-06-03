@@ -20,11 +20,11 @@ public class PE_204 {
         return hamming(primes.length-1, limit) + 1;
     }
 
-    private static long hamming(int index, long limit) {
-        if (index == 0) return 63 - Long.numberOfLeadingZeros(limit);
-        if (limit <= Integer.MAX_VALUE) return hamming(index, (int) limit);
+    private static long hamming(int i, long L) {
+        if (i == 0) return 63 - Long.numberOfLeadingZeros(L);
+        if (L <= Integer.MAX_VALUE) return hamming(i, (int) L);
 
-        return hamming(index-1, limit) + hamming(index, limit/primes[index]) + 1;
+        return hamming(i-1, L) + hamming(i, L/primes[i]) + 1;
     }
 
     private static long hamming(int i, int L) {
