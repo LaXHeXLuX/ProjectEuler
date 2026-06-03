@@ -30,28 +30,20 @@ public class PE_203 {
     private static long sumOfSquareFreeDistinctPascalNumbers(int rows) {
         long sum = 1;
 
-        long[][] triangle = new long[rows][];
-        triangle[0] = new long[] {1};
-        Set<Long> distinctPascalNumbers = new HashSet<>();
-        distinctPascalNumbers.add(1L);
-        triangle[1] = new long[] {1, 1};
+        Set<Long> seen = new HashSet<>();
+        seen.add(1L);
+        long[] last = {1, 1};
         for (int i = 2; i < rows; i++) {
-            triangle[i] = new long[i/2 + 1];
-            triangle[i][0] = 1;
-            int l0 = triangle[i-1].length-1;
-            int l1 = triangle[i].length-1;
-            for (int j = 1; j < l1; j++) {
-                triangle[i][j] = triangle[i-1][j-1] + triangle[i-1][j];
-                if (distinctPascalNumbers.add(triangle[i][j]) && squareFree(triangle[i][j])) {
-                    sum += triangle[i][j];
+            long[] current = new long[i+1];
+            current[0] = 1;
+            current[i] = 1;
+            for (int j = 1; j < i; j++) {
+                current[j] = last[j-1] + last[j];
+                if (seen.add(current[j]) && squareFree(current[j])) {
+                    sum += current[j];
                 }
             }
-            if (i % 2 == 0) triangle[i][l1] = 2*triangle[i-1][l0];
-            else triangle[i][l1] = triangle[i-1][l0-1] + triangle[i-1][l0];
-            if (!distinctPascalNumbers.contains(triangle[i][l1]) && squareFree(triangle[i][l1])) {
-                distinctPascalNumbers.add(triangle[i][l1]);
-                sum += triangle[i][l1];
-            }
+            last = current;
         }
         return sum;
     }
