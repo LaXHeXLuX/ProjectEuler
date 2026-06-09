@@ -3,29 +3,34 @@ package euler;
 import utils.Fraction;
 import utils.Primes;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class PE_0329 {
     private static boolean[] primes;
     private static boolean[] path;
     private static int size;
-    private static final Map<Integer, Map<Integer, Fraction<Long>>> memo = new HashMap<>();
+    private static Fraction<Long>[][] memo;
 
     static void main() {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static String PE() {
         String pathString = "PPPPNNPPPNPPNPN";
-        path = path(pathString);
-        size = 500;
-        for (int i = 1; i <= size; i++) memo.put(i, new HashMap<>());
-        primes = Primes.sieve(size+1);
+        int s = 500;
+        prep(pathString, s);
         Fraction<Long> probability = pathProbability();
         return probability.num + "/" + probability.den;
     }
 
+    @SuppressWarnings("unchecked")
+    private static void prep(String pathString, int s) {
+        path = path(pathString);
+        size = s;
+        memo = new Fraction[size+1][size+1];
+        primes = Primes.sieve(size+1);
+    }
 
     private static boolean[] path(String pathString) {
         boolean[] path = new boolean[pathString.length()];
@@ -40,7 +45,7 @@ public class PE_0329 {
         for (int i = 1; i <= size; i++) {
             probability = probability.add(pathProbability(i));
         }
-        return probability.multiply(new Fraction<>(1L, (long) size)).simplify();
+        return probability.divide((long) size).simplify();
     }
 
     private static Fraction<Long> pathProbability(int start) {
@@ -53,7 +58,7 @@ public class PE_0329 {
         if (primes[start] == path[i]) probability = new Fraction<>(2L, 3L);
         else probability = new Fraction<>(1L, 3L);
         if (i == path.length-1) return probability;
-        if (memo.get(start).containsKey(i)) return memo.get(start).get(i);
+        if (memo[start][i] != null) return memo[start][i];
 
         if (start == 1) probability = probability.multiply(pathProbability(2, i+1));
         else if (start == size) probability = probability.multiply(pathProbability(size-1, i+1));
@@ -63,7 +68,7 @@ public class PE_0329 {
             probability = probability.multiply(new Fraction<>(1L, 2L)).multiply(p1.add(p2));
         }
         probability = probability.simplify();
-        memo.get(start).put(i, probability);
+        memo[start][i] = probability;
         return probability;
     }
 }
