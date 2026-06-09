@@ -169,7 +169,7 @@ public class test {
         put(PE_0313.class, "2057774861813004");
         put(PE_0315.class, "13625242");
         put(PE_0321.class, "2470433131948040");
-        put(PE_0323.class, "63551758451");
+        put(PE_0323.class, "6.3551758451");
         put(PE_0329.class, "199740353/29386561536000");
         put(PE_0336.class, "CAGBIHEFJDK");
         put(PE_0340.class, "291504964");
