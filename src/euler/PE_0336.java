@@ -19,8 +19,35 @@ public class PE_0336 {
 
     private static String nthSorted(int n, int size) {
         maximixes(size);
-        maximixes.sort(Arrays::compare);
-        return String.valueOf(maximixes.get(n));
+
+        int len = maximixes.getFirst().length;
+        char[][][] ordered = new char[len][maximixes.size()][];
+        int[] indexes = new int[len];
+        for (char[] maximix : maximixes) {
+            int first = maximix[0] - 'A';
+            ordered[first][indexes[first]] = maximix;
+            indexes[first]++;
+        }
+
+        for (int i = 0; i < indexes.length; i++) {
+            char[][] orderedCut = new char[indexes[i]][];
+            System.arraycopy(ordered[i], 0, orderedCut, 0, orderedCut.length);
+            ordered[i] = orderedCut;
+        }
+
+        int sum = 0;
+        int i;
+        for (i = 0; i < ordered.length; i++) {
+            sum += ordered[i].length;
+            if (sum >= n) {
+                sum -= ordered[i].length;
+                break;
+            }
+        }
+
+        char[][] focused = ordered[i];
+        Arrays.sort(focused, Arrays::compare);
+        return String.valueOf(focused[n - sum]);
     }
 
     private static void maximixes(int n) {
