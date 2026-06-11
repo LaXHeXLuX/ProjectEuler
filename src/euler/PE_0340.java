@@ -23,29 +23,21 @@ public class PE_0340 {
     }
 
     private static BigInteger S(BigInteger a, BigInteger b, BigInteger c) {
-        BigInteger sum = BigInteger.ZERO;
+        BigInteger big3 = BigInteger.valueOf(3);
+        BigInteger big4 = BigInteger.valueOf(4);
+
+        BigInteger part1 = sumTo(b);
+        BigInteger part2 = big4.multiply(b.add(BigInteger.ONE)).multiply(a.subtract(c));
+        BigInteger part3_1 = big4.multiply(a).subtract(big3.multiply(c));
+
         BigInteger q = b.divide(a);
-        BigInteger r = b.remainder(a);
-        sum = sum.add(r.add(BigInteger.ONE).multiply(F(a, b, c, BigInteger.ZERO)).add(sumTo(r)));
-        BigInteger F0 = F(a, b, c, r.add(BigInteger.ONE));
-        sum = sum.add(q.multiply(sumTo(a.subtract(BigInteger.ONE))));
-        sum = sum.add(q.multiply(a).multiply(F0));
-        sum = sum.subtract(BigInteger.valueOf(3).multiply(a).multiply(a.subtract(c)).multiply(sumTo(q.subtract(BigInteger.ONE))));
-        BigInteger x = b.subtract(a.multiply(q)).subtract(r);
-        sum = sum.add(x.multiply(F(a, b, c, a.multiply(q).add(r).add(BigInteger.ONE))));
-        sum = sum.add(sumTo(x));
-        return sum;
+        BigInteger r = b.subtract(a.multiply(q));
+        BigInteger part3_2 = a.multiply(sumTo(q.subtract(BigInteger.ONE))).add(r.add(BigInteger.ONE).multiply(q));
+
+        return part1.add(part2).add(part3_1.multiply(part3_2));
     }
 
     private static BigInteger sumTo(BigInteger n) {
         return n.multiply(n.add(BigInteger.ONE)).divide(BigInteger.TWO);
-    }
-
-    private static BigInteger F(BigInteger a, BigInteger b, BigInteger c, BigInteger n) {
-        if (n.compareTo(b) > 0) return n.subtract(c);
-        BigInteger q = b.subtract(n).divide(a);
-        BigInteger big4 = BigInteger.valueOf(4);
-        BigInteger big3 = BigInteger.valueOf(3);
-        return n.add(big4.multiply(q).multiply(a)).subtract(big3.multiply(q).multiply(c)).add(big4.multiply(a.subtract(c)));
     }
 }
