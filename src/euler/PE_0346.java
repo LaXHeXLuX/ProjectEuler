@@ -1,5 +1,7 @@
 package euler;
 
+import utils.Diophantine;
+
 import java.util.*;
 
 public class PE_0346 {
@@ -8,23 +10,35 @@ public class PE_0346 {
     }
 
     public static String PE() {
-        long limit = 1_000_000_000_000L;
-        return String.valueOf(multipleBaseRepunits(limit));
+        long limit = Diophantine.pow10[12];
+        return String.valueOf(multipleBaseRepunitSum(limit));
     }
 
-    private static long multipleBaseRepunits(long limit) {
-        Set<Long> repunits = new HashSet<>();
+    private static long multipleBaseRepunitSum(long limit) {
         long totalSum = 1;
-        int baseLimit = (int) Math.sqrt(limit);
-        for (int i = 2; i <= baseLimit; i++) {
-            long pow = (long) i * i;
-            long sum = pow + i+1;
+
+        long l = ((long) Math.sqrt(4*limit - 3) - 1)/2;
+        totalSum += l*(l+1)*(2*l+1)/6 + l*(l+1)/2 + l - 3;
+
+        Set<Long> repunits = new HashSet<>();
+        
+        l = (int) Math.cbrt(limit);
+        for (long b = 2; b <= l; b++) {
+            long sum = b*b*b + b*b + b + 1;
             while (sum < limit) {
-                if (repunits.add(sum)) totalSum += sum;
-                pow *= i;
-                sum += pow;
+                if (!R3(sum) && repunits.add(sum)) {
+                    totalSum += sum;
+                }
+                sum = sum * b + 1;
             }
         }
+        
         return totalSum;
+    }
+
+    private static boolean R3(long n) {
+        long root = Diophantine.root(4*n - 3);
+        if (root < 0) return false;
+        return root % 2 == 1;
     }
 }
