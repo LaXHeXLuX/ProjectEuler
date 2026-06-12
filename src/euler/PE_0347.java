@@ -18,17 +18,14 @@ public class PE_0347 {
     private static long S(int N) {
         int[] primes = Primes.primes(N/2);
         long sum = 0;
-        boolean[] found = new boolean[N+1];
-        for (int i = 0; i < primes.length; i++) {
-            if ((long) primes[i] * primes[i] >= N) break;
+        int iLimit = Arrays.binarySearch(primes, (int) Math.sqrt(N)) + 1;
+        if (iLimit < 0) iLimit = -iLimit;
+        for (int i = 0; i < iLimit; i++) {
+
             int jLimit = Arrays.binarySearch(primes, N / primes[i]) + 1;
             if (jLimit < 0) jLimit = -jLimit;
             for (int j = i+1; j < jLimit; j++) {
-
-                int result = M(primes[i], primes[j], N);
-                if (found[result]) continue;
-                found[result] = true;
-                sum += result;
+                sum += M(primes[i], primes[j], N);
             }
         }
         return sum;
