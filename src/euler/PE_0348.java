@@ -31,11 +31,11 @@ public class PE_0348 {
         int iLimit = Integer.MAX_VALUE;
         while (first.size() < n && (first.size() + second.size() < n || i < iLimit)) {
             long palindrome = palindromeFrom(i, false);
-            if (palindrome % 4 != 3 && waysToExpress(palindrome) == ways) {
+            if (waysToExpress(palindrome) == ways) {
                 first.add(palindrome);
             }
             palindrome = palindromeFrom(i, true);
-            if (palindrome % 4 != 3 && waysToExpress(palindrome) == ways) {
+            if (waysToExpress(palindrome) == ways) {
                 second.add(palindrome);
                 iLimit = i*10;
             }
@@ -48,9 +48,8 @@ public class PE_0348 {
 
     private static int waysToExpress(long n) {
         int ways = 0;
-        int cubeStep = Math.toIntExact(2 - (n % 2));
         long cubeLimit = (long) Math.cbrt(n);
-        for (long cube = 2; cube < cubeLimit; cube+=cubeStep) {
+        for (long cube = 2; cube < cubeLimit; cube++) {
             long rem = n - cube*cube*cube;
             long root = Diophantine.root(rem);
             if (root > 0) ways++;
