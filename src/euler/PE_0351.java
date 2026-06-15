@@ -15,7 +15,6 @@ public class PE_0351 {
     }
 
     private static long totientSum(int n) {
-        if (n <= 0) return 0;
         int L = (int) Math.sqrt(n);
         long[] v = new long[L+1];
         long[] bigV = new long[n/L + 1];
