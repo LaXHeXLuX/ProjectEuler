@@ -18,10 +18,6 @@ public class random_test {
     }
 
     private static void test() {
-        int n = 1726;
 
-        int[] cf = Diophantine.continuedFraction(n);
-
-        System.out.println(Arrays.toString(cf));
     }
 }
