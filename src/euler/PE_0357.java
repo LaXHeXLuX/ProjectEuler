@@ -1,5 +1,6 @@
 package euler;
 
+import utils.Diophantine;
 import utils.Primes;
 
 public class PE_0357 {
@@ -27,6 +28,7 @@ public class PE_0357 {
     }
 
     private static boolean primeGenerating(int n) {
+        if (!composites[n >> 2]) return true;
         for (int d = 3; d*d <= n; d++) {
             if (n % d == 0 && composites[(d + n/d) >> 1]) return false;
         }
