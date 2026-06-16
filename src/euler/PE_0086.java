@@ -22,20 +22,18 @@ public class PE_0086 {
         return M;
     }
 
-    private static int solutionCount(int a) {
-        int step = 1;
-        if (a % 2 != 0) step = 2;
+    private static int solutionCount(int c) {
+        long cc = (long) c * c;
         int count = 0;
-        for (int bPlusC = 2; bPlusC < a+1; bPlusC += step) {
-            if (Diophantine.root(a*a + bPlusC*bPlusC) > 0) {
-                count += bPlusC / 2;
+
+        int step = 1;
+        if (c % 2 != 0) step = 2;
+        for (int ab = 2; ab < 2*c; ab+=step) {
+            if (Diophantine.root(cc + (long) ab * ab) > 0) {
+                count += Math.min(ab, c) - (ab+1)/2;
             }
         }
-        for (int bPlusC = a+1; bPlusC <= 2*a; bPlusC += step) {
-            if (Diophantine.root(a*a + bPlusC*bPlusC) > 0) {
-                count += (2*a + 2 - bPlusC) / 2;
-            }
-        }
+
         return count;
     }
 }
