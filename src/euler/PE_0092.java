@@ -3,30 +3,33 @@ package euler;
 import java.util.Arrays;
 
 public class PE_0092 {
-    private static boolean[] chainEnds1;
+    private static boolean[] chainEnds;
     private static int[][] cache;
 
     static void main() {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static String PE() {
         int digits = 7;
-        return String.valueOf(countOf89Enders2(digits));
+        return String.valueOf(countOf89Enders(digits));
     }
 
     private static void makeChains(int lowerLimit) {
-        chainEnds1 = new boolean[lowerLimit+1];
+        chainEnds = new boolean[lowerLimit+1];
         for (int i = 1; i <= lowerLimit; i++) {
             int temp = i;
             while (temp != 1 && temp != 89) {
                 temp = digitSquareSum(temp);
             }
-            chainEnds1[i] = temp == 1;
+            chainEnds[i] = temp == 1;
         }
     }
 
-    private static int countOf89Enders2(int digits) {
+    private static int countOf89Enders(int digits) {
         int lowerLimit = digits*9*9;
         makeChains(lowerLimit);
         cache = new int[lowerLimit+1][digits+1];
@@ -35,7 +38,7 @@ public class PE_0092 {
         }
         int count = 0;
         for (int n = 1; n <= lowerLimit; n++) {
-            if (chainEnds1[n]) continue;
+            if (chainEnds[n]) continue;
             count += f(n, digits);
         }
         return count;
