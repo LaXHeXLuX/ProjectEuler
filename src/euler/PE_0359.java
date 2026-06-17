@@ -24,7 +24,7 @@ public class PE_0359 {
 
     private static long sumOfAll(long f, long r, int i, Primes.PF[] pfs, long mod) {
         if (i == pfs.length) {
-            return P(f, r, mod);
+            return P2(f, r, mod);
         }
 
         long sum = 0;
@@ -37,29 +37,28 @@ public class PE_0359 {
         return sum % mod;
     }
 
-    private static long P(long f, long r, long mod) {
-        BigInteger bR = BigInteger.valueOf(r);
-        BigInteger bMod = BigInteger.valueOf(mod);
-        if (f == 1) {
-            BigInteger result = bR.multiply(bR.add(BigInteger.ONE)).divide(BigInteger.TWO);
-            return result.mod(bMod).longValueExact();
-        }
-        BigInteger bF = BigInteger.valueOf(f);
-        if (r == 2) {
-            BigInteger result = bF.pow(2).divide(BigInteger.TWO).add(BigInteger.ONE);
-            if (f % 2 == 0) result = result.add(BigInteger.TWO.multiply(bF));
-            return result.mod(bMod).longValueExact();
-        }
-        BigInteger s1 = BigInteger.ONE;
-        BigInteger s2 = BigInteger.TWO.multiply(bF);
-        if ((f & 1) == 0) {
-            s1 = BigInteger.TWO.multiply(bF).add(BigInteger.ONE);
-            s2 = BigInteger.TWO;
-        }
-        BigInteger p = bF.pow(2).divide(BigInteger.TWO);
-        p = p.add(bR.subtract(BigInteger.valueOf(3)).multiply(bR.subtract(BigInteger.ONE)).divide(BigInteger.TWO));
-        p = p.add(bR.divide(BigInteger.TWO).multiply(s1.add(s2)));
-        if ((r & 1) == 0) p = p.subtract(s2).add(BigInteger.ONE);
-        return p.mod(bMod).longValueExact();
+    private static long P2(long f, long r, long mod) {
+        BigInteger R = BigInteger.valueOf(r);
+        BigInteger M = BigInteger.valueOf(mod);
+        if (f == 1) return T(R).mod(M).longValueExact();
+
+        long fOdd = f/2*2 + 1;
+        BigInteger F = BigInteger.valueOf(fOdd);
+
+        BigInteger P = F.pow(2).divide(BigInteger.TWO);
+        P = P.add(R.divide(BigInteger.TWO).pow(2));
+        BigInteger halfR = R.subtract(BigInteger.ONE).divide(BigInteger.TWO);
+        P = P.add(BigInteger.TWO.multiply(F.subtract(BigInteger.ONE).multiply(halfR).add(T(halfR))));
+        P = P.mod(M);
+        long p = P.longValueExact();
+
+        if (f % 2 == 1) return p;
+        f = f % mod;
+        if (r % 2 == 0) return (p + f) % mod;
+        return (p - f + mod) % mod;
+    }
+
+    private static BigInteger T(BigInteger n) {
+        return n.multiply(n.add(BigInteger.ONE)).divide(BigInteger.TWO);
     }
 }
