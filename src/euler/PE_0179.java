@@ -26,8 +26,7 @@ public class PE_0179 {
             int pow = 1;
             while (p < limit) {
                 for (int n = Math.toIntExact(p); n < limit; n += (int) p) {
-                    divisorCounts[n] /= pow;
-                    divisorCounts[n] *= pow+1;
+                    divisorCounts[n] = divisorCounts[n] / pow * (pow+1);
                 }
                 p *= i;
                 pow++;
