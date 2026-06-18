@@ -3,8 +3,7 @@ package euler;
 import java.util.Arrays;
 
 public class PE_0092 {
-    private static boolean[] chainEnds;
-    private static int[][] cache;
+    private static long[][] cache;
 
     static void main() {
         double s = System.currentTimeMillis();
@@ -18,37 +17,28 @@ public class PE_0092 {
         return String.valueOf(countOf89Enders(digits));
     }
 
-    private static void makeChains(int lowerLimit) {
-        chainEnds = new boolean[lowerLimit+1];
-        for (int i = 1; i <= lowerLimit; i++) {
-            int temp = i;
-            while (temp != 1 && temp != 89) {
-                temp = digitSquareSum(temp);
-            }
-            chainEnds[i] = temp == 1;
-        }
-    }
-
-    private static int countOf89Enders(int digits) {
+    private static long countOf89Enders(int digits) {
         int lowerLimit = digits*9*9;
-        makeChains(lowerLimit);
-        cache = new int[lowerLimit+1][digits+1];
-        for (int[] c : cache) {
+        cache = new long[lowerLimit+1][digits+1];
+        for (long[] c : cache) {
             Arrays.fill(c, -1);
         }
-        int count = 0;
+        long count = 0;
         for (int n = 1; n <= lowerLimit; n++) {
-            if (chainEnds[n]) continue;
+            int temp = n;
+            while (temp != 1 && temp != 89) temp = digitSquareSum(temp);
+            if (temp == 1) continue;
+
             count += f(n, digits);
         }
         return count;
     }
 
-    private static int f(int n, int k) {
+    private static long f(int n, int k) {
         if (n == 0 && k == 0) return 1;
         if (n < 0 || k == 0) return 0;
         if (cache[n][k] >= 0) return cache[n][k];
-        int count = 0;
+        long count = 0;
         for (int i = 0; i < 10; i++) {
             count += f(n - i*i, k-1);
         }
