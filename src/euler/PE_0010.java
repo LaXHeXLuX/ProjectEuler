@@ -7,10 +7,7 @@ public class PE_0010 {
     private static long[][] memo;
 
     static void main() {
-        double s = System.currentTimeMillis();
         System.out.println(PE());
-        double e = System.currentTimeMillis();
-        System.out.println((e-s) + " ms");
     }
 
     public static String PE() {
