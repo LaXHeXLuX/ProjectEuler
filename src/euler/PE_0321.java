@@ -27,7 +27,6 @@ public class PE_0321 {
 
     private static List<BigInteger> atLeastNFirstTerms(int n) {
         int D = 2;
-        BigInteger bigD = BigInteger.valueOf(D);
         long[] baseLong = Diophantine.pell(D);
         BigInteger[] base = {BigInteger.valueOf(baseLong[0]), BigInteger.valueOf(baseLong[1])};
         List<long[]> fundamentalsLong = Diophantine.pell(D, -7);
@@ -42,10 +41,7 @@ public class PE_0321 {
                 if (f[1].compareTo(BigInteger.TWO) > 0) {
                     solutions.add(f[1].divide(BigInteger.TWO).subtract(BigInteger.ONE));
                 }
-                f = new BigInteger[] {
-                        base[0].multiply(f[0]).add(bigD.multiply(base[1]).multiply(f[1])),
-                        base[0].multiply(f[1]).add(base[1].multiply(f[0]))
-                };
+                f = Diophantine.nextPell(base, f, D);
                 fundamentals.set(j, f);
             }
         }

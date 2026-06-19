@@ -42,7 +42,7 @@ public class PE_0140 {
 
                 BigInteger[] bigF = {BigInteger.valueOf(f[0]), BigInteger.valueOf(f[1])};
                 BigInteger[] bigCurrent = {BigInteger.valueOf(current[0]), BigInteger.valueOf(current[1])};
-                bigCurrent = pellNext(bigF, bigCurrent, BigInteger.valueOf(D));
+                bigCurrent = Diophantine.nextPell(bigF, bigCurrent, D);
                 try {
                     current = new long[] {bigCurrent[0].longValueExact(), bigCurrent[1].longValueExact()};
                 }
@@ -53,12 +53,5 @@ public class PE_0140 {
         }
         nuggets.sort(Long::compareTo);
         return nuggets;
-    }
-
-    private static BigInteger[] pellNext(BigInteger[] fundamental, BigInteger[] current, BigInteger D) {
-        return new BigInteger[] {
-                fundamental[0].multiply(current[0]).add(D.multiply(fundamental[1]).multiply(current[1])),
-                fundamental[1].multiply(current[0]).add(fundamental[0].multiply(current[1]))
-        };
     }
 }
