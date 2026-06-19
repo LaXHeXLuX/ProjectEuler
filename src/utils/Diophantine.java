@@ -57,6 +57,9 @@ public class Diophantine {
         return new long[] {base[0]*current[0] + D*base[1]*current[1], base[0]*current[1] + base[1]*current[0]};
     }
     public static List<long[]> pell(int D, int C) {
+        return pell(D, C, false);
+    }
+    public static List<long[]> pell(int D, int C, boolean onlyPositive) {
         long[] fundamental = pell(D);
         int adder = 1;
         int absC = C;
@@ -73,7 +76,7 @@ public class Diophantine {
             long x = Diophantine.root(xx);
             if (x > 0) {
                 fundamentals.add(new long[] {x, y});
-                fundamentals.add(new long[] {-x, y});
+                if (!onlyPositive) fundamentals.add(new long[] {-x, y});
             }
             y++;
         }
