@@ -1,29 +1,31 @@
 package euler;
 
+import utils.Diophantine;
+
+import java.util.List;
+
 public class PE_0100 {
     static void main() {
         System.out.println(PE());
     }
 
     public static String PE() {
-        long lowerLimit = 1_000_000_000_000L;
-        long[] result = firstArrangementAfter(lowerLimit);
-        return String.valueOf(result[1]);
+        long L = 1_000_000_000_000L;
+        return String.valueOf(blueDiscCount(L));
     }
 
-    private static long[] firstArrangementAfter(long lowerLimit) {
-        long aLimit = lowerLimit * 2 + 1;
-        long[] ab = {1, 1};
-        while (ab[0] <= aLimit) {
-            ab = nextAB(ab);
+    private static long blueDiscCount(long L) {
+        int D = 2;
+        long[] base = Diophantine.pell(D);
+        List<long[]> bases = Diophantine.pell(D, 2, true);
+        if (bases.size() > 1) throw new RuntimeException("I don't want to deal with multiple bases");
+        long[] next = bases.getFirst();
+
+        long mLimit = 2*L - 1;
+        while (next[1] <= mLimit) {
+            next = Diophantine.nextPell(base, next, D);
         }
 
-        long x = (1 + ab[0]) / 2;
-        long y = (1 + ab[1]) / 2;
-        return new long[] {x, y};
-    }
-
-    private static long[] nextAB(long[] ab) {
-        return new long[] {3*ab[0] + 4*ab[1], 2*ab[0] + 3*ab[1]};
+        return (next[0] + 2) / 4;
     }
 }
