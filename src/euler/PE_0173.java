@@ -14,8 +14,9 @@ public class PE_0173 {
         long count = 0;
 
         long nLimit = (long) (Math.sqrt(L - 4) / 2);
+        L /= 4;
         for (long n = 1; n <= nLimit; n++) {
-            count += L/(4*n);
+            count += L/n;
         }
 
         return count - nLimit*(nLimit+1)/2;
