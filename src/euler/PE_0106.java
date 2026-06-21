@@ -2,8 +2,6 @@ package euler;
 
 import utils.Combinations;
 
-import java.math.BigInteger;
-
 public class PE_0106 {
     static void main() {
         System.out.println(PE());
@@ -16,10 +14,12 @@ public class PE_0106 {
 
     private static long countOfSubsetPairs(int n) {
         long sum = 0;
-        for (int i = 2; i <= n/2; i++) {
-            BigInteger allPairs = Combinations.nChooseMBigInteger(n, i).multiply(Combinations.nChooseMBigInteger(n-i, i)).divide(BigInteger.TWO);
-            BigInteger sub = Combinations.nChooseMBigInteger(n, 2*i).multiply(Combinations.catalanBig(i));
-            sum += allPairs.subtract(sub).longValue();
+        for (int i = 1; i <= n/2; i++) {
+            long binom1 = Combinations.nChooseM(n, 2*i);
+            long binom2 = Combinations.nChooseM(2*i, i);
+            long num = binom1 * binom2 * (i-1);
+            long den = 2L*(i+1);
+            sum += num / den;
         }
         return sum;
     }
