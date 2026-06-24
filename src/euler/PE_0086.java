@@ -30,7 +30,7 @@ public class PE_0086 {
         if (c % 2 != 0) step = 2;
         for (int ab = 2; ab < 2*c; ab+=step) {
             if (Diophantine.root(cc + (long) ab * ab) > 0) {
-                count += Math.min(ab, c) - (ab+1)/2;
+                count += Math.min(ab-1, c) -  (ab-1)/2;
             }
         }
 
