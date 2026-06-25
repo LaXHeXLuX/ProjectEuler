@@ -1,6 +1,5 @@
 package euler;
 
-import utils.Diophantine;
 import utils.Primes;
 
 public class PE_0381 {
