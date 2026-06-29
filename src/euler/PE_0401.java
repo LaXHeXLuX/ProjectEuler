@@ -29,7 +29,7 @@ public class PE_0401 {
     public static long SIGMA2(long n, long mod) {
         long sum = n % mod;
         long r;
-        long prevSum = 0;
+        long prevSum = 1;
         for (long l = 2; l <= n; l = r + 1) {
             long value = n / l;
             r = n / value;
