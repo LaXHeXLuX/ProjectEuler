@@ -1,7 +1,7 @@
 package euler;
 
 public class PE_0078 {
-    private static long[] eulersFunction;
+    private static long[] p;
 
     static void main() {
         System.out.println(PE());
@@ -9,41 +9,48 @@ public class PE_0078 {
 
     public static String PE() {
         int n = 1_000_000;
-        eulersFunction = new long[n+1];
+        p = new long[n+1];
         return String.valueOf(firstToDivideN(n));
     }
 
     private static int firstToDivideN(int n) {
-        int answer = 1;
-        long ways = eulersFunction(answer, n);
+        int pSize = 100;
+        while (true) {
+            p = new long[pSize];
 
-        while (ways != 0) {
-            answer++;
-            ways = eulersFunction(answer, n);
+            p[0] = 1;
+            int answer = 1;
+
+            while (answer < p.length) {
+                p[answer] = p(answer, n);
+                if (p[answer] == 0) return answer;
+                answer++;
+            }
+
+            pSize *= 10;
         }
-
-        return answer;
     }
 
-    private static long eulersFunction(int n, int mod) {
-        if (n < 0) return 0;
-        if (n == 0) return 1;
+    private static int g(int k) {
+        return k*(3*k-1)/2;
+    }
 
-        if (eulersFunction[n] > 0) return eulersFunction[n];
-
-        int step = 1;
+    private static long p(int n, int mod) {
         long sum = 0;
-        while (step <= n) {
-            int nthStep = (step * (3*step-1)) >> 1;
-            if (nthStep > n) break;
-            int coefficient = ((step & 1) << 1) - 1;
-            sum += coefficient * eulersFunction(n-nthStep, mod);
-            sum += coefficient * eulersFunction(n-nthStep-step, mod);
-            sum = ((sum % mod) + mod) % mod;
-            step++;
-        }
 
-        eulersFunction[n] = sum;
+        int sign = 1;
+        int k = 1;
+        int gk = g(k);
+        while (n >= gk) {
+            sum = (sum + sign * p[n - gk]) % mod;
+
+            k = -k;
+            if (k > 0) {
+                k++;
+                sign = -sign;
+            }
+            gk = g(k);
+        }
 
         return sum;
     }

@@ -37,17 +37,16 @@ public class PE_0088 {
     private static void fillBestScores(int length, int product, int sum) {
         int limit = (bestScore.length-1)*2 / product;
         int start = 2;
-        if (length > 0) start = factors[length -1];
+        if (length > 0) start = factors[length - 1];
         for (int i = start; i <= limit; i++) {
-            factors[length++] = i;
+            factors[length] = i;
             int newProduct = product * i;
             int newSum = sum + i;
-            int size = newProduct - newSum + length;
+            int size = newProduct - newSum + length+1;
             if (size < bestScore.length && bestScore[size] > newProduct) {
                 bestScore[size] = newProduct;
             }
-            fillBestScores(length, newProduct, newSum);
-            length--;
+            fillBestScores(length+1, newProduct, newSum);
         }
     }
 }

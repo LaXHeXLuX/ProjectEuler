@@ -8,7 +8,10 @@ import java.util.List;
 
 public class PE_0140 {
     static void main() {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static String PE() {
@@ -31,9 +34,9 @@ public class PE_0140 {
 
         List<Long> nuggets = new ArrayList<>();
         long[] f = Diophantine.pell(D);
-        List<long[]> fundamentals = Diophantine.pell(D, 4*(step*step - step - 1));
-        for (long[] fundamental : fundamentals) {
-            long[] current = {fundamental[0], fundamental[1]};
+        List<long[]> bases = Diophantine.pell(D, 4*(step*step - step - 1));
+        for (long[] base : bases) {
+            long[] current = {base[0], base[1]};
             while (true) {
                 long x = current[0];
                 if (x < 0) x = -x;
@@ -42,7 +45,7 @@ public class PE_0140 {
 
                 BigInteger[] bigF = {BigInteger.valueOf(f[0]), BigInteger.valueOf(f[1])};
                 BigInteger[] bigCurrent = {BigInteger.valueOf(current[0]), BigInteger.valueOf(current[1])};
-                bigCurrent = pellNext(bigF, bigCurrent, BigInteger.valueOf(D));
+                bigCurrent = Diophantine.nextPell(bigF, bigCurrent, D);
                 try {
                     current = new long[] {bigCurrent[0].longValueExact(), bigCurrent[1].longValueExact()};
                 }
@@ -53,12 +56,5 @@ public class PE_0140 {
         }
         nuggets.sort(Long::compareTo);
         return nuggets;
-    }
-
-    private static BigInteger[] pellNext(BigInteger[] fundamental, BigInteger[] current, BigInteger D) {
-        return new BigInteger[] {
-                fundamental[0].multiply(current[0]).add(D.multiply(fundamental[1]).multiply(current[1])),
-                fundamental[1].multiply(current[0]).add(fundamental[0].multiply(current[1]))
-        };
     }
 }

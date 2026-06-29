@@ -53,7 +53,13 @@ public class Diophantine {
                 (l-1) * (1 + (l-1)%2) - 1
         );
     }
+    public static long[] nextPell(long[] base, long[] current, int D) {
+        return new long[] {base[0]*current[0] + D*base[1]*current[1], base[0]*current[1] + base[1]*current[0]};
+    }
     public static List<long[]> pell(int D, int C) {
+        return pell(D, C, false);
+    }
+    public static List<long[]> pell(int D, int C, boolean onlyPositive) {
         long[] fundamental = pell(D);
         int adder = 1;
         int absC = C;
@@ -70,7 +76,7 @@ public class Diophantine {
             long x = Diophantine.root(xx);
             if (x > 0) {
                 fundamentals.add(new long[] {x, y});
-                fundamentals.add(new long[] {-x, y});
+                if (!onlyPositive) fundamentals.add(new long[] {-x, y});
             }
             y++;
         }
@@ -102,6 +108,12 @@ public class Diophantine {
                 continuedFraction,
                 (l-1) * (2 - l%2) - 1
         );
+    }
+    public static BigInteger[] nextPell(BigInteger[] base, BigInteger[] current, int D) {
+        return new BigInteger[] {
+                base[0].multiply(current[0]).add(BigInteger.valueOf(D).multiply(base[1]).multiply(current[1])),
+                base[0].multiply(current[1]).add(base[1].multiply(current[0]))
+        };
     }
     public static int root(int n) {
         if (n < 0) throw new IllegalArgumentException("Can't find root of negative n");

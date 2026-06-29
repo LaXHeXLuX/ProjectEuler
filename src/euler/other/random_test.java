@@ -1,9 +1,5 @@
 package euler.other;
 
-import utils.Diophantine;
-
-import java.util.Arrays;
-
 public class random_test {
     void main() {
         double s = System.currentTimeMillis();

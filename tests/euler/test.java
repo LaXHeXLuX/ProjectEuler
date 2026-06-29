@@ -186,7 +186,7 @@ public class test {
         put(PE_0407.class, "39782849136421");
         put(PE_0997.class, "5765993594880");
     }};
-    private static final int DEFAULT_LOG_TIME = 300;
+    private static final int DEFAULT_LOG_TIME = 100;
 
     static void main() {
         tests();
