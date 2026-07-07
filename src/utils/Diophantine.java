@@ -253,22 +253,6 @@ public class Diophantine {
 
         return new int[] {s1, t1};
     }
-    public static long[] extendedEuclidean(long a, long b) {
-        long r1 = a; long r2 = b;
-        long s1 = 1; long s2 = 0;
-        long t1 = 0; long t2 = 1;
-
-        while (r2 != 0) {
-            long q = r1 / r2;
-            long r3 = r1 - q*r2;
-            long s3 = s1 - q*s2;
-            long t3 = t1 - q*t2;
-            r1 = r2; s1 = s2; t1 = t2;
-            r2 = r3; s2 = s3; t2 = t3;
-        }
-
-        return new long[] {s1, t1};
-    }
     public static final long[] pow10 = {
             1, 10, 100, 1_000, 10_000, 100_000, 1_000_000, 10_000_000, 100_000_000, 1_000_000_000,
             10_000_000_000L, 100_000_000_000L, 1_000_000_000_000L,
@@ -349,15 +333,29 @@ public class Diophantine {
         return result;
     }
     public static int modDivide(int a, int b, int mod) {
-        int d = Math.toIntExact(Diophantine.gcd(b, mod));
-        if (a % d != 0) return -1;
+        int d = Math.toIntExact(Diophantine.gcd(a, mod));
+        if (b % d != 0) return -1;
         a /= d;
         b /= d;
         mod /= d;
-        int[] sol = Diophantine.extendedEuclidean(b, mod);
-        int result = (sol[0] * a) % mod;
-        if (result < 0) result += mod;
-        return result;
+        return modInverse(a, mod) * b;
+    }
+    public static int modInverse(int a, int mod) {
+        int m0 = mod;
+        int x = 1;
+        int y = 0;
+
+        while (a > 1) {
+            int q = a / mod;
+            int t = mod;
+            mod = a % mod;
+            a = t;
+            t = y;
+            y = x - q*y;
+            x = t;
+        }
+
+        return (x < 0) ? x + m0 : x;
     }
     public static long ord(long a, long n) {
         if (gcd(a, n) != 1) throw new IllegalArgumentException("a and n must be coprime");
