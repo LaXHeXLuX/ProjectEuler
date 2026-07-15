@@ -53,7 +53,7 @@ For each method I have specified the name and description or use case:
 - **digitSum** (int, long, BigInteger) - $\text{digitSum}(n)$ gives the digit sum of $n$.
 - **isPalindromeInBase** (int, long) - $\text{isPalindromeInBase}(n, b)$ returns true iff the number $n$ converted to base $b$ is palindromic.
 - **isPalindrome** (int, long) - returns $\text{isPalindromeInBase}(n, 10)$.
-- **gcd** (int, long) - $\text{gcd}(a, b)$ gives the greatest common divisor of $a$ and $b$.
+- **gcd** (int, long) - $\gcd(a, b)$ gives the greatest common divisor of $a$ and $b$.
 - **extendedEuclidean** (int, long) - $\text{extendedEuclidean}(a, b)$ gives the [Bézout coefficients](https://en.wikipedia.org/wiki/B%C3%A9zout%27s_identity) $(x, y)$ such that $ax + by = gcd(a, b)$. For coprime $(a, b)$ this means $ax + by = 1$, or $ax \equiv 1 \pmod{b}$.
 - **pow** - $\text{pow}(b, e)$ gives the result $b^e$.
 - **powMod** - $\text{powMod}(b, e, m)$ gives the result $x$ such that $b^e \equiv x \pmod{m}$.
