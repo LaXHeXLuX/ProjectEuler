@@ -58,7 +58,7 @@ For each method I have specified the name and description or use case:
 - **pow** - $\text{pow}(b, e)$ gives the result $b^e$.
 - **powMod** - $\text{powMod}(b, e, m)$ gives the result $x$ such that $b^e \equiv x \pmod{m}$.
 - **tetrateMod** - $\text{tetrateMod}(b, e, m)$ gives the result $x$ such that $b↑↑e \equiv x \pmod{m}$. Requirement: $gcd(b, m) = 1$
-- **modDivide** - $\text{modDivide}(a, b, m)$ gives the minimal positive integer $x$ such that $ax \equiv b \pmod{m}$.
+- **modDivide** - $\text{modDivide}(a, b, m)$ gives the minimal non-negative integer $x$ such that $ax \equiv b \pmod{m}$.
 - **modInverse** - $\text{modInverse}(a, m)$ gives the minimal positive integer $x$ such that $ax \equiv 1 \pmod{m}$.
 - **ord** - $\text{ord}(a, m)$ gives the minimal positive integer $x$ such that $a^x \equiv 1 \pmod{m}$.
 - **crt** - $\text{crt}(n_1, a_1, n_2, a_2, ...)$ gives the minimal positive integer $x$ such that $x \equiv a_i \pmod{n_i}$ for any $n_i$.
