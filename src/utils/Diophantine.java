@@ -333,6 +333,8 @@ public class Diophantine {
         return result;
     }
     public static int modDivide(int a, int b, int mod) {
+        b %= mod;
+        if (b < 0) b += mod;
         int d = Math.toIntExact(Diophantine.gcd(a, mod));
         if (b % d != 0) return -1;
         a /= d;
