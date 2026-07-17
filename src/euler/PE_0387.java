@@ -8,7 +8,7 @@ public class PE_0387 {
     }
 
     public static String PE() {
-        int powTen = 17;
+        int powTen = 14;
         return String.valueOf(sumOfHarshadPrimes(powTen));
     }
 
