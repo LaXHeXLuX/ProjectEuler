@@ -338,7 +338,7 @@ public class Diophantine {
         a /= d;
         b /= d;
         mod /= d;
-        return modInverse(a, mod) * b;
+        return (int) ((modInverse(a, mod) * (long) b) % mod);
     }
     public static int modInverse(int a, int mod) {
         int m0 = mod;
@@ -369,19 +369,19 @@ public class Diophantine {
     public static int crt(int... ints) {
         if (ints.length == 0 || ints.length % 2 != 0 ) throw new IllegalArgumentException("Wrong number of arguments (zero or odd)");
 
-        int n1 = ints[0];
-        int a1 = ints[1];
+        long n1 = ints[0];
+        long a1 = ints[1];
         for (int i = 2; i < ints.length; i+=2) {
-            int n2 = ints[i];
-            int a2 = ints[i+1];
-            int gcd = gcd(n1, n2);
+            long n2 = ints[i];
+            long a2 = ints[i+1];
+            long gcd = gcd(n1, n2);
             if ((a1 - a2) % gcd != 0) return -1;
-            int[] bezout = extendedEuclidean(n1, n2);
-            a1 = (a1*bezout[1]*n2 + a2*bezout[0]*n1) / gcd;
+            long[] bezout = extendedEuclidean(n1, n2);
+            a1 = (a1 * bezout[1] * n2 + a2 * bezout[0] * n1) / gcd;
             n1 = n1*n2 / gcd;
             a1 = Math.floorMod(a1, n1);
         }
 
-        return a1;
+        return Math.toIntExact(a1);
     }
 }
