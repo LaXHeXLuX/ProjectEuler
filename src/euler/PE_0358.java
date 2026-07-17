@@ -1,11 +1,15 @@
 package euler;
 
 import utils.Diophantine;
+import utils.Divisors;
 import utils.Primes;
 
 public class PE_0358 {
     static void main() {
+        double s = System.currentTimeMillis();
         System.out.println(PE());
+        double e = System.currentTimeMillis();
+        System.out.println((e-s) + " ms");
     }
 
     public static String PE() {
@@ -17,7 +21,6 @@ public class PE_0358 {
 
         start = start / 100_000 * 100_000 + residue;
         for (int i = start; i <= end; i += 100_000) {
-            if (i % 5 == 0) continue;
             if (!Primes.isPrime(i)) continue;
             int periodSize = periodSize(i);
             if (periodSize != i-1) continue;
@@ -29,6 +32,10 @@ public class PE_0358 {
     }
 
     private static int periodSize(int n) {
-        return (int) Diophantine.ord(10, n);
+        long[] divs = Divisors.divisors((long) (n-1));
+        for (long div : divs) {
+            if (Diophantine.powModExact(10, div, n) == 1) return (int) div;
+        }
+        return -1;
     }
 }
